@@ -2,3 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+::root{
+    --primary-color-dark:#5A2982;
+    --secondary-color-dark:#B891D6;
+    --primary-color:#A55AD9;
+    --secondary-color:#F4EDF6;
+    --white:#FFFFFF;
+    --body:#5C6C7B;
+    --gray-light:#F1F1F1;
+}
+body {
+    font-size:16px;
+    color:var(--body);
+}
+
+
+h1,h2,h3,h4,h5,.title-lg, .title, .body, .caption{
+    line-height:140%;
+}
+
+h1{
+    font-size:48px;
+}
+
+h2{
+    font-size:40px;
+}
+
+h3{
+    font-size:33px;
+}
+h4{
+    font-size:28px;
+}
+
+h5{
+    font-size:23px;
+}
+
+p{
+    font-size:16px;
+}
+
+.title-lg{
+    font-size:19px;
+}
+
+.title{
+    font-size:16px;
+}
+
+.caption{
+    font-size:11px;
+}
+
+.bold {
+    font-weight:700;
+}
+
+
