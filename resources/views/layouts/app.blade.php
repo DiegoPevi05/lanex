@@ -13,6 +13,14 @@
         <!-- Styles -->
         @vite('resources/css/app.css')
     </head>
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+    <body class="antialiased min-h-screen bg-white h-full w-full">
+        <x-navbar /> <!-- Include the Navbar component -->
+
+        <main class="w-full h-auto">
+            @yield('content') <!-- Inject content from specific views -->
+        </main>
+
+        <x-footer />
+
     </body>
 </html>

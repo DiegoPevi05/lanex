@@ -10,15 +10,16 @@
     --white:#FFFFFF;
     --body:#5C6C7B;
     --gray-light:#F1F1F1;
-}
-body {
-    font-size:16px;
-    color:var(--body);
+    font-family: 'Nunito', sans-serif;
 }
 
 
-h1,h2,h3,h4,h5,.title-lg, .title, .body, .caption{
+h1,h2,h3,h4,h5,span, label, body, caption{
     line-height:140%;
+}
+
+h1,h2,h3,h4,h5,span,label {
+    font-family: 'Open Sans', sans-serif;
 }
 
 h1{
@@ -44,20 +45,21 @@ p{
     font-size:16px;
 }
 
-.title-lg{
-    font-size:19px;
-}
-
-.title{
+label{
     font-size:16px;
 }
 
-.caption{
-    font-size:11px;
+span{
+    font-size:19px;
 }
 
-.bold {
-    font-weight:700;
+body {
+    font-size:16px;
+}
+
+
+caption{
+    font-size:11px;
 }
 
 
