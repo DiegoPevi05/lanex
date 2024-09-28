@@ -45,12 +45,12 @@ p{
     font-size:16px;
 }
 
-label{
-    font-size:16px;
-}
-
 span{
     font-size:19px;
+}
+
+label{
+    font-size:16px;
 }
 
 body {
@@ -60,6 +60,17 @@ body {
 
 caption{
     font-size:11px;
+}
+
+.padding-x{
+    padding:0px 150px;
+}
+
+.padding-y {
+    padding:100px 0px;
+}
+.padding {
+    padding:100px 150px;
 }
 
 

@@ -1,8 +1,117 @@
 @extends('layouts.app')
 
+
 @section('content')
-    <div class="container">
-        <h1>Welcome to Lanex!</h1>
-        <p>This is the home page content.</p>
-    </div>
+    <section id="home_hero_section" class="w-full bg-slate-700 min-h-screen pt-[140px] relative z-10 text-white">
+        <img src="/images/home.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 bg-cover blur-xs z-20">
+        <div class="relative w-full h-full padding-x z-30">
+            <div class="w-full h-full flex flex-col gap-y-12">
+
+                <div class="w-[60%] h-full flex flex-col gap-y-4">
+                    <div class="w-full h-auto flex flex-col gap-y-2">
+                        <h5 class="font-bold">SOMOS LA MEJOR COMPAÑIA DE LOGISTICA</h5>
+                        <h1 class="font-bold">Optimice sus envíos con nuestros servicios de carga</h1>
+                    </div>
+                    <label class="font-bold">Simplifica tu proceso de envío y hazlo más eficiente con nuestros servicios de carga. De principio a fin, nos encargaremos de todo para garantizar que su carga llegue de manera segura.</label>
+                </div>
+
+                <div class="h-auto w-full flex flex-row items-start justify-between">
+                    <div class="w-full h-auto flex flex-row justify-start  items-center gap-x-6">
+                        <div class="w-auto h-auto
+                            flex flex-col items-start justify-start
+                            p-2
+                            bg-primary rounded-xl">
+                            <h1 class="font-bold !text-[48px]">26 K</h1>
+                            <p class="font-bold">Clientes Satisfechos</p>
+                        </div>
+
+                        <div class="w-auto h-auto
+                            flex flex-col items-start justify-start
+                            p-2
+                            bg-primary rounded-xl">
+                            <h1 class="font-bold !text-[48px]">12 +</h1>
+                            <p class="font-bold">Clientes Satisfechos</p>
+                        </div>
+
+                    </div>
+                    <div class="w-auto h-auto relative pt-24">
+                        <livewire:search-form />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="home_step_guide" class="w-full h-screen bg-white text-body">
+        <div class="relative w-full h-full padding flex flex-col divide-y divide-primary gap-y-6">
+            <div class="h-1/2 w-full flex flex-row gap-x-12 border-primary">
+                <div class="w-1/2 h-full">
+                    <div class="w-full h-full bg-secondary py-6 px-4 rounded-lg flex items-center justify-center">
+                        <img src="/images/aircraft.svg" class="w-auto h-full"/>
+                    </div>
+                </div>
+
+                <div class="w-1/2 h-full flex flex-col justify-start items-start">
+                    <h5 class="font-bold text-primary">How It Works</h5>
+                    <h2 class="font-bold text-primary-dark">
+                        Simplify Your Shipping Experience with Our Easy Step Process
+                    </h2>
+                    <p>
+                        At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.
+                    </p>
+                </div>
+
+            </div>
+            <div class="h-1/2 w-full flex flex-row gap-x-12 pt-6">
+                <div class="w-1/3 h-full flex flex-col items-center justify-start gap-y-4">
+                    <div class="rounded-xl text-primary bg-transparent border-2 border-secondary shadow-sm py-1 px-4">
+                        <p>Paso 1</p>
+                    </div>
+                    <div class="rounded-xl flex items-center justify-center w-36 h-36 bg-primary p-8">
+                        <img src="/images/dollar.svg" class="w-full h-full"/>
+                    </div>
+                    <h4 class="font-bold text-primary-dark">
+                        Solicita una Cotizacion
+                    </h4>
+                    <p class="text-center">
+                        We believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs.
+                    </p>
+
+                </div>
+
+                <div class="w-1/3 h-full flex flex-col items-center justify-start gap-y-4">
+                    <div class="rounded-xl text-primary bg-transparent border-2 border-secondary shadow-sm py-1 px-4">
+                        <p>Paso 2</p>
+                    </div>
+                    <div class="rounded-xl flex items-center justify-center w-36 h-36 bg-primary p-8">
+                        <img src="/images/package.svg" class="w-full h-full"/>
+
+                    </div>
+                    <h4 class="font-bold text-primary-dark">
+                        Solicita una Cotizacion
+                    </h4>
+                    <p class="text-center">
+                        We believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs.
+                    </p>
+
+                </div>
+
+                <div class="w-1/3 h-full flex flex-col items-center justify-start gap-y-4">
+                    <div class="rounded-xl text-primary bg-transparent border-2 border-secondary shadow-sm py-1 px-4">
+                        <p>Paso 1</p>
+                    </div>
+                    <div class="rounded-xl flex items-center justify-center w-36 h-36 bg-primary p-8">
+                        <img src="/images/container.svg" class="w-full h-full"/>
+                    </div>
+                    <h4 class="font-bold text-primary-dark">
+                        Solicita una Cotizacion
+                    </h4>
+                    <p class="text-center">
+                        We believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

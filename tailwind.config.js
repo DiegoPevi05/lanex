@@ -30,7 +30,7 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       addUtilities({
-        '.text-bold': {
+        '.font-bold': {
           fontWeight: '700',
         },
       });
