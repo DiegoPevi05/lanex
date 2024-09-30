@@ -1,6 +1,6 @@
 <!-- resources/views/components/navbar.blade.php -->
-<footer id="footer" class="p-4 flex flex-col padding text-secondary-dark">
-    <div class="w-full h-auto grid grid-cols-4 gap-12">
+<footer id="footer" class="p-4 flex flex-col padding-x  text-secondary-dark">
+    <div class="w-full h-auto grid grid-cols-4 gap-12 padding-y">
         <div class="col-span-1 flex flex-col gap-y-4 justify-start items-start">
 
             <div class="w-full h-auto flex flex-row items-center">
@@ -55,6 +55,12 @@
             <span class="font-bold">Subscribete</span>
             <input placeholder="Ingresa tu correo" class="w-full bg-body border-2 border-body rounded-md p-4 text-sm placeholder:text-secondary text-secondary" />
             <livewire:button-link text="Subscribete Ahora" variant="tertiary" url="#" extraClasses="uppercase py-4 w-full"/>
+        </div>
+    </div>
+    <div class="w-full h-auto flex flex-col justify-start items-start border-t-2 border-secondary-dark border-dashed padding-x gap-y-6">
+        <label class="font-bold mt-12 text-secodnary">Copyright © {{$currentYear}} Lan<label class="text-primary-dark">Ex</label></label>
+        <div class="w-full h-full flex flex-col items-center justify-end pb-6">
+            <label>Developed by <a href="https://www.digitalprocessit.com" target="_blank" class="hover:text-primary hover:underline duration-300">DigitalProcessIT</a> © {{$currentYear}} </label>
         </div>
     </div>
 </footer>

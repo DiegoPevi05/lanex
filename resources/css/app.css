@@ -14,6 +14,7 @@
 }
 
 
+
 h1,h2,h3,h4,h5,span, label, body, caption{
     line-height:140%;
 }
@@ -74,3 +75,33 @@ caption{
 }
 
 
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.reviews {
+  display: flex;
+}
+
+.reviews-slide {
+  animation: slide 55s infinite linear;
+}
+
+.reviews-slide-card {
+  cursor: pointer;
+}
+
+.reviews:hover .reviews-slide {
+  animation-play-state: paused;
+}

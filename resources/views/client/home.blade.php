@@ -47,7 +47,7 @@
             <div class="h-1/2 w-full flex flex-row gap-x-12 border-primary">
                 <div class="w-1/2 h-full">
                     <div class="w-full h-full bg-secondary py-6 px-4 rounded-lg flex items-center justify-center">
-                        <img src="/images/aircraft.svg" class="w-auto h-full"/>
+                        <img src="/images/svg/aircraft.svg" class="w-auto h-full"/>
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@
                         <p>Paso 1</p>
                     </div>
                     <div class="rounded-xl flex items-center justify-center w-36 h-36 bg-primary p-8">
-                        <img src="/images/dollar.svg" class="w-full h-full"/>
+                        <img src="/images/svg/dollar.svg" class="w-full h-full"/>
                     </div>
                     <h4 class="font-bold text-primary-dark">
                         Solicita una Cotizacion
@@ -84,7 +84,7 @@
                         <p>Paso 2</p>
                     </div>
                     <div class="rounded-xl flex items-center justify-center w-36 h-36 bg-primary p-8">
-                        <img src="/images/package.svg" class="w-full h-full"/>
+                        <img src="/images/svg/package-check.svg" class="w-full h-full"/>
 
                     </div>
                     <h4 class="font-bold text-primary-dark">
@@ -101,7 +101,7 @@
                         <p>Paso 1</p>
                     </div>
                     <div class="rounded-xl flex items-center justify-center w-36 h-36 bg-primary p-8">
-                        <img src="/images/container.svg" class="w-full h-full"/>
+                        <img src="/images/svg/container.svg" class="w-full h-full"/>
                     </div>
                     <h4 class="font-bold text-primary-dark">
                         Solicita una Cotizacion
@@ -114,4 +114,50 @@
             </div>
         </div>
     </section>
+    <x-brands  title="EMPRESAS CON LAS QUE TRABAJAMOS"/>
+    <x-services-section />
+    <x-questions />
+    <section id="reviews" class="w-full h-screen bg-white text-body">
+        <div class="relative w-full h-full padding flex flex-row justify-start items-start gap-x-24">
+            <div class="w-1/2 h-full flex flex-col justify-start items-start gap-y-6">
+                <div class="min-h-[500px] w-full flex flex-col justify-start items-start">
+                    <h5>Testimonials</h5>
+                    <h1 class="text-primary-dark font-bold">
+                        Our Clients Speak for Us
+                    </h1>
+                    <div class="relative w-full h-full rounded-xl bg-secondary flex justify-center items-center p-4">
+                        <div class="absolute rounded-xl -top-12 -right-12 h-24 w-24 bg-primary-dark flex justify-center items-center">
+                            <img src="/images/svg/quotes.svg" class="h-12 w-12" />
+
+                        </div>
+                        <img src="/images/svg/review.svg" class="h-[80%] w-auto" />
+                    </div>
+                </div>
+
+                <x-review
+                    stars="4"
+                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
+                    name="Interesting"
+                    charge="CEO"
+                    variant="secondary"
+                />
+            </div>
+
+            <div class="w-1/2 h-full flex flex-col justify-start items-start gap-y-6">
+                <x-review  stars="4"
+                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
+                    name="Interesting" charge="CEO" />
+
+                <x-review  stars="4"
+                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
+                    name="Interesting" charge="CEO" />
+
+                <x-review  stars="4"
+                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
+                    name="Interesting" charge="CEO" />
+
+            </div>
+        </div>
+    </section>
+
 @endsection

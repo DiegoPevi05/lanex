@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class Footer extends Component
 {
+    public $currentYear;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->currentYear = date('Y');
     }
 
     /**
