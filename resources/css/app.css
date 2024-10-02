@@ -63,8 +63,95 @@ caption{
     font-size:11px;
 }
 
-.padding-x{
-    padding:0px 150px;
+
+
+@media (max-width: 1024px) {
+    h1{
+        font-size:44px;
+    }
+    h2{
+        font-size:36px;
+    }
+    h3{
+        font-size:30px;
+    }
+    h4{
+        font-size:24px;
+    }
+    
+    h5{
+        font-size:20px;
+    }
+    
+    p{
+        font-size:14px;
+    }
+    
+    span{
+        font-size:16px;
+    }
+    
+    label{
+        font-size:14px;
+    }
+    
+    body {
+        font-size:14px;
+    }
+    
+    
+    caption{
+        font-size:10px;
+    }
+}
+
+@media (max-width: 640px) {
+    h1{
+        font-size:24px;
+    }
+    h2{
+        font-size:24px;
+    }
+    h3{
+        font-size:20px;
+    }
+    h4{
+        font-size:20px;
+    }
+    
+    h5{
+        font-size:14px;
+    }
+    
+    p{
+        line-height:130%;
+        font-size:12px;
+    }
+    
+    span{
+        font-size:16px;
+    }
+    
+    label{
+        font-size:11px;
+    }
+    
+    body {
+        font-size:14px;
+    }
+    
+    
+    caption{
+        font-size:10px;
+    }
+}
+
+.padding-x {
+    padding: 0px 150px;
+}
+
+.padding-b{
+    padding-bottom:100px;
 }
 
 .padding-y {
@@ -73,6 +160,41 @@ caption{
 .padding {
     padding:100px 150px;
 }
+
+@media (max-width: 1280px) {
+    .padding-x {
+        padding: 0px 80px;
+    }
+    .padding-b{
+        padding-bottom:80px;
+    }
+    .padding-y{
+        padding: 80px 0px;
+    }
+    .padding{
+        padding:80px 80px;
+
+    }
+}
+
+@media (max-width: 640px) {
+
+    .padding-x {
+        padding: 0px 40px;
+    }
+    .padding-b{
+        padding-bottom:40px;
+    }
+    .padding-y{
+        padding: 40px 0px;
+    }
+    .padding{
+        padding:40px 40px;
+
+    }
+}
+
+
 
 
 .no-scroll-bar::-webkit-scrollbar {
@@ -105,3 +227,202 @@ caption{
 .reviews:hover .reviews-slide {
   animation-play-state: paused;
 }
+
+
+/******************* Animations ****************************/
+
+@keyframes slide-in-right {
+    from {
+        transform: translateX(-10%) translateY(0);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        transform: translateX(10%) translateY(0);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-up {
+    from {
+        transform: translateX(0) translateY(-10%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-down {
+    from {
+        transform: translateX(0) translateY(10%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+@keyframes slide-out-right {
+    from {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-10%) translateY(0);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-out-left {
+    from {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(10%) translateY(0);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-out-up {
+    from {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(0) translateY(-10%);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-out-down {
+    from {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(0) translateY(10%);
+        opacity: 0;
+    }
+}
+
+/* Fade-In Animation */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Fade-Out Animation */
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.animation-element{
+    opacity: 0;
+}
+
+
+/* Slide-In Classes */
+.animation-element.in-view.slide-in-right {
+    animation: slide-in-right 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-element.in-view.slide-in-left {
+    animation: slide-in-left 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-element.in-view.slide-in-up {
+    animation: slide-in-up 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-element.in-view.slide-in-down {
+    animation: slide-in-down 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+/* Slide-Out Classes */
+.animation-element.in-view.slide-out-right {
+    animation: slide-out-right 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-element.in-view.slide-out-left {
+    animation: slide-out-left 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-element.inv-view.slide-out-up {
+    animation: slide-out-up 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-element.inv-view.slide-out-down {
+    animation: slide-out-down 0.8s forwards;
+    animation-delay:0.5s;
+}
+/* Fade-In Class */
+.animation-element.in-view.fade-in {
+    animation: fade-in 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+/* Fade-Out Class */
+.animation-element.in-view.fade-out {
+    animation: fade-out 0.8s forwards;
+    animation-delay:0.5s;
+}
+
+.animation-group .animation-element.in-view:nth-child(1){
+    animation-delay:0.8s;
+}
+
+.animation-group .animation-element.in-view:nth-child(2){
+    animation-delay:1.3s;
+}
+
+.animation-group .animation-element.in-view:nth-child(3){
+    animation-delay:1.5s;
+}
+
+.animation-group .animation-element.in-view:nth-child(4){
+    animation-delay:1.8s;
+}
+
+.animation-group .animation-element.in-view:nth-child(5){
+    animation-delay:2.3s;
+}
+
+.animation-group .animation-element.in-view:nth-child(6){
+    animation-delay:2.6s;
+}
+
+
+

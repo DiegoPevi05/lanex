@@ -14,13 +14,13 @@
     </div>
 
     <!-- Tab Content -->
-    <div class="w-96 md:w-[500px] flex shadow-md rounded-b-lg rounded-tr-lg p-4
+    <div class="w-full sm:w-96 md:w-[500px] flex shadow-md rounded-b-lg rounded-tr-lg p-4
         {{ $activeTab === 'tab1' ? ' bg-white' : 'bg-primary-dark' }}
         ">
         @if($activeTab === 'tab1')
             <!-- Content for Tab 1 -->
             <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1">
-                <div class="w-full flex flex-row items-center justify-start gap-x-4">
+                <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
                     <input placeholder="Tracking ID" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
                     <livewire:button-link text="Buscar" url="#" extraClasses="h-full uppercase font-bold"/>
                 </div>
@@ -29,7 +29,7 @@
         @elseif($activeTab === 'tab2')
             <!-- Content for Tab 2 -->
             <div class="w-full h-auto flex flex-col items-start justify-start text-white gap-y-1">
-                <div class="w-full flex flex-row items-center justify-start gap-x-4">
+                <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
                     <input placeholder="Nombre del Producto" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold" />
                     <livewire:button-link text="Cotizar" variant="secondary" url="#" extraClasses="h-full uppercase font-bold"/>
                 </div>

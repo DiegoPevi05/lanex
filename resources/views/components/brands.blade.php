@@ -1,5 +1,5 @@
     <section id="brands" class="w-full {{ $variant == 'secondary' ? 'bg-white': 'bg-primary-dark' }} h-auto flex flex-col justify-center items-center padding gap-y-12">
-        <h3 class="font-bold {{ $variant == 'secondary' ? 'text-primary-dark': 'text-white' }}">{{$title}}</h3>
+        <h3 class="max-sm:text-center font-bold {{ $variant == 'secondary' ? 'text-primary-dark': 'text-white' }}">{{$title}}</h3>
         <div class="w-full flex flex-row justify-start items-start">
 
           <div class="relative w-full h-auto overflow-hidden">
