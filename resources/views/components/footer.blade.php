@@ -36,10 +36,10 @@
         <div class="col-span-1 flex flex-col gap-y-4 justify-start item-start sm:items-center">
             <span class="font-bold">Navigacion</span>
             <div class="flex flex-col justify-start items-start gap-y-4">
-                <span><a href="#" class="hover:underline">Home</a></span>
-                <span><a href="#" class="hover:underline">About Us</a></span>
-                <span><a href="#" class="hover:underline">Services</a></span>
-                <span><a href="#" class="hover:underline">Contact Us</a></span>
+                <span><a href="{{ route('home') }}" class="hover:underline">Home</a></span>
+                <span><a href="{{ route('about') }}" class="hover:underline">About Us</a></span>
+                <span><a href="{{ route('services') }}" class="hover:underline">Services</a></span>
+                <span><a href="{{ route('contact') }}" class="hover:underline">Contact Us</a></span>
             </div>
         </div>
 

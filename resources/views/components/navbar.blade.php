@@ -33,11 +33,11 @@
         </div>
         <div class="hidden xl:flex w-auto h-auto flex-row text-primary-dark">
             <div class="w-auto h-auto flex flex-row gap-x-4">
-                <a href="#"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Inicio</label></a>
-                <a href="#"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Nosotros</label></a>
-                <a href="#"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Servicios</label></a>
-                <a href="#"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Proveedores</label></a>
-                <a href="#"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Contactanos</label></a>
+                <a href="{{ route('home')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Inicio</label></a>
+                <a href="{{ route('about')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Nosotros</label></a>
+                <a href="{{ route('services')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Servicios</label></a>
+                <a href="{{ route('providers')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Proveedores</label></a>
+                <a href="{{ route('contact')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Contactanos</label></a>
             </div>
         </div>
         <div class="navbar_menu_toggle_button flex xl:hidden justify-center items-center bg-primary p-2 rounded-xl shadow-md active:scale-95 duration-300">
@@ -62,16 +62,16 @@
             </div>
         </div>
         <div class="w-auto h-auto flex flex-col gap-y-6 sm:gap-y-12 text-primary mt-12">
-            <a href="#"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Inicio</h4></a>
-            <a href="#"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Nosotros</h4></a>
-            <a href="#"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Servicios</h4></a>
-            <a href="#"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Proveedores</h4></a>
-            <a href="#"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Contactanos</h4></a>
+            <a href="{{ route('home')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Inicio</h4></a>
+            <a href="{{ route('about')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Nosotros</h4></a>
+            <a href="{{ route('services')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Servicios</h4></a>
+            <a href="{{ route('providers')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Proveedores</h4></a>
+            <a href="{{ route('contact')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Contactanos</h4></a>
         </div>
         <div class="w-auto h-auto
             flex flex-row justify-start gap-x-4 items-center mt-12">
-            <livewire:button-link url="#" text="Cotizar" extraClasses="px-12 py-2" />
-            <livewire:button-link url="#" text="Track" extraClasses="px-12 py-2" />
+            <livewire:button-link url="#" size="lg" text="Cotizar" extraClasses="px-12 py-2" />
+            <livewire:button-link url="#" size="lg" text="Track" extraClasses="px-12 py-2" />
         </div>
         <div class="flex flex-row gap-x-6 mt-auto text-primary">
             <a href="">

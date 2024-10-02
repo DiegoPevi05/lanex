@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\Service;
 
 class ServicesSection extends Component
 {
@@ -14,44 +15,7 @@ class ServicesSection extends Component
      */
     public function __construct()
     {
-        $this->services = [
-            [
-                'route' => '/services/ship',
-                'header' => 'Envio Maritimo',
-                'content' => 'Reliable and efficient trucking services to meet your needs.',
-                'svgIcon' => 'heroicon-o-truck',
-            ],
-            [
-                'route' => '/services/air',
-                'header' => 'Envio Aeroe',
-                'content' => 'Fast and secure air cargo deliveries worldwide.',
-                'svgIcon' => 'heroicon-o-truck',
-            ],
-            [
-                'route' => '/services/air',
-                'header' => 'Envio Aeroe',
-                'content' => 'Fast and secure air cargo deliveries worldwide.',
-                'svgIcon' => 'heroicon-o-truck',
-            ],
-            [
-                'route' => '/services/air',
-                'header' => 'Envio Aeroe',
-                'content' => 'Fast and secure air cargo deliveries worldwide.',
-                'svgIcon' => 'heroicon-o-truck',
-            ],
-            [
-                'route' => '/services/air',
-                'header' => 'Envio Aeroe',
-                'content' => 'Fast and secure air cargo deliveries worldwide.',
-                'svgIcon' => 'heroicon-o-truck',
-            ],
-            [
-                'route' => '/services/air',
-                'header' => 'Envio Aeroe',
-                'content' => 'Fast and secure air cargo deliveries worldwide.',
-                'svgIcon' => 'heroicon-o-truck',
-            ]
-        ];
+        $this->services = Service::all();
     }
 
     /**

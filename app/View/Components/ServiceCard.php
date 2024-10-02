@@ -9,19 +9,19 @@ use Illuminate\View\Component;
 class ServiceCard extends Component
 {
 
-    public $header;
-    public $content;
-    public $svgIcon;
-    public $route;
+    public $id;
+    public $name;
+    public $icon;
+    public $description;
     /**
      * Create a new component instance.
      */
-    public function __construct(string $header,string $content,  string $svgIcon, string $route)
+    public function __construct(string $id,string $name,  string $icon, string $description)
     {
-        $this->header = $header;
-        $this->content = $content;
-        $this->svgIcon = $svgIcon;
-        $this->route  = $route;
+        $this->id                   = $id;
+        $this->name                 = $name;
+        $this->icon                 = $icon;
+        $this->description          = $description;
     }
 
     /**

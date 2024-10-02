@@ -12,8 +12,9 @@ class ButtonLink extends Component
     public $text;
     public $variant;
     public $extraClasses;
+    public $size;
 
-    public function mount($url, $text = '', $leftIcon = null, $rightIcon = null , $variant = 'primary', $extraClasses = '')
+    public function mount($url, $text = '', $leftIcon = null, $rightIcon = null , $variant = 'primary', $extraClasses = '', $size='md')
     {
         $this->url = $url;
         $this->leftIcon = $leftIcon;
@@ -21,6 +22,7 @@ class ButtonLink extends Component
         $this->text = $text;
         $this->variant = $variant;
         $this->extraClasses = $extraClasses;
+        $this->size = $size;
     }
 
     public function render()

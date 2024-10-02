@@ -15,14 +15,8 @@
         @vite('resources/js/app.js')
         @livewireStyles
     </head>
-    <body class="antialiased min-h-screen bg-white h-full w-full">
-        <x-navbar /> <!-- Include the Navbar component -->
-
-        <main class="w-full h-auto">
-            @yield('content') <!-- Inject content from specific views -->
-        </main>
-
-        <x-footer />
+    <body class="antialiased min-h-screen bg-transparent h-full w-full">
+        @yield('content') <!-- Inject content from specific views -->
         @livewireScripts
     </body>
 </html>

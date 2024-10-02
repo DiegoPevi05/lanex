@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.client')
 
 
-@section('content')
+@section('content-client')
     <section id="home_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white bg-green-100">
         <img src="/images/home.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover blur-xs z-20">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">

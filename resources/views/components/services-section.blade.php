@@ -8,10 +8,10 @@
         <div class="h-full w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 grid-rows-2 gap-6 xl:gap-12 py-12 xl:p-12 animation-group">
             @foreach ($services as $service)
                 <x-service-card
-                    :route="$service['route']"
-                    :header="$service['header']"
-                    :content="$service['content']"
-                    :svgIcon="$service['svgIcon']"
+                    :id="$service['id']"
+                    :name="$service['name']"
+                    :description="$service['short_description']"
+                    :icon="$service['icon']"
                 />
             @endforeach
         </div>
