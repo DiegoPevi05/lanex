@@ -13,8 +13,8 @@
         </div>
         <div class="w-auto h-auto
             flex justify-center gap-x-4 items-center">
-            <livewire:button-link url="#" text="Cotizar" />
-            <livewire:button-link url="#" text="Track" variant="secondary" />
+            <livewire:button-link url="#" text="{{ __('messages.common.quote') }}"  />
+            <livewire:button-link url="#" text="{{ __('messages.common.track') }}" variant="secondary" />
         </div>
     </div>
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-xl:mt-12">
@@ -33,11 +33,11 @@
         </div>
         <div class="hidden xl:flex w-auto h-auto flex-row text-primary-dark">
             <div class="w-auto h-auto flex flex-row gap-x-4">
-                <a href="{{ route('home')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Inicio</label></a>
-                <a href="{{ route('about')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Nosotros</label></a>
-                <a href="{{ route('services')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Servicios</label></a>
-                <a href="{{ route('providers')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Proveedores</label></a>
-                <a href="{{ route('contact')  }}"><label class="font-bold hover:text-primary duration-300 cursor-pointer">Contactanos</label></a>
+                <a href="{{ route('home')  }}"><label class="font-bold {{ request()->routeIs('home')  ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.home') }}</label></a>
+                <a href="{{ route('about')  }}"><label class="font-bold {{ request()->routeIs('about') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.aboutus') }}</label></a>
+                <a href="{{ route('services')  }}"><label class="font-bold {{ request()->routeIs('services') || request()->routeIs('service') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.services') }}</label></a>
+                <a href="{{ route('suppliers')  }}"><label class="font-bold {{ request()->routeIs('suppliers') || request()->routeIs('supplier') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.suppliers') }}</label></a>
+                <a href="{{ route('contact')  }}"><label class="font-bold {{ request()->routeIs('contact') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.contact') }}</label></a>
             </div>
         </div>
         <div class="navbar_menu_toggle_button flex xl:hidden justify-center items-center bg-primary p-2 rounded-xl shadow-md active:scale-95 duration-300">
@@ -62,16 +62,16 @@
             </div>
         </div>
         <div class="w-auto h-auto flex flex-col gap-y-6 sm:gap-y-12 text-primary mt-12">
-            <a href="{{ route('home')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Inicio</h4></a>
-            <a href="{{ route('about')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Nosotros</h4></a>
-            <a href="{{ route('services')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Servicios</h4></a>
-            <a href="{{ route('providers')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Proveedores</h4></a>
-            <a href="{{ route('contact')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer">Contactanos</h4></a>
+            <a href="{{ route('home')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.home') }}</h4></a>
+            <a href="{{ route('about')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.aboutus') }}</h4></a>
+            <a href="{{ route('services')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.services') }}</h4></a>
+            <a href="{{ route('suppliers')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.suppliers') }}</h4></a>
+            <a href="{{ route('contact')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.contact') }}</h4></a>
         </div>
         <div class="w-auto h-auto
             flex flex-row justify-start gap-x-4 items-center mt-12">
-            <livewire:button-link url="#" size="lg" text="Cotizar" extraClasses="px-12 py-2" />
-            <livewire:button-link url="#" size="lg" text="Track" extraClasses="px-12 py-2" />
+            <livewire:button-link url="#" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-12 py-2" />
+            <livewire:button-link url="#" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-12 py-2" />
         </div>
         <div class="flex flex-row gap-x-6 mt-auto text-primary">
             <a href="">

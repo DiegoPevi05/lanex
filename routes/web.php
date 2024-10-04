@@ -7,6 +7,7 @@ Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
 Route::get('/services', [WebController::class, 'services'])->name('services');
 Route::get('/service/{id}', [WebController::class, 'service'])->name('service');
-Route::get('/providers', [WebController::class, 'providers'])->name('providers');
+Route::get('/suppliers', [WebController::class, 'suppliers'])->name('suppliers');
+Route::get('/supplier/{id}', [WebController::class, 'supplier'])->name('supplier');
 Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 

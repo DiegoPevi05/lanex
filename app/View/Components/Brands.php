@@ -10,21 +10,15 @@ class Brands extends Component
 {
     public $title;
     public $variant;
-    public $brands;
+    public $suppliers;
     /**
      * Create a new component instance.
      */
-    public function __construct(string $title, string $variant = '')
+    public function __construct(string $title, string $variant = '', $suppliers = [])
     {
         $this->title = $title;
         $this->variant = $variant;
-        $this->brands = [
-            '/images/brand.png',
-            '/images/brand.png',
-            '/images/brand.png',
-            '/images/brand.png',
-            '/images/brand.png'
-        ];
+        $this->suppliers = $suppliers;
     }
 
     /**

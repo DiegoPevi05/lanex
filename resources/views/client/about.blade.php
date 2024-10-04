@@ -2,8 +2,8 @@
 
 
 @section('content-client')
-    <section id="aboutus_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white bg-green-100">
-        <img src="/images/aboutus.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20">
+    <section id="aboutus_hero_section" class="w-full flex flex-col h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
+        <img src="/images/aboutus.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
             <div class="w-full h-full flex flex-col justify-center xl:justify-end xl:items-end gap-y-12">
 
@@ -23,7 +23,7 @@
             </div>
         </div>
     </section>
-    <div class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 padding gap-x-6 animation-group">
+    <section id="about_us_statistics" class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 padding gap-x-6 animation-group">
         <div class="col-span-1 flex flex-col items-start justify-center w-full animation-element text-animation">
             <h1 class="font-bold text-primary">+120</h1>
             <span class="w-full xl:w-[80%] h-[3px] bg-primary"></span>
@@ -41,7 +41,7 @@
             <span class="w-full xl:w-[80%] h-[3px] bg-primary"></span>
             <h5 class="text-body">Paises para Exportar</h5>
         </div>
-    </div>
+    </section>
     <x-content-section
         header="Quienes Somos?"
         title="Somos una compañia Experta en Logistica"

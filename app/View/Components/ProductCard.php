@@ -6,18 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Questions extends Component
+class ProductCard extends Component
 {
-    public $title;
-    public $questions;
+    public $product;
     /**
      * Create a new component instance.
      */
-    public function __construct($title = '',$questions = [])
+    public function __construct($product)
     {
-        // Sample questions and answers
-        $this->questions =  $questions;
-        $this->title = $title;
+        $this->product = $product;
     }
 
     /**
@@ -25,6 +22,6 @@ class Questions extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.questions');
+        return view('components.product-card');
     }
 }

@@ -4,12 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Service;
+use App\Models\Supplier;
 
 class WebController extends Controller
 {
     public function home()
     {
-        return view('client.home');
+
+        $questions = [
+            [
+                'id' => 1,
+                'question' => 'What is the return policy?',
+                'answer' => 'You can return any item within 30 days of purchase.',
+            ],
+            [
+                'id' => 2,
+                'question' => 'How do I track my order?',
+                'answer' => 'You will receive a tracking number via email once your order has shipped.',
+            ],
+            [
+                'id' => 3,
+                'question' => 'Do you offer international shipping?',
+                'answer' => 'Yes, we ship to many countries worldwide. Check our shipping page for details.',
+            ],
+            [
+                'id' => 4,
+                'question' => 'How can I contact customer support?',
+                'answer' => 'You can reach customer support via the contact form on our website or by calling our hotline.',
+            ],
+        ];
+
+
+
+        // Find the service by ID or throw a 404 error if not found
+        $suppliers = Supplier::select('id', 'name', 'logo')->get();
+
+        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers]);
     }
 
     public function about()
@@ -26,18 +56,31 @@ class WebController extends Controller
     {
         // Fake data for now
         // Find the service by ID or throw a 404 error if not found
-        $service = Service::findOrFail($id);
+        $service = Service::with('suppliers:id,name,logo')->findOrFail($id);
 
         // Decode the JSON webcontent into an array
         $service->webcontent = json_decode($service->webcontent, true); // true converts it to an associative array
+
 
         // Pass the service data to the view
         return view('client.service', ['service' => $service]);
     }
 
-    public function providers()
+    public function suppliers()
     {
-        return view('client.providers');
+
+        return view('client.suppliers');
+    }
+
+    public function supplier($id)
+    {
+        $supplier = Supplier::with('products')->findOrFail($id);
+
+        if (!is_array($supplier->details)) {
+            $supplier->details = json_decode($supplier->details, true);
+        }
+
+        return view('client.supplier',['supplier'=> $supplier]);
     }
 
     public function contact()
