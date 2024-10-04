@@ -13,7 +13,7 @@
         </div>
         <div class="w-auto h-auto
             flex justify-center gap-x-4 items-center">
-            <livewire:button-link url="#" text="{{ __('messages.common.quote') }}"  />
+            <livewire:button-link url="{{route('quote')}}" text="{{ __('messages.common.quote') }}"  />
             <livewire:button-link url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
         </div>
     </div>
@@ -70,8 +70,8 @@
         </div>
         <div class="w-auto h-auto
             flex flex-row justify-start gap-x-4 items-center mt-12">
-            <livewire:button-link url="#" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-12 py-2" />
-            <livewire:button-link url="#" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-12 py-2" />
+            <livewire:button-link url="{{route('quote')}}" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-12 py-2" />
+            <livewire:button-link url="{{route('track')}}" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-12 py-2" />
         </div>
         <div class="flex flex-row gap-x-6 mt-auto text-primary">
             <a href="">

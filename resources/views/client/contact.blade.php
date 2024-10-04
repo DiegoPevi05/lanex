@@ -3,7 +3,7 @@
 
 @section('content-client')
     <section id="contact_hero_section" class="w-full h-auto bg-white text-body pt-[80px] pt:mt-[140px]">
-    <div class="relative w-full h-auto padding flex flex-col xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
+    <div class="relative w-full h-auto px-4 sm:px-24 xl:px-48 py-12 sm:py-24 xl:py-36 flex flex-col xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start items-start gap-y-6 max-sm:mt-12">
             <div class="h-auto h-full w-full flex flex-col justify-start items-start relative">
                 <h5 class="animation-element slide-in-up">
@@ -13,13 +13,13 @@
                     Envianos Cualquier Duda que tengas
                 </h1>
                 <div class="w-full h-full flex justify-center items-center p-6 sm:p-4 mt-6 sm:mt-12 animation-element slide-in-up">
-                    <img src="/images/svg/contact.svg" class="h-96 w-auto" />
+                    <img src="/images/svg/contact.svg" class="h-48 sm:h-96 w-auto" />
                 </div>
             </div>
         </div>
 
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
-            <form class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark">
+            <form class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
                 <h5>
                     Envianos un mensaje con cualquier consulta y responderemos a la brevedad
                 </h5>

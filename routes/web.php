@@ -11,5 +11,6 @@ Route::get('/suppliers', [WebController::class, 'suppliers'])->name('suppliers')
 Route::get('/supplier/{id}', [WebController::class, 'supplier'])->name('supplier');
 Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 Route::get('/track', [WebController::class, 'track'])->name('track');
+Route::get('/quote', [WebController::class, 'quote'])->name('quote');
 Route::get('/track-flight', [WebController::class, 'trackFlight'])->name('track-flight');
 
