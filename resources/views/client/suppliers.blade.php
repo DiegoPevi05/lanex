@@ -23,5 +23,5 @@
             </div>
         </div>
     </section>
-    <x-suppliers-section />
+    <x-suppliers-section  header="Encuentra tu Producto Ideal" title="Algunas de Nuestros Proveedores mas Remarcables" />
 @endsection

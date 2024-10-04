@@ -31,7 +31,7 @@
             <h5 class="animation-element slide-in-up text-primary">
                 Encuentra tu Producto Ideal
             </h5>
-            <h1 class="text-primary-dark font-bold animation-element slide-in-up">
+            <h1 class="text-primary-dark font-bold animation-element slide-in-up text-center">
                 Mira los Productos más pedidos ultimamente
             </h1>
         </div>
@@ -44,7 +44,13 @@
                         </div>
                     </div>
                 @endforeach
+            @else
+                <div class="col-span-1 sm:col-span-2 xl:col-span-3 flex flex-col items-center justify-center py-24 gap-y-12">
+                    <h5 class="font-bold text-primary">Currently no Products for this Supplier</h5>
+                    <img src="/images/svg/empty.svg" class="h-48 w-auto"/>
+                </div>
             @endif
         </div>
     </section>
+    <x-suppliers-section  header="Encuentra otro  Proveedor" title="Otros proveedores que venden productos similares" />
 @endsection

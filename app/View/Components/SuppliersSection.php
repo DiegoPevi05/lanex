@@ -10,11 +10,15 @@ use App\Models\Supplier;
 class SuppliersSection extends Component
 {
     public $suppliers;
+    public $header;
+    public $title;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($header, $title)
     {
+        $this->header = $header;
+        $this->title = $title;
         // Fetch all suppliers and ensure it's not null
         $this->suppliers = Supplier::limit(6)->get();
 

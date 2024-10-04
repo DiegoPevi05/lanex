@@ -2,46 +2,51 @@
 
 
 @section('content-client')
-    <section id="home_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white bg-green-100">
-        <img src="/images/home.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover blur-xs z-20">
-        <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
-            <div class="w-full h-full flex flex-col justify-center xl:justify-end gap-y-12">
-
-                <div class="w-full xl:w-[60%] h-auto flex flex-col gap-y-4 animation-element slide-in-up">
-                    <div class="w-full h-auto flex flex-col gap-y-2">
-                        <h5 class="font-bold">SOMOS LA MEJOR COMPAÑIA DE LOGISTICA</h5>
-                        <h1 class="font-bold">Optimice sus envíos con nuestros servicios de carga</h1>
-                    </div>
-                    <label class="font-bold">Simplifica tu proceso de envío y hazlo más eficiente con nuestros servicios de carga. De principio a fin, nos encargaremos de todo para garantizar que su carga llegue de manera segura.</label>
-                </div>
-
-                <div class="h-auto w-full flex flex-col xl:flex-row items-start justify-between">
-                    <div class="w-full h-auto flex flex-row justify-start  items-center gap-x-6 animation-group">
-                        <div class="w-auto h-auto
-                            animation-element slide-in-right
-                            flex flex-col items-start justify-start
-                            p-2
-                            bg-primary rounded-xl">
-                            <h1 class="font-bold text-[32px] sm:!text-[48px]">26 K</h1>
-                            <p class="font-bold">Clientes Satisfechos</p>
-                        </div>
-
-                        <div class="w-auto h-auto
-                            flex flex-col items-start justify-start
-                            animation-element slide-in-right
-                            p-2
-                            bg-primary rounded-xl">
-                            <h1 class="font-bold text-[32px] sm:!text-[48px]">12 +</h1>
-                            <p class="font-bold">Clientes Satisfechos</p>
-                        </div>
-
-                    </div>
-                    <div class="max-sm:m-none max-xl:ml-auto w-auto h-auto pt-6 sm:pt-12 xl:pt-24 animation-element slide-in-left">
-                        <livewire:search-form />
-                    </div>
+    <section id="contact_hero_section" class="w-full h-auto bg-white text-body pt-[80px] pt:mt-[140px]">
+    <div class="relative w-full h-auto padding flex flex-col xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
+        <div class="w-full xl:w-1/2 h-full flex flex-col justify-start items-start gap-y-6 max-sm:mt-12">
+            <div class="h-auto h-full w-full flex flex-col justify-start items-start relative">
+                <h5 class="animation-element slide-in-up">
+                    Contactanos
+                </h5>
+                <h1 class="text-primary-dark font-bold animation-element slide-in-up">
+                    Envianos Cualquier Duda que tengas
+                </h1>
+                <div class="w-full h-full flex justify-center items-center p-6 sm:p-4 mt-6 sm:mt-12 animation-element slide-in-up">
+                    <img src="/images/svg/contact.svg" class="h-96 w-auto" />
                 </div>
             </div>
-
         </div>
+
+        <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
+            <form class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark">
+                <h5>
+                    Envianos un mensaje con cualquier consulta y responderemos a la brevedad
+                </h5>
+                <div class="w-full h-auto">
+                    <label for="contact_form_email" class="font-bold">Correo Electronico</span>
+                    <input id="contact_form_email" name="email" type="email"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="Correo Electronico " />
+                </div>
+
+                <div class="w-full h-auto">
+                    <label for="contact_form_company" class="font-bold">Razon Social</span>
+                    <input id="contact_form_company" name="company" type="text"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="Razon Social" />
+                </div>
+
+                <div class="w-full h-auto">
+                    <label for="contact_form_ruc" class="font-bold">RUC</span>
+                    <input id="contact_form_ruc" name="ruc" type="text"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="RUC" />
+                </div>
+                <div class="w-full h-auto">
+                    <label for="contact_form_message" class="font-bold">Mensaje</span>
+                    <textarea id="contact_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" >Mensaje</textarea>
+                </div>
+                <button type="submit" class="bg-primary-dark px-12 sm:px-24 py-2 sm:py-4 lg:py-3 text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
+                    <span>Enviar</span>
+                </button>
+            </form>
+        </div>
+    </div>
     </section>
+    <x-questions title="Frequently asked questions" :questions="$questions" />
 @endsection

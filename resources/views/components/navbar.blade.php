@@ -14,7 +14,7 @@
         <div class="w-auto h-auto
             flex justify-center gap-x-4 items-center">
             <livewire:button-link url="#" text="{{ __('messages.common.quote') }}"  />
-            <livewire:button-link url="#" text="{{ __('messages.common.track') }}" variant="secondary" />
+            <livewire:button-link url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
         </div>
     </div>
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-xl:mt-12">
