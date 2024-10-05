@@ -1,5 +1,5 @@
 <!-- resources/views/components/navbar.blade.php -->
-<nav id="navbar" class="absolute top-0 left-0 right-0 w-full flex flex-col h-auto z-50">
+<nav id="navbar" class="absolute top-0 left-0 right-0 w-full flex flex-col h-auto z-[60]">
     <div class="hidden xl:flex w-full justify-between items-center bg-primary-dark px-20 h-[60px]">
         <div class="w-auto h-auto
             divide-x divide-dashed
@@ -13,8 +13,9 @@
         </div>
         <div class="w-auto h-auto
             flex justify-center gap-x-4 items-center">
-            <livewire:button-link url="{{route('quote')}}" text="{{ __('messages.common.quote') }}"  />
-            <livewire:button-link url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
+            <x-button url="{{route('quote')}}" text="{{ __('messages.common.quote') }}"  />
+            <x-button url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
+            <x-language-selector id="xl" />
         </div>
     </div>
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-xl:mt-12">
@@ -40,6 +41,7 @@
                 <a href="{{ route('contact')  }}"><label class="font-bold {{ request()->routeIs('contact') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.contact') }}</label></a>
             </div>
         </div>
+
         <div class="navbar_menu_toggle_button flex xl:hidden justify-center items-center bg-primary p-2 rounded-xl shadow-md active:scale-95 duration-300">
             <x-heroicon-o-bars-3 class="h-6 sm:h-12 w-6 sm:w-12 text-white" />
         </div>
@@ -48,18 +50,21 @@
         <div class="navbar_menu_toggle_button ml-auto w-auto flex justify-center items-center bg-primary p-2 rounded-xl shadow-md active:scale-95 duration-300">
             <x-heroicon-o-x-mark class="h-6 sm:h-12 w-6 sm:w-12 text-white" />
         </div>
-        <div class="w-full h-auto flex flex-row items-center">
-            <div class="w-[60px] h-auto p-none">
-                <img src="/images/logo.png" class="h-auto w-full" />
+        <div class="w-full h-auto flex flex-between items-center">
+            <div class="w-full h-auto flex flex-row items-center">
+                <div class="w-[60px] h-auto p-none">
+                    <img src="/images/logo.png" class="h-auto w-full" />
+                </div>
+                <div class="w-auto flex flex-row">
+                    <h1 class="font-bold text-primary">
+                        Lan
+                    </h2>
+                    <h1 class="font-bold text-primary-dark">
+                        Ex
+                    </h2>
+                </div>
             </div>
-            <div class="w-auto flex flex-row">
-                <h1 class="font-bold text-primary">
-                    Lan
-                </h2>
-                <h1 class="font-bold text-primary-dark">
-                    Ex
-                </h2>
-            </div>
+            <x-language-selector id="sm" />
         </div>
         <div class="w-auto h-auto flex flex-col gap-y-6 sm:gap-y-12 text-primary mt-12">
             <a href="{{ route('home')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.home') }}</h4></a>
@@ -70,8 +75,8 @@
         </div>
         <div class="w-auto h-auto
             flex flex-row justify-start gap-x-4 items-center mt-12">
-            <livewire:button-link url="{{route('quote')}}" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-12 py-2" />
-            <livewire:button-link url="{{route('track')}}" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-12 py-2" />
+            <x-button url="{{route('quote')}}" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-12 py-2" />
+            <x-button url="{{route('track')}}" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-12 py-2" />
         </div>
         <div class="flex flex-row gap-x-6 mt-auto text-primary">
             <a href="">

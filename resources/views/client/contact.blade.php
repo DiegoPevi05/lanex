@@ -7,10 +7,10 @@
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start items-start gap-y-6 max-sm:mt-12">
             <div class="h-auto h-full w-full flex flex-col justify-start items-start relative">
                 <h5 class="animation-element slide-in-up">
-                    Contactanos
+                    {{ __('messages.contact.hero.header') }}
                 </h5>
                 <h1 class="text-primary-dark font-bold animation-element slide-in-up">
-                    Envianos Cualquier Duda que tengas
+                    {{ __('messages.contact.hero.title') }}
                 </h1>
                 <div class="w-full h-full flex justify-center items-center p-6 sm:p-4 mt-6 sm:mt-12 animation-element slide-in-up">
                     <img src="/images/svg/contact.svg" class="h-48 sm:h-96 w-auto" />
@@ -21,32 +21,32 @@
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
             <form class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
                 <h5>
-                    Envianos un mensaje con cualquier consulta y responderemos a la brevedad
+                    {{ __('messages.contact.hero.form.contact_form_title') }}
                 </h5>
                 <div class="w-full h-auto">
-                    <label for="contact_form_email" class="font-bold">Correo Electronico</span>
-                    <input id="contact_form_email" name="email" type="email"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="Correo Electronico " />
+                    <label for="contact_form_email" class="font-bold">{{ __('messages.contact.hero.form.contact_form_email_label') }}</span>
+                    <input id="contact_form_email" name="email" type="email"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="{{ __('messages.contact.hero.form.contact_form_email_placeholder') }}" />
                 </div>
 
                 <div class="w-full h-auto">
-                    <label for="contact_form_company" class="font-bold">Razon Social</span>
-                    <input id="contact_form_company" name="company" type="text"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="Razon Social" />
+                    <label for="contact_form_company" class="font-bold">{{ __('messages.contact.hero.form.contact_form_company_label') }}</span>
+                    <input id="contact_form_company" name="company" type="text"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="{{ __('messages.contact.hero.form.contact_form_company_placeholder') }}" />
                 </div>
 
                 <div class="w-full h-auto">
-                    <label for="contact_form_ruc" class="font-bold">RUC</span>
-                    <input id="contact_form_ruc" name="ruc" type="text"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="RUC" />
+                    <label for="contact_form_ruc" class="font-bold">{{ __('messages.contact.hero.form.contact_form_ruc_label') }}</span>
+                    <input id="contact_form_ruc" name="ruc" type="text"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="{{ __('messages.contact.hero.form.contact_form_ruc_placeholder') }}" />
                 </div>
                 <div class="w-full h-auto">
-                    <label for="contact_form_message" class="font-bold">Mensaje</span>
-                    <textarea id="contact_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" >Mensaje</textarea>
+                    <label for="contact_form_message" class="font-bold">{{ __('messages.contact.hero.form.contact_form_message_label') }}</span>
+                    <textarea id="contact_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" >{{ __('messages.contact.hero.form.contact_form_message_placeholder') }}</textarea>
                 </div>
                 <button type="submit" class="bg-primary-dark px-12 sm:px-24 py-2 sm:py-4 lg:py-3 text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
-                    <span>Enviar</span>
+                    <span>{{ __('messages.contact.hero.form.contact_form_button') }}</span>
                 </button>
             </form>
         </div>
     </div>
     </section>
-    <x-questions title="Frequently asked questions" :questions="$questions" />
+    <x-questions title="{{ __('messages.contact.questions') }}" :questions="$questions" />
 @endsection

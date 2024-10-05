@@ -13,11 +13,14 @@
                         <x-dynamic-component :component="$step['icon']" class="w-full h-full {{ $step['active'] ? 'text-primary' : 'text-body' }}" />
                     </div>
                 </div>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-auto mt-2">
+                    <p class="text-[10px] sm:text-xs text-nowrap">{{__($step['label'])}}</p>
+                </div>
             </div>
         @endforeach
     @else
         <div class="w-full h-auto flex flex-col items-center justify-center py-24 gap-y-12">
-            <h5 class="font-bold text-primary">No steps provided</h5>
+            <h5 class="font-bold text-primary">{{ __('messages.track.tracker.no_steps') }}</h5>
             <img src="/images/svg/empty.svg" class="h-48 w-auto"/>
         </div>
     @endif

@@ -17,6 +17,6 @@
         </div>
         <h3 class="font-bold text-primary-dark">404 - Page Not Found</h3>
         <p class="font-bold text-primary-dark">Sorry, the page you are looking for could not be found.</p>
-        <livewire:button-link leftIcon="heroicon-s-arrow-left" rightIcon="heroicon-s-home" text="" url="{{ route('home') }}" size="lg" extraClasses="uppercase font-bold mt-6"/>
+        <x-button leftIcon="heroicon-s-arrow-left" rightIcon="heroicon-s-home" text="" url="{{ route('home') }}" size="lg" extraClasses="uppercase font-bold mt-6"/>
 </div>
 @endsection

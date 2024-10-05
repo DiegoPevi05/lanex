@@ -17,10 +17,10 @@
                 <div class="w-full h-auto flex flex-col items-start justify-center text-body gap-y-1 xl:p-6 animation-element slide-in-up">
                     <img src={{$supplier['logo']}} class="w-[40%] h-auto"/>
                     <h5 class="font-bold text-white">{{$supplier['name']}}</h5>
-                    <h1 class="font-bold text-white">Supplier Products</h1>
+                    <h1 class="font-bold text-white">{{ __('messages.supplier.hero.header') }}</h1>
                     <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4 p-4 rounded-xl" style="background-color: rgba(255, 255, 255, 0.6);">
                         <input placeholder="Buscar Producto por EAN" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
-                        <livewire:button-link text="Buscar" url="#" extraClasses="h-full uppercase font-bold"/>
+                        <x-button text="Buscar" url="#" extraClasses="h-full uppercase font-bold"/>
                     </div>
                 </div>
             </div>
@@ -29,10 +29,12 @@
     <section id="supplier_products" class="w-full flex flex-col h-auto padding gap-y-12">
         <div class="w-full h-auto flex flex-col justify-start items-center">
             <h5 class="animation-element slide-in-up text-primary">
-                Encuentra tu Producto Ideal
+                {{ __('messages.supplier.products.header') }}
+
             </h5>
             <h1 class="text-primary-dark font-bold animation-element slide-in-up text-center">
-                Mira los Productos más pedidos ultimamente
+                {{ __('messages.supplier.products.title') }}
+
             </h1>
         </div>
         <div class="h-full w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-x-24 xl:gap-y-12 animation-group">
@@ -46,11 +48,11 @@
                 @endforeach
             @else
                 <div class="col-span-1 sm:col-span-2 xl:col-span-3 flex flex-col items-center justify-center py-24 gap-y-12">
-                    <h5 class="font-bold text-primary">Currently no Products for this Supplier</h5>
+                    <h5 class="font-bold text-primary">{{ __('messages.common.no_products') }}</h5>
                     <img src="/images/svg/empty.svg" class="h-48 w-auto"/>
                 </div>
             @endif
         </div>
     </section>
-    <x-suppliers-section  header="Encuentra otro  Proveedor" title="Otros proveedores que venden productos similares" />
+    <x-suppliers-section  header="{{ __('messages.supplier.supplier_section.header') }}" title="{{ __('messages.supplier.supplier_section.title') }}" />
 @endsection

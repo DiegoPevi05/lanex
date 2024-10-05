@@ -22,7 +22,7 @@
             <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1">
                 <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
                     <input placeholder="Tracking ID" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
-                    <livewire:button-link text="Buscar" url="#" extraClasses="h-full uppercase font-bold"/>
+                    <x-button text="Buscar" url="#" extraClasses="h-full uppercase font-bold"/>
                 </div>
                 <p class="text-[12px]">This is the content for Tab 1. It can be anything you want. <a class="text-primary underline cursor-pointer">Help</a></p>
             </div>
@@ -31,7 +31,7 @@
             <div class="w-full h-auto flex flex-col items-start justify-start text-white gap-y-1">
                 <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
                     <input placeholder="Nombre del Producto" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold" />
-                    <livewire:button-link text="Cotizar" variant="secondary" url="#" extraClasses="h-full uppercase font-bold"/>
+                    <x-button text="Cotizar" variant="secondary" url="#" extraClasses="h-full uppercase font-bold"/>
                 </div>
                 <p class="text-[12px]">This is the content for Tab 1. It can be anything you want. <a class="underline cursor-pointer">Help</a></p>
             </div>

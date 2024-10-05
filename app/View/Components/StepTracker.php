@@ -18,19 +18,19 @@ class StepTracker extends Component
     {
         // Predefined steps for flight and ship
         $flightSteps = [
-            ['icon' => 'lucide-warehouse', 'label' => 'Warehouse', 'active' => false],
-            ['icon' => 'mdi-airplane-landing', 'label' => 'Landing', 'active' => false],
-            ['icon' => 'mdi-airplane-takeoff', 'label' => 'Takeoff', 'active' => false],
-            ['icon' => 'heroicon-o-truck', 'label' => 'Transport', 'active' => false],
-            ['icon' => 'lucide-package-check', 'label' => 'Delivery', 'active' => false],
+            ['icon' => 'lucide-warehouse', 'label' => 'messages.track.shipment_steps.air.warehouse', 'active' => false],
+            ['icon' => 'mdi-airplane-landing', 'label' => 'messages.track.shipment_steps.air.landing', 'active' => false],
+            ['icon' => 'mdi-airplane-takeoff', 'label' => 'messages.track.shipment_steps.air.takeoff', 'active' => false],
+            ['icon' => 'heroicon-o-truck', 'label' => 'messages.track.shipment_steps.air.transport', 'active' => false],
+            ['icon' => 'lucide-package-check', 'label' => 'messages.track.shipment_steps.air.delivery', 'active' => false],
         ];
 
         $shipSteps = [
-            ['icon' => 'lucide-warehouse', 'label' => 'Docking', 'active' => false],
-            ['icon' => 'mdi-ferry', 'label' => 'On Board', 'active' => false],
-            ['icon' => 'lucide-anchor', 'label' => 'Anchoring', 'active' => false],
-            ['icon' => 'heroicon-o-truck', 'label' => 'Transport', 'active' => false],
-            ['icon' => 'lucide-package-check', 'label' => 'Delivery', 'active' => false],
+            ['icon' => 'lucide-warehouse', 'label' => 'messages.track.shipment_steps.ship.warehouse', 'active' => false],
+            ['icon' => 'mdi-ferry', 'label' => 'On Board', 'messages.track.shipment_steps.ship.on_board' => false],
+            ['icon' => 'lucide-anchor', 'label' => 'messages.track.shipment_steps.ship.anchoring', 'active' => false],
+            ['icon' => 'heroicon-o-truck', 'label' => 'messages.track.shipment_steps.ship.transport', 'active' => false],
+            ['icon' => 'lucide-package-check', 'label' => 'messages.track.shipment_steps.ship.delivery', 'active' => false],
         ];
 
         // Select the appropriate step array based on type

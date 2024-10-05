@@ -13,4 +13,8 @@ Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 Route::get('/track', [WebController::class, 'track'])->name('track');
 Route::get('/quote', [WebController::class, 'quote'])->name('quote');
 Route::get('/track-flight', [WebController::class, 'trackFlight'])->name('track-flight');
+Route::get('/set-language/{lang}', function ($lang) {
+    session(['locale' => $lang]);
+    return redirect()->back();
+})->name('set-language');
 

@@ -127,7 +127,7 @@
     </section>
     <x-brands  title="{{ __('messages.home.brands') }}" :suppliers="$suppliers"/>
     <x-services-section />
-    <x-questions title="Frequently asked questions" :questions="$questions" />
+    <x-questions title="{{ __('messages.home.questions') }}" :questions="$questions" />
     <section id="reviews" class="w-full h-auto xl:h-screen bg-white text-body">
         <div class="relative w-full h-full padding flex flex-col sm:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
             <div class="w-full sm:w-1/2 h-full flex flex-col justify-start items-start gap-y-6">
@@ -147,10 +147,10 @@
 
                 <div class="hidden sm:flex w-full h-full p-none m-none">
                     <x-review
-                        stars="4"
-                        content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
-                        name="Interesting"
-                        charge="CEO"
+                        :stars="$reviews[0]['stars']"
+                        :content="$reviews[0]['review']"
+                        :name="$reviews[0]['name']"
+                        :charge="$reviews[0]['charge']"
                         variant="secondary"
                     />
                 </div>
@@ -160,24 +160,33 @@
 
                 <div class="flex sm:hidden w-full h-full p-none m-none">
                     <x-review
-                        stars="4"
-                        content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
-                        name="Interesting"
-                        charge="CEO"
+                        :stars="$reviews[0]['stars']"
+                        :content="$reviews[0]['review']"
+                        :name="$reviews[0]['name']"
+                        :charge="$reviews[0]['charge']"
                         variant="secondary"
                     />
                 </div>
-                <x-review  stars="4"
-                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
-                    name="Interesting" charge="CEO" />
+                <x-review
+                    :stars="$reviews[1]['stars']"
+                    :content="$reviews[1]['review']"
+                    :name="$reviews[1]['name']"
+                    :charge="$reviews[1]['charge']"
+                />
 
-                <x-review  stars="4"
-                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
-                    name="Interesting" charge="CEO" />
+                <x-review  
+                    :stars="$reviews[2]['stars']"
+                    :content="$reviews[2]['review']"
+                    :name="$reviews[2]['name']"
+                    :charge="$reviews[2]['charge']"
+                />
 
-                <x-review  stars="4"
-                    content="I was very impressed with FastGo handling of my recent shipment. They went above and beyond to ensure my cargo arrived safely and on time. I will definitely be using their services again in the future."
-                    name="Interesting" charge="CEO" />
+                <x-review  
+                    :stars="$reviews[3]['stars']"
+                    :content="$reviews[3]['review']"
+                    :name="$reviews[3]['name']"
+                    :charge="$reviews[3]['charge']"
+                />
 
             </div>
         </div>

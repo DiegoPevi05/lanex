@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\FlightTracker;
 use App\Models\Service;
 use App\Models\Supplier;
+use App\Models\Review;
 
 class WebController extends Controller
 {
@@ -42,12 +43,12 @@ class WebController extends Controller
             ],
         ];
 
-
+        $reviews = Review::all();
 
         // Find the service by ID or throw a 404 error if not found
         $suppliers = Supplier::select('id', 'name', 'logo')->get();
 
-        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers]);
+        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'reviews' => $reviews]);
     }
 
     public function about()

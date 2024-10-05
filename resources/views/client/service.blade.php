@@ -17,7 +17,7 @@
             </div>
         </div>
     </section>
-    <x-brands  title="EMPRESAS CON LAS QUE TRABAJAMOS" variant='secondary' :suppliers="$service->suppliers"/>
+    <x-brands  title="{{ __('messages.service.brands.title') }}" variant='secondary' :suppliers="$service->suppliers"/>
     <x-content-section
         header="{{$service['webcontent']['overview']['header']}}"
         title="{{$service['webcontent']['overview']['title']}}"
@@ -32,7 +32,7 @@
         svgContent="/images/svg/aboutus_2.svg"
         button="COTIZA AHORA"
         content="At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.Envío marítimoAt FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.Envío marítimo At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs."
-        href="{{ route('services') }}"
+        href="{{ route('quote') }}"
     />
     <section id="service_key_points" class="w-full flex flex-col h-auto xl:h-screen padding">
         <div class="h-auto xl:h-[30%] w-full flex flex-col xl:flex-row justify-between items-center relative">
