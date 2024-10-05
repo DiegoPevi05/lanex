@@ -39,6 +39,13 @@ class ServiceFactory extends Factory
                         'content' => $this->faker->text(600),
                     ],
                 ],
+                'content_link' => [
+                    'header' => $this->faker->text(20),
+                    'title' => $this->faker->text(40),
+                    'button_label' => $this->faker->text(30),
+                    'image' => '/images/svg/aboutus_2.svg',
+                    'content' => $this->faker->text(400)
+                ],
                 'keypoints' => [
                     'header' => $this->faker->text(30),
                     'title' => $this->faker->text(50),

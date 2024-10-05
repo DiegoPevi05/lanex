@@ -27,11 +27,11 @@
         content2="{{$service['webcontent']['overview']['content']['content']}}"
     />
     <x-content-link-section
-        header="Encabezado"
-        title="Dialoga con Expertos"
-        svgContent="/images/svg/aboutus_2.svg"
-        button="COTIZA AHORA"
-        content="At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.Envío marítimoAt FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.Envío marítimo At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs."
+        header="{{$service['webcontent']['content_link']['header']}}"
+        title="{{$service['webcontent']['content_link']['title']}}"
+        svgContent="{{$service['webcontent']['content_link']['image']}}"
+        button="{{$service['webcontent']['content_link']['button_label']}}"
+        content="{{$service['webcontent']['content_link']['content']}}"
         href="{{ route('quote') }}"
     />
     <section id="service_key_points" class="w-full flex flex-col h-auto xl:h-screen padding">
