@@ -1,6 +1,6 @@
-<div class="relative inline-block text-left z-[120]">
-    <div 
-        data-id="{{$id}}" 
+<div class="relative inline-block text-left z-[60]">
+    <div
+        data-id="{{$id}}"
         class="language-selector w-auto h-auto flex flex-row items-center gap-x-1 rounded-xl py-2 px-3 bg-primary border-2 border-primary font-bold text-white cursor-pointer duration-300 hover:text-white hover:bg-primary-dark">
         <!-- Display the currently selected language -->
         <span id="selected-lang">{{ app()->getLocale() === 'en' ? 'EN' : 'ES' }}</span>

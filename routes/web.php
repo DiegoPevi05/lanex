@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -18,3 +19,5 @@ Route::get('/set-language/{lang}', function ($lang) {
     return redirect()->back();
 })->name('set-language');
 
+
+Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard_home');
