@@ -201,5 +201,37 @@ return [
             'quote_form_button' => 'Quote Now',
         ],
         'questions' => 'Frequently asked questions',
+    ],
+    'dashboard' => [
+        'sidebar' => [
+            'greeting' => 'Hi',
+            'welcome' => 'Welcome',
+            'home' => 'dashboard',
+            'services' => 'services',
+            'orders' => 'orders',
+            'transports' => 'transports',
+            'billing' => 'billing',
+            'web' => 'web',
+            'profile' => 'profile',
+            'config' => 'config',
+            'signout' => 'sign out'
+        ],
+        'web' => [
+            'dropdown_search' => "selection type",
+            'header' => "web content",
+            'input_placeholder_search' => "search web content",
+            'button_label_search' => "Search",
+            'dropdown' => [
+                'review' => 'review',
+                'service' => 'service',
+                'supplier' => 'supplier',
+                'product' => 'product'
+            ],
+            'card' => [
+                'preview' => 'preview',
+                'date_content' => "updated at",
+                'actions' => 'actions'
+            ]
+        ]
     ]
 ];

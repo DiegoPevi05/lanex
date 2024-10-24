@@ -78,28 +78,28 @@ caption{
     h4{
         font-size:24px;
     }
-    
+
     h5{
         font-size:20px;
     }
-    
+
     p{
         font-size:14px;
     }
-    
+
     span{
         font-size:16px;
     }
-    
+
     label{
         font-size:14px;
     }
-    
+
     body {
         font-size:14px;
     }
-    
-    
+
+
     caption{
         font-size:10px;
     }
@@ -118,29 +118,29 @@ caption{
     h4{
         font-size:20px;
     }
-    
+
     h5{
         font-size:14px;
     }
-    
+
     p{
         line-height:130%;
         font-size:12px;
     }
-    
+
     span{
         font-size:16px;
     }
-    
+
     label{
         font-size:11px;
     }
-    
+
     body {
         font-size:14px;
     }
-    
-    
+
+
     caption{
         font-size:10px;
     }
@@ -442,5 +442,23 @@ caption{
     animation-delay:2.3s;
 }
 
+.animation-group .animation-element.in-view:nth-child(7){
+    animation-delay:2.6s;
+}
 
+.animation-group .animation-element.in-view:nth-child(8){
+    animation-delay:2.9s;
+}
+
+.animation-group .animation-element.in-view:nth-child(9){
+    animation-delay:3.1s;
+}
+
+.animation-group .animation-element.in-view:nth-child(10){
+    animation-delay:3.4s;
+}
+
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
 
