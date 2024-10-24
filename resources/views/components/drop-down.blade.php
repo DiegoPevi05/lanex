@@ -64,12 +64,14 @@
         currentOption.textContent = label;
         currentOption.setAttribute('data-id', value);
 
-        // Dispatch a custom event to notify that the option has been set
-        const event = new CustomEvent(`dropdown-{{$id}}`, {  // Corrected the quote here
-            detail: { label: label, value: value }
-        });
-        dropDownSelector.dispatchEvent(event);
+        const dropdown = document.querySelector('#dropdown-options-{{$id}}');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+        }
+
     }
+
+
 
     attachDropdownEvent('{{$id}}');
 

@@ -1,13 +1,13 @@
 
-<div  id="web-content-card-{{$type}}-{{$id}}" class="w-full h-auto bg-white rounded-xl border-2 border-gray-light p-2 grid grid-cols-2 px-4 animation-element slide-in-up">
+<div  id="web-content-card-{{$type}}" class="w-full h-auto bg-white rounded-xl border-2 border-gray-light p-2 grid grid-cols-2 px-4 animation-element slide-in-up">
     <div class="col-span-1 flex flex-col">
-        <p class="font-bold text-primary capitalize">{{ __('messages.dashboard.web.card.preview') }}</p>
+        <p class="font-bold text-primary capitalize">{{ __('messages.dashboard.web.card_content.preview') }}</p>
         <p class="text-sm">{{$preview}}</p>
     </div>
     <div class="col-span-1 flex flex-col items-end">
-        <p class="text-secondary-dark capitalize font-bold text-xs">{{ __('messages.dashboard.web.card.date_content') }}</p>
+        <p class="text-secondary-dark capitalize font-bold text-xs">{{ __('messages.dashboard.web.card_content.date_content') }}</p>
         <p class="text-xs">{{$updated}}</p>
-        <p class="text-secondary-dark capitalize font-bold text-xs mt-2 capitalize">{{ __('messages.dashboard.web.card.actions') }}</p>
+        <p class="text-secondary-dark capitalize font-bold text-xs mt-2 capitalize">{{ __('messages.dashboard.web.card_content.actions') }}</p>
         <div class="flex flex-row w-auto gap-x-2 mt-1">
             <span  onClick='selectContent({{$content}},"view")' class="h-8 w-8 bg-white border-2 border-gray-light rounded-xl flex items-center justify-center text-secondary-dark p-1 hover:bg-primary hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
@@ -28,7 +28,7 @@
 <script>
     function selectContent(content, type) {
         // Create a custom event to notify that the card has been selected
-        const event = new CustomEvent('web-content-selected', {
+        const event = new CustomEvent('web-content-card-{{$type}}', {
             detail: { content: content, type: type }
         });
 

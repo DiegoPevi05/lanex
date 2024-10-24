@@ -39,28 +39,7 @@ class DashboardController extends Controller
 
     public function web(Request $request)
     {
-        // Retrieve the 'type' and 'page' query parameters
-        $type = $request->input('type','review'); // Get the 'type' parameter
-        $perPage = 10; // Default items per page
-        $currentPage = $request->input('page', 1); // Get the current page from the request, defaulting to 1
-
-        // Initialize the pagination variable
-        $pagination = ['currentPage'=> 1, 'lastPage'=>1];
-
-        if ($type === 'review') {
-            // Retrieve paginated reviews
-            $data = Review::paginate($perPage);
-
-        } else {
-            // Handle other types if needed (this part can be adjusted based on your requirements)
-            $data = [];
-        }
-
-        // Pass the content array and pagination to the view
-        return view('dashboard.web', [
-            'type' => $type,
-            'pagination' => $data, // Pass the pagination variable
-        ]);
+        return view('dashboard.web');
     }
 
     public function profile()

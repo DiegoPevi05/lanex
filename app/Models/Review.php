@@ -20,7 +20,34 @@ class Review extends Model
 
     public function getType(): string
     {
-        return 'Review';
+        return 'review';
+    }
+
+    /**
+     * Serialize the Review model into a JSON string.
+     *
+     * @return string
+     */
+    public function filterFields():array
+    {
+        return [
+            [
+                'label' => 'messages.dashboard.web.review.dropdown.name',
+                'value' => 'name',
+            ],
+            [
+                'label' => 'messages.dashboard.web.review.dropdown.charge',
+                'value' => 'charge',
+            ],
+            [
+                'label' => 'messages.dashboard.web.review.dropdown.review',
+                'value' => 'review',
+            ],
+            [
+                'label' => 'messages.dashboard.web.review.dropdown.stars',
+                'value' => 'stars',
+            ],
+        ];
     }
 
     /**

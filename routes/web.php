@@ -37,6 +37,8 @@ Route::prefix('/dashboard')->group(function(){
     Route::prefix('/web')->group(function(){
         Route::get('/', [DashboardController::class, 'web'])->name('dashboard_web');
         Route::prefix('/review')->group(function () {
+            Route::get('/', [ReviewController::class, 'index'])->name('dashboard_web_review');
+            Route::post('/form', [ReviewController::class, 'renderForm'])->name('reviews.form');
             Route::post('/store', [ReviewController::class, 'store'])->name('reviews.store');
             Route::put('/update/{id}', [ReviewController::class, 'update'])->name('reviews.update');
             Route::delete('/destroy/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');

@@ -217,20 +217,32 @@ return [
             'signout' => 'sign out'
         ],
         'web' => [
-            'dropdown_search' => "selection type",
             'header' => "web content",
-            'input_placeholder_search' => "search web content",
-            'button_label_search' => "Search",
-            'dropdown' => [
-                'review' => 'review',
-                'service' => 'service',
-                'supplier' => 'supplier',
-                'product' => 'product'
-            ],
+            'indications' => "Select and option to create, update or delete web content",
+            'dropdown_search' => "selection filter",
             'card' => [
+                'reviews' => 'reviews',
+                'services' => "services",
+                'suppliers' => 'suppliers',
+                'products' => 'products'
+            ],
+            'card_content' => [
                 'preview' => 'preview',
-                'date_content' => "updated at",
-                'actions' => 'actions'
+                'date_content' => 'updated at',
+                'actions' => 'actions',
+            ],
+            'review' => [
+                'new_review' => 'new review',
+                'header' => "reviews",
+                'indications' => "select an option create, update or delete reviews",
+                'input_placeholder_search' => "search review",
+                'button_label_search' => "search",
+                'dropdown' => [
+                    'name' => 'name',
+                    'charge' => 'charge',
+                    'review' => 'review',
+                    'stars' => 'stars'
+                ],
             ]
         ]
     ]

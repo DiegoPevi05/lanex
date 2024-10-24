@@ -1,7 +1,7 @@
 <div class="w-full h-full">
-    <h5>{{ $review ? 'Update Review' : 'Create Review' }}</h5>
+    <h5>{{ $formRequest !== 'view' ? ($formRequest === 'update' ? 'Update Review' : 'Create Review') : "View Review"  }}</h5>
 
-    <form id="{{ $id }}" method="{{ $type_request === 'post' ? 'POST' : 'PUT' }}" action="{{ $review ? route('reviews.update', $review->id) : route('reviews.store') }}">
+    <form method="{{ $formRequest !== 'view' ? ($formRequest === 'create' ? 'POST' : 'PUT') : '#' }}" action="{{ $formRequest !== 'view' ? ($formRequest === 'update' ? route('reviews.update', $review->id) : route('reviews.store')) : '#' }}">
         @csrf
         @if($review)
             @method('PUT')
@@ -60,19 +60,3 @@
         </div>
     </form>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById('create_form');
-
-        // Listen for the custom event when a card is selected
-        form.addEventListener('web-content-selected', function(event) {
-            const selectedData = event.detail.data;
-
-            // Assuming your form has input fields that need to be populated
-            form.querySelector('input[name="name"]').value = selectedData.name;
-            form.querySelector('textarea[name="description"]').value = selectedData.description;
-            // Update other form fields similarly
-        });
-    });
-</script>

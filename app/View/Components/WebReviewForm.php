@@ -8,18 +8,15 @@ use Illuminate\View\Component;
 
 class WebReviewForm extends Component
 {
-    public $id;
-    public $type_request;
+    public $formRequest;
     public $review;
     /**
      * Create a new component instance.
      */
-    public function __construct($id = 'create_form', $type_request ='post', $review = null)
+    public function __construct($formRequest = null, $review = null)
     {
-        $this->id = $id;
-        $this->type_request = $type_request;
+        $this->formRequest = $formRequest;
         $this->review = $review;
-
     }
 
     /**
