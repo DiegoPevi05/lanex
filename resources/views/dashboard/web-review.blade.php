@@ -5,12 +5,22 @@
     <section id="dashboard_web_review" class="bg-gray-light h-full w-full flex flex-row gap-x-4 p-4">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="w-full h-full flex flex-col bg-white rounded-xl p-4 gap-y-2">
-            <div class="w-full h-auto flex flex-row justify-between">
-                <div class="w-auto h-auto flex flex-row">
-                    <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1 group-hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
+            <div class="w-full h-auto flex flex-row justify-between py-4">
+                <div class="w-auto h-auto flex flex-row items-center gap-x-2">
+                    <a href="{{ route('dashboard_web') }}" class="h-10 w-10 bg-transparent bg-white rounded-full hover:bg-primary hover:text-white cursor-pointer border-2 border-primary active:scale-95 flex items-center justify-center text-secondary-dark p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+                    </a>
+                    <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     </span>
                     <h4 class="font-bold text-primary-dark capitalize">{{ __('messages.dashboard.web.review.header') }}</h4>
+                </div>
+
+                <div class="w-auto h-auto flex flex-row">
+                    <button id="create_button" class="w-auto h-full px-4 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2">
+                        {{__('messages.dashboard.web.review.new_review')}}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    </button>
                 </div>
             </div>
 
@@ -53,12 +63,17 @@
                 </div>
             </div>
         </div>
-        <div class="w-[40%] h-full bg-white rounded-xl flex flex-col p-4">
-            <div class="w-auto h-auto flex flex-col items-center justify-center">
+        <div class="w-[40%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4">
+            <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center">
                 <img src="/images/svg/empty.svg" class="w-[40%] h-auto"/>
                 <label>{{__('messages.dashboard.web.empty_content')}}</label>
             </div>
-            <div id="content-form">
+            <div id="loading-content-form" class="hidden w-full h-full flex items-center justify-center">
+                <span class="animate-spin p-1 h-12 w-12 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                </span>
+            </div>
+            <div id="content-form" class="hidden h-full w-full">
             </div>
         </div>
         </div>
@@ -84,9 +99,22 @@
         });
 
 
-        document.addEventListener('web-content-card-review', function (e) {
-            const content = e.detail.content;
-            const type = e.detail.type;
+
+
+
+        function updateFormState(content,type){
+
+            const currentPage = document.querySelector('#dashboard_web_review');
+            const contentForm  = currentPage.querySelector('#content-form');
+            const emtpyContentForm = currentPage.querySelector('#empty-content-form')
+            const loadingContentForm = currentPage.querySelector('#loading-content-form')
+
+            if (!contentForm.classList.contains('hidden')) {
+                contentForm.classList.add('hidden');
+            };
+
+            emtpyContentForm.classList.add('hidden');
+            loadingContentForm.classList.remove('hidden');
 
             // Update content dynamically via AJAX using POST
             fetch('/dashboard/web/review/form', {
@@ -105,11 +133,39 @@
                 return response.text();
             })
             .then(html => {
-                const currentPage = document.querySelector('#dashboard_web_review');
+
                 currentPage.querySelector('#content-form').innerHTML = html;
+                loadingContentForm.classList.add('hidden');
+                contentForm.classList.remove('hidden');
             })
             .catch(error => console.error('Error loading content:', error));
 
+        }
+
+
+        document.addEventListener('web-content-card-review', function (e) {
+            const content = e.detail.content;
+            const type = e.detail.type;
+            updateFormState(content,type);
         });
+
+        const createButton = document.querySelector('#create_button');
+
+        if (createButton) {
+            createButton.addEventListener('click', function(e) {
+                updateFormState(null, 'create');
+            });
+        }
     });
+
+
+
+    function clearContent() {
+        const currentPage = document.querySelector('#dashboard_web_review');
+        const contentForm  = currentPage.querySelector('#content-form');
+        const emtpyContentForm = currentPage.querySelector('#empty-content-form ')
+
+        emtpyContentForm.classList.remove('hidden');
+        contentForm.classList.add('hidden');
+    }
 </script>

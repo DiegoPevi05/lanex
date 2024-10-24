@@ -11,6 +11,7 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'charge',
         'date_review',
@@ -58,6 +59,7 @@ class Review extends Model
     public function serialize(): string
     {
         return json_encode([
+            'id' => $this->id,
             'name' => $this->name,
             'charge' => $this->charge,
             'date_review' => $this->date_review,
@@ -78,6 +80,7 @@ class Review extends Model
 
         // Create a new Review instance with the deserialized data
         return new self([
+            'id' => $data['id'],
             'name' => $data['name'],
             'charge' => $data['charge'],
             'date_review' => $data['date_review'],

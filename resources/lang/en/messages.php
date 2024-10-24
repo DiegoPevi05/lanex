@@ -220,6 +220,7 @@ return [
             'header' => "web content",
             'indications' => "Select and option to create, update or delete web content",
             'dropdown_search' => "selection filter",
+            'empty_content' => "No content to show",
             'card' => [
                 'reviews' => 'reviews',
                 'services' => "services",
@@ -243,6 +244,33 @@ return [
                     'review' => 'review',
                     'stars' => 'stars'
                 ],
+                'form' => [
+                    'headers' => [
+                        'view' => 'view review',
+                        'create' => 'create review',
+                        'update' => 'update review'
+                    ],
+                    'fields' => [
+                        'name' => 'name',
+                        'charge' => 'charge',
+                        'date_review' => 'date of review',
+                        'review' => 'review',
+                        'stars' => 'stars'
+                    ],
+                    'placeholders' => [
+                        'name' => 'name',
+                        'charge' => 'charge',
+                        'date_review' => 'date of review',
+                        'review' => 'review',
+                        'stars' => 'stars'
+                    ],
+                    'buttons' => [
+                        'cancel' => 'cancel',
+                        'create' => 'create review',
+                        'update' => 'update review'
+                    ]
+
+                ]
             ]
         ]
     ]

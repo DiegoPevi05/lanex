@@ -59,17 +59,19 @@ class ReviewController extends Controller
 
     public function renderForm(Request $request)
     {
-        // Retrieve the JSON data from the request body
-        $data = json_decode($request->getContent(), true); // Decode JSON to an associative array
-        // You can pass any data required for the form here
-        $formRequest = $data['type'] ?? null; // Fetch the 'type' parameter safely
-        $content = $data['content'] ?? null; // Fetch the 'content' parameter safely
+        $formRequest = $request->input('type', null);
+
+        $content = $request->input('content', []);
 
         $review = null;
 
-        if ($content) {
-            $review = $content;
-        };
+        if($content){
+            // Convert content to a JSON string
+            $jsonContent = json_encode($content);
+            // Use the deserialize method to create a Review instance
+            $review = Review::deserialize($jsonContent);
+        }
+
 
         // Create the form component instance
         $formComponent = new WebReviewForm($formRequest, $review);
