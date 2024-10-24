@@ -2,7 +2,7 @@
 
 @section('content-dashboard')
 
-    <section id="dashboard_web_review" class="bg-gray-light h-full w-full flex flex-row gap-x-4 p-4">
+    <section id="dashboard_web_review" class="bg-gray-light h-full w-full flex flex-row xl:gap-x-4 p-4">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="w-full h-full flex flex-col bg-white rounded-xl p-4 gap-y-2">
             <div class="w-full h-auto flex flex-row justify-between py-4">
@@ -63,7 +63,12 @@
                 </div>
             </div>
         </div>
-        <div class="w-[40%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4">
+        <div class="dashboard_web_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full  sm:w-[600px] max-xl:border-s-2 xl:w-[40%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4 transition-all duration-300">
+            <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-0">
+                <span class="dashboard_button_toggle_content h-12 w-12 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </span>
+            </div>
             <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center">
                 <img src="/images/svg/empty.svg" class="w-[40%] h-auto"/>
                 <label>{{__('messages.dashboard.web.empty_content')}}</label>
@@ -85,6 +90,31 @@
 
     document.addEventListener("DOMContentLoaded", function() {
 
+        function toggleFormContent(){
+
+            const menu = document.querySelector('.dashboard_web_content_form');
+
+            if (menu.classList.contains('max-xl:-right-[600px]')) {
+                menu.classList.add('max-xl:-right-0');
+                menu.classList.remove('max-xl:-right-[600px]');
+                menu.classList.remove('max-sm:-right-[100%]');
+
+            } else {
+                menu.classList.add('max-xl:-right-[600px]');
+                menu.classList.add('max-sm:-right-[100%]');
+                menu.classList.remove('max-xl:-right-0');
+            }
+
+        };
+
+        // Select the button and the menu
+        const menuButtons = document.querySelectorAll('.dashboard_button_toggle_content');
+        menuButtons.forEach(function(button) {
+            button.addEventListener('click', toggleFormContent);
+        });
+
+
+
         const SearchBar = document.querySelector(`#web-content-review-search`);
         // Listen for the custom event
         SearchBar.addEventListener('search-web-content-review-search', function (e) {
@@ -103,6 +133,8 @@
 
 
         function updateFormState(content,type){
+
+            toggleFormContent();
 
             const currentPage = document.querySelector('#dashboard_web_review');
             const contentForm  = currentPage.querySelector('#content-form');
@@ -156,11 +188,12 @@
                 updateFormState(null, 'create');
             });
         }
+
+
     });
 
-
-
     function clearContent() {
+
         const currentPage = document.querySelector('#dashboard_web_review');
         const contentForm  = currentPage.querySelector('#content-form');
         const emtpyContentForm = currentPage.querySelector('#empty-content-form ')
@@ -168,4 +201,8 @@
         emtpyContentForm.classList.remove('hidden');
         contentForm.classList.add('hidden');
     }
+
+
+
+
 </script>

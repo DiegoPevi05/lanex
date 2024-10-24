@@ -1,4 +1,15 @@
-<div class="w-full h-full flex flex-col justify-start items-start  py-4 gap-y-6 border-e-2 border-gray-light">
+<div class="xl:hidden w-full h-auto flex flex-row items-center justify-start p-4">
+    <span class="dashboard_button_toggle_sidebar h-10 w-10 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
+    </span>
+</div>
+
+<div class="dashboard_menu_sidebar max-xl:fixed max-xl:top-0 max-xl:-left-[300px] max-xl:bottom-0 max-xl:right-0 max-xl:w-[300px] h-screen bg-white transition-all duration-300 xl:w-full xl:h-full flex flex-col justify-start items-start  py-4 gap-y-6 border-e-2 border-gray-light z-[120]">
+    <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden">
+        <span class="dashboard_button_toggle_sidebar h-10 w-10 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </span>
+    </div>
     <div class="w-full h-auto flex flex-row items-center justify-center px-12">
         <div class="w-[60px] h-auto p-none">
             <img src="/images/logo.png" class="h-auto w-full" />
@@ -89,7 +100,7 @@
         </li>
 
         <li>
-            <a href="{{ route('dashboard_web') }}" class="text-body w-full flex flex-row gap-x-4 hover:text-primary cursor-pointer duration-300 active:scale-95 hover:bg-slate-100 px-12 py-4 {{ request()->routeIs('dashboard_web')  ? 'text-primary border-e-[3px] border-primary' : '' }}">
+            <a href="{{ route('dashboard_web') }}" class="text-body w-full flex flex-row gap-x-4 hover:text-primary cursor-pointer duration-300 active:scale-95 hover:bg-slate-100 px-12 py-4 {{ request()->is('dashboard/web*')   ? 'text-primary border-e-[3px] border-primary' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
             <p class="capitalize font-bold">
                 {{__('messages.dashboard.sidebar.web')}}
@@ -116,3 +127,23 @@
         </li>
     </ul>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select the button and the menu
+        const menuButtons = document.querySelectorAll('.dashboard_button_toggle_sidebar');
+        const menu = document.querySelector('.dashboard_menu_sidebar');
+
+        menuButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (menu.classList.contains('max-xl:-left-[300px]')) {
+                    menu.classList.add('max-xl:-left-0');
+                    menu.classList.remove('max-xl:-left-[300px]');
+                } else {
+                    menu.classList.add('max-xl:-left-[300px]');
+                    menu.classList.remove('max-xl:-left-0');
+                }
+            });
+        });
+    });
+</script>
