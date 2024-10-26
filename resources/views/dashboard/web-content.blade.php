@@ -63,8 +63,8 @@
                 </div>
             </div>
         </div>
-        <div class="dashboard_web_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full  sm:w-[600px] max-xl:border-s-2 xl:w-[40%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4 transition-all duration-300">
-            <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-0">
+        <div class="dashboard_web_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full  sm:w-[600px] max-xl:border-s-2 xl:w-[50%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4 transition-all duration-300">
+            <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-4">
                 <span class="dashboard_button_toggle_content h-12 w-12 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </span>
@@ -240,6 +240,190 @@
             document.dispatchEvent(event);
         }
 
+
+
+
+
+
+    let pointIndex = 0;
+
+
+    function addPoint() {
+
+        pointIndex = document.querySelectorAll("#points-container .point-item").length;
+        // Create a new div to hold the point inputs
+        const pointContainer = document.createElement("div");
+        pointContainer.classList.add("point-item", "mb-4", "mt-4", "border-2","border-secondary-dark","flex","flex-col", "rounded-md","p-4","animation-element","in-view","slide-in-up");
+
+        const containerHeader = document.createElement('div');
+        containerHeader.classList.add('flex','flex-row','justify-between','w-full', 'h-auto')
+
+        const pointTitle = document.createElement("p");
+        pointTitle.classList.add("text-sm", "font-bold", "text-primary", "capitalize");
+        pointTitle.innerText = `{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_point')}} ${pointIndex + 1}`;
+        containerHeader.appendChild(pointTitle);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("text-sm", "font-bold", "text-primary", "capitalize","rounded-xl","active:scale-95","duration-300","transition-all","bg-secondary-dark","hover:bg-primary","px-4", "py-2","text-white");
+        deleteButton.innerText = "{{ __('messages.common.delete') }}";
+
+        // Add delete functionality
+        deleteButton.onclick = function() {
+            pointContainer.remove(); // Remove the point container
+            updatePointTitles(); // Update the titles of remaining points
+        };
+
+        containerHeader.appendChild(deleteButton);
+        pointContainer.appendChild(containerHeader);
+
+        // Set up the title input
+        const titleLabel = document.createElement("label");
+        titleLabel.classList.add("block", "text-sm", "font-bold", "text-secondary-dark", "capitalize");
+        titleLabel.innerText = `{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_points_point_title')}}`;
+        pointContainer.appendChild(titleLabel);
+
+        const titleInput = document.createElement("input");
+        titleInput.type = "text";
+        titleInput.name = `webcontent[keypoints][points][${pointIndex}][title]`;
+        titleInput.classList.add("mt-2","text-sm","block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body");
+        titleInput.placeholder = "Enter point title";
+        pointContainer.appendChild(titleInput);
+
+        // Set up the content textarea
+        const contentLabel = document.createElement("label");
+        contentLabel.classList.add("block", "text-sm", "font-bold", "text-secondary-dark", "capitalize", "mt-2");
+        contentLabel.innerText = `{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_points_point_content')}}`;
+        pointContainer.appendChild(contentLabel);
+
+        const contentTextarea = document.createElement("textarea");
+        contentTextarea.name = `webcontent[keypoints][points][${pointIndex}][content]`;
+        contentTextarea.classList.add("mt-2","text-sm", "block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body","!h-[150px]","no-scroll-bar");
+        contentTextarea.placeholder = "Enter point content";
+        pointContainer.appendChild(contentTextarea);
+
+        // Append the new point container to the main container
+        document.getElementById("points-container").appendChild(pointContainer);
+
+        // Increment the point index for the next point
+        pointIndex++;
+    }
+
+    // Helper function to update point titles after deletion
+    function updatePointTitles() {
+        const pointItems = document.querySelectorAll(".point-item");
+        pointItems.forEach((item, index) => {
+            // Update point title display
+            const pointTitle = item.querySelector("p");
+            pointTitle.innerText = `Point ${index + 1}`;
+
+            // Update input names to have continuous indexing
+            const titleInput = item.querySelector("input[type='text']");
+            const contentTextarea = item.querySelector("textarea");
+
+            titleInput.name = `webcontent[keypoints][points][${index}][title]`;
+            contentTextarea.name = `webcontent[keypoints][points][${index}][content]`;
+        });
+
+        // Update pointIndex to the current count
+        pointIndex = pointItems.length;
+    }
+
+    let questionIndex = 0;
+
+
+    function addQuestion(prefix) {
+        questionIndex = document.querySelectorAll("#questions-container .question-item").length;
+        // Create a new div to hold the point inputs
+        const pointContainer = document.createElement("div");
+        pointContainer.classList.add("question-item", "mb-4", "mt-4", "border-2","border-secondary-dark","flex","flex-col", "rounded-md","p-4","animation-element","in-view","slide-in-up");
+
+        const containerHeader = document.createElement('div');
+        containerHeader.classList.add('flex','flex-row','justify-between','w-full', 'h-auto')
+
+        const pointTitle = document.createElement("p");
+        pointTitle.classList.add("text-sm", "font-bold", "text-primary", "capitalize");
+        pointTitle.innerText = `{{__('messages.dashboard.web.service.form.fields.webcontent_faqs_question')}} ${questionIndex + 1}`;
+        containerHeader.appendChild(pointTitle);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("text-sm", "font-bold", "text-primary", "capitalize","rounded-xl","active:scale-95","duration-300","transition-all","bg-secondary-dark","hover:bg-primary","px-4", "py-2","text-white");
+        deleteButton.innerText = "{{ __('messages.common.delete') }}";
+
+        // Add delete functionality
+        deleteButton.onclick = function() {
+            pointContainer.remove(); // Remove the point container
+            updateQuestionTitles(prefix); // Update the titles of remaining points
+        };
+
+        containerHeader.appendChild(deleteButton);
+        pointContainer.appendChild(containerHeader);
+
+        // Set up the title input
+        const titleLabel = document.createElement("label");
+        titleLabel.classList.add("block", "text-sm", "font-bold", "text-secondary-dark", "capitalize");
+        titleLabel.innerText = `{{__('messages.dashboard.web.service.form.fields.webcontent_faqs_question_question')}}`;
+        pointContainer.appendChild(titleLabel);
+
+        const titleInput = document.createElement("input");
+        titleInput.type = "text";
+        titleInput.name = `${prefix}[${questionIndex}][question]`;
+        titleInput.classList.add("mt-2","text-sm","block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body");
+        titleInput.placeholder = "Enter question title";
+        pointContainer.appendChild(titleInput);
+
+        // Set up the content textarea
+        const contentLabel = document.createElement("label");
+        contentLabel.classList.add("block", "text-sm", "font-bold", "text-secondary-dark", "capitalize", "mt-2");
+        contentLabel.innerText = `{{__('messages.dashboard.web.service.form.fields.webcontent_faqs_question_answer')}}`;
+        pointContainer.appendChild(contentLabel);
+
+        const contentTextarea = document.createElement("textarea");
+        contentTextarea.name = `${prefix}[${questionIndex}][answer]`;
+        contentTextarea.classList.add("mt-2","text-sm", "block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body","!h-[150px]","no-scroll-bar");
+        contentTextarea.placeholder = "Enter question";
+        pointContainer.appendChild(contentTextarea);
+
+        // Append the new point container to the main container
+        document.getElementById("questions-container").appendChild(pointContainer);
+
+        // Increment the point index for the next point
+        questionIndex++;
+    }
+
+    // Helper function to update point titles after deletion
+    function updateQuestionTitles(prefix) {
+        const questionItems = document.querySelectorAll(".question-item");
+        questionItems.forEach((item, index) => {
+            // Update point title display
+            const pointTitle = item.querySelector("p");
+            pointTitle.innerText = `Question ${index + 1}`;
+
+            // Update input names to have continuous indexing
+            const titleInput = item.querySelector("input[type='text']");
+            const contentTextarea = item.querySelector("textarea");
+
+            titleInput.name = `${prefix}[${index}][question]`;
+            contentTextarea.name = `${prefix}[${index}][answer]`;
+        });
+
+        // Update questionIndex to the current count
+        questionIndex = questionItems.length;
+    }
+
+
+    function previewImage(event, fieldName) {
+        const fieldId = `image-viewer-${fieldName}`;
+        const imageView = document.getElementById(fieldId);
+        const file = event.target.files[0];
+
+        if (file && imageView) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imageView.style.backgroundImage = `url(${e.target.result})`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
 
     </script>

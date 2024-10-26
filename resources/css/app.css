@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-::root{
+:root{
     --primary-color-dark:#5A2982;
     --secondary-color-dark:#B891D6;
     --primary-color:#A55AD9;
@@ -465,4 +465,74 @@ caption{
 .no-scroll-bar::-webkit-scrollbar {
   display: none;
 }
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  /* Width of the scrollbar */
+}
 
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  /* Color of the scrollbar handle */
+  border-radius: 8px;
+  /* Rounded corners */
+  border: 2px solid var(--primary-color);
+  /* Space around the handle */
+}
+
+/* Style the scrollbar on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color-dark);
+  border: 2px solid var(--primary-color-dark);
+  /* Darker color on hover */
+}
+
+.file-select {
+  position: relative;
+  display: inline-block;
+}
+
+.file-select::before {
+  background-color: var(--white);
+  color: var(--primary-color-dark);
+  border-radius: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  content: 'Agregar Imagen';
+  /* testo por defecto */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+.file-select:hover::before {
+  transform: scale(1.05);
+  /* Allow the pseudo-element to respond to the hover */
+  box-shadow: 0 0 0.04em,
+    0 0.06em 0.16em -0.03em transparent inset,
+    0 0 0 0.07em rgba(0, 0, 0, 0.1) inset,
+    0 0 0 3.3px rgba(165, 90, 217, 0.55),
+    0 0 0 5px rgba(165, 90, 217, 0.3);
+}
+
+.file-select input[type="file"] {
+  opacity: 0;
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+}
+
+
+#src-tent-image::before {
+  text-align: center;
+  content: 'Agregar Imagen \A +';
+  white-space: pre-wrap;
+  /* Allows the line break */
+}
