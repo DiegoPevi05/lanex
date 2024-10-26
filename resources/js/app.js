@@ -37,3 +37,5 @@ window.addEventListener('resize', function() {
 
 // Trigger the initial check on page load
 checkIfInView();
+
+

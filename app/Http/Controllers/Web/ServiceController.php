@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\Review;
+use App\Models\Service;
 use App\Services\FormService;
 
-class ReviewController extends AbstractEntityController
+class ServiceController extends AbstractEntityController
 {
     public function __construct(FormService $formService)
     {
-        parent::__construct(new Review(), $formService);
+        parent::__construct(new Service(), $formService);
     }
 }

@@ -2,6 +2,8 @@
 
 return [
     'common' => [
+        'delete' => 'delete',
+        'cancel' => 'cancel',
         'quote' => 'Quote',
         'track' => 'Track',
         'no_products' => 'Currently no Products for this Supplier'
@@ -233,7 +235,7 @@ return [
                 'actions' => 'actions',
             ],
             'review' => [
-                'new_review' => 'new review',
+                'new_entity' => 'new review',
                 'header' => "reviews",
                 'indications' => "select an option create, update or delete reviews",
                 'input_placeholder_search' => "search review",
@@ -268,10 +270,130 @@ return [
                         'cancel' => 'cancel',
                         'create' => 'create review',
                         'update' => 'update review'
+                    ],
+                    'validations' => [
+                        'name_required' => 'The name field is required.',
+                        'name_string' => 'The name must be a valid string.',
+                        'name_max' => 'The name may not be greater than 255 characters.',
+                        'charge_required' => 'The charge field is required.',
+                        'charge_string' => 'The charge must be a valid string.',
+                        'charge_max' => 'The charge may not be greater than 255 characters.',
+                        'date_review_required' => 'The review date is required.',
+                        'date_review_date' => 'The review date must be a valid date format.',
+                        'review_required' => 'The review content is required.',
+                        'review_string' => 'The review content must be a valid string.',
+                        'review_max' => 'The review content may not be greater than 500 characters.',
+                        'stars_required' => 'The star rating is required.',
+                        'stars_integer' => 'The star rating must be an integer.',
+                        'stars_min' => 'The star rating must be at least 1.',
+                        'stars_max' => 'The star rating may not be greater than 5.',
+                    ],
+                    'success' => [
+                        'create' => 'Create Review Successfully',
+                        'update' => 'Update Review Successfully',
+                        'delete' => 'Delete Review Successfully'
+                    ],
+                    'error' => [
+                        'not_found' => "Review not found.",
+                        'validation_failed' => "There were errors in the form submission."
+                    ],
+                    'modal' => [
+                        'delete_header' => "Are you sure you want to delete this Review?",
+                        'delete_content' => "You wont be able to restore once the information is deleted"
                     ]
-
                 ]
-            ]
+            ],
+            'service' => [
+                'new_entity' => 'new service',
+                'header' => "services",
+                'indications' => "select an option to create, update, or delete services",
+                'input_placeholder_search' => "search service",
+                'button_label_search' => "search",
+                'dropdown' => [
+                    'external_id' => 'External id',
+                    'name' => 'name',
+                    'short_description' => 'short description',
+                ],
+                'form' => [
+                    'headers' => [
+                        'view' => 'view service',
+                        'create' => 'create service',
+                        'update' => 'update service'
+                    ],
+                    'fields' => [
+                        'external_id' => 'External ID',
+                        'name' => 'Name',
+                        'icon' => 'Icon',
+                        'short_description' => 'Short Description',
+                        'webcontent_header' => 'Web Content Header',
+                        'webcontent_title' => 'Web Content Title',
+                        'webcontent_image' => 'Web Content Image',
+                        'webcontent_description' => 'Web Content Description',
+                        'webcontent_overview_header' => 'Overview Header',
+                        'webcontent_overview_title' => 'Overview Title',
+                        'webcontent_overview_image' => 'Overview Image',
+                        'webcontent_overview_content_header' => 'Overview Content Header',
+                        'webcontent_overview_content_introduction' => 'Overview Content Introduction',
+                        'webcontent_overview_content_content' => 'Overview Content',
+                        'webcontent_content_link_header' => 'Content Link Header',
+                        'webcontent_content_link_title' => 'Content Link Title',
+                        'webcontent_content_link_button_label' => 'Content Link Button Label',
+                        'webcontent_content_link_image' => 'Content Link Image',
+                        'webcontent_content_link_content' => 'Content Link Content',
+                        'webcontent_keypoints_header' => 'Key Points Header',
+                        'webcontent_keypoints_title' => 'Key Points Title',
+                        'webcontent_keypoints_points' => 'Key Points',
+                        'webcontent_faqs_title' => 'FAQs Title',
+                        'webcontent_faqs_questions' => 'FAQs Questions',
+                    ],
+                    'placeholders' => [
+                        'external_id' => 'Enter External ID',
+                        'name' => 'Enter Name',
+                        'icon' => 'Select Icon',
+                        'short_description' => 'Enter Short Description',
+                        'webcontent_header' => 'Enter Web Content Header',
+                        'webcontent_title' => 'Enter Web Content Title',
+                        'webcontent_description' => 'Enter Web Content Description',
+                        'webcontent_image' => 'Enter Web Content Image',
+                        'webcontent_overview_header' => 'Enter Overview Header',
+                        'webcontent_overview_title' => 'Enter Overview Title',
+                        'webcontent_overview_image' => 'Select Overview Image',
+                        'webcontent_overview_content_header' => 'Enter Overview Content Header',
+                        'webcontent_overview_content_introduction' => 'Enter Overview Content Introduction',
+                        'webcontent_overview_content_content' => 'Enter Overview Content',
+                        'webcontent_content_link_header' => 'Enter Content Link Header',
+                        'webcontent_content_link_title' => 'Enter Content Link Title',
+                        'webcontent_content_link_button_label' => 'Enter Content Link Button Label',
+                        'webcontent_content_link_image' => 'Select Content Link Image',
+                        'webcontent_content_link_content' => 'Enter Content Link Content',
+                        'webcontent_keypoints_header' => 'Enter Key Points Header',
+                        'webcontent_keypoints_title' => 'Enter Key Points Title',
+                        'webcontent_keypoints_points' => 'Enter Key Points',
+                        'webcontent_faqs_title' => 'Enter FAQs Title',
+                        'webcontent_faqs_questions' => 'Enter FAQs Questions',
+                    ],
+                    'buttons' => [
+                        'cancel' => 'cancel',
+                        'create' => 'create service',
+                        'update' => 'update service'
+                    ],
+                    'validations' => [
+                    ],
+                    'success' => [
+                        'create' => 'Create Service Successfully',
+                        'update' => 'Update Service Successfully',
+                        'delete' => 'Delete Service Successfully'
+                    ],
+                    'error' => [
+                        'not_found' => "Service not found.",
+                        'validation_failed' => "There were errors in the form submission."
+                    ],
+                    'modal' => [
+                        'delete_header' => "Are you sure you want to delete this Service?",
+                        'delete_content' => "You won't be able to restore once the information is deleted."
+                    ]
+                ]
+            ],
         ]
     ]
 ];

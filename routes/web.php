@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 
 //Routes for Web
 use App\Http\Controllers\Web\ReviewController;
+use App\Http\Controllers\Web\ServiceController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -43,7 +44,12 @@ Route::prefix('/dashboard')->group(function(){
             Route::put('/update/{id}', [ReviewController::class, 'update'])->name('reviews.update');
             Route::delete('/destroy/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
         });
+        Route::prefix('/service')->group(function () {
+            Route::get('/', [ServiceController::class, 'index'])->name('dashboard_web_service');
+            Route::post('/form', [ServiceController::class, 'renderForm'])->name('services.form');
+            Route::post('/store', [ServiceController::class, 'store'])->name('services.store');
+            Route::put('/update/{id}', [ServiceController::class, 'update'])->name('services.update');
+            Route::delete('/destroy/{id}', [ServiceController::class, 'destroy'])->name('services.destroy');
+        });
     });
 });
-
-

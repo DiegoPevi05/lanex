@@ -370,23 +370,23 @@ caption{
 
 /* Slide-Out Classes */
 .animation-element.in-view.slide-out-right {
-    animation: slide-out-right 0.8s forwards;
-    animation-delay:0.5s;
+    animation: slide-out-right 0.3s forwards;
+    animation-delay:0s;
 }
 
 .animation-element.in-view.slide-out-left {
-    animation: slide-out-left 0.8s forwards;
-    animation-delay:0.5s;
+    animation: slide-out-left 0.3s forwards;
+    animation-delay:0s;
 }
 
-.animation-element.inv-view.slide-out-up {
-    animation: slide-out-up 0.8s forwards;
-    animation-delay:0.5s;
+.animation-element.in-view.slide-out-up {
+    animation: slide-out-up 0.3s forwards;
+    animation-delay:0s;
 }
 
-.animation-element.inv-view.slide-out-down {
-    animation: slide-out-down 0.8s forwards;
-    animation-delay:0.5s;
+.animation-element.in-view.slide-out-down {
+    animation: slide-out-down 0.3s forwards;
+    animation-delay:0s;
 }
 /* Fade-In Class */
 .animation-element.in-view.fade-in {
@@ -396,8 +396,8 @@ caption{
 
 /* Fade-Out Class */
 .animation-element.in-view.fade-out {
-    animation: fade-out 0.8s forwards;
-    animation-delay:0.5s;
+    animation: fade-out 0.3s forwards;
+    animation-delay:0s;
 }
 
 @keyframes text-animation{
@@ -415,6 +415,10 @@ caption{
 .animation-element.in-view.text-animation{
     animation: text-animation 1s linear forwards;
     animation-delay:0.5s;
+}
+
+.animation-group .animation-element.no-delay{
+    animation-delay:0s;
 }
 
 

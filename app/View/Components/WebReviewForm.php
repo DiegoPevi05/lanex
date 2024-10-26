@@ -24,7 +24,6 @@ class WebReviewForm extends Component
      */
     public function render(): View|Closure|string
     {
-
         return view('components.web-review-form', [
             'formRequest' => $this->formRequest,
             'review' => $this->review

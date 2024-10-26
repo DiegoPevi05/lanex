@@ -16,7 +16,7 @@
                     <p class="font-bold text-primary group-hover:text-white capitalize">{{ __('messages.dashboard.web.card.reviews') }}</p>
                 </a>
 
-                <a id="web-content-option-services" href={{ route('dashboard_web_review') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
+                <a id="web-content-option-services" href={{ route('dashboard_web_service') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
                     <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1 group-hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                     </span>
