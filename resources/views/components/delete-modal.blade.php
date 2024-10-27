@@ -41,7 +41,7 @@
         modal.classList.add("fade-in");
 
         const deleteButton = modal.querySelector("#delete_modal");
-        deleteButton.addEventListener("click", () => closeModal());
+        deleteButton.addEventListener("click", () => closeDeleteModal());
     };
 
 

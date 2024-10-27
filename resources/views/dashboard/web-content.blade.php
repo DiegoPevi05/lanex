@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="dashboard_web_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full  sm:w-[600px] max-xl:border-s-2 xl:w-[50%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4 transition-all duration-300">
-            <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-4">
+            <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-4 z-[1200]">
                 <span class="dashboard_button_toggle_content h-12 w-12 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </span>
@@ -198,6 +198,7 @@
                      // Check for errors and populate error messages
                     @if(session('errors'))
                         const errors = @json(session('errors')->toArray());
+                        console.log(errors);
                         for (const [field, message] of Object.entries(errors)) {
                             const errorSpan = document.getElementById(`error-${field}`);
                             if (errorSpan) {

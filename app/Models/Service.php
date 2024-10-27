@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Lang;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class Service extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'external_id',
         'name',
         'icon',
         'short_description',
@@ -42,7 +42,6 @@ class Service extends Model
         };
 
         return [
-            'external_id' => $validatedFields['external_id'] ?? null,
             'name' => $validatedFields['name'] ?? null,
             'icon' => $validatedFields['icon'] ?? null,
             'short_description' => $validatedFields['short_description'] ?? null,
@@ -113,12 +112,11 @@ class Service extends Model
     public static function getValidationRules($isUpdate = false)
     {
         return [
-            'external_id' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'icon' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'short_description' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
             'webcontent' => $isUpdate ? 'sometimes|required|array' : 'required|array',
-            'webcontent.image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated for image validation
+            'webcontent.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
             'webcontent.header' => 'required|string|max:30',
             'webcontent.title' => 'required|string|max:50',
             'webcontent.description' => 'required|string|max:200',
@@ -126,7 +124,7 @@ class Service extends Model
             // Overview nested fields
             'webcontent.overview.header' => 'required|string|max:20',
             'webcontent.overview.title' => 'required|string|max:50',
-            'webcontent.overview.image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated for image validation
+            'webcontent.overview.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
             'webcontent.overview.content.header' => 'required|string|max:200',
             'webcontent.overview.content.introduction' => 'required|string|max:400',
             'webcontent.overview.content.content' => 'required|string|max:600',
@@ -135,7 +133,7 @@ class Service extends Model
             'webcontent.content_link.header' => 'required|string|max:20',
             'webcontent.content_link.title' => 'required|string|max:40',
             'webcontent.content_link.button_label' => 'required|string|max:30',
-            'webcontent.content_link.image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated for image validation
+            'webcontent.content_link.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
             'webcontent.content_link.content' => 'required|string|max:400',
 
             // Keypoints nested fields
@@ -148,7 +146,6 @@ class Service extends Model
             // FAQs nested fields
             'webcontent.faqs.title' => 'required|string|max:50',
             'webcontent.faqs.questions' => 'required|array|min:1|max:10',
-            'webcontent.faqs.questions.*.id' => 'required|integer', // ID for each question
             'webcontent.faqs.questions.*.question' => 'required|string|max:100',
             'webcontent.faqs.questions.*.answer' => 'required|string|max:400',
         ];
@@ -160,9 +157,6 @@ class Service extends Model
     public static function getValidationMessages()
     {
         return [
-            'external_id.required' => __('messages.dashboard.web.service.form.validations.external_id_required'),
-            'external_id.string' => __('messages.dashboard.web.service.form.validations.external_id_string'),
-            'external_id.max' => __('messages.dashboard.web.service.form.validations.external_id_max'),
             'name.required' => __('messages.dashboard.web.service.form.validations.name_required'),
             'name.string' => __('messages.dashboard.web.service.form.validations.name_string'),
             'name.max' => __('messages.dashboard.web.service.form.validations.name_max'),
@@ -176,7 +170,6 @@ class Service extends Model
             'webcontent.required' => __('messages.dashboard.web.service.form.validations.webcontent_required'),
             'webcontent.array' => __('messages.dashboard.web.service.form.validations.webcontent_array'),
 
-            'webcontent.image.required' => __('messages.dashboard.web.service.form.validations.webcontent_image_required'),
             'webcontent.image.image' => __('messages.dashboard.web.service.form.validations.webcontent_image_image'),
             'webcontent.image.mimes' => __('messages.dashboard.web.service.form.validations.webcontent_image_mimes'),
             'webcontent.image.max' => __('messages.dashboard.web.service.form.validations.webcontent_image_max'),
@@ -202,7 +195,6 @@ class Service extends Model
             'webcontent.overview.title.string' => __('messages.dashboard.web.service.form.validations.overview_title_string'),
             'webcontent.overview.title.max' => __('messages.dashboard.web.service.form.validations.overview_title_max'),
 
-            'webcontent.overview.image.required' => __('messages.dashboard.web.service.form.validations.webcontent_overview_image_required'),
             'webcontent.overview.image.image' => __('messages.dashboard.web.service.form.validations.webcontent_overview_image_image'),
             'webcontent.overview.image.mimes' => __('messages.dashboard.web.service.form.validations.webcontent_overview_image_mimes'),
             'webcontent.overview.image.max' => __('messages.dashboard.web.service.form.validations.webcontent_overview_image_max'),
@@ -232,7 +224,6 @@ class Service extends Model
             'webcontent.content_link.button_label.string' => __('messages.dashboard.web.service.form.validations.content_link_button_label_string'),
             'webcontent.content_link.button_label.max' => __('messages.dashboard.web.service.form.validations.content_link_button_label_max'),
 
-             'webcontent.content_link.image.required' => __('messages.dashboard.web.service.form.validations.webcontent_content_link_image_required'),
             'webcontent.content_link.image.image' => __('messages.dashboard.web.service.form.validations.webcontent_content_link_image_image'),
             'webcontent.content_link.image.mimes' => __('messages.dashboard.web.service.form.validations.webcontent_content_link_image_mimes'),
             'webcontent.content_link.image.max' => __('messages.dashboard.web.service.form.validations.webcontent_content_link_image_max'),
@@ -340,10 +331,6 @@ class Service extends Model
     {
         return [
             [
-                'label' => 'messages.dashboard.web.service.dropdown.external_id',
-                'value' => 'external_id',
-            ],
-            [
                 'label' => 'messages.dashboard.web.service.dropdown.name',
                 'value' => 'name',
             ],
@@ -360,7 +347,6 @@ class Service extends Model
     public function serialize(): string
     {
         return json_encode([
-            'external_id' => $this->external_id,
             'name' => $this->name,
             'icon' => $this->icon,
             'short_description' => $this->short_description,
@@ -376,7 +362,6 @@ class Service extends Model
         $data = json_decode($json, true);
 
         return new self([
-            'external_id' => $data['external_id'],
             'name' => $data['name'],
             'icon' => $data['icon'],
             'short_description' => $data['short_description'],

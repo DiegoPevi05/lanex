@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class ImageUploadService
 {
@@ -21,21 +22,28 @@ class ImageUploadService
     {
         // Validate the type and get the folder name
         $folderName = self::getType($type);
-        $storagePath = "public/images/{$folderName}";
+        $storagePath = "/images/{$folderName}";
+        Log::info("Storing image in folder: {$storagePath}");
 
         // Delete the existing image if a path is provided
-        if ($existingImagePath && Storage::exists("public/{$existingImagePath}")) {
-            Storage::delete("public/{$existingImagePath}");
+        if ($existingImagePath && Storage::exists("{$existingImagePath}")) {
+            Storage::delete("{$existingImagePath}");
+            if (!Storage::delete("{$existingImagePath}")) {
+                        Log::error("Failed to delete the existing image at path: public/{$existingImagePath}");
+            }
         }
 
         // Generate a unique filename and store the new image
         $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
-        if (!$image->storeAs($storagePath, $filename)) {
+        Log::info("Generated filename: {$filename}");
+        if (!$image->storeAs($storagePath, $filename,'public')) {
+            Log::error("Failed to store the image in path: {$storagePath}");
             throw new \Exception("Failed to store the image.");
         }
 
         // Return the stored path (relative to public)
-        return "images/{$folderName}/{$filename}";
+        Log::info("Image successfully stored at: images/{$folderName}/{$filename}");
+        return "/images/{$folderName}/{$filename}";
     }
 
     /**

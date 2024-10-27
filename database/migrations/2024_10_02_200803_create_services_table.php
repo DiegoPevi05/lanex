@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('external_id')->unique();
             $table->string('name');
             $table->string('icon');
             $table->string('short_description');

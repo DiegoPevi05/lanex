@@ -93,7 +93,7 @@ abstract class AbstractEntityController extends Controller
         // Pass the current entity to getFillableFields
         $entityData = $this->model::getFillableFields($validator->validated(), $request, $entity);
 
-        $entity = $this->model->update($entityData);
+        $entity = $entity->update($entityData);
 
         return redirect()->route($this->model::getRedirectRoutes("update"))->with('success', $this->model::getSuccessMessage('update'));
     }

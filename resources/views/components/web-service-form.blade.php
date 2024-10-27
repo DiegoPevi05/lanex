@@ -50,9 +50,9 @@
 
 
         <div class="mb-4 mt-4">
-            <label for="webcontent[image]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_image") }}</label>
+            <label for="webcontent[image]" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_image") }}</label>
             <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-webcontent-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-cover bg-center">
+                <div id="image-viewer-webcontent-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{ asset('storage/' . $service->webcontent['image']) }})">
 
                 </div>
                 <div class="file-select" id="src-tent-image" >
@@ -64,7 +64,7 @@
 
 
 
-        <p class="text-lg text-primary font-bold">{{ __("messages.dashboard.web.service.form.fields.webcontent_overview") }}</p>
+        <p class="text-lg text-primary font-bold mt-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_overview") }}</p>
 
         <div class="mb-4 mt-4">
             <label for="webcontent[overview][header]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_overview_header") }}</label>
@@ -76,6 +76,19 @@
             <label for="webcontent[overview][title]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_overview_title") }}</label>
             <input id="webcontent[overview][title]" type="text" name="webcontent[overview][title]" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_overview_title") }}" value="{{ old("webcontent.overview.title", $service->webcontent['overview']['title'] ?? '') }}" {{$formRequest === "view" ? "disabled" : ""}}/>
             <span class="text-primary font-bold text-xs error-message" id="error-webcontent.overview.title"></span>
+        </div>
+
+        <div class="mb-4 mt-4">
+            <label for="webcontent[overview][image]" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_overview_image") }}</label>
+            <div class="flex flex-row justify-start gap-x-2">
+                <div id="image-viewer-webcontent-overview-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{$service->webcontent['overview']['image']}})">
+
+                </div>
+                <div class="file-select" id="src-tent-image" >
+                  <input type="file" name="webcontent[overview][image]" aria-label="webcontent[overview][image]" onchange="previewImage(event, 'webcontent-overview-image')" {{$formRequest === "view" ? "disabled" : ""}}/>
+                </div>
+            </div>
+            <span class="text-primary font-bold text-xs error-message" id="error-webcontent.overview.content"></span>
         </div>
 
         <div class="mb-4 mt-4">
@@ -117,19 +130,26 @@
         </div>
 
         <div class="mb-4 mt-4">
-            <label for="webcontent[content_link][image]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_content_link_image") }}</label>
-            <input type="file" id="webcontent[content_link][image]" name="webcontent[content_link][image]" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("webcontent.content_link.image", $service->webcontent['content_link']['image'] ?? '') }}" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_content_link_image") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-            <span class="text-primary font-bold text-xs error-message" id="error-webcontent.content_link.image"></span>
-        </div>
-
-        <div class="mb-4 mt-4">
             <label for="webcontent[content_link][content]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_content_link_content") }}</label>
             <textarea id="webcontent[content_link][content]" name="webcontent[content_link][content]" class="no-scroll-bar mt-2 text-sm block !h-[150px] w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"  placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_content_link_content") }}" {{$formRequest === "view" ? "disabled" : ""}}>{{ old("webcontent.content_link.content", $service->webcontent['content_link']['content'] ?? '') }}</textarea>
             <span class="text-primary font-bold text-xs error-message" id="error-webcontent.content_link.content"></span>
         </div>
 
+        <div class="mb-4 mt-4">
+            <label for="webcontent[content_link][image]" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_content_link_image") }}</label>
+            <div class="flex flex-row justify-start gap-x-2">
+                <div id="image-viewer-webcontent-content-link-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{$service->webcontent['content_link']['image']}})">
 
-        <p class="text-lg text-primary font-bold">{{ __("messages.dashboard.web.service.form.fields.webcontent_keypoints_points") }}</p>
+                </div>
+                <div class="file-select" id="src-tent-image" >
+                  <input type="file" name="webcontent[content_link][image]" aria-label="webcontent[content_link][image]" onchange="previewImage(event, 'webcontent-content-link-image')" {{$formRequest === "view" ? "disabled" : ""}}/>
+                </div>
+            </div>
+            <span class="text-primary font-bold text-xs error-message" id="error-webcontent.content_link.content"></span>
+        </div>
+
+
+        <p class="text-lg text-primary font-bold mt-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_keypoints_points") }}</p>
 
         <div class="mb-4 mt-4">
             <label for="webcontent[keypoints][header]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_keypoints_header") }}</label>
@@ -150,24 +170,26 @@
             </div>
             <!-- Container for dynamic points -->
             <div id="points-container" class="mb-4 mt-4">
-                @foreach($service->webcontent['keypoints']['points'] as $index => $point)
-                    <div class="point-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
-                        <div class="flex flex-row justify-between w-full h-auto">
-                            <p class="text-sm font-bold text-primary capitalize">{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_point')}} {{ $index + 1 }}</p>
-                            @if($formRequest !== 'view')
-                            <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.point-item').remove(); updatePointTitles()">
-                                {{ __('messages.common.delete') }}
-                            </button>
-                            @endif
+                @if($service)
+                    @foreach($service->webcontent['keypoints']['points'] as $index => $point)
+                        <div class="point-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
+                            <div class="flex flex-row justify-between w-full h-auto">
+                                <p class="text-sm font-bold text-primary capitalize">{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_point')}} {{ $index + 1 }}</p>
+                                @if($formRequest !== 'view')
+                                <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.point-item').remove(); updatePointTitles()">
+                                    {{ __('messages.common.delete') }}
+                                </button>
+                                @endif
+                            </div>
+
+                            <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_points_point_title')}}</label>
+                            <input type="text" name="webcontent[keypoints][points][{{ $index }}][title]" value="{{ $point['title'] }}" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{__('messages.dashboard.web.service.form.placeholders.webcontent_keypoints_points_title')}}">
+
+                            <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_points_point_content')}}</label>
+                            <textarea name="webcontent[keypoints][points][{{ $index }}][content]" class="no-scroll-bar mt-2 text-sm block !h-[150px] w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{__('messages.dashboard.web.service.form.placeholders.webcontent_keypoints_points_content')}}">{{ $point['content'] }}</textarea>
                         </div>
-
-                        <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_points_point_title')}}</label>
-                        <input type="text" name="webcontent[faqs][points][{{ $index }}][question]" value="{{ $point['title'] }}" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{__('messages.dashboard.web.service.form.placeholders.webcontent_keypoints_points_title')}}">
-
-                        <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{__('messages.dashboard.web.service.form.fields.webcontent_keypoints_points_point_content')}}</label>
-                        <textarea name="webcontent[faqs][points][{{ $index }}][answer]" class="no-scroll-bar mt-2 text-sm block !h-[150px] w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{__('messages.dashboard.web.service.form.placeholders.webcontent_keypoints_points_content')}}">{{ $point['content'] }}</textarea>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
 
@@ -186,26 +208,29 @@
             </div>
             <!-- Container for dynamic points -->
             <div id="questions-container" class="mb-4 mt-4">
-                <!-- Iterate over the existing questions -->
-                @foreach($service->webcontent['faqs']['questions'] as $index => $question)
-                    <div class="question-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
-                        <div class="flex flex-row justify-between w-full h-auto">
-                            <p class="text-sm font-bold text-primary capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question") }} {{ $index + 1 }}</p>
 
-                            @if($formRequest !== 'view')
-                            <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.question-item').remove(); updateQuestionTitles('webcontent[faqs]')">
-                                {{ __('messages.common.delete') }}
-                            </button>
-                            @endif
+                @if($service)
+                    <!-- Iterate over the existing questions -->
+                    @foreach($service->webcontent['faqs']['questions'] as $index => $question)
+                        <div class="question-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
+                            <div class="flex flex-row justify-between w-full h-auto">
+                                <p class="text-sm font-bold text-primary capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question") }} {{ $index + 1 }}</p>
+
+                                @if($formRequest !== 'view')
+                                <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.question-item').remove(); updateQuestionTitles('webcontent[faqs]')">
+                                    {{ __('messages.common.delete') }}
+                                </button>
+                                @endif
+                            </div>
+
+                            <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question_question") }}</label>
+                            <input type="text" name="webcontent[faqs][questions][{{ $index }}][question]" value="{{ $question['question'] }}" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_faqs_question") }}">
+
+                            <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question_answer") }}</label>
+                            <textarea name="webcontent[faqs][questions][{{ $index }}][answer]" class="no-scroll-bar mt-2 text-sm block !h-[150px] w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_faqs_answer") }}">{{ $question['answer'] }}</textarea>
                         </div>
-
-                        <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question_question") }}</label>
-                        <input type="text" name="webcontent[faqs][questions][{{ $index }}][question]" value="{{ $question['question'] }}" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_faqs_question") }}">
-
-                        <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question_answer") }}</label>
-                        <textarea name="webcontent[faqs][questions][{{ $index }}][answer]" class="no-scroll-bar mt-2 text-sm block !h-[150px] w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.webcontent_faqs_answer") }}">{{ $question['answer'] }}</textarea>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
 

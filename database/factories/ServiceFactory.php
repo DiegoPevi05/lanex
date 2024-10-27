@@ -20,7 +20,6 @@ class ServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => 'service_' . Str::random(5),
             'name' => $this->faker->company(),
             'icon' => $this->randomIcon(),
             'short_description' => $this->faker->text(80),
@@ -103,7 +102,6 @@ class ServiceFactory extends Factory
     {
         return collect(range(1, $count))->map(function ($id) {
             return [
-                'id' => $id,  // Add the unique id
                 'question' => $this->faker->text(40),
                 'answer' => $this->faker->text(400),
             ];
