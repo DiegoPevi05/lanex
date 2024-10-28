@@ -9,7 +9,7 @@
                     {{$title}}
                 </h1>
                 <div class="xl:absolute xl:-left-36 w-full h-full flex justify-center items-center p-6 sm:p-4 mt-6 sm:mt-12 animation-element slide-in-up">
-                    <img src="{{$svgContent}}" class="h-[80%] w-auto" />
+                    <img src="{{ asset('storage/'. $svgContent)}}" class="h-[80%] w-auto" />
                 </div>
             </div>
         </div>

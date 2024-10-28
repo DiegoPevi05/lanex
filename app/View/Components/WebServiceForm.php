@@ -11,12 +11,14 @@ class WebServiceForm extends Component
 {
     public $formRequest;
     public $service;
+    public $icons;
     /**
      * Create a new component instance.
      */
-    public function __construct($formRequest = null, $service = null)
+    public function __construct($formRequest = null, $service = null, $icons = [])
     {
         $this->formRequest = $formRequest;
+        $this->icons = $icons;
 
         if ($service) {
             $service->webcontent = json_decode($service->webcontent, true);
@@ -34,7 +36,8 @@ class WebServiceForm extends Component
 
         return view('components.web-service-form', [
             'formRequest' => $this->formRequest,
-            'service' => $this->service
+            'service' => $this->service,
+            'icons' => $this->icons
         ]);
     }
 }

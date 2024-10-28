@@ -1,6 +1,7 @@
 
 <div  id="web-content-card-{{$type}}-{{$id}}" class="w-full h-auto bg-white rounded-xl border-2 border-gray-light p-2 grid grid-cols-2 px-4 animation-element slide-in-up">
     <div class="col-span-1 flex flex-col">
+        <p class="font-bold text-sm text-primary-dark capitalize">{{__('messages.dashboard.web.card.'.$type)}} : {{$id}}</p>
         <p class="font-bold text-primary capitalize">{{ __('messages.dashboard.web.card_content.preview') }}</p>
         <p class="text-sm">{{$preview}}</p>
     </div>

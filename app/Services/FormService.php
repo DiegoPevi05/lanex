@@ -3,6 +3,7 @@
 namespace App\Services;
 use App\View\Components\WebReviewForm;
 use App\View\Components\WebServiceForm;
+use App\Services\IconService;
 
 class FormService
 {
@@ -17,8 +18,9 @@ class FormService
 
         }elseif($typeEntity == "service"){
 
+            $icons = IconService::getAllSvgIcons();
             // Create the form component instance
-            $formComponent = new WebServiceForm($formRequest, $entity);
+            $formComponent = new WebServiceForm($formRequest, $entity, $icons);
 
         }
 

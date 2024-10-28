@@ -17,8 +17,20 @@
         </div>
 
         <div class="mb-4 mt-4">
-            <label for="icon" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.service.form.fields.icon") }}</label>
-            <input type="text" id="icon" name="icon" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('icon', $service->icon ?? '') }}" placeholder="{{ __("messages.dashboard.web.service.form.placeholders.icon") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+            <label for="icon" class="block text-sm font-bold text-secondary-dark capitalize">
+                {{ __("messages.dashboard.web.service.form.fields.icon") }}
+            </label>
+
+            <select id="icon" name="icon" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
+                <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
+
+                @foreach($icons as $filename => $content)
+                    <option value="{{ $content }}" {{ old('icon', $service->icon ?? '') === $content ? 'selected' : '' }}>
+                        {{ $filename }}
+                    </option>
+                @endforeach
+            </select>
+
             <span class="text-primary font-bold text-xs error-message" id="error-icon"></span>
         </div>
 
@@ -52,7 +64,7 @@
         <div class="mb-4 mt-4">
             <label for="webcontent[image]" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_image") }}</label>
             <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-webcontent-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{ asset('storage/' . $service->webcontent['image']) }})">
+                <div id="image-viewer-webcontent-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{ $service ? asset('storage/' . $service->webcontent['image']) : '' }})">
 
                 </div>
                 <div class="file-select" id="src-tent-image" >
@@ -81,7 +93,7 @@
         <div class="mb-4 mt-4">
             <label for="webcontent[overview][image]" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_overview_image") }}</label>
             <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-webcontent-overview-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{$service->webcontent['overview']['image']}})">
+                <div id="image-viewer-webcontent-overview-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{ $service ? asset('storage/' . $service->webcontent['overview']['image']) : '' }})">
 
                 </div>
                 <div class="file-select" id="src-tent-image" >
@@ -138,7 +150,7 @@
         <div class="mb-4 mt-4">
             <label for="webcontent[content_link][image]" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.service.form.fields.webcontent_content_link_image") }}</label>
             <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-webcontent-content-link-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{$service->webcontent['content_link']['image']}})">
+                <div id="image-viewer-webcontent-content-link-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{ $service ? asset( 'storage/' . $service->webcontent['content_link']['image'] ) : '' }})">
 
                 </div>
                 <div class="file-select" id="src-tent-image" >
@@ -217,7 +229,7 @@
                                 <p class="text-sm font-bold text-primary capitalize">{{ __("messages.dashboard.web.service.form.fields.webcontent_faqs_question") }} {{ $index + 1 }}</p>
 
                                 @if($formRequest !== 'view')
-                                <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.question-item').remove(); updateQuestionTitles('webcontent[faqs]')">
+                                <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.question-item').remove(); updateQuestionTitles('webcontent[faqs][questions]')">
                                     {{ __('messages.common.delete') }}
                                 </button>
                                 @endif

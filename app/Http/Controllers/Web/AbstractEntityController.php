@@ -49,6 +49,8 @@ abstract class AbstractEntityController extends Controller
         $idEntity = $request->input('idEntity');
         $entity = $idEntity ? $this->model->find($idEntity) : null;
 
+        //dd($entity);
+
         $formComponent = $this->formService->getFormComponent($formRequest, $typeEntity, $entity);
 
         return $formComponent ? $formComponent->render() : response()->json(['success' => false], 500);
@@ -56,6 +58,8 @@ abstract class AbstractEntityController extends Controller
 
     public function store(Request $request)
     {
+
+
         $validator = Validator::make($request->all(), $this->model::getValidationRules(), $this->model::getValidationMessages());
 
         if ($validator->fails()) {
@@ -79,6 +83,7 @@ abstract class AbstractEntityController extends Controller
             return redirect()->route($this->model::getRedirectRoutes("update"))
                 ->with('error', $this->model::getErrorMessage('not_found'));
         }
+
 
         $validator = Validator::make($request->all(), $this->model::getValidationRules('update'), $this->model::getValidationMessages());
 

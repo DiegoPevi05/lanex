@@ -139,13 +139,13 @@ class Service extends Model
             // Keypoints nested fields
             'webcontent.keypoints.header' => 'required|string|max:30',
             'webcontent.keypoints.title' => 'required|string|max:50',
-            'webcontent.keypoints.points' => 'required|array|min:1|max:10',
+            'webcontent.keypoints.points' => 'required|array|min:1|max:6',
             'webcontent.keypoints.points.*.title' => 'required|string|max:30', // Title for each point
             'webcontent.keypoints.points.*.content' => 'required|string|max:400', // Content for each point
 
             // FAQs nested fields
             'webcontent.faqs.title' => 'required|string|max:50',
-            'webcontent.faqs.questions' => 'required|array|min:1|max:10',
+            'webcontent.faqs.questions' => 'required|array|min:1|max:6',
             'webcontent.faqs.questions.*.question' => 'required|string|max:100',
             'webcontent.faqs.questions.*.answer' => 'required|string|max:400',
         ];

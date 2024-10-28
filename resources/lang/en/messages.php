@@ -227,7 +227,11 @@ return [
                 'reviews' => 'reviews',
                 'services' => "services",
                 'suppliers' => 'suppliers',
-                'products' => 'products'
+                'products' => 'products',
+                'review' => 'review',
+                'service' => "service",
+                'supplier' => 'supplier',
+                'product' => 'product'
             ],
             'card_content' => [
                 'preview' => 'preview',

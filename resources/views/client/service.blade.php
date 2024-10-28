@@ -3,7 +3,7 @@
 
 @section('content-client')
     <section id="home_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white bg-green-100">
-        <img src="{{$service['webcontent']['image']}}" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20">
+        <img src="{{ asset('storage/' . $service['webcontent']['image'])}}" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
             <div class="w-full h-full flex flex-col justify-center xl:justify-end xl:items-end gap-y-12">
 
