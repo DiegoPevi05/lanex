@@ -1,5 +1,15 @@
 *
+
+# Allow specific folders and their contents
+!images/
 !images/svgs/
+!images/svgs/**
 !images/web/
+!images/web/**
 !images/test/
+!images/test/**
+
+# Ignore files with .jpg:Zone.Identifier extension
+*:Zone.Identifier
+
 !.gitignore
