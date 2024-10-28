@@ -205,6 +205,57 @@ return [
         'questions' => 'Preguntas Frecuentes',
     ],
     'dashboard' => [
+        'auth' => [
+            'keyword' => 'Palabra clave',
+            'login' => 'Iniciar sesión',
+            'email' => 'Correo electrónico',
+            'name' => 'Nombre',
+            'password' => 'Contraseña',
+            'password_confirmation' => 'Confirmación de contraseña',
+            'forgot_password' => '¿Olvidaste tu contraseña?',
+            'register' => 'Registrarse',
+            'have_an_account' => '¿Ya tienes una cuenta? Iniciar sesión',
+            'reset_password' => 'Restablecer la contraseña',
+            'back_to_login' => 'Volver a iniciar sesión',
+            'send_password_reset_link' => "Enviar enlace para restablecer la contraseña",
+            // Login validation and error messages
+            'login_required_email' => 'El campo de correo electrónico es obligatorio.',
+            'login_invalid_email' => 'El correo electrónico debe ser una dirección de correo electrónico válida.',
+            'login_required_password' => 'El campo de contraseña es obligatorio.',
+            'login_failed' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
+
+            // Registration validation and success messages
+            'register_required_name' => 'El campo de nombre es obligatorio.',
+            'register_invalid_name' => 'El nombre debe ser una cadena válida y tener menos de 255 caracteres.',
+            'register_required_email' => 'El campo de correo electrónico es obligatorio.',
+            'register_invalid_email' => 'El correo electrónico debe ser una dirección de correo electrónico válida.',
+            'register_unique_email' => 'Ya existe una cuenta con este correo electrónico.',
+            'register_required_password' => 'El campo de contraseña es obligatorio.',
+            'register_min_password' => 'La contraseña debe tener al menos 6 caracteres.',
+            'register_confirmed_password' => 'La confirmación de la contraseña no coincide.',
+            'register_required_keyword' => 'La palabra clave de registro es obligatoria.',
+            'register_invalid_keyword' => 'Palabra clave de registro inválida.',
+            'register_success' => 'Cuenta creada con éxito.',
+
+            // Forgot Password validation and feedback messages
+            'forgot_password_required_email' => 'El campo de correo electrónico es obligatorio.',
+            'forgot_password_invalid_email' => 'El correo electrónico debe ser una dirección de correo electrónico válida.',
+            'forgot_password_link_sent' => 'Se ha enviado un enlace para restablecer la contraseña a tu correo electrónico.',
+            'forgot_password_link_failed' => 'Hubo un problema al enviar el enlace para restablecer la contraseña. Por favor, verifica tu dirección de correo electrónico e inténtalo de nuevo.',
+
+            // Reset Password validation and feedback messages
+            'reset_password_required_token' => 'El token de restablecimiento es obligatorio.',
+            'reset_password_required_email' => 'El campo de correo electrónico es obligatorio.',
+            'reset_password_invalid_email' => 'El correo electrónico debe ser una dirección de correo electrónico válida.',
+            'reset_password_required_password' => 'El campo de contraseña es obligatorio.',
+            'reset_password_min_password' => 'La contraseña debe tener al menos 6 caracteres.',
+            'reset_password_confirmed_password' => 'La confirmación de la contraseña no coincide.',
+            'reset_password_success' => 'Tu contraseña ha sido restablecida con éxito.',
+            'reset_password_failed' => 'Hubo un problema al restablecer tu contraseña. Por favor, inténtalo de nuevo.',
+
+            // Logout message
+            'logout_success' => 'Has cerrado sesión exitosamente.',
+        ],
         'sidebar' => [
             'greeting' => 'Hola',
             'welcome' => 'Bienvenido',

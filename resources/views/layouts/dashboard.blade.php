@@ -2,7 +2,6 @@
 
 @section('content')
     <main class="w-full h-screen bg-white xl:grid xl:grid-cols-7 xl:grid-rows-1 flex flex-col">
-        <x-toast/>
         <div class="xl:col-span-1 w-full h-auto xl:h-full flex flex-col">
             <x-sidebar />
         </div>

@@ -1,7 +1,7 @@
 <div id="product_card_{{$product['id']}}" class="w-full h-full rounded-xl shadow-xl flex flex-col text-body py-4 px-6" style="background-color: rgba(255, 255, 255, 0.6);">
     <div class="h-auto w-full flex justify-center items-center">
         <div class="h-24 w-24 flex justify-center items-center border-2 border-gray-light rounded-xl p-1">
-            <img src="{{$product['image']}}" class="w-auto h-full" />
+            <img src="{{asset ('storage/'. $product['image'])}}" class="w-auto h-full" />
         </div>
     </div>
     <div class="h-auto w-full flex flex-col justify-start items-center gap-y-3">

@@ -3,7 +3,7 @@
 
 @section('content-client')
     <section id="suppliers_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
-        <img src="/images/supplier.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
+        <img src="{{ asset('storage/'. '/images/web/supplier.jpg') }}" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30 bg-transparent">
             <div class="w-full h-full flex flex-col-reverse xl:flex-row justify-center gap-y-12">
 
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="w-full h-auto flex flex-col items-start justify-center text-body gap-y-1 xl:p-6 animation-element slide-in-up">
-                    <img src={{$supplier['logo']}} class="w-[40%] h-auto"/>
+                    <img src={{ asset('storage/'. $supplier['logo'])}} class="w-[40%] h-auto"/>
                     <h5 class="font-bold text-white">{{$supplier['name']}}</h5>
                     <h1 class="font-bold text-white">{{ __('messages.supplier.hero.header') }}</h1>
                     <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4 p-4 rounded-xl" style="background-color: rgba(255, 255, 255, 0.6);">

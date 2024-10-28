@@ -28,8 +28,8 @@
             <span class="font-bold text-primary">
                 {{__('messages.dashboard.sidebar.greeting')}}
             </span>
-            <span class="font-bold text-primary-dark">
-                Diego
+            <span class="font-bold text-primary-dark capitalize">
+                {{ Auth::user()->name }}
             </span>
         </div>
         <p class="text-body">

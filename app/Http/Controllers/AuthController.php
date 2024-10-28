@@ -22,6 +22,11 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
+        ], [
+            'email.required' => __('messages.dashboard.auth.login_required_email'),
+            'email.email' => __('messages.dashboard.auth.login_invalid_email'),
+            'password.required' => __('messages.dashboard.auth.login_required_password'),
+            'password.min' => __('messages.dashboard.auth.register_min_password'),
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
@@ -29,7 +34,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => __('messages.dashboard.auth.login_failed'),
         ]);
     }
 
@@ -46,7 +51,23 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
+            'keyword' => 'required|string',
+        ], [
+            'name.required' => __('messages.dashboard.auth.register_required_name'),
+            'name.max' => __('messages.dashboard.auth.register_invalid_name'),
+            'email.required' => __('messages.dashboard.auth.register_required_email'),
+            'email.email' => __('messages.dashboard.auth.register_invalid_email'),
+            'email.unique' => __('messages.dashboard.auth.register_unique_email'),
+            'password.required' => __('messages.dashboard.auth.register_required_password'),
+            'password.min' => __('messages.dashboard.auth.register_min_password'),
+            'password.confirmed' => __('messages.dashboard.auth.register_confirmed_password'),
+            'keyword.required' => __('messages.dashboard.auth.register_required_keyword'),
         ]);
+
+        // Check if the provided keyword matches the one in the .env file
+        if ($request->keyword !== env('REGISTRATION_KEYWORD')) {
+            return back()->withErrors(['keyword' => __('messages.dashboard.auth.register_invalid_keyword')]);
+        }
 
         User::create([
             'name' => $request->name,
@@ -54,7 +75,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login')->with('success', 'Account created successfully.');
+        return redirect()->route('login')->with('success', __('messages.dashboard.auth.register_success'));
     }
 
     // Show reset password form
@@ -66,13 +87,16 @@ class AuthController extends Controller
     // Handle password reset email
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $request->validate(['email' => 'required|email'], [
+            'email.required' => __('messages.dashboard.auth.forgot_password_required_email'),
+            'email.email' => __('messages.dashboard.auth.forgot_password_invalid_email'),
+        ]);
 
         $status = Password::sendResetLink($request->only('email'));
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            ? back()->with(['status' => __('messages.dashboard.auth.forgot_password_link_sent')])
+            : back()->withErrors(['email' => __('messages.dashboard.auth.forgot_password_link_failed')]);
     }
 
     // Show reset password form
@@ -88,6 +112,13 @@ class AuthController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6|confirmed',
+        ], [
+            'token.required' => __('messages.dashboard.auth.reset_password_required_token'),
+            'email.required' => __('messages.dashboard.auth.reset_password_required_email'),
+            'email.email' => __('messages.dashboard.auth.reset_password_invalid_email'),
+            'password.required' => __('messages.dashboard.auth.reset_password_required_password'),
+            'password.min' => __('messages.dashboard.auth.reset_password_min_password'),
+            'password.confirmed' => __('messages.dashboard.auth.reset_password_confirmed_password'),
         ]);
 
         $status = Password::reset(
@@ -99,14 +130,14 @@ class AuthController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+            ? redirect()->route('login')->with('status', __('messages.dashboard.auth.reset_password_success'))
+            : back()->withErrors(['email' => __('messages.dashboard.auth.reset_password_failed')]);
     }
 
     // Logout
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('status', __('messages.dashboard.auth.logout_success'));
     }
 }

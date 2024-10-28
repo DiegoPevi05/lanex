@@ -206,6 +206,7 @@ return [
     ],
     'dashboard' => [
         'auth' => [
+            'keyword' => 'Keyword',
             'login' => 'login',
             'email' => 'email',
             'name' => 'name',
@@ -216,7 +217,44 @@ return [
             'have_an_account' => 'Already have an account? Login',
             'reset_password' => 'Reset Password',
             'back_to_login' => 'Back to Login',
-            'send_password_reset_link' => "Send password reset link"
+            'send_password_reset_link' => "Send password reset link",
+            // Login validation and error messages
+            'login_required_email' => 'The email field is required.',
+            'login_invalid_email' => 'The email must be a valid email address.',
+            'login_required_password' => 'The password field is required.',
+            'login_failed' => 'The provided credentials do not match our records.',
+
+            // Registration validation and success messages
+            'register_required_name' => 'The name field is required.',
+            'register_invalid_name' => 'The name must be a valid string and less than 255 characters.',
+            'register_required_email' => 'The email field is required.',
+            'register_invalid_email' => 'The email must be a valid email address.',
+            'register_unique_email' => 'An account with this email already exists.',
+            'register_required_password' => 'The password field is required.',
+            'register_min_password' => 'The password must be at least 6 characters.',
+            'register_confirmed_password' => 'The password confirmation does not match.',
+            'register_required_keyword' => 'The registration keyword is required.',
+            'register_invalid_keyword' => 'Invalid registration keyword.',
+            'register_success' => 'Account created successfully.',
+
+            // Forgot Password validation and feedback messages
+            'forgot_password_required_email' => 'The email field is required.',
+            'forgot_password_invalid_email' => 'The email must be a valid email address.',
+            'forgot_password_link_sent' => 'Password reset link has been sent to your email.',
+            'forgot_password_link_failed' => 'There was an issue sending the password reset link. Please check your email address and try again.',
+
+            // Reset Password validation and feedback messages
+            'reset_password_required_token' => 'The reset token is required.',
+            'reset_password_required_email' => 'The email field is required.',
+            'reset_password_invalid_email' => 'The email must be a valid email address.',
+            'reset_password_required_password' => 'The password field is required.',
+            'reset_password_min_password' => 'The password must be at least 6 characters.',
+            'reset_password_confirmed_password' => 'The password confirmation does not match.',
+            'reset_password_success' => 'Your password has been reset successfully.',
+            'reset_password_failed' => 'There was an issue resetting your password. Please try again.',
+
+            // Logout message
+            'logout_success' => 'You have been successfully logged out.',
         ],
         'sidebar' => [
             'greeting' => 'Hi',

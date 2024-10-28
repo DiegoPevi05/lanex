@@ -8,13 +8,11 @@ use Illuminate\View\Component;
 
 class Toast extends Component
 {
-    public $messages;
     /**
      * Create a new component instance.
      */
-    public function __construct($messages=[])
+    public function __construct()
     {
-        $this->messages = $messages;
     }
 
     /**

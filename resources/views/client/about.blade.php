@@ -45,7 +45,7 @@
     <x-content-section
         header="{{ __('messages.about.content.header') }}"
         title="{{ __('messages.about.content.title') }}"
-        svgContent="/images/svg/aboutus_1.svg"
+        svgContent="images/web/aboutus_1.svg"
         introduction="{{ __('messages.about.content.introduction') }}"
         content1="{{ __('messages.about.content.content1') }}"
         content2="{{ __('messages.about.content.content2') }}"
@@ -53,7 +53,7 @@
     <x-content-link-section
         header="{{ __('messages.about.content_link.header') }}"
         title="{{ __('messages.about.content_link.title') }}"
-        svgContent="/images/svg/aboutus_2.svg"
+        svgContent="images/web/aboutus_2.svg"
         button="{{ __('messages.about.content_link.button_label') }}"
         content="{{ __('messages.about.content_link.content') }}"
         href="{{ route('quote') }}"

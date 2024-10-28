@@ -4,10 +4,19 @@
     <div class="bg-white h-screen w-full">
         <div class="h-full w-full flex justify-center items-center">
             <div class="h-auto w-full sm:w-[400px] flex justify-center items-center flex-col shadow-xl border-2 border-gray-light rounded-xl p-6 gap-y-4">
-                <h2 class="font-bold text-secondary-dark">{{ __('messages.dashboard.auth.login') }}</h2>
-                @if($errors->any())
-                    <div>{{ $errors->first() }}</div>
-                @endif
+                <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center justify-center px-12">
+                    <div class="w-auto flex flex-row">
+                        <h3 class="font-bold text-primary">
+                            Lan
+                        </h3>
+                        <h3 class="font-bold text-primary-dark">
+                            Ex
+                        </h3>
+                    </div>
+                </a>
+
+                <p class="font-bold text-sm text-secondary-dark capitalize">{{__('messages.dashboard.auth.login')}}</p>
+
                 <form action="{{ route('login') }}" method="POST" class="w-full h-full flex flex-col items-start justify-center gap-y-2">
                     @csrf
 
@@ -26,7 +35,7 @@
                     </span>
 
 
-                    <button  type="submit"  class="mx-auto px-4 py-2 bg-primary text-white duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
+                    <button  type="submit"  class="mt-4 mx-auto px-4 py-2 bg-primary text-white duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
                         {{ __('messages.dashboard.auth.login') }}
                     </button>
                 </form>
@@ -38,7 +47,18 @@
 @endsection
 
  <script>
+
+
         document.addEventListener("DOMContentLoaded", function () {
+
+            @if(session('success'))
+                showToast(["{{session('success')}}"]);
+            @endif
+
+            @if($errors->any())
+                showToast(@json($errors->all()));
+            @endif
+
             const passwordInput = document.getElementById("password");
             const togglePassword = document.getElementById("toggle-password");
             const eyeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>`;

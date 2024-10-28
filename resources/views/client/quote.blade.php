@@ -132,7 +132,7 @@
                     {{__('messages.quote.hero.title')}}
                 </h1>
                 <div class="w-full h-full flex justify-center items-center p-6 sm:p-4 mt-6 sm:mt-12 animation-element slide-in-up">
-                    <img src="/images/svg/quote.svg" class="h-48 sm:h-96 w-auto" />
+                    <img src="{{asset('storage'.'/images/web/quote.svg')}}" class="h-48 sm:h-96 w-auto" />
                 </div>
             </div>
         </div>

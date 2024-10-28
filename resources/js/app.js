@@ -39,3 +39,4 @@ window.addEventListener('resize', function() {
 checkIfInView();
 
 
+

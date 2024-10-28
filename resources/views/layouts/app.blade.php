@@ -16,6 +16,7 @@
         @livewireStyles
     </head>
     <body class="antialiased min-h-screen bg-transparent h-full w-full">
+        <x-toast/>
         @yield('content') <!-- Inject content from specific views -->
         @livewireScripts
     </body>

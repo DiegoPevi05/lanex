@@ -9,44 +9,38 @@
         <p class="toast_message text-body text-sm w-full">Message that someone have writteng completelle</p>
     </div>
 </div>
-@push('scripts')
-    <script>
-        function showToast(messages) {
-            const toastContainer = document.getElementById("toasts_container");
-            messages.forEach((message)=>{
-                const toastTemplate = toastContainer.querySelector(".toast_template");
 
-                // Clone the toast template node
-                const newToast = toastTemplate.cloneNode(true);
-                newToast.classList.remove("pointer-events-none");
-                newToast.classList.add("slide-in-down","pointer-events-auto"); // Add the animation class for sliding in
+<script>
 
-                // Set the message in the cloned toast
-                newToast.querySelector(".toast_message").textContent = message;
+function showToast(messages) {
+    const toastContainer = document.getElementById("toasts_container");
+    messages.forEach((message) => {
+        const toastTemplate = toastContainer.querySelector(".toast_template");
 
-                // Set the current hour in hh:mm format
-                const currentHour = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                newToast.querySelector(".toast_hour").textContent = currentHour;
+        const newToast = toastTemplate.cloneNode(true);
+        newToast.classList.remove("pointer-events-none");
+        newToast.classList.add("slide-in-down", "pointer-events-auto");
 
-                // Remove on click of the delete button
-                const deleteButton = newToast.querySelector(".delete_toast_button");
-                deleteButton.addEventListener("click", () => {
-                    removeToast(newToast);
-                });
+        newToast.querySelector(".toast_message").textContent = message;
 
-                function removeToast(toast) {
-                    toast.classList.add("slide-out-down");
-                    toast.classList.remove("slide-in-down");
+        const currentHour = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        newToast.querySelector(".toast_hour").textContent = currentHour;
 
-                    // Remove the toast from DOM after animation
-                    setTimeout(() => {
-                        toastContainer.removeChild(toast);
-                    }, 800); // match with animation duration
-                }
+        const deleteButton = newToast.querySelector(".delete_toast_button");
+        deleteButton.addEventListener("click", () => {
+            removeToast(newToast);
+        });
 
-                // Append the new toast to the container
-                toastContainer.appendChild(newToast);
-            })
+        function removeToast(toast) {
+            toast.classList.add("slide-out-down");
+            toast.classList.remove("slide-in-down");
+            setTimeout(() => {
+                toastContainer.removeChild(toast);
+            }, 800);
         }
-    </script>
-@endpush
+
+        toastContainer.appendChild(newToast);
+    });
+}
+
+</script>
