@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AuthController;
 
 //Routes for Web
 use App\Http\Controllers\Web\ReviewController;
 use App\Http\Controllers\Web\ServiceController;
+use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\SupplierController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -24,7 +27,7 @@ Route::get('/set-language/{lang}', function ($lang) {
 })->name('set-language');
 
 
-Route::prefix('/dashboard')->group(function(){
+Route::prefix('/dashboard')->middleware('auth')->group(function(){
 
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard_home');
     Route::get('/services', [DashboardController::class, 'services'])->name('dashboard_services');
@@ -51,5 +54,32 @@ Route::prefix('/dashboard')->group(function(){
             Route::put('/update/{id}', [ServiceController::class, 'update'])->name('services.update');
             Route::delete('/destroy/{id}', [ServiceController::class, 'destroy'])->name('services.destroy');
         });
+
+        Route::prefix('/product')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('dashboard_web_product');
+            Route::post('/form', [ProductController::class, 'renderForm'])->name('products.form');
+            Route::post('/store', [ProductController::class, 'store'])->name('products.store');
+            Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
+            Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+        });
+
+        Route::prefix('/supplier')->group(function () {
+            Route::get('/', [SupplierController::class, 'index'])->name('dashboard_web_supplier');
+            Route::post('/form', [SupplierController::class, 'renderForm'])->name('suppliers.form');
+            Route::post('/store', [SupplierController::class, 'store'])->name('suppliers.store');
+            Route::put('/update/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
+            Route::delete('/destroy/{id}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+        });
     });
 });
+
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('showForgotPassword');
+Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');

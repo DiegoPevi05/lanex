@@ -203,6 +203,8 @@
                     @endforeach
                 @endif
             </div>
+
+            <span class="text-primary font-bold text-xs error-message" id="error-webcontent.keypoints.points"></span>
         </div>
 
         <p class="text-lg text-primary font-bold">{{__('messages.dashboard.web.service.form.fields.webcontent_faqs')}}</p>
@@ -244,6 +246,8 @@
                     @endforeach
                 @endif
             </div>
+
+            <span class="text-primary font-bold text-xs error-message" id="error-webcontent.faqs.questions"></span>
         </div>
 
 

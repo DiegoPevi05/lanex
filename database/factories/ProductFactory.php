@@ -38,7 +38,6 @@ class ProductFactory extends Factory
     {
         $icons = [
             '/images/test/celular.webp',
-            '/images/test/agua.jpeg',
             '/images/test/hp_product.webp'
         ];
 

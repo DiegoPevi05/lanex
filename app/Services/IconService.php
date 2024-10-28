@@ -21,7 +21,7 @@ class IconService
             $filename = basename($file);
 
             // Store the relative path for each SVG file
-            $icons[$filename] = Storage::url($file);
+            $icons[$filename] = '/' . $file;
 
         }
 

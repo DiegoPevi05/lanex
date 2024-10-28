@@ -55,7 +55,7 @@ class ImageUploadService
      */
     public static function getType(string $type): string
     {
-        $allowedTypes = ['service', 'product', 'user']; // Update allowed types as needed
+        $allowedTypes = ['service', 'product','supplier', 'user']; // Update allowed types as needed
         if (!in_array($type, $allowedTypes)) {
             throw new \Exception("Invalid type specified.");
         }

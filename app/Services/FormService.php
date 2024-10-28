@@ -3,6 +3,8 @@
 namespace App\Services;
 use App\View\Components\WebReviewForm;
 use App\View\Components\WebServiceForm;
+use App\View\Components\WebProductForm;
+use App\View\Components\WebSupplierForm;
 use App\Services\IconService;
 
 class FormService
@@ -22,6 +24,13 @@ class FormService
             // Create the form component instance
             $formComponent = new WebServiceForm($formRequest, $entity, $icons);
 
+        }elseif($typeEntity == "product"){
+            // Create the form component instance
+            $formComponent = new WebProductForm($formRequest, $entity);
+
+        }elseif($typeEntity == "supplier"){
+            // Create the form component instance
+            $formComponent = new WebSupplierForm($formRequest, $entity);
         }
 
         return $formComponent;

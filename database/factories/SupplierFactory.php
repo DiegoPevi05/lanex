@@ -39,8 +39,6 @@ class SupplierFactory extends Factory
     private function randomImage(): string
     {
         $icons = [
-            '/images/test/facebook.png',
-            '/images/test/google.png',
             '/images/test/interbank.svg'
         ];
 

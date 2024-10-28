@@ -11,7 +11,16 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
                     </a>
                     <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1">
+                        @if($EntityType == "product")
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-2"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+
+                        @elseif($EntityType == "supplier")
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-warehouse"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg>
+                        @elseif($EntityType == "service")
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                        @else
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        @endif
                     </span>
                     <h4 class="font-bold text-primary-dark capitalize">{{ __('messages.dashboard.web.'.$EntityType.'.header') }}</h4>
                 </div>
@@ -424,6 +433,71 @@
             };
             reader.readAsDataURL(file);
         }
+    }
+
+
+
+    let detailIndex = 0;
+
+
+    function addDetail() {
+
+        detailIndex = document.querySelectorAll("#details-container .detail-item").length;
+        // Create a new div to hold the detail inputs
+        const detailContainer = document.createElement("div");
+        detailContainer.classList.add("detail-item", "mb-4", "mt-4", "border-2","border-secondary-dark","flex","flex-col", "rounded-md","p-4","animation-element","in-view","slide-in-up");
+
+        const containerHeader = document.createElement('div');
+        containerHeader.classList.add('flex','flex-row','justify-between','w-full', 'h-auto')
+
+        const detailTitle = document.createElement("p");
+        detailTitle.classList.add("text-sm", "font-bold", "text-primary", "capitalize");
+        detailTitle.innerText = `{{__('messages.dashboard.web.supplier.form.fields.details_detail')}} ${detailIndex + 1}`;
+        containerHeader.appendChild(detailTitle);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("text-sm", "font-bold", "text-primary", "capitalize","rounded-xl","active:scale-95","duration-300","transition-all","bg-secondary-dark","hover:bg-primary","px-4", "py-2","text-white");
+        deleteButton.innerText = "{{ __('messages.common.delete') }}";
+
+        // Add delete functionality
+        deleteButton.onclick = function() {
+            detailContainer.remove(); // Remove the detail container
+            updateDetailTitles(); // Update the titles of remaining details
+        };
+
+        containerHeader.appendChild(deleteButton);
+        detailContainer.appendChild(containerHeader);
+
+
+        const detailTextarea = document.createElement("textarea");
+        detailTextarea.name = `details[${questionIndex}]`;
+        detailTextarea.classList.add("mt-2","text-sm", "block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body","!h-[150px]","no-scroll-bar");
+        detailTextarea.placeholder = "Enter detail";
+        detailContainer.appendChild(detailTextarea);
+
+        // Append the new detail container to the main container
+        document.getElementById("details-container").appendChild(detailContainer);
+
+        // Increment the detail index for the next detail
+        detailIndex++;
+    }
+
+    // Helper function to update point titles after deletion
+    function updateDetailTitles() {
+        const datailItems = document.querySelectorAll(".detail-item");
+        datailItems.forEach((item, index) => {
+            // Update point title display
+            const detailTitle = item.querySelector("p");
+            detailTitle.innerText = `Detail ${index + 1}`;
+
+            // Update input names to have continuous indexing
+            const detailInput = item.querySelector("input[type='text']");
+
+            detailInput.name = `details[${index}]`;
+        });
+
+        // Update detailIndex to the current count
+        detailIndex = pointItems.length;
     }
 
     </script>

@@ -205,6 +205,19 @@ return [
         'questions' => 'Frequently asked questions',
     ],
     'dashboard' => [
+        'auth' => [
+            'login' => 'login',
+            'email' => 'email',
+            'name' => 'name',
+            'password' => 'password',
+            'password_confirmation' => 'password confirmation',
+            'forgot_password' => 'forgot password?',
+            'register' => 'register',
+            'have_an_account' => 'Already have an account? Login',
+            'reset_password' => 'Reset Password',
+            'back_to_login' => 'Back to Login',
+            'send_password_reset_link' => "Send password reset link"
+        ],
         'sidebar' => [
             'greeting' => 'Hi',
             'welcome' => 'Welcome',
@@ -325,7 +338,6 @@ return [
                         'update' => 'update service'
                     ],
                     'fields' => [
-                        'external_id' => 'External ID',
                         'name' => 'Name',
                         'icon' => 'Icon',
                         'short_description' => 'Short Description',
@@ -364,7 +376,6 @@ return [
                         'webcontent_faqs_question_answer' => 'answer'
                     ],
                     'placeholders' => [
-                        'external_id' => 'Enter External ID',
                         'name' => 'Enter Name',
                         'icon' => 'Select Icon',
                         'short_description' => 'Enter Short Description',
@@ -400,6 +411,78 @@ return [
                         'update' => 'update service'
                     ],
                     'validations' => [
+                        'name_required' => "The name is required.",
+                        'name_string' => "The name should be a string.",
+                        'name_max' => "The name should not exceed 255 characters.",
+                        'icon_required' => "The icon is required.",
+                        'icon_string' => "The icon should be a string.",
+                        'icon_max' => "The icon should not exceed 255 characters.",
+                        'short_description_required' => "The short description is required.",
+                        'short_description_string' => "The short description should be a string.",
+                        'short_description_max' => "The short description should not exceed 500 characters.",
+                        'webcontent_required' => "The web content is required.",
+                        'webcontent_array' => "The web content should be an array.",
+                        'webcontent_image_image' => "The image should be a valid image file.",
+                        'webcontent_image_mimes' => "The image must be of type: jpeg, png, jpg, gif, webp.",
+                        'webcontent_image_max' => "The image size should not exceed 2048 KB.",
+                        'webcontent_header_required' => "The header is required.",
+                        'webcontent_header_string' => "The header should be a string.",
+                        'webcontent_header_max' => "The header should not exceed 30 characters.",
+                        'webcontent_title_required' => "The title is required.",
+                        'webcontent_title_string' => "The title should be a string.",
+                        'webcontent_title_max' => "The title should not exceed 50 characters.",
+                        'webcontent_description_required' => "The description is required.",
+                        'webcontent_description_string' => "The description should be a string.",
+                        'webcontent_description_max' => "The description should not exceed 200 characters.",
+                        'overview_header_required' => "The overview header is required.",
+                        'overview_header_string' => "The overview header should be a string.",
+                        'overview_header_max' => "The overview header should not exceed 20 characters.",
+                        'overview_title_required' => "The overview title is required.",
+                        'overview_title_string' => "The overview title should be a string.",
+                        'overview_title_max' => "The overview title should not exceed 50 characters.",
+                        'overview_content_header_required' => "The content header is required.",
+                        'overview_content_header_string' => "The content header should be a string.",
+                        'overview_content_header_max' => "The content header should not exceed 200 characters.",
+                        'overview_content_introduction_required' => "The content introduction is required.",
+                        'overview_content_introduction_string' => "The content introduction should be a string.",
+                        'overview_content_introduction_max' => "The content introduction should not exceed 400 characters.",
+                        'overview_content_content_required' => "The content is required.",
+                        'overview_content_content_string' => "The content should be a string.",
+                        'overview_content_content_max' => "The content should not exceed 600 characters.",
+                        'content_link_header_required' => "The content link header is required.",
+                        'content_link_header_string' => "The content link header should be a string.",
+                        'content_link_header_max' => "The content link header should not exceed 20 characters.",
+                        'content_link_title_required' => "The content link title is required.",
+                        'content_link_title_string' => "The content link title should be a string.",
+                        'content_link_title_max' => "The content link title should not exceed 40 characters.",
+                        'content_link_button_label_required' => "The button label is required.",
+                        'content_link_button_label_string' => "The button label should be a string.",
+                        'content_link_button_label_max' => "The button label should not exceed 30 characters.",
+                        'content_link_content_required' => "The content link content is required.",
+                        'content_link_content_string' => "The content link content should be a string.",
+                        'content_link_content_max' => "The content link content should not exceed 400 characters.",
+                        'keypoints_header_required' => "The keypoints header is required.",
+                        'keypoints_header_string' => "The keypoints header should be a string.",
+                        'keypoints_header_max' => "The keypoints header should not exceed 30 characters.",
+                        'keypoints_title_required' => "The keypoints title is required.",
+                        'keypoints_title_string' => "The keypoints title should be a string.",
+                        'keypoints_title_max' => "The keypoints title should not exceed 50 characters.",
+                        'keypoints_points_required' => "At least one keypoint is required.",
+                        'keypoints_points_array' => "The keypoints should be an array.",
+                        'keypoints_points_item_required' => "Each keypoint is required.",
+                        'keypoints_points_item_string' => "Each keypoint should be a string.",
+                        'keypoints_points_item_max' => "Each keypoint should not exceed 400 characters.",
+                        'faqs_title_required' => "The FAQ title is required.",
+                        'faqs_title_string' => "The FAQ title should be a string.",
+                        'faqs_title_max' => "The FAQ title should not exceed 50 characters.",
+                        'faqs_questions_required' => "At least one FAQ question is required.",
+                        'faqs_questions_array' => "The FAQ questions should be an array.",
+                        'faqs_questions_question_required' => "Each FAQ question is required.",
+                        'faqs_questions_question_string' => "Each FAQ question should be a string.",
+                        'faqs_questions_question_max' => "Each FAQ question should not exceed 100 characters.",
+                        'faqs_questions_answer_required' => "Each FAQ answer is required.",
+                        'faqs_questions_answer_string' => "Each FAQ answer should be a string.",
+                        'faqs_questions_answer_max' => "Each FAQ answer should not exceed 400 characters.",
                     ],
                     'success' => [
                         'create' => 'Create Service Successfully',
@@ -416,6 +499,151 @@ return [
                     ]
                 ]
             ],
+            'product' => [
+                'new_entity' => 'new product',
+                'header' => "products",
+                'indications' => "select an option create, update or delete products",
+                'input_placeholder_search' => "search product",
+                'button_label_search' => "search",
+                'dropdown' => [
+                    'name' => 'name',
+                    'description' => 'description',
+                    'stars' => 'stars'
+                ],
+                'form' => [
+                    'headers' => [
+                        'view' => 'view product',
+                        'create' => 'create product',
+                        'update' => 'update product'
+                    ],
+                    'fields' => [
+                        'name' => 'name',
+                        'stars' => 'stars',
+                        'description' => 'description',
+                        'image' => 'image',
+                        'EAN' => 'EAN',
+                    ],
+                    'placeholders' => [
+                        'name' => 'Enter Name',
+                        'description' => 'Enter Description',
+                        'stars' => 'Enter the number of stars',
+                        'image' => 'Enter an Image',
+                        'EAN' => 'Enter the EAN number of the product',
+                    ],
+                    'buttons' => [
+                        'cancel' => 'cancel',
+                        'create' => 'create product',
+                        'update' => 'update product'
+                    ],
+                    'validations' => [
+                        'name_required' => 'The name field is required.',
+                        'name_string' => 'The name must be a valid string.',
+                        'name_max' => 'The name may not be greater than 255 characters.',
+
+                        'description_required' => 'The description content is required.',
+                        'description_string' => 'The description content must be a valid string.',
+                        'description_max' => 'The description content may not be greater than 500 characters.',
+
+                        'image_image' => "The image should be a valid image file.",
+                        'image_mimes' => "The image must be of type: jpeg, png, jpg, gif, webp.",
+                        'image_max' => "The image size should not exceed 2048 KB.",
+
+                        'stars_required' => 'The star rating is required.',
+                        'stars_integer' => 'The star rating must be an integer.',
+                        'stars_min' => 'The star rating must be at least 1.',
+                        'stars_max' => 'The star rating may not be greater than 5.',
+
+                        'ean_required' => 'The EAN field is required.',
+                        'ean_string' => 'The EAN must be a valid string.',
+                        'ean_max' => 'The EAN may not be greater than 255 characters.',
+                    ],
+                    'success' => [
+                        'create' => 'Create Product Successfully',
+                        'update' => 'Update Product Successfully',
+                        'delete' => 'Delete Product Successfully'
+                    ],
+                    'error' => [
+                        'not_found' => "Product not found.",
+                        'validation_failed' => "There were errors in the form submission."
+                    ],
+                    'modal' => [
+                        'delete_header' => "Are you sure you want to delete this Product?",
+                        'delete_content' => "You wont be able to restore once the information is deleted"
+                    ]
+                ]
+            ],
+            'supplier' => [
+                'new_entity' => 'new supplier',
+                'header' => "suppliers",
+                'indications' => "select an option create, update or delete suppliers",
+                'input_placeholder_search' => "search supplier",
+                'button_label_search' => "search",
+                'dropdown' => [
+                    'name' => 'name',
+                    'description' => 'description',
+                ],
+                'form' => [
+                    'headers' => [
+                        'view' => 'view supplier',
+                        'create' => 'create supplier',
+                        'update' => 'update supplier'
+                    ],
+                    'fields' => [
+                        'name' => 'name',
+                        'logo' => 'logo',
+                        'description' => 'description',
+                        'details' => 'details',
+                        'details_add' => 'Add Detail',
+                        'details_detail' => 'Detail'
+                    ],
+                    'placeholders' => [
+                        'name' => 'Enter Name',
+                        'logo' => 'logo',
+                        'description' => 'Enter description',
+                        'details' => 'Enter details'
+                    ],
+                    'buttons' => [
+                        'cancel' => 'cancel',
+                        'create' => 'create supplier',
+                        'update' => 'update supplier'
+                    ],
+                    'validations' => [
+                        'name_required' => 'The name field is required.',
+                        'name_string' => 'The name must be a valid string.',
+                        'name_max' => 'The name may not be greater than 255 characters.',
+
+                        'description_required' => 'The description content is required.',
+                        'description_string' => 'The description content must be a valid string.',
+                        'description_max' => 'The description content may not be greater than 500 characters.',
+
+                        'logo_image' => "The image should be a valid image file.",
+                        'logo_mimes' => "The image must be of type: jpeg, png, jpg, gif, webp.",
+                        'logo_max' => "The image size should not exceed 2048 KB.",
+
+
+                        'details_required' => "The details are required.",
+                        'details_array' => "The details should be array.",
+                        'details_min' => "The details should contain at least one detail.",
+                        'details_item_string' => "The detail inside the details array should be string.",
+                        'details_item_max' => "The detail inside the details array should be string of maxium 300 characters.",
+
+                    ],
+                    'success' => [
+                        'create' => 'Create Supplier Successfully',
+                        'update' => 'Update Supplier Successfully',
+                        'delete' => 'Delete Supplier Successfully'
+                    ],
+                    'error' => [
+                        'not_found' => "Supplier not found.",
+                        'validation_failed' => "There were errors in the form submission."
+                    ],
+                    'modal' => [
+                        'delete_header' => "Are you sure you want to delete this Supplier?",
+                        'delete_content' => "You wont be able to restore once the information is deleted"
+                    ]
+                ]
+            ],
+
         ]
     ]
 ];

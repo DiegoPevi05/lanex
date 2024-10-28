@@ -10,7 +10,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </span>
     </div>
-    <div class="w-full h-auto flex flex-row items-center justify-center px-12">
+    <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center justify-center px-12">
         <div class="w-[60px] h-auto p-none">
             <img src="/images/logo.png" class="h-auto w-full" />
         </div>
@@ -22,7 +22,7 @@
                 Ex
             </h3>
         </div>
-    </div>
+    </a>
     <div class="w-full flex flex-col items-start justify-center px-12">
         <div class="w-auto flex flex-row gap-x-2">
             <span class="font-bold text-primary">
@@ -118,12 +118,21 @@
         </li>
 
         <li>
-            <a href="#" class="text-body w-full flex flex-row gap-x-4 hover:text-primary cursor-pointer duration-300 active:scale-95 hover:bg-slate-100 px-12 py-4 {{ request()->routeIs('dashboard_signout')  ? 'text-primary border-e-[3px] border-primary' : '' }} mt-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M13 4h3a2 2 0 0 1 2 2v14"/><path d="M2 20h3"/><path d="M13 20h9"/><path d="M10 12v.01"/><path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"/></svg>
-            <p class="capitalize font-bold">
-                {{__('messages.dashboard.sidebar.signout')}}
-            </p>
-            </a>
+            <form action="{{ route('logout') }}" method="POST" class="mt-auto">
+                @csrf
+                <button type="submit" class="text-body w-full flex flex-row gap-x-4 hover:text-primary cursor-pointer duration-300 active:scale-95 hover:bg-slate-100 px-12 py-4 {{ request()->routeIs('dashboard_signout') ? 'text-primary border-e-[3px] border-primary' : '' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                        <path d="M13 4h3a2 2 0 0 1 2 2v14"/>
+                        <path d="M2 20h3"/>
+                        <path d="M13 20h9"/>
+                        <path d="M10 12v.01"/>
+                        <path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"/>
+                    </svg>
+                    <p class="capitalize font-bold">
+                        {{ __('messages.dashboard.sidebar.signout') }}
+                    </p>
+                </button>
+            </form>
         </li>
     </ul>
 </div>

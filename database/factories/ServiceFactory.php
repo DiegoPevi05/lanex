@@ -21,17 +21,17 @@ class ServiceFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'icon' => $this->randomIcon(),
+            'icon' => '/images/test/truck.svg',
             'short_description' => $this->faker->text(80),
             'webcontent' => json_encode([
-                'image' => '/images/aboutus.jpg',
+                'image' => '/images/test/aboutus.jpg',
                 'header' => $this->faker->text(30),
                 'title' => $this->faker->text(50),
                 'description' => $this->faker->text(200),
                 'overview' => [
                     'header' => $this->faker->text(20),
                     'title' => $this->faker->text(50),
-                    'image' => '/images/svg/services_1.svg',
+                    'image' => '/images/test/services_1.svg',
                     'content' => [
                         'header' => $this->faker->text(200),
                         'introduction' => $this->faker->text(400),
@@ -42,7 +42,7 @@ class ServiceFactory extends Factory
                     'header' => $this->faker->text(20),
                     'title' => $this->faker->text(40),
                     'button_label' => $this->faker->text(30),
-                    'image' => '/images/svg/aboutus_2.svg',
+                    'image' => '/images/test/aboutus_2.svg',
                     'content' => $this->faker->text(400)
                 ],
                 'keypoints' => [
@@ -58,22 +58,6 @@ class ServiceFactory extends Factory
             'created_at' => now(),
             'updated_at' => now(),
         ];
-    }
-
-    /**
-     * Generate a random icon from a predefined array.
-     *
-     * @return string
-     */
-    private function randomIcon(): string
-    {
-        $icons = [
-            'ri-ship-fill',
-            'heroicon-o-truck',
-            'bi-airplane-fill'
-        ];
-
-        return $this->faker->randomElement($icons);
     }
 
     /**

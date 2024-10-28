@@ -7,6 +7,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Models\Review;
 use App\Models\Service;
+use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Support\Str;
 
 class WebContentCard extends Component
@@ -42,6 +44,26 @@ class WebContentCard extends Component
             $this->updated = $service->updated_at->format('Y-m-d');  // Format the date
             $this->deleteRoute = $service->getRoutes()['destroy'];
             $this->deleteMessages = $service->getHelperMessages();
+
+        }elseif($data instanceof Product){
+
+            $product = $data;
+            $this->id = (string)$product->id;  // Convert ID to string
+            $this->type = $product->getType();  // Call on the instance
+            $this->preview = $product->name;  // Limit preview to 50 characters
+            $this->updated = $product->updated_at->format('Y-m-d');  // Format the date
+            $this->deleteRoute = $product->getRoutes()['destroy'];
+            $this->deleteMessages = $product->getHelperMessages();
+
+        }elseif($data instanceof Supplier){
+
+            $supplier = $data;
+            $this->id = (string)$supplier->id;  // Convert ID to string
+            $this->type = $supplier->getType();  // Call on the instance
+            $this->preview = $supplier->name;  // Limit preview to 50 characters
+            $this->updated = $supplier->updated_at->format('Y-m-d');  // Format the date
+            $this->deleteRoute = $supplier->getRoutes()['destroy'];
+            $this->deleteMessages = $supplier->getHelperMessages();
 
         }
     }

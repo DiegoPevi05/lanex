@@ -23,14 +23,14 @@
                     <p class="font-bold text-primary group-hover:text-white capitalize">{{ __('messages.dashboard.web.card.services') }}</p>
                 </a>
 
-                <a id="web-content-option-suppliers" href={{ route('dashboard_web_review') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
+                <a id="web-content-option-suppliers" href={{ route('dashboard_web_supplier') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
                     <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1 group-hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-warehouse"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg>
                     </span>
                     <p class="font-bold text-primary group-hover:text-white capitalize">{{ __('messages.dashboard.web.card.suppliers') }}</p>
                 </a>
 
-                <a id="web-content-option-products" href={{ route('dashboard_web_review') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
+                <a id="web-content-option-products" href={{ route('dashboard_web_product') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
 
                     <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1 group-hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-2"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
