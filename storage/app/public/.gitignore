@@ -10,6 +10,6 @@
 !images/test/**
 
 # Ignore files with .jpg:Zone.Identifier extension
-*:Zone.Identifier
+*.Identifier
 
 !.gitignore
