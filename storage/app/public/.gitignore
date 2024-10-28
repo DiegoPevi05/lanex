@@ -1,2 +1,4 @@
 *
+!public/images/svgs/
+!public/images/web/
 !.gitignore
