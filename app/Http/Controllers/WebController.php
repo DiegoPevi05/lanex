@@ -7,19 +7,19 @@ use App\Services\FlightTracker;
 use App\Models\Service;
 use App\Models\Supplier;
 use App\Models\Review;
-use App\Services\EmailService;
+use App\Notifications\CustomEmailNotification;
+use App\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class WebController extends Controller
 {
     protected $flightTracker;
 
-    protected $emailService;
-
-    public function __construct(FlightTracker $flightTracker, EmailService $emailService)
+    public function __construct(FlightTracker $flightTracker)
     {
         $this->flightTracker = $flightTracker;
 
-        $this->emailService = $emailService;
     }
 
     public function home()
@@ -149,14 +149,52 @@ class WebController extends Controller
             'message.max' => __('messages.contact.mail.message_max'),
         ]);
 
-        // Send the email using the EmailService
-        $emailSent = $this->emailService->sendContactFormEmail($validatedData);
+        try{
 
-        if ($emailSent) {
-            return redirect()->route('client.contact')->with('success', __('messages.contact.success'));
-        } else {
-            return redirect()->route('client.contact')->with('error', __('messages.contact.error'));
+            $notifiable = new AnonymousNotifiable($validatedData['email']);
+            $notification = new CustomEmailNotification(
+                __('messages.contact.mail.subject_anonymous'),
+                __('messages.contact.mail.greeting_anonymous'),
+                [__('messages.contact.mail.intro_anonymous_1')],
+                null,
+                null,
+                [__('messages.contact.mail.outro_anonymous_2')],
+                __('messages.contact.mail.salutation_anonymous'),
+                null
+            );
+
+            $notifiable->notify($notification);
+
+            $notifiable_admin = new AnonymousNotifiable(env('APP_ADMIN_EMAIL'));
+            $notification_admin = new CustomEmailNotification(
+                __('messages.contact.mail.subject_admin'),
+                __('messages.contact.mail.greeting_admin'),
+                [__('messages.contact.mail.intro_admin_1'),
+                 __('messages.contact.mail.intro_admin_2'),
+                 __('messages.contact.mail.intro_admin_3') . ' : ' . $validatedData['email'],
+                 __('messages.contact.mail.intro_admin_4') . ' : ' . $validatedData['company'],
+                 __('messages.contact.mail.intro_admin_5') . ' : ' . $validatedData['ruc'],
+                 __('messages.contact.mail.intro_admin_6') . ' : ' . $validatedData['message']
+                ],
+                null,
+                null,
+                [],
+                null,
+                null
+            );
+
+            $notifiable_admin->notify($notification_admin);
+
+            return redirect()->route('contact')->with('success', __('messages.contact.success'));
+
+        } catch (\Exception $e) {
+            // Log the error message for debugging
+            Log::error('Failed to send contact email: ' . $e->getMessage());
+
+            // Redirect with an error message if email sending fails
+            return redirect()->route('contact')->with('error', __('messages.contact.error'));
         }
+
     }
 
     public function quote()

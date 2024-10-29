@@ -19,7 +19,8 @@
         </div>
 
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
-            <form class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
+            <form action="{{ route('contact.submit') }}" method="POST" class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
+                @csrf
                 <h5>
                     {{ __('messages.contact.hero.form.contact_form_title') }}
                 </h5>
@@ -39,7 +40,7 @@
                 </div>
                 <div class="w-full h-auto">
                     <label for="contact_form_message" class="font-bold">{{ __('messages.contact.hero.form.contact_form_message_label') }}</span>
-                    <textarea id="contact_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" >{{ __('messages.contact.hero.form.contact_form_message_placeholder') }}</textarea>
+                    <textarea id="contact_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="{{ __('messages.contact.hero.form.contact_form_message_placeholder') }}"></textarea>
                 </div>
                 <button type="submit" class="bg-primary-dark px-12 sm:px-24 py-2 sm:py-4 lg:py-3 text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
                     <span>{{ __('messages.contact.hero.form.contact_form_button') }}</span>
@@ -50,3 +51,21 @@
     </section>
     <x-questions title="{{ __('messages.contact.questions') }}" :questions="$questions" />
 @endsection
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        @if(session('success'))
+            showToast(["{{session('success')}}"]);
+        @endif
+
+        @if($errors->any())
+            showToast(@json($errors->all()));
+        @endif
+
+        @if(session('error'))
+            showToast(["{{session('error')}}"]);
+        @endif
+
+    });
+</script>

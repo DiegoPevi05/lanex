@@ -129,6 +129,32 @@ return [
             ],
         ],
         'questions' => 'Preguntas Frecuentes',
+        'mail' => [
+            'subject' => 'Nueva solicitud de contacto',
+            'company_required' => 'El campo de la empresa es obligatorio.',
+            'company_max' => 'El nombre de la empresa no debe exceder los 255 caracteres.',
+            'email_required' => 'El campo de correo electrónico es obligatorio.',
+            'email_valid' => 'Por favor, ingresa una dirección de correo electrónico válida.',
+            'ruc_required' => 'El campo RUC es obligatorio.',
+            'ruc_max' => 'El RUC no debe exceder los 20 caracteres.',
+            'message_required' => 'El campo de mensaje es obligatorio.',
+            'message_max' => 'El mensaje no debe exceder los 1000 caracteres.',
+            'subject_anonymous' => 'Gracias por contactarnos',
+            'greeting_anonymous' => '¡Hola!',
+            'intro_anonymous_1' => 'Gracias por visitarnos.',
+            'outro_anonymous_2' => 'Nos pondremos en contacto contigo pronto.',
+            'salutation_anonymous' => '¡Gracias!',
+            'subject_admin' => 'Una nueva persona está intentando contactarte',
+            'greeting_admin' => '¡Hola!',
+            'intro_admin_1' => 'Tienes una nueva solicitud de contacto.',
+            'intro_admin_2' => 'Estos son los detalles:',
+            'intro_admin_3' => 'Correo electrónico',
+            'intro_admin_4' => 'Empresa',
+            'intro_admin_5' => 'RUC',
+            'intro_admin_6' => 'Mensaje',
+        ],
+        'success' => '¡Tu mensaje ha sido enviado exitosamente!',
+        'error' => 'Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.',
     ],
     'track' => [
         'hero' => [
@@ -516,20 +542,20 @@ return [
                         'name_required' => 'El campo de nombre es obligatorio.',
                         'name_string' => 'El nombre debe ser una cadena válida.',
                         'name_max' => 'El nombre no debe exceder los 255 caracteres.',
-            
+
                         'description_required' => 'El campo de descripción es obligatorio.',
                         'description_string' => 'La descripción debe ser una cadena válida.',
                         'description_max' => 'La descripción no debe exceder los 500 caracteres.',
-            
+
                         'image_image' => "La imagen debe ser un archivo de imagen válido.",
                         'image_mimes' => "La imagen debe ser de tipo: jpeg, png, jpg, gif, webp.",
                         'image_max' => "El tamaño de la imagen no debe exceder los 2048 KB.",
-            
+
                         'stars_required' => 'La calificación de estrellas es obligatoria.',
                         'stars_integer' => 'La calificación de estrellas debe ser un número entero.',
                         'stars_min' => 'La calificación de estrellas debe ser al menos 1.',
                         'stars_max' => 'La calificación de estrellas no puede ser mayor que 5.',
-            
+
                         'ean_required' => 'El campo EAN es obligatorio.',
                         'ean_string' => 'El EAN debe ser una cadena válida.',
                         'ean_max' => 'El EAN no debe exceder los 255 caracteres.',
@@ -586,15 +612,15 @@ return [
                         'name_required' => 'El campo de nombre es obligatorio.',
                         'name_string' => 'El nombre debe ser una cadena de texto válida.',
                         'name_max' => 'El nombre no puede tener más de 255 caracteres.',
-            
+
                         'description_required' => 'El contenido de la descripción es obligatorio.',
                         'description_string' => 'El contenido de la descripción debe ser una cadena de texto válida.',
                         'description_max' => 'El contenido de la descripción no puede tener más de 500 caracteres.',
-            
+
                         'logo_image' => "La imagen debe ser un archivo de imagen válido.",
                         'logo_mimes' => "La imagen debe ser de tipo: jpeg, png, jpg, gif, webp.",
                         'logo_max' => "El tamaño de la imagen no debe exceder 2048 KB.",
-            
+
                         'details_required' => "Los detalles son obligatorios.",
                         'details_array' => "Los detalles deben ser un arreglo.",
                         'details_min' => "Los detalles deben contener al menos un detalle.",
