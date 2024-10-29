@@ -7,14 +7,19 @@ use App\Services\FlightTracker;
 use App\Models\Service;
 use App\Models\Supplier;
 use App\Models\Review;
+use App\Services\EmailService;
 
 class WebController extends Controller
 {
     protected $flightTracker;
 
-    public function __construct(FlightTracker $flightTracker)
+    protected $emailService;
+
+    public function __construct(FlightTracker $flightTracker, EmailService $emailService)
     {
         $this->flightTracker = $flightTracker;
+
+        $this->emailService = $emailService;
     }
 
     public function home()
@@ -58,7 +63,11 @@ class WebController extends Controller
 
     public function services()
     {
-        return view('client.services');
+
+        // Find the service by ID or throw a 404 error if not found
+        $suppliers = Supplier::select('id', 'name', 'logo')->get();
+
+        return view('client.services',['suppliers' => $suppliers]);
     }
 
     public function service($id)
@@ -119,6 +128,35 @@ class WebController extends Controller
         ];
 
         return view('client.contact' , ['questions' => $questions]);
+    }
+
+     public function submitContactForm(Request $request)
+    {
+        // Validate the form inputs
+        $validatedData = $request->validate([
+            'company' => 'required|string|max:255',
+            'email' => 'required|email',
+            'ruc' => 'required|string|max:20',
+            'message' => 'required|string|max:1000',
+        ], [
+            'company.required' => __('messages.contact.mail.company_required'),
+            'company.max' => __('messages.contact.mail.company_max'),
+            'email.required' => __('messages.contact.mail.email_required'),
+            'email.email' => __('messages.contact.mail.email_valid'),
+            'ruc.required' => __('messages.contact.mail.ruc_required'),
+            'ruc.max' => __('messages.contact.mail.ruc_max'),
+            'message.required' => __('messages.contact.mail.message_required'),
+            'message.max' => __('messages.contact.mail.message_max'),
+        ]);
+
+        // Send the email using the EmailService
+        $emailSent = $this->emailService->sendContactFormEmail($validatedData);
+
+        if ($emailSent) {
+            return redirect()->route('client.contact')->with('success', __('messages.contact.success'));
+        } else {
+            return redirect()->route('client.contact')->with('error', __('messages.contact.error'));
+        }
     }
 
     public function quote()

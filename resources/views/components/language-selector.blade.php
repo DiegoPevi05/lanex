@@ -4,7 +4,9 @@
         class="language-selector w-auto h-auto flex flex-row items-center gap-x-1 rounded-xl py-2 px-3 bg-primary border-2 border-primary font-bold text-white cursor-pointer duration-300 hover:text-white hover:bg-primary-dark">
         <!-- Display the currently selected language -->
         <span id="selected-lang">{{ app()->getLocale() === 'en' ? 'EN' : 'ES' }}</span>
-        <x-heroicon-o-chevron-down class="h-5 w-5 text-white group-hover:text-white"/>
+        <span class="h-6 w-6 text-white group-hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
     </div>
 
     <!-- Dropdown options, hidden by default -->

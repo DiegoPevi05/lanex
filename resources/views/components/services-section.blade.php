@@ -1,4 +1,4 @@
-<section id="services" class="w-full h-auto xl:h-screen bg-white text-body">
+<section id="services" class="w-full h-auto xl:min-h-screen bg-white text-body">
     <div class="relative w-full h-full padding flex flex-col justify-center items-center">
         <h5 class="animation-element slide-in-up">Nuestros Servicios</h5>
         <h1 class="font-bold text-primary-dark animation-element slide-in-up text-center">

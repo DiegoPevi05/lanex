@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-xl:mt-12">
-        <div class="w-full h-auto flex flex-row items-center">
+        <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center">
             <div class="w-[60px] h-auto p-none">
                 <img src="/images/logo.png" class="h-auto w-full" />
             </div>
@@ -31,7 +31,7 @@
                     Ex
                 </h2>
             </div>
-        </div>
+        </a>
         <div class="hidden xl:flex w-auto h-auto flex-row text-primary-dark">
             <div class="w-auto h-auto flex flex-row gap-x-4">
                 <a href="{{ route('home')  }}"><label class="font-bold {{ request()->routeIs('home')  ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.home') }}</label></a>

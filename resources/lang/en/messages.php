@@ -129,6 +129,19 @@ return [
             ],
         ],
         'questions' => 'Frequently Asked Questions',
+        'mail' => [
+            'subject' => 'New Contact Form Submission'
+            'company_required' => 'The company field is required.',
+            'company_max' => 'The company name may not exceed 255 characters.',
+            'email_required' => 'The email field is required.',
+            'email_valid' => 'Please enter a valid email address.',
+            'ruc_required' => 'The RUC field is required.',
+            'ruc_max' => 'The RUC may not exceed 20 characters.',
+            'message_required' => 'The message field is required.',
+            'message_max' => 'The message may not exceed 1000 characters.',
+        ],
+        'success' => 'Your message has been sent successfully!',
+        'error' => 'There was an issue sending your message. Please try again.',
     ],
     'track' => [
         'hero' => [

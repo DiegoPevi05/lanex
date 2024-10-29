@@ -128,7 +128,7 @@
     <x-brands  title="{{ __('messages.home.brands') }}" :suppliers="$suppliers"/>
     <x-services-section />
     <x-questions title="{{ __('messages.home.questions') }}" :questions="$questions" />
-    <section id="reviews" class="w-full h-auto xl:h-screen bg-white text-body">
+    <section id="reviews" class="w-full h-auto xl:min-h-screen bg-white text-body">
         <div class="relative w-full h-full padding flex flex-col sm:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
             <div class="w-full sm:w-1/2 h-full flex flex-col justify-start items-start gap-y-6">
                 <div class="h-auto sm:min-h-[500px] w-full flex flex-col justify-start items-start animation-element slide-in-up">
@@ -138,27 +138,31 @@
                     </h1>
                     <div class="relative w-full h-full rounded-xl bg-secondary flex justify-center items-center p-6 sm:p-4 max-sm:mt-6">
                         <div class="absolute rounded-xl -top-6 sm:-top-12 -right-6 sm:-right-12 h-12 sm:h-24 w-12 sm:w-24 bg-primary-dark flex justify-center items-center">
-                            <img src="/images/svg/quotes.svg" class="h-6 sm:h-12 w-6 sm:w-12" />
+                            <img src="{{ asset('storage/' . 'images/web/quotes.svg' ) }}" class="h-6 sm:h-12 w-6 sm:w-12" />
 
                         </div>
-                        <img src="/images/svg/review.svg" class="h-[80%] w-auto" />
+                        <img src="{{ asset('storage/' . 'images/web/review.svg') }}" class="h-[80%] w-auto" />
                     </div>
                 </div>
 
                 <div class="hidden sm:flex w-full h-full p-none m-none">
-                    <x-review
-                        :stars="$reviews[0]['stars']"
-                        :content="$reviews[0]['review']"
-                        :name="$reviews[0]['name']"
-                        :charge="$reviews[0]['charge']"
-                        variant="secondary"
-                    />
+                    @if($reviews && $reviews[0])
+                        <x-review
+                            :stars="$reviews[0]['stars']"
+                            :content="$reviews[0]['review']"
+                            :name="$reviews[0]['name']"
+                            :charge="$reviews[0]['charge']"
+                            variant="secondary"
+                        />
+                    @endif
                 </div>
             </div>
 
             <div class="w-full sm:w-1/2 h-full flex flex-col justify-start items-start gap-y-6 animation-group">
 
                 <div class="flex sm:hidden w-full h-full p-none m-none">
+
+                    @if($reviews && $reviews[0])
                     <x-review
                         :stars="$reviews[0]['stars']"
                         :content="$reviews[0]['review']"
@@ -166,27 +170,35 @@
                         :charge="$reviews[0]['charge']"
                         variant="secondary"
                     />
+                    @endif
                 </div>
+
+                @if($reviews && $reviews[1])
                 <x-review
                     :stars="$reviews[1]['stars']"
                     :content="$reviews[1]['review']"
                     :name="$reviews[1]['name']"
                     :charge="$reviews[1]['charge']"
                 />
+                @endif
 
-                <x-review  
+                @if($reviews && $reviews[2])
+                <x-review
                     :stars="$reviews[2]['stars']"
                     :content="$reviews[2]['review']"
                     :name="$reviews[2]['name']"
                     :charge="$reviews[2]['charge']"
                 />
+                @endif
 
-                <x-review  
+                @if($reviews && $reviews[3])
+                <x-review
                     :stars="$reviews[3]['stars']"
                     :content="$reviews[3]['review']"
                     :name="$reviews[3]['name']"
                     :charge="$reviews[3]['charge']"
                 />
+                @endif
 
             </div>
         </div>
