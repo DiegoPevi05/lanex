@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
-class Service extends Model
+class WebService extends Model
 {
     use HasFactory;
+
+    protected $table = 'web_services';
 
     protected $fillable = [
         'name',
@@ -21,7 +23,7 @@ class Service extends Model
     /**
      * Get fillable fields.
      */
-    public static function getFillableFields($validatedFields, Request $request, Service $entity = null)
+    public static function getFillableFields($validatedFields, Request $request, WebService $entity = null)
     {
 
         // Helper function for image processing
@@ -355,7 +357,7 @@ class Service extends Model
     /**
      * Deserialize a JSON string into a Service object.
      */
-    public static function deserialize(string $json): Service
+    public static function deserialize(string $json): WebService
     {
         $data = json_decode($json, true);
 
@@ -372,6 +374,6 @@ class Service extends Model
      */
     public function suppliers()
     {
-        return $this->belongsToMany(Supplier::class);
+        return $this->belongsToMany(WebSupplier::class, 'web_service_supplier', 'service_id', 'supplier_id');
     }
 }

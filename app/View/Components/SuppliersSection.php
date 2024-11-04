@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\Supplier;
+use App\Models\WebSupplier;
 
 class SuppliersSection extends Component
 {
@@ -20,7 +20,7 @@ class SuppliersSection extends Component
         $this->header = $header;
         $this->title = $title;
         // Fetch all suppliers and ensure it's not null
-        $this->suppliers = Supplier::limit(6)->get();
+        $this->suppliers = WebSupplier::limit(6)->get();
 
         // Decode details for each supplier
         $this->suppliers->each(function ($supplier) {

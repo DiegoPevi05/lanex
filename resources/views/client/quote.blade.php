@@ -5,7 +5,8 @@
     <section id="quote_hero_section" class="w-full h-auto bg-white text-body pt-[80px] pt:mt-[140px]">
     <div class="relative w-full h-auto px-4 sm:px-24 xl:px-48 py-12 sm:py-24 xl:py-36 flex flex-col-reverse xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
-            <form class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
+            <form action="{{route('quote.submit')}}" method="POST" class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
+                @csrf
                 <h5>
                     {{__('messages.quote.form.quote_form_title')}}
                 </h5>
@@ -77,7 +78,7 @@
                                     {{__('messages.quote.form.quote_form_arrival_address_label')}}
                                 </p>
                             </label>
-                            <input id="quote_form_arrival_address" name="arrival_date" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_arrival_address_placeholder')}}" />
+                            <input id="quote_form_arrival_address" name="arrival_address" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_arrival_address_placeholder')}}" />
                         </div>
 
                     </div>
@@ -132,7 +133,7 @@
                 </div>
                 <div class="w-full h-auto">
                     <label for="quote_form_message" class="font-bold">{{__('messages.quote.form.quote_form_message_label')}}</span>
-                    <textarea id="quote_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" >{{__('messages.quote.form.quote_form_message_placeholder')}}</textarea>
+                    <textarea id="quote_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_message_placeholder')}}"></textarea>
                 </div>
                 <button type="submit" class="bg-primary-dark px-12 sm:px-24 py-2 sm:py-4 lg:py-3 text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
                     <span>{{__('messages.quote.form.quote_form_button')}}</span>
@@ -156,3 +157,21 @@
     </section>
     <x-questions title="{{__('messages.quote.questions')}}" :questions="$questions" />
 @endsection
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        @if(session('success'))
+            showToast(["{{session('success')}}"]);
+        @endif
+
+        @if($errors->any())
+            showToast(@json($errors->all()));
+        @endif
+
+        @if(session('error'))
+            showToast(["{{session('error')}}"]);
+        @endif
+
+    });
+</script>

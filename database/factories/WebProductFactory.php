@@ -4,15 +4,15 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Product;
+use App\Models\WebProduct;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
-class ProductFactory extends Factory
+class WebProductFactory extends Factory
 {
 
-    protected $model = Product::class;
+    protected $model = WebProduct::class;
     /**
      * Define the model's default state.
      *

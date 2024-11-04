@@ -52,6 +52,39 @@
             <span class="text-primary font-bold text-xs error-message" id="error-EAN"></span>
         </div>
 
+        <!-- Suppliers -->
+        <div class="mb-4 mt-4">
+            <div class="w-full h-auto flex flex-col justify-start">
+                <p class="text-sm text-primary font-bold capitalize">{{ __("messages.dashboard.web.product.form.fields.suppliers") }}</p>
+                <div class="w-full h-auto flex flex-row gap-x-4">
+                    <select class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body">
+                        <option>None</option>
+                    </select>
+                    <button type="button" class="hover:bg-white hover:text-primary active:scale-95 duration-300 border-2 border-primary bg-primary text-white px-4 py-2 rounded-xl ml-auto disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-100 w-[30%]" onclick="addSupplier()" {{ $formRequest === 'view' ? 'disabled' :'' }}>{{ __("messages.dashboard.web.product.form.fields.add_supplier") }}</button>
+                </div>
+            </div>
+            <!-- Container for dynamic points -->
+            <div id="questions-container" class="mb-4 mt-4">
+                @if($product->suppliers)
+                    @foreach($product->suppliers as $index => $supplier)
+                        <div class="question-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
+                            <div class="flex flex-row justify-between w-full h-auto">
+                                <p class="text-sm font-bold text-primary capitalize">{{ __("messages.dashboard.web.product.form.fields.supplier") }} {{ $supplier->id }}</p>
+
+                                @if($formRequest !== 'view')
+                                <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.question-item').remove(); updateQuestionTitles('webcontent[faqs][questions]')">
+                                    {{ __('messages.common.delete') }}
+                                </button>
+                                @endif
+                            </div>
+                            <input type="text" name="suppliers[{{ $index }}]" value="{{ $supplier->name }}" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.web.product.form.placeholders.suppliers") }}" disabled>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+            <span class="text-primary font-bold text-xs error-message" id="error-suppliers"></span>
+        </div>
+
         <!-- Submit Button -->
         <div class="flex {{ $formRequest == "view" ? 'justify-end' : 'justify-between' }} ">
             <button type="button" onclick="clearContent()" class="clear_content_form_button px-4 py-2 bg-secondary-dark text-white duration-300 hover:bg-primary rounded-md active:scale-95 capitalize">

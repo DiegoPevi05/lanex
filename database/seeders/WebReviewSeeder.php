@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Review;
+use App\Models\WebReview;
 
 
-class ReviewSeeder extends Seeder
+class WebReviewSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class ReviewSeeder extends Seeder
     public function run(): void
     {
         // Create 4 random reviews
-        Review::factory(4)->create();
+        WebReview::factory(4)->create();
     }
 }

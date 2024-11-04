@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\FlightTracker;
-use App\Models\Service;
-use App\Models\Supplier;
-use App\Models\Review;
+use App\Models\WebService;
+use App\Models\WebSupplier;
+use App\Models\WebReview;
 use App\Notifications\CustomEmailNotification;
 use App\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Log;
@@ -48,10 +48,10 @@ class WebController extends Controller
             ],
         ];
 
-        $reviews = Review::all();
+        $reviews = WebReview::all();
 
         // Find the service by ID or throw a 404 error if not found
-        $suppliers = Supplier::select('id', 'name', 'logo')->get();
+        $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
 
         return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'reviews' => $reviews]);
     }
@@ -65,7 +65,7 @@ class WebController extends Controller
     {
 
         // Find the service by ID or throw a 404 error if not found
-        $suppliers = Supplier::select('id', 'name', 'logo')->get();
+        $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
 
         return view('client.services',['suppliers' => $suppliers]);
     }
@@ -74,7 +74,7 @@ class WebController extends Controller
     {
         // Fake data for now
         // Find the service by ID or throw a 404 error if not found
-        $service = Service::with('suppliers:id,name,logo')->findOrFail($id);
+        $service = WebService::with('suppliers:id,name,logo')->findOrFail($id);
 
         // Decode the JSON webcontent into an array
         $service->webcontent = json_decode($service->webcontent, true); // true converts it to an associative array
@@ -92,7 +92,7 @@ class WebController extends Controller
 
     public function supplier($id)
     {
-        $supplier = Supplier::with('products')->findOrFail($id);
+        $supplier = WebSupplier::with('products')->findOrFail($id);
 
         if (!is_array($supplier->details)) {
             $supplier->details = json_decode($supplier->details, true);
@@ -223,6 +223,96 @@ class WebController extends Controller
         ];
 
         return view('client.quote' , ['questions' => $questions]);
+    }
+
+     public function QuoteForm(Request $request)
+    {
+        // Validate the form inputs
+        $validatedData = $request->validate([
+            'number_flight' => 'string|max:255',
+            'packing_list' => 'string|max:255',
+            'departure_date' => 'date',
+            'arrival_date' => 'date',
+            'arrival_address' => 'string|max:255',
+            'supplier_identifier' => 'string|max:255',
+            'client_identifier' => 'string|max:255',
+            'product_identifier' => 'string|max:255',
+            'email' => 'required|email',
+            'message' => 'required|string|max:1000',
+        ], [
+            'number_flight.string' => __('messages.quote.form.validations.number_flight_string'),
+            'number_flight.max' => __('messages.quote.form.validations.number_flight_max'),
+            'packing_list.string' => __('messages.quote.form.validations.packing_list_string'),
+            'packing_list.max' => __('messages.quote.form.validations.packing_list_max'),
+            'departure_date.date' => __('messages.quote.form.validations.departure_date_date'),
+            'arrival_date.date' => __('messages.quote.form.validations.arrival_date_date'),
+            'arrival_address.string' => __('messages.quote.form.validations.arrival_address_string'),
+            'arrival_address.max' => __('messages.quote.form.validations.arrival_address_max'),
+            'supplier_identifier.string' => __('messages.quote.form.validations.supplier_identifier_string'),
+            'supplier_identifier.max' => __('messages.quote.form.validations.supplier_identifier_max'),
+            'client_identifier.string' => __('messages.quote.form.validations.client_identifier_string'),
+            'client_identifier.max' => __('messages.quote.form.validations.client_identifier_max'),
+            'product_identifier.string' => __('messages.quote.form.validations.product_identifier_string'),
+            'product_identifier.max' => __('messages.quote.form.validations.product_identifier_max'),
+            'email.required' => __('messages.quote.form.validations.email_required'),
+            'email.email' => __('messages.quote.form.validations.email_valid'),
+            'message.required' => __('messages.quote.form.validations.message_required'),
+            'message.max' => __('messages.quote.form.validations.message_max'),
+        ]);
+
+        try{
+
+            $notifiable = new AnonymousNotifiable($validatedData['email']);
+            $notification = new CustomEmailNotification(
+                __('messages.quote.mail.subject_anonymous'),
+                __('messages.quote.mail.greeting_anonymous'),
+                [__('messages.quote.mail.intro_anonymous_1')],
+                null,
+                null,
+                [__('messages.quote.mail.outro_anonymous_2')],
+                __('messages.quote.mail.salutation_anonymous'),
+                null
+            );
+
+            $notifiable->notify($notification);
+
+            $notifiable_admin = new AnonymousNotifiable(env('APP_ADMIN_EMAIL'));
+
+            $notification_admin = new CustomEmailNotification(
+                __('messages.quote.mail.subject_admin'),
+                __('messages.quote.mail.greeting_admin'),
+                [__('messages.quote.mail.intro_admin_1'),
+                 __('messages.quote.mail.intro_admin_2'),
+                 __('messages.quote.mail.intro_admin_3') . ' : ' . $validatedData['number_flight'],
+                 __('messages.quote.mail.intro_admin_4') . ' : ' . $validatedData['packing_list'],
+                 __('messages.quote.mail.intro_admin_5') . ' : ' . $validatedData['departure_date'],
+                 __('messages.quote.mail.intro_admin_6') . ' : ' . $validatedData['arrival_date'],
+                 __('messages.quote.mail.intro_admin_7') . ' : ' . $validatedData['arrival_address'],
+                 __('messages.quote.mail.intro_admin_8') . ' : ' . $validatedData['supplier_identifier'],
+                 __('messages.quote.mail.intro_admin_9') . ' : ' . $validatedData['client_identifier'],
+                 __('messages.quote.mail.intro_admin_10') . ' : ' . $validatedData['product_identifier'],
+                 __('messages.quote.mail.intro_admin_11') . ' : ' . $validatedData['email'],
+                 __('messages.quote.mail.intro_admin_12') . ' : ' . $validatedData['message']
+                ],
+                null,
+                null,
+                [],
+                null,
+                null
+            );
+
+            $notifiable_admin->notify($notification_admin);
+
+            return redirect()->route('quote')->with('success', __('messages.quote.success'));
+
+        } catch (\Exception $e) {
+            // Log the error message for debugging
+            Log::error('Failed to send quote email: ' . $e->getMessage());
+
+            // Redirect with an error message if email sending fails
+            return redirect()->route('quote')->with('error', __('messages.quote.error'));
+        }
+
     }
 
     public function track()

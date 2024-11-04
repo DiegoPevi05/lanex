@@ -61,8 +61,11 @@ class CustomEmailNotification extends Notification
             $mailMessage->line($line);
         }
 
-        // Set the salutation
-        return $mailMessage->salutation($this->salutation ?? 'Thank you!');
+        if ($this->salutation) {
+            $mailMessage->salutation($this->salutation);
+        }
+    
+        return $mailMessage;
     }
     /**
      * Get the array representation of the notification.

@@ -5,11 +5,13 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\WebSupplier;
 
 class WebProductForm extends Component
 {
     public $formRequest;
     public $product;
+    public $suppliers;
     /**
      * Create a new component instance.
      */
@@ -17,6 +19,7 @@ class WebProductForm extends Component
     {
         $this->formRequest = $formRequest;
         $this->product = $product;
+        $this->suppliers = WebSupplier::all();
     }
 
     /**
@@ -26,7 +29,8 @@ class WebProductForm extends Component
     {
         return view('components.web-product-form', [
             'formRequest' => $this->formRequest,
-            'product' => $this->product
+            'product' => $this->product,
+            'suppliers' => $this->suppliers
         ]);
     }
 }

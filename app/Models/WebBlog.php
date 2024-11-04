@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Blog extends Model
+class WebBlog extends Model
 {
 
     use HasFactory;
+
+    protected $table = 'web_blogs';
 
     protected $fillable = [
         'title',

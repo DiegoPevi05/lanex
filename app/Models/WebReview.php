@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\Request;
 
-class Review extends Model
+class WebReview extends Model
 {
 
     use HasFactory;
+
+    protected $table = 'web_reviews';
 
     protected $fillable = [
         'name',
@@ -20,7 +22,7 @@ class Review extends Model
         'stars',
     ];
 
-    public static function getFillableFields($validatedFields, Request $request, Review $entity = null)
+    public static function getFillableFields($validatedFields, Request $request, WebReview $entity = null)
     {
         return [
             'name' => $validatedFields['name'] ?? null,
@@ -183,7 +185,7 @@ class Review extends Model
      * @param string $json
      * @return Review
      */
-    public static function deserialize(string $json): Review
+    public static function deserialize(string $json): WebReview
     {
         $data = json_decode($json, true);
 

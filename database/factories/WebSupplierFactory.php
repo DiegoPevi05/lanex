@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Supplier;
+use App\Models\WebSupplier;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Supplier>
  */
-class SupplierFactory extends Factory
+class WebSupplierFactory extends Factory
 {
-    protected $model = Supplier::class;
+    protected $model = WebSupplier::class;
     /**
      * Define the model's default state.
      *

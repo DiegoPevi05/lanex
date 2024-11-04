@@ -1,4 +1,4 @@
-<div class="relative inline-block text-left z-[60]">
+<div class="relative inline-block text-left z-[120]">
     <div
         data-id="{{$id}}"
         class="language-selector w-auto h-auto flex flex-row items-center gap-x-1 rounded-xl py-2 px-3 bg-primary border-2 border-primary font-bold text-white cursor-pointer duration-300 hover:text-white hover:bg-primary-dark">
@@ -21,15 +21,6 @@
 </div>
 
 <script>
-// Function to toggle dropdowns based on clicked component
-    document.querySelectorAll('.language-selector').forEach(selector => {
-        selector.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const dropdown = document.querySelector(`#dropdown-options-${id}`);
-            dropdown.classList.toggle('hidden');
-        });
-    });
-
     // Set language and navigate to the route
     function setLanguage(url) {
         window.location.href = url;

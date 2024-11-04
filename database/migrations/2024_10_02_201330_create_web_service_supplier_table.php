@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_supplier', function (Blueprint $table) {
+        Schema::create('web_service_supplier', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('service_id')->constrained()->onDelete('cascade');
-            $table->foreignId('supplier_id')->constrained()->onDelete('cascade');
+            $table->foreignId('service_id')->constrained('web_services')->onDelete('cascade');
+            $table->foreignId('supplier_id')->constrained('web_suppliers')->onDelete('cascade');
             $table->timestamps(); // Optional, but useful for tracking the relationship creation time
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_supplier');
+        Schema::dropIfExists('web_service_supplier');
     }
 };

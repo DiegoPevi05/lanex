@@ -21,6 +21,7 @@ Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 Route::post('/contact/submit', [WebController::class, 'submitContactForm'])->name('contact.submit');
 Route::get('/track', [WebController::class, 'track'])->name('track');
 Route::get('/quote', [WebController::class, 'quote'])->name('quote');
+Route::post('/quote/submit', [WebController::class, 'QuoteForm'])->name('quote.submit');
 Route::get('/track-flight', [WebController::class, 'trackFlight'])->name('track-flight');
 Route::get('/set-language/{lang}', function ($lang) {
     session(['locale' => $lang]);

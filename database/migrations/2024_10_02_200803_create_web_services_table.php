@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::create('web_services', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo');
-            $table->text('description');
-            $table->json('details'); // Array of strings or JSON
+            $table->string('icon');
+            $table->string('short_description');
+            $table->json('webcontent'); // or you can use longText for JSON stringified
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suppliers');
+        Schema::dropIfExists('web_services');
     }
 };

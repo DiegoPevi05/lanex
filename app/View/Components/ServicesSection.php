@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\Service;
+use App\Models\WebService;
 
 class ServicesSection extends Component
 {
@@ -15,7 +15,7 @@ class ServicesSection extends Component
      */
     public function __construct()
     {
-        $this->services = Service::all();
+        $this->services = WebService::all();
     }
 
     /**

@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
-class Supplier extends Model
+class WebSupplier extends Model
 {
 
     use HasFactory;
+
+    protected $table = 'web_suppliers';
 
     protected $fillable = [
         'name',
@@ -19,7 +21,7 @@ class Supplier extends Model
         'details'
     ];
 
-    public static function getFillableFields($validatedFields, Request $request, Supplier $entity = null)
+    public static function getFillableFields($validatedFields, Request $request, WebSupplier $entity = null)
     {
 
         // Helper function for image processing
@@ -124,12 +126,6 @@ class Supplier extends Model
         return isset($messages[$action]) ? __($messages[$action]) : '';
     }
 
-
-    public function suppliers()
-    {
-        return $this->belongsToMany(Supplier::class);
-    }
-
     /**
      * Get error messages for CRUD operations.
      */
@@ -197,7 +193,7 @@ class Supplier extends Model
      * @param string $json
      * @return Review
      */
-    public static function deserialize(string $json): Supplier
+    public static function deserialize(string $json): WebSupplier
     {
         $data = json_decode($json, true);
 
@@ -212,11 +208,11 @@ class Supplier extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_supplier');
+        return $this->belongsToMany(WebProduct::class, 'web_product_supplier','supplier_id', 'product_id');
     }
 
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(WebService::class, 'web_service_supplier','supplier_id', 'service_id');
     }
 }

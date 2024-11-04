@@ -114,5 +114,20 @@
             });
         })
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to toggle dropdowns based on clicked component
+        document.querySelectorAll('.language-selector').forEach(selector => {
+            selector.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const dropdown = document.querySelector(`#dropdown-options-${id}`);
+                if(dropdown.classList.contains('hidden')){
+                    dropdown.classList.remove('hidden');
+                }else{
+                    dropdown.classList.add('hidden');
+                }
+            });
+        });
+    })
 </script>
 

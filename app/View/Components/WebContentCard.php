@@ -5,10 +5,10 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\Review;
-use App\Models\Service;
-use App\Models\Product;
-use App\Models\Supplier;
+use App\Models\WebReview;
+use App\Models\WebService;
+use App\Models\WebProduct;
+use App\Models\WebSupplier;
 use Illuminate\Support\Str;
 
 class WebContentCard extends Component
@@ -26,7 +26,7 @@ class WebContentCard extends Component
 
     public function __construct($data)
     {
-        if ($data instanceof Review) {
+        if ($data instanceof WebReview) {
             $review = $data;
             $this->id = (string)$review->id;  // Convert ID to string
             $this->type = $review->getType();  // Call on the instance
@@ -35,7 +35,7 @@ class WebContentCard extends Component
             $this->deleteRoute = $review->getRoutes()['destroy'];
             $this->deleteMessages = $review->getHelperMessages();
 
-        }elseif($data instanceof Service){
+        }elseif($data instanceof WebService){
 
             $service = $data;
             $this->id = (string)$service->id;  // Convert ID to string
@@ -45,7 +45,7 @@ class WebContentCard extends Component
             $this->deleteRoute = $service->getRoutes()['destroy'];
             $this->deleteMessages = $service->getHelperMessages();
 
-        }elseif($data instanceof Product){
+        }elseif($data instanceof WebProduct){
 
             $product = $data;
             $this->id = (string)$product->id;  // Convert ID to string
@@ -55,7 +55,7 @@ class WebContentCard extends Component
             $this->deleteRoute = $product->getRoutes()['destroy'];
             $this->deleteMessages = $product->getHelperMessages();
 
-        }elseif($data instanceof Supplier){
+        }elseif($data instanceof WebSupplier){
 
             $supplier = $data;
             $this->id = (string)$supplier->id;  // Convert ID to string

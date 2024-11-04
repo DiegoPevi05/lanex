@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
-class Product extends Model
+class WebProduct extends Model
 {
 
     use HasFactory;
+
+    protected $table = 'web_products';
 
     protected $fillable = [
         'name',
@@ -20,7 +22,7 @@ class Product extends Model
         'EAN'
     ];
 
-    public static function getFillableFields($validatedFields, Request $request, Product $entity = null)
+    public static function getFillableFields($validatedFields, Request $request, WebProduct $entity = null)
     {
 
         // Helper function for image processing
@@ -129,10 +131,7 @@ class Product extends Model
     }
 
 
-    public function suppliers()
-    {
-        return $this->belongsToMany(Supplier::class);
-    }
+
 
     /**
      * Get error messages for CRUD operations.
@@ -206,7 +205,7 @@ class Product extends Model
      * @param string $json
      * @return Review
      */
-    public static function deserialize(string $json): Product
+    public static function deserialize(string $json): WebProduct
     {
         $data = json_decode($json, true);
 
@@ -218,5 +217,10 @@ class Product extends Model
             'description' => $data['description'],
             'EAN' => $data['EAN'],
         ]);
+    }
+
+    public function suppliers()
+    {
+        return $this->belongsToMany(WebSupplier::class, 'web_product_supplier','product_id', 'supplier_id');
     }
 }

@@ -4,14 +4,14 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Service;
+use App\Models\WebService;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service>
  */
-class ServiceFactory extends Factory
+class WebServiceFactory extends Factory
 {
-    protected $model = Service::class;
+    protected $model = WebService::class;
     /**
      * Define the model's default state.
      *
