@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TransportType extends Model
+{
+    use HasFactory;
+
+    protected $table = 'transport_types';
+
+    protected $fillable = [
+        'type',
+        'description',
+        'status',
+    ];
+
+    public function trackingSteps()
+    {
+        return $this->hasMany(TrackingStep::class,'transport_type_id');
+    }
+}

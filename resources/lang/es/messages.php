@@ -333,7 +333,7 @@ return [
             'greeting' => 'Hola',
             'welcome' => 'Bienvenido',
             'home' => 'tablero',
-            'services' => 'servicios',
+            'history' => 'history',
             'orders' => 'pedidos',
             'transports' => 'transportes',
             'billing' => 'facturación',

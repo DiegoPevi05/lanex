@@ -16,11 +16,6 @@ class DashboardController extends Controller
         return view('dashboard.dashboard');
     }
 
-    public function services()
-    {
-        return view('dashboard.services');
-    }
-
     public function orders()
     {
         return view('dashboard.orders');
@@ -29,6 +24,11 @@ class DashboardController extends Controller
     public function transports()
     {
         return view('dashboard.transports');
+    }
+
+    public function history()
+    {
+        return view('dashboard.history');
     }
 
     public function billing()

@@ -32,7 +32,7 @@ Route::get('/set-language/{lang}', function ($lang) {
 Route::prefix('/dashboard')->middleware('auth')->group(function(){
 
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard_home');
-    Route::get('/services', [DashboardController::class, 'services'])->name('dashboard_services');
+    Route::get('/history', [DashboardController::class, 'history'])->name('dashboard_history');
     Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard_orders');
     Route::get('/transports', [DashboardController::class, 'transports'])->name('dashboard_transports');
     Route::get('/billing', [DashboardController::class, 'billing'])->name('dashboard_billing');
