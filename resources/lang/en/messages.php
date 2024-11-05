@@ -6,7 +6,10 @@ return [
         'cancel' => 'cancel',
         'quote' => 'Quote',
         'track' => 'Track',
-        'no_products' => 'Currently no Products for this Supplier'
+        'no_products' => 'Currently no Products for this Supplier',
+        'no_suppliers_options' => 'No Suppliers',
+        'no_services_options' => 'No Services',
+        'no_products_options' => 'No Products'
     ],
     'navbar' => [
         'home' => 'Home',
@@ -429,6 +432,7 @@ return [
                 ]
             ],
             'service' => [
+                'name' => 'service',
                 'new_entity' => 'new service',
                 'header' => "services",
                 'indications' => "select an option to create, update, or delete services",
@@ -481,7 +485,10 @@ return [
                         'webcontent_faqs_questions' => 'FAQs Questions',
                         'webcontent_faqs_question' => 'question',
                         'webcontent_faqs_question_question' => 'question',
-                        'webcontent_faqs_question_answer' => 'answer'
+                        'webcontent_faqs_question_answer' => 'answer',
+                        'suppliers' => 'suppliers',
+                        'supplier' => 'supplier',
+                        'add_supplier' => "Add Supplier"
                     ],
                     'placeholders' => [
                         'name' => 'Enter Name',
@@ -512,6 +519,7 @@ return [
                         'webcontent_faqs_questions' => 'Enter FAQs Questions',
                         'webcontent_faqs_question' => 'Enter Question',
                         'webcontent_faqs_answer' => 'Enter Answer',
+                        'suppliers' => 'Enter Supplier'
                     ],
                     'buttons' => [
                         'cancel' => 'cancel',
@@ -608,6 +616,7 @@ return [
                 ]
             ],
             'product' => [
+                'name' => 'product',
                 'new_entity' => 'new product',
                 'header' => "products",
                 'indications' => "select an option create, update or delete products",
@@ -685,6 +694,7 @@ return [
                 ]
             ],
             'supplier' => [
+                'name' => 'supplier',
                 'new_entity' => 'new supplier',
                 'header' => "suppliers",
                 'indications' => "select an option create, update or delete suppliers",
@@ -706,7 +716,11 @@ return [
                         'description' => 'description',
                         'details' => 'details',
                         'details_add' => 'Add Detail',
-                        'details_detail' => 'Detail'
+                        'details_detail' => 'Detail',
+                        'services' => 'services',
+                        'add_product' => 'Add product',
+                        'products' => 'products',
+                        'add_service' => 'Add service'
                     ],
                     'placeholders' => [
                         'name' => 'Enter Name',

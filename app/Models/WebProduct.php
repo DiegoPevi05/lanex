@@ -24,7 +24,6 @@ class WebProduct extends Model
 
     public static function getFillableFields($validatedFields, Request $request, WebProduct $entity = null)
     {
-
         // Helper function for image processing
         $processImage = function ($imageFieldPath, $currentImagePath) use ($request) {
             // Check if an image is present in the request
@@ -40,13 +39,22 @@ class WebProduct extends Model
             return $currentImagePath;
         };
 
-        return [
+        // Process the fillable fields
+        $fillableFields = [
             'name' => $validatedFields['name'] ?? null,
             'image' => $processImage('image', $entity ? $entity->image : null),
             'stars' => $validatedFields['stars'] ?? null,
             'description' => $validatedFields['description'] ?? null,
             'EAN' => $validatedFields['EAN'] ?? null,
         ];
+
+        // Sync suppliers if the suppliers field is provided in the request
+        if ($entity && $request->has('suppliers')) {
+            $supplierIds = $request->input('suppliers', []);
+            $entity->suppliers()->sync($supplierIds);
+        }
+
+        return $fillableFields;
 
     }
 

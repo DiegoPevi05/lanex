@@ -41,7 +41,7 @@ class WebService extends Model
             return $currentImagePath;
         };
 
-        return [
+        $fillableFields = [
             'name' => $validatedFields['name'] ?? null,
             'icon' => $validatedFields['icon'] ?? null,
             'short_description' => $validatedFields['short_description'] ?? null,
@@ -78,6 +78,14 @@ class WebService extends Model
                 ],
             ]),
         ];
+
+        // Sync suppliers if the suppliers field is provided in the request
+        if ($entity && $request->has('suppliers')) {
+            $supplierIds = $request->input('suppliers', []);
+            $entity->suppliers()->sync($supplierIds);
+        }
+
+        return $fillableFields;
     }
 
     /**

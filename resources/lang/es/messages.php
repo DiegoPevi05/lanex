@@ -6,7 +6,10 @@ return [
         'cancel' => 'cancelar',
         'quote' => 'Cotización',
         'track' => 'Rastrear',
-        'no_products' => 'Actualmente no hay productos para este proveedor'
+        'no_products' => 'Actualmente no hay productos para este proveedor',
+        'no_suppliers_options' => 'No hay proveedores',
+        'no_services_options' => 'No hay servicios',
+        'no_products_options' => 'No hay productos'
     ],
     'navbar' => [
         'home' => 'Inicio',
@@ -429,6 +432,7 @@ return [
                 ]
             ],
             'service' => [
+                'name' => 'servicio',
                 'new_entity' => 'nuevo servicio',
                 'header' => "servicios",
                 'indications' => "selecciona una opción para crear, actualizar o eliminar servicios",
@@ -513,7 +517,8 @@ return [
                         'webcontent_faqs_questions' => 'Ingresar preguntas de preguntas frecuentes',
                         'webcontent_faqs_question' => 'Ingresar pregunta frecuente',
                         'webcontent_faqs_question_question' => 'Ingresar pregunta frecuente',
-                        'webcontent_faqs_question_answer' => 'Ingresar respuesta'
+                        'webcontent_faqs_question_answer' => 'Ingresar respuesta',
+                        'suppliers' => 'Ingresar Proveedor'
                     ],
                     'buttons' => [
                         'cancel' => 'Cancelar',
@@ -547,6 +552,7 @@ return [
                 ]
             ],
             'product' => [
+                'name' => 'producto',
                 'new_entity' => 'nuevo producto',
                 'header' => "productos",
                 'indications' => "selecciona una opción para crear, actualizar o eliminar productos",
@@ -569,6 +575,9 @@ return [
                         'description' => 'descripción',
                         'image' => 'imagen',
                         'EAN' => 'EAN',
+                        'suppliers' => 'proveedores',
+                        'supplier' => 'proveedor',
+                        'add_supplier' => "Agregar proveedor"
                     ],
                     'placeholders' => [
                         'name' => 'Ingrese Nombre',
@@ -576,6 +585,7 @@ return [
                         'stars' => 'Ingrese el número de estrellas',
                         'image' => 'Ingrese una Imagen',
                         'EAN' => 'Ingrese el número EAN del producto',
+                        'suppliers' => 'Ingresar proveedor'
                     ],
                     'buttons' => [
                         'cancel' => 'cancelar',
@@ -620,6 +630,7 @@ return [
                 ]
             ],
             'supplier' => [
+                'name' => 'proveedor',
                 'new_entity' => 'nuevo proveedor',
                 'header' => "proveedores",
                 'indications' => "selecciona una opción: crear, actualizar o eliminar proveedores",
@@ -639,7 +650,11 @@ return [
                         'name' => 'nombre',
                         'logo' => 'logo',
                         'description' => 'descripción',
-                        'details' => 'detalles'
+                        'details' => 'detalles',
+                        'services' => 'servicios',
+                        'add_product' => 'Agregar producto',
+                        'products' => 'productos',
+                        'add_service' => 'Agregar servicio'
                     ],
                     'placeholders' => [
                         'name' => 'Ingresa nombre',

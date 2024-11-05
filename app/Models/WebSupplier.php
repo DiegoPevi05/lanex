@@ -39,12 +39,26 @@ class WebSupplier extends Model
             return $currentImagePath;
         };
 
-        return [
+        $fillableFields = [
             'name' => $validatedFields['name'] ?? null,
             'logo' => $processImage('logo', $entity ? $entity->logo : null),
             'description' => $validatedFields['description'] ?? null,
             'details' => json_encode($validatedFields['details'] ?? []) ,
         ];
+
+        // Sync suppliers if the suppliers field is provided in the request
+        if ($entity && $request->has('products')) {
+            $productIds = $request->input('products', []);
+            $entity->products()->sync($productIds);
+        }
+
+        // Sync suppliers if the suppliers field is provided in the request
+        if ($entity && $request->has('services')) {
+            $serviceIds = $request->input('services', []);
+            $entity->services()->sync($serviceIds);
+        }
+
+        return $fillableFields;
 
     }
 

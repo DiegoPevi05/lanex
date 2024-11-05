@@ -19,7 +19,7 @@ class WebProductForm extends Component
     {
         $this->formRequest = $formRequest;
         $this->product = $product;
-        $this->suppliers = WebSupplier::all();
+        $this->suppliers = WebSupplier::select('id', 'name')->get();
     }
 
     /**

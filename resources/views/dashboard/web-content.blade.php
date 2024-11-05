@@ -500,5 +500,88 @@
         detailIndex = pointItems.length;
     }
 
+
+    function addEntity(entity,name) {
+        // Get the selected supplier
+        const selectElement = document.querySelector(`select[name='${entity}s_options']`);
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const entityId = selectedOption.value;
+        const entityName = selectedOption.text;
+
+        if(!entityId){
+            return;
+        };
+
+        // Select all hidden inputs within the entity container (suppliers-container, etc.)
+        const currentIds = document.querySelectorAll(`#${entity}s-container input[type="hidden"]`);
+
+        // Check if any hidden input contains the desired entity ID in its value
+        let entityExists = Array.from(currentIds).some(input => Number(input.value) === Number(entityId));
+
+        if (entityExists) {
+            return; // Stop if entity already exists in the hidden inputs
+        }
+
+        entityIndex = document.querySelectorAll(`#${entity}s-container .${entity}-item`).length;
+        // Create a new div to hold the detail inputs
+        const entityContainer = document.createElement("div");
+        entityContainer.classList.add(`${entity}-item`, "mb-4", "mt-4", "border-2","border-secondary-dark","flex","flex-col", "rounded-md","p-4","animation-element","in-view","slide-in-up");
+
+        const containerHeader = document.createElement('div');
+        containerHeader.classList.add('flex','flex-row','justify-between','w-full', 'h-auto')
+
+        const entityTitle = document.createElement("p");
+        entityTitle.classList.add("text-sm", "font-bold", "text-primary", "capitalize");
+        entityTitle.innerText = `${name} ${entityId}`;
+        containerHeader.appendChild(entityTitle);
+
+        const deleteEntityButton = document.createElement("button");
+        deleteEntityButton.classList.add("text-sm", "font-bold", "text-primary", "capitalize","rounded-xl","active:scale-95","duration-300","transition-all","bg-secondary-dark","hover:bg-primary","px-4", "py-2","text-white");
+        deleteEntityButton.innerText = "{{ __('messages.common.delete') }}";
+
+        // Add delete functionality
+        deleteEntityButton.onclick = function() {
+            entityContainer.remove(); // Remove the detail container
+            updateEntityIndex(entity); // Update the titles of remaining details
+        };
+
+        containerHeader.appendChild(deleteEntityButton);
+        entityContainer.appendChild(containerHeader);
+
+
+        const entityInput = document.createElement("input");
+        entityInput.value = entityName;
+        entityInput.classList.add("mt-2","text-sm", "block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body");
+        entityInput.placeholder = `{{ __('messages.dashboard.web.${entity}.form.placeholders.suppliers') }}`;
+        entityInput.disabled = true;
+        entityContainer.appendChild(entityInput);
+
+
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = `${entity}s[${entityIndex}]`;
+        hiddenInput.value = entityId;
+        entityContainer.appendChild(hiddenInput);
+
+        // Append the new detail container to the main container
+        document.getElementById(`${entity}s-container`).appendChild(entityContainer);
+
+        // Increment the detail index for the next detail
+        entityIndex++;
+    }
+
+    function updateEntityIndex(entity) {
+        const entityItems = document.querySelectorAll(`.${entity}-item`);
+        entityItems.forEach((entityItem, index) => {
+
+            const hiddenInput = entityItem.querySelector("input[type='hidden']");
+            if (hiddenInput) {
+                hiddenInput.name = `${entity}s[${index}]`;
+            }
+        });
+        // Update detailIndex to the current count
+        detailIndex = entityItems.length;
+    }
+
     </script>
 @endpush

@@ -59,7 +59,6 @@ abstract class AbstractEntityController extends Controller
     public function store(Request $request)
     {
 
-
         $validator = Validator::make($request->all(), $this->model::getValidationRules(), $this->model::getValidationMessages());
 
         if ($validator->fails()) {
