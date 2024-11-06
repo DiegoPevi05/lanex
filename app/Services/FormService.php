@@ -7,6 +7,7 @@ use App\View\Components\WebProductForm;
 use App\View\Components\WebSupplierForm;
 use App\View\Components\TransportTypeForm;
 use App\View\Components\ClientForm;
+use App\View\Components\OrderForm;
 use App\Services\IconService;
 
 class FormService
@@ -42,7 +43,11 @@ class FormService
 
         }elseif($typeEntity == "client"){
 
-            $formComponent = new ClientForm($formRequest, $entity, );
+            $formComponent = new ClientForm($formRequest, $entity );
+
+        }elseif($typeEntity == "order"){
+
+            $formComponent = new OrderForm($formRequest, $entity );
         }
 
         return $formComponent;

@@ -234,7 +234,7 @@ class Order extends Model
         if (!$inTransitStep) {
             $inTransitStep = $this->trackingSteps()
                 ->where('status', 'PENDING')
-                ->orderBy('sequence')
+                ->orderByDesc('sequence')
                 ->first();
         }
 

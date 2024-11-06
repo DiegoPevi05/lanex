@@ -36,12 +36,15 @@ class OrderSeeder extends Seeder
 
             $transport_index = 0;
 
+
             $tracking_steps = TrackingStep::factory(6)->make()->each(function ($tracking_step) use ($order, $transport_group, &$transport_index) {
+
                 $tracking_step->transport_type_id = $transport_group[$transport_index]->id;
                 $tracking_step->order_id = $order->id; // Set order_id directly
                 $tracking_step->save();
                 // Move to the next transport type, wrapping around if we reach the end
                 $transport_index = ($transport_index + 1) % $transport_group->count();
+
             });
 
             // Create and associate freights with the order

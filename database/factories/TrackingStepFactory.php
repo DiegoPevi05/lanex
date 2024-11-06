@@ -21,7 +21,7 @@ class TrackingStepFactory extends Factory
     public function definition(): array
     {
         $sequence = self::$sequenceCounter;
-        self::$sequenceCounter = self::$sequenceCounter >= 5 ? 1 : self::$sequenceCounter + 1;
+        self::$sequenceCounter = self::$sequenceCounter >= 6 ? 1 : self::$sequenceCounter + 1;
 
         return [
             'sequence' => $sequence,

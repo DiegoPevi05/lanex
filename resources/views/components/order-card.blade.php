@@ -31,7 +31,7 @@ $currentTransportType = $transportType->type;
         </div>
     </div>
     <div class="w-full h-auto flex flex-col justify-start items-start border-b-2 border-gray-light px-4 py-4">
-        <div class="w-full flex flex-row">
+        <div class="w-full h-auto flex flex-row">
             <div class="w-1/2 h-full flex flex-col justify-start items-start">
                 <p class="text-secondary-dark">
                 {{ __('messages.track.order.shipment') }}:
@@ -48,7 +48,7 @@ $currentTransportType = $transportType->type;
                 </span>
             </div>
         </div>
-        <div class="w-full flex flex-row mt-2 h-16">
+        <div class="w-full flex flex-row mt-2 h-auto">
             <div class="grid grid-cols-2 grid-rows-span w-1/2 relative">
                 <div class="col-span-1 flex justify-center items-center">
                     <p>{{ __('messages.track.order.origin') }}</p>
