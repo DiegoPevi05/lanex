@@ -10,6 +10,9 @@ use App\Http\Controllers\Web\ReviewController;
 use App\Http\Controllers\Web\ServiceController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\SupplierController;
+use App\Http\Controllers\TransportTypeController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -33,11 +36,32 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
 
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard_home');
     Route::get('/history', [DashboardController::class, 'history'])->name('dashboard_history');
-    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard_orders');
-    Route::get('/transports', [DashboardController::class, 'transports'])->name('dashboard_transports');
     Route::get('/billing', [DashboardController::class, 'billing'])->name('dashboard_billing');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('dashboard_profile');
-    Route::get('/config', [DashboardController::class, 'config'])->name('dashboard_config');
+
+    Route::prefix('/client')->group(function(){
+        Route::get('/', [ClientController::class, 'index'])->name('dashboard_client');
+        Route::post('/form', [ClientController::class, 'renderForm'])->name('client.form');
+        Route::post('/store', [ClientController::class, 'store'])->name('client.store');
+        Route::put('/update/{id}', [ClientController::class, 'update'])->name('client.update');
+        Route::delete('/destroy/{id}', [ClientController::class, 'destroy'])->name('client.destroy');
+    });
+
+    Route::prefix('/order')->group(function(){
+        Route::get('/', [OrderController::class, 'index'])->name('dashboard_order');
+        Route::post('/form', [OrderController::class, 'renderForm'])->name('order.form');
+        Route::post('/store', [OrderController::class, 'store'])->name('order.store');
+        Route::put('/update/{id}', [OrderController::class, 'update'])->name('order.update');
+        Route::delete('/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+    });
+
+    Route::prefix('/transport_type')->group(function(){
+        Route::get('/', [TransportTypeController::class, 'index'])->name('dashboard_transport_type');
+        Route::post('/form', [TransportTypeController::class, 'renderForm'])->name('transport_type.form');
+        Route::post('/store', [TransportTypeController::class, 'store'])->name('transport_type.store');
+        Route::put('/update/{id}', [TransportTypeController::class, 'update'])->name('transport_type.update');
+        Route::delete('/destroy/{id}', [TransportTypeController::class, 'destroy'])->name('transport_type.destroy');
+    });
 
 
     Route::prefix('/web')->group(function(){

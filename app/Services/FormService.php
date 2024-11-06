@@ -5,6 +5,7 @@ use App\View\Components\WebReviewForm;
 use App\View\Components\WebServiceForm;
 use App\View\Components\WebProductForm;
 use App\View\Components\WebSupplierForm;
+use App\View\Components\TransportTypeForm;
 use App\Services\IconService;
 
 class FormService
@@ -31,6 +32,10 @@ class FormService
         }elseif($typeEntity == "supplier"){
             // Create the form component instance
             $formComponent = new WebSupplierForm($formRequest, $entity);
+
+        }elseif($typeEntity == "transport_type"){
+            $formComponent = new TransportTypeForm($formRequest, $entity);
+
         }
 
         return $formComponent;

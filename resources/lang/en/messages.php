@@ -334,6 +334,7 @@ return [
             'welcome' => 'Welcome',
             'home' => 'dashboard',
             'orders' => 'orders',
+            'clients' => 'clients',
             'transports' => 'transports',
             'history' => 'history',
             'billing' => 'billing',
@@ -513,12 +514,14 @@ return [
                         'webcontent_keypoints_header' => 'Enter Key Points Header',
                         'webcontent_keypoints_title' => 'Enter Key Points Title',
                         'webcontent_keypoints_points' => 'Enter Key Points',
-                        'webcontent_keypoints_points_title' => 'Enter Title',
-                        'webcontent_keypoints_points_content' => 'Enter Content',
+                        'webcontent_keypoints_point' => 'Enter Key Point',
+                        'webcontent_keypoints_points_point_title' => 'Enter title of key point',
+                        'webcontent_keypoints_points_point_content' => 'Enter content of key point',
                         'webcontent_faqs_title' => 'Enter FAQs Title',
                         'webcontent_faqs_questions' => 'Enter FAQs Questions',
                         'webcontent_faqs_question' => 'Enter Question',
-                        'webcontent_faqs_answer' => 'Enter Answer',
+                        'webcontent_faqs_question_question' => 'Enter FAQ',
+                        'webcontent_faqs_question_answer' => 'Enter Answer',
                         'suppliers' => 'Enter Supplier'
                     ],
                     'buttons' => [
@@ -737,22 +740,17 @@ return [
                         'name_required' => 'The name field is required.',
                         'name_string' => 'The name must be a valid string.',
                         'name_max' => 'The name may not be greater than 255 characters.',
-
                         'description_required' => 'The description content is required.',
                         'description_string' => 'The description content must be a valid string.',
                         'description_max' => 'The description content may not be greater than 500 characters.',
-
                         'logo_image' => "The image should be a valid image file.",
                         'logo_mimes' => "The image must be of type: jpeg, png, jpg, gif, webp.",
                         'logo_max' => "The image size should not exceed 2048 KB.",
-
-
                         'details_required' => "The details are required.",
                         'details_array' => "The details should be array.",
                         'details_min' => "The details should contain at least one detail.",
                         'details_item_string' => "The detail inside the details array should be string.",
                         'details_item_max' => "The detail inside the details array should be string of maxium 300 characters.",
-
                     ],
                     'success' => [
                         'create' => 'Create Supplier Successfully',
@@ -769,7 +767,327 @@ return [
                     ]
                 ]
             ],
+        ],
+        'transport_type' => [
+            'name' => 'transport type',
+            'new_entity' => 'new transport',
+            'header' => "transport types",
+            'indications' => "select an option to create, update or delete transports",
+            'input_placeholder_search' => "search transport",
+            'button_label_search' => "search",
+            'dropdown' => [
+                'name' => 'name',
+                'description' => 'description',
+                'status' => 'status',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'view transport type',
+                    'create' => 'create transport type',
+                    'update' => 'update transport type'
+                ],
+                'fields' => [
+                    'type' => 'type',
+                    'name' => 'name',
+                    'icon' => 'icon',
+                    'status' => 'status',
+                    'description' => 'description'
+                ],
+                'placeholders' => [
+                    'type' => 'Enter the type',
+                    'name' => 'Enter Name',
+                    'icon' => 'Select the icon',
+                    'status' => 'Enter status',
+                    'description' => 'Enter description',
+                ],
+                'buttons' => [
+                    'cancel' => 'cancel',
+                    'create' => 'create transport type',
+                    'update' => 'update transport type'
+                ],
+                'validations' => [
 
+                    'type_required' => 'The type field is required.',
+                    'type_string' => 'The type must be a valid string.',
+                    'type_max' => 'The type may not be greater than 255 characters.',
+
+                    'name_required' => 'The name field is required.',
+                    'name_string' => 'The name must be a valid string.',
+                    'name_max' => 'The name may not be greater than 255 characters.',
+
+                    'icon_required' => 'The icon field is required.',
+                    'icon_string' => 'The icon must be a valid string.',
+                    'icon_max' => 'The icon may not be greater than 255 characters.',
+
+                    'description_required' => 'The description content is required.',
+                    'description_string' => 'The description content must be a valid string.',
+                    'description_max' => 'The description content may not be greater than 500 characters.',
+
+                    'status_required' => 'The status field is required.',
+                    'status_string' => 'The status must be a valid string.',
+                    'status_max' => 'The status may not be greater than 255 characters.',
+
+                ],
+                'success' => [
+                    'create' => 'Create Transport Type Successfully',
+                    'update' => 'Update Transport Type Successfully',
+                    'delete' => 'Delete Transport Type Successfully'
+                ],
+                'error' => [
+                    'not_found' => "Transport Type not found.",
+                    'validation_failed' => "There were errors in the form submission."
+                ],
+                'modal' => [
+                    'delete_header' => "Are you sure you want to delete this Transport Type?",
+                    'delete_content' => "You wont be able to restore once the information is deleted"
+                ]
+            ]
+        ],
+        'tracking_step' => [
+            'name' => 'tracking step',
+            'new_entity' => 'new tracking step',
+            'header' => 'tracking steps',
+            'indications' => 'select an option to create, update, or delete tracking steps',
+            'input_placeholder_search' => 'search tracking step',
+            'button_label_search' => 'search',
+            'dropdown' => [
+                'status' => 'status',
+                'origin' => 'origin',
+                'destination' => 'destination'
+            ],
+            'form' => [
+                'headers' => [
+                    'view'=> 'view tracking step',
+                    'create'=> 'create tracking step',
+                    'update'=> 'update tracking step'
+                ],
+                'fields'=> [
+                    'status'=> 'status',
+                    'sequence'=> 'sequence',
+                    'origin'=> 'origin',
+                    'destination'=> 'destination',
+                    'order_id'=> 'order ID',
+                    'transport_type_id'=> 'transport type ID'
+                ],
+                'placeholders' => [
+                    'status' => 'Enter status (e.g., PENDING, IN TRANSIT, COMPLETED)',
+                    'sequence' => 'Enter sequence number',
+                    'origin' => 'Enter origin',
+                    'destination' => 'Enter destination',
+                    'order_id' => 'Enter order ID',
+                    'transport_type_id' => 'Enter transport type ID'
+                ],
+                'buttons' => [
+                    'cancel' => 'cancel',
+                    'create' => 'create tracking step',
+                    'update' => 'update tracking step'
+                ],
+                'validations' => [
+                    'status_required' => 'The status field is required.',
+                    'status_string' => 'The status must be a valid string.',
+                    'status_max' => 'The status may not be greater than 255 characters.',
+                    'status_in' => 'The status must be one of the following: PENDING, IN TRANSIT, COMPLETED.',
+
+                    'sequence_required'=> 'The sequence field is required.',
+                    'sequence_integer'=> 'The sequence must be an integer.',
+                    'sequence_min'=> 'The sequence must be at least 1.',
+
+                    'origin_string'=> 'The origin must be a valid string.',
+                    'origin_max'=> 'The origin may not be greater than 255 characters.',
+
+                    'destination_string'=> 'The destination must be a valid string.',
+                    'destination_max'=> 'The destination may not be greater than 255 characters.',
+
+                    'order_id_required'=> 'The order ID field is required.',
+                    'order_id_exists'=> 'The selected order ID is invalid.',
+
+                    'transport_type_id_required'=> 'The transport type ID field is required.',
+                    'transport_type_id_exists'=> 'The selected transport type ID is invalid.'
+                ],
+                'success'=> [
+                    'create'=> 'Tracking Step created successfully.',
+                    'update'=> 'Tracking Step updated successfully.',
+                    'delete'=> 'Tracking Step deleted successfully.'
+                ],
+                'error'=> [
+                    'not_found'=> 'Tracking Step not found.',
+                    'validation_failed'=> 'There were errors in the form submission.'
+                ],
+                'modal'=> [
+                    'delete_header'=> 'Are you sure you want to delete this Tracking Step?',
+                    'delete_content'=> "You won't be able to restore the information once it's deleted."
+                ]
+            ]
+        ],
+        'order' => [
+            'name' => 'order',
+            'new_entity' => 'new order',
+            'header' => "orders",
+            'indications' => "select an option to create, update or delete orders",
+            'input_placeholder_search' => "search order",
+            'button_label_search' => "search",
+            'dropdown' => [
+                'order_number' => 'order number',
+                'status' => 'status',
+                'client' => 'client',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'view order',
+                    'create' => 'create order',
+                    'update' => 'update order'
+                ],
+                'fields' => [
+                    'order_number' => 'order number',
+                    'status' => 'status',
+                    'details' => 'details',
+                    'net_amount' => 'net amount',
+                    'taxes' => 'taxes',
+                    'operative_cost' => 'operative cost',
+                    'numero_dam' => 'DAM number',
+                    'manifest' => 'manifest',
+                    'channel' => 'channel',
+                    'client_id' => 'client'
+                ],
+                'placeholders' => [
+                    'order_number' => 'Enter order number',
+                    'status' => 'Enter status',
+                    'details' => 'Enter details',
+                    'net_amount' => 'Enter net amount',
+                    'taxes' => 'Enter taxes',
+                    'operative_cost' => 'Enter operative cost',
+                    'numero_dam' => 'Enter DAM number',
+                    'manifest' => 'Enter manifest',
+                    'channel' => 'Enter channel',
+                    'client_id' => 'Select client'
+                ],
+                'buttons' => [
+                    'cancel' => 'cancel',
+                    'create' => 'create order',
+                    'update' => 'update order'
+                ],
+                'validations' => [
+                    'order_number_required' => 'The order number field is required.',
+                    'order_number_string' => 'The order number must be a valid string.',
+                    'order_number_max' => 'The order number may not be greater than 255 characters.',
+
+                    'status_required' => 'The status field is required.',
+                    'status_string' => 'The status must be a valid string.',
+                    'status_max' => 'The status may not be greater than 255 characters.',
+                    'status_in' => 'The status is not inside the available options.',
+
+                    'details_required' => 'The details field is required.',
+                    'details_string' => 'The details must be a valid string.',
+
+                    'net_amount_required' => 'The net amount field is required.',
+                    'net_amount_numeric' => 'The net amount must be a valid number.',
+
+                    'taxes_required' => 'The taxes field is required.',
+                    'taxes_numeric' => 'The taxes must be a valid number.',
+
+                    'operative_cost_required' => 'The operative cost field is required.',
+                    'operative_cost_numeric' => 'The operative cost must be a valid number.',
+
+                    'numero_dam_required' => 'The DAM number field is required.',
+                    'numero_dam_integer' => 'The DAM number must be an integer.',
+
+                    'manifest_required' => 'The manifest field is required.',
+                    'manifest_integer' => 'The manifest must be an integer.',
+
+                    'channel_required' => 'The channel field is required.',
+                    'channel_integer' => 'The channel must be an integer.',
+
+                    'client_id_required' => 'The client field is required.',
+                    'client_id_exists' => 'The selected client does not exist.',
+                ],
+                'success' => [
+                    'create' => 'Order created successfully',
+                    'update' => 'Order updated successfully',
+                    'delete' => 'Order deleted successfully'
+                ],
+                'error' => [
+                    'not_found' => "Order not found.",
+                    'validation_failed' => "There were errors in the form submission."
+                ],
+                'modal' => [
+                    'delete_header' => "Are you sure you want to delete this order?",
+                    'delete_content' => "You won’t be able to restore once the information is deleted"
+                ]
+            ]
+        ],
+        'client' => [
+            'name' => 'client',
+            'new_entity' => 'new client',
+            'header' => "clients",
+            'indications' => "select an option to create, update or delete clients",
+            'input_placeholder_search' => "search client",
+            'button_label_search' => "search",
+            'dropdown' => [
+                'client_id' => 'Client ID',
+                'company' => 'Company',
+                'RUC' => 'RUC',
+                'cellphone' => 'Cellphone',
+                'email' => 'Email',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'view client',
+                    'create' => 'create client',
+                    'update' => 'update client'
+                ],
+                'fields' => [
+                    'client_id' => 'Client ID',
+                    'company' => 'Company',
+                    'RUC' => 'RUC',
+                    'cellphone' => 'Cellphone',
+                    'email' => 'Email'
+                ],
+                'placeholders' => [
+                    'client_id' => 'Enter Client ID',
+                    'company' => 'Enter Company Name',
+                    'RUC' => 'Enter RUC',
+                    'cellphone' => 'Enter Cellphone',
+                    'email' => 'Enter Email'
+                ],
+                'buttons' => [
+                    'cancel' => 'cancel',
+                    'create' => 'create client',
+                    'update' => 'update client'
+                ],
+                'validations' => [
+                    'client_id_required' => 'The client ID field is required.',
+                    'client_id_integer' => 'The client ID must be a valid integer.',
+
+                    'company_required' => 'The company field is required.',
+                    'company_string' => 'The company must be a valid string.',
+                    'company_max' => 'The company may not be greater than 255 characters.',
+
+                    'RUC_required' => 'The RUC field is required.',
+                    'RUC_string' => 'The RUC must be a valid string.',
+                    'RUC_max' => 'The RUC may not be greater than 13 characters.',
+
+                    'cellphone_required' => 'The cellphone field is required.',
+                    'cellphone_string' => 'The cellphone must be a valid string.',
+                    'cellphone_max' => 'The cellphone may not be greater than 15 characters.',
+
+                    'email_required' => 'The email field is required.',
+                    'email_email' => 'The email must be a valid email address.',
+                    'email_max' => 'The email may not be greater than 255 characters.',
+                ],
+                'success' => [
+                    'create' => 'Client created successfully.',
+                    'update' => 'Client updated successfully.',
+                    'delete' => 'Client deleted successfully.'
+                ],
+                'error' => [
+                    'not_found' => "Client not found.",
+                    'validation_failed' => "There were errors in the form submission."
+                ],
+                'modal' => [
+                    'delete_header' => "Are you sure you want to delete this client?",
+                    'delete_content' => "You won't be able to restore this client once deleted."
+                ]
+            ]
         ]
     ]
 ];

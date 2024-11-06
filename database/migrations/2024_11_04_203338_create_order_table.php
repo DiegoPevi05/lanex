@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('numero_dam');
             $table->unsignedBigInteger('manifest');
             $table->unsignedBigInteger('channel');
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->default(0);
             $table->timestamps();
         });
     }

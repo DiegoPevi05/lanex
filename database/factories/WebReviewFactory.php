@@ -21,7 +21,7 @@ class WebReviewFactory extends Factory
     {
         return [
             'name' => $this->faker->text(40),
-            'charge'=> $this->faker->texT(10),
+            'charge'=> $this->faker->text(10),
             'date_review'=> now(),
             'review'=> $this->faker->text(500),
             'stars' => $this->faker->numberBetween(1, 5)

@@ -335,6 +335,7 @@ return [
             'home' => 'tablero',
             'history' => 'history',
             'orders' => 'pedidos',
+            'clients' => 'clientes',
             'transports' => 'transportes',
             'billing' => 'facturación',
             'web' => 'web',
@@ -485,7 +486,10 @@ return [
                         'webcontent_faqs_questions' => 'Preguntas de preguntas frecuentes',
                         'webcontent_faqs_question' => 'pregunta',
                         'webcontent_faqs_question_question' => 'pregunta',
-                        'webcontent_faqs_question_answer' => 'respuesta'
+                        'webcontent_faqs_question_answer' => 'respuesta',
+                        'suppliers' => 'proveedores',
+                        'supplier' => 'proveedor',
+                        'add_supplier' => "Agregar proveedor"
                     ],
                     'placeholders' => [
                         'name' => 'Ingresar nombre',
@@ -526,15 +530,78 @@ return [
                         'update' => 'Actualizar Servicio'
                     ],
                     'validations' => [
-                        'name_required' => 'El campo de nombre es obligatorio.',
-                        'name_string' => 'El nombre debe ser una cadena válida.',
-                        'name_max' => 'El nombre no debe exceder de 255 caracteres.',
-                        'short_description_required' => 'El campo de descripción breve es obligatorio.',
-                        'short_description_string' => 'La descripción breve debe ser una cadena válida.',
-                        'short_description_max' => 'La descripción breve no debe exceder de 255 caracteres.',
-                        'icon_required' => 'El campo de ícono es obligatorio.',
-                        'icon_string' => 'El ícono debe ser una cadena válida.',
-                        'icon_max' => 'El ícono no debe exceder de 255 caracteres.'
+                        'name_required' => "El nombre es obligatorio.",
+                        'name_string' => "El nombre debe ser una cadena.",
+                        'name_max' => "El nombre no debe exceder los 255 caracteres.",
+                        'icon_required' => "El icono es obligatorio.",
+                        'icon_string' => "El icono debe ser una cadena.",
+                        'icon_max' => "El icono no debe exceder los 255 caracteres.",
+                        'short_description_required' => "La descripción corta es obligatoria.",
+                        'short_description_string' => "La descripción corta debe ser una cadena.",
+                        'short_description_max' => "La descripción corta no debe exceder los 500 caracteres.",
+                        'webcontent_required' => "El contenido web es obligatorio.",
+                        'webcontent_array' => "El contenido web debe ser un array.",
+                        'webcontent_image_image' => "La imagen debe ser un archivo de imagen válido.",
+                        'webcontent_image_mimes' => "La imagen debe ser de tipo: jpeg, png, jpg, gif, webp.",
+                        'webcontent_image_max' => "El tamaño de la imagen no debe exceder los 2048 KB.",
+                        'webcontent_header_required' => "El encabezado es obligatorio.",
+                        'webcontent_header_string' => "El encabezado debe ser una cadena.",
+                        'webcontent_header_max' => "El encabezado no debe exceder los 30 caracteres.",
+                        'webcontent_title_required' => "El título es obligatorio.",
+                        'webcontent_title_string' => "El título debe ser una cadena.",
+                        'webcontent_title_max' => "El título no debe exceder los 50 caracteres.",
+                        'webcontent_description_required' => "La descripción es obligatoria.",
+                        'webcontent_description_string' => "La descripción debe ser una cadena.",
+                        'webcontent_description_max' => "La descripción no debe exceder los 200 caracteres.",
+                        'overview_header_required' => "El encabezado de resumen es obligatorio.",
+                        'overview_header_string' => "El encabezado de resumen debe ser una cadena.",
+                        'overview_header_max' => "El encabezado de resumen no debe exceder los 20 caracteres.",
+                        'overview_title_required' => "El título de resumen es obligatorio.",
+                        'overview_title_string' => "El título de resumen debe ser una cadena.",
+                        'overview_title_max' => "El título de resumen no debe exceder los 50 caracteres.",
+                        'overview_content_header_required' => "El encabezado del contenido es obligatorio.",
+                        'overview_content_header_string' => "El encabezado del contenido debe ser una cadena.",
+                        'overview_content_header_max' => "El encabezado del contenido no debe exceder los 200 caracteres.",
+                        'overview_content_introduction_required' => "La introducción del contenido es obligatoria.",
+                        'overview_content_introduction_string' => "La introducción del contenido debe ser una cadena.",
+                        'overview_content_introduction_max' => "La introducción del contenido no debe exceder los 400 caracteres.",
+                        'overview_content_content_required' => "El contenido es obligatorio.",
+                        'overview_content_content_string' => "El contenido debe ser una cadena.",
+                        'overview_content_content_max' => "El contenido no debe exceder los 600 caracteres.",
+                        'content_link_header_required' => "El encabezado del enlace de contenido es obligatorio.",
+                        'content_link_header_string' => "El encabezado del enlace de contenido debe ser una cadena.",
+                        'content_link_header_max' => "El encabezado del enlace de contenido no debe exceder los 20 caracteres.",
+                        'content_link_title_required' => "El título del enlace de contenido es obligatorio.",
+                        'content_link_title_string' => "El título del enlace de contenido debe ser una cadena.",
+                        'content_link_title_max' => "El título del enlace de contenido no debe exceder los 40 caracteres.",
+                        'content_link_button_label_required' => "La etiqueta del botón es obligatoria.",
+                        'content_link_button_label_string' => "La etiqueta del botón debe ser una cadena.",
+                        'content_link_button_label_max' => "La etiqueta del botón no debe exceder los 30 caracteres.",
+                        'content_link_content_required' => "El contenido del enlace es obligatorio.",
+                        'content_link_content_string' => "El contenido del enlace debe ser una cadena.",
+                        'content_link_content_max' => "El contenido del enlace no debe exceder los 400 caracteres.",
+                        'keypoints_header_required' => "El encabezado de puntos clave es obligatorio.",
+                        'keypoints_header_string' => "El encabezado de puntos clave debe ser una cadena.",
+                        'keypoints_header_max' => "El encabezado de puntos clave no debe exceder los 30 caracteres.",
+                        'keypoints_title_required' => "El título de puntos clave es obligatorio.",
+                        'keypoints_title_string' => "El título de puntos clave debe ser una cadena.",
+                        'keypoints_title_max' => "El título de puntos clave no debe exceder los 50 caracteres.",
+                        'keypoints_points_required' => "Se requiere al menos un punto clave.",
+                        'keypoints_points_array' => "Los puntos clave deben ser un array.",
+                        'keypoints_points_item_required' => "Cada punto clave es obligatorio.",
+                        'keypoints_points_item_string' => "Cada punto clave debe ser una cadena.",
+                        'keypoints_points_item_max' => "Cada punto clave no debe exceder los 400 caracteres.",
+                        'faqs_title_required' => "El título de las preguntas frecuentes es obligatorio.",
+                        'faqs_title_string' => "El título de las preguntas frecuentes debe ser una cadena.",
+                        'faqs_title_max' => "El título de las preguntas frecuentes no debe exceder los 50 caracteres.",
+                        'faqs_questions_required' => "Se requiere al menos una pregunta frecuente.",
+                        'faqs_questions_array' => "Las preguntas frecuentes deben ser un array.",
+                        'faqs_questions_question_required' => "Cada pregunta frecuente es obligatoria.",
+                        'faqs_questions_question_string' => "Cada pregunta frecuente debe ser una cadena.",
+                        'faqs_questions_question_max' => "Cada pregunta frecuente no debe exceder los 100 caracteres.",
+                        'faqs_questions_answer_required' => "Cada respuesta de pregunta frecuente es obligatoria.",
+                        'faqs_questions_answer_string' => "Cada respuesta de pregunta frecuente debe ser una cadena.",
+                        'faqs_questions_answer_max' => "Cada respuesta de pregunta frecuente no debe exceder los 400 caracteres.",
                     ],
                     'success' => [
                         'create' => 'Servicio creado con éxito',
@@ -651,6 +718,8 @@ return [
                         'logo' => 'logo',
                         'description' => 'descripción',
                         'details' => 'detalles',
+                        'details_add' => 'Agregar detalle',
+                        'details_detail' => 'Detalle',
                         'services' => 'servicios',
                         'add_product' => 'Agregar producto',
                         'products' => 'productos',
@@ -671,15 +740,12 @@ return [
                         'name_required' => 'El campo de nombre es obligatorio.',
                         'name_string' => 'El nombre debe ser una cadena de texto válida.',
                         'name_max' => 'El nombre no puede tener más de 255 caracteres.',
-
                         'description_required' => 'El contenido de la descripción es obligatorio.',
                         'description_string' => 'El contenido de la descripción debe ser una cadena de texto válida.',
                         'description_max' => 'El contenido de la descripción no puede tener más de 500 caracteres.',
-
                         'logo_image' => "La imagen debe ser un archivo de imagen válido.",
                         'logo_mimes' => "La imagen debe ser de tipo: jpeg, png, jpg, gif, webp.",
                         'logo_max' => "El tamaño de la imagen no debe exceder 2048 KB.",
-
                         'details_required' => "Los detalles son obligatorios.",
                         'details_array' => "Los detalles deben ser un arreglo.",
                         'details_min' => "Los detalles deben contener al menos un detalle.",
@@ -701,6 +767,325 @@ return [
                     ]
                 ]
             ]
-        ]
+        ],
+        'transport_type' => [
+            'name' => 'tipo de transporte',
+            'new_entity' => 'nuevo transporte',
+            'header' => "tipos de transporte",
+            'indications' => "seleccione una opción para crear, actualizar o eliminar transportes",
+            'input_placeholder_search' => "buscar transporte",
+            'button_label_search' => "buscar",
+            'dropdown' => [
+                'name' => 'nombre',
+                'description' => 'descripción',
+                'status' => 'estado',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'ver tipo de transporte',
+                    'create' => 'crear tipo de transporte',
+                    'update' => 'actualizar tipo de transporte'
+                ],
+                'fields' => [
+                    'type' => 'tipo',
+                    'name' => 'nombre',
+                    'icon' => 'icono',
+                    'status' => 'estado',
+                    'description' => 'descripción'
+                ],
+                'placeholders' => [
+                    'type' => 'Ingrese el tipo',
+                    'name' => 'Ingrese el nombre',
+                    'icon' => 'Seleccione el icono',
+                    'status' => 'Ingrese el estado',
+                    'description' => 'Ingrese la descripción',
+                ],
+                'buttons' => [
+                    'cancel' => 'cancelar',
+                    'create' => 'crear tipo de transporte',
+                    'update' => 'actualizar tipo de transporte'
+                ],
+                'validations' => [
+                    'type_required' => 'El campo tipo es obligatorio.',
+                    'type_string' => 'El tipo debe ser una cadena válida.',
+                    'type_max' => 'El tipo no puede tener más de 255 caracteres.',
+
+                    'name_required' => 'El campo nombre es obligatorio.',
+                    'name_string' => 'El nombre debe ser una cadena válida.',
+                    'name_max' => 'El nombre no puede tener más de 255 caracteres.',
+
+                    'icon_required' => 'El campo icono es obligatorio.',
+                    'icon_string' => 'El icono debe ser una cadena válida.',
+                    'icon_max' => 'El icono no puede tener más de 255 caracteres.',
+
+                    'description_required' => 'El contenido de la descripción es obligatorio.',
+                    'description_string' => 'El contenido de la descripción debe ser una cadena válida.',
+                    'description_max' => 'El contenido de la descripción no puede tener más de 500 caracteres.',
+
+                    'status_required' => 'El campo estado es obligatorio.',
+                    'status_string' => 'El estado debe ser una cadena válida.',
+                    'status_max' => 'El estado no puede tener más de 255 caracteres.',
+                ],
+                'success' => [
+                    'create' => 'Tipo de transporte creado con éxito',
+                    'update' => 'Tipo de transporte actualizado con éxito',
+                    'delete' => 'Tipo de transporte eliminado con éxito'
+                ],
+                'error' => [
+                    'not_found' => "Tipo de transporte no encontrado.",
+                    'validation_failed' => "Hubo errores en el envío del formulario."
+                ],
+                'modal' => [
+                    'delete_header' => "¿Está seguro de que desea eliminar este tipo de transporte?",
+                    'delete_content' => "No podrá restaurar la información una vez eliminada"
+                ]
+            ]
+        ],
+        'tracking_step' => [
+            'name' => 'paso de seguimiento',
+            'new_entity' => 'nuevo paso de seguimiento',
+            'header' => 'pasos de seguimiento',
+            'indications' => 'seleccione una opción para crear, actualizar o eliminar pasos de seguimiento',
+            'input_placeholder_search' => 'buscar paso de seguimiento',
+            'button_label_search' => 'buscar',
+            'dropdown' => [
+                'status' => 'estado',
+                'origin' => 'origen',
+                'destination' => 'destino'
+            ],
+            'form' => [
+                'headers' => [
+                    'view'=> 'ver paso de seguimiento',
+                    'create'=> 'crear paso de seguimiento',
+                    'update'=> 'actualizar paso de seguimiento'
+                ],
+                'fields'=> [
+                    'status'=> 'estado',
+                    'sequence'=> 'secuencia',
+                    'origin'=> 'origen',
+                    'destination'=> 'destino',
+                    'order_id'=> 'ID de pedido',
+                    'transport_type_id'=> 'ID de tipo de transporte'
+                ],
+                'placeholders' => [
+                    'status' => 'Ingrese el estado (ej., PENDIENTE, EN TRÁNSITO, COMPLETADO)',
+                    'sequence' => 'Ingrese el número de secuencia',
+                    'origin' => 'Ingrese el origen',
+                    'destination' => 'Ingrese el destino',
+                    'order_id' => 'Ingrese el ID del pedido',
+                    'transport_type_id' => 'Ingrese el ID del tipo de transporte'
+                ],
+                'buttons' => [
+                    'cancel' => 'cancelar',
+                    'create' => 'crear paso de seguimiento',
+                    'update' => 'actualizar paso de seguimiento'
+                ],
+                'validations' => [
+                    'status_required' => 'El campo de estado es obligatorio.',
+                    'status_string' => 'El estado debe ser una cadena válida.',
+                    'status_max' => 'El estado no puede tener más de 255 caracteres.',
+                    'status_in' => 'El estado debe ser uno de los siguientes: PENDIENTE, EN TRÁNSITO, COMPLETADO.',
+
+                    'sequence_required'=> 'El campo de secuencia es obligatorio.',
+                    'sequence_integer'=> 'La secuencia debe ser un número entero.',
+                    'sequence_min'=> 'La secuencia debe ser al menos 1.',
+
+                    'origin_string'=> 'El origen debe ser una cadena válida.',
+                    'origin_max'=> 'El origen no puede tener más de 255 caracteres.',
+
+                    'destination_string'=> 'El destino debe ser una cadena válida.',
+                    'destination_max'=> 'El destino no puede tener más de 255 caracteres.',
+
+                    'order_id_required'=> 'El campo ID de pedido es obligatorio.',
+                    'order_id_exists'=> 'El ID de pedido seleccionado es inválido.',
+
+                    'transport_type_id_required'=> 'El campo ID de tipo de transporte es obligatorio.',
+                    'transport_type_id_exists'=> 'El ID de tipo de transporte seleccionado es inválido.'
+                ],
+                'success'=> [
+                    'create'=> 'Paso de seguimiento creado con éxito.',
+                    'update'=> 'Paso de seguimiento actualizado con éxito.',
+                    'delete'=> 'Paso de seguimiento eliminado con éxito.'
+                ],
+                'error'=> [
+                    'not_found'=> 'Paso de seguimiento no encontrado.',
+                    'validation_failed'=> 'Hubo errores en el envío del formulario.'
+                ],
+                'modal'=> [
+                    'delete_header'=> '¿Está seguro de que desea eliminar este paso de seguimiento?',
+                    'delete_content'=> "No podrá restaurar la información una vez eliminada."
+                ]
+            ]
+        ],
+        'order' => [
+            'name' => 'orden',
+            'new_entity' => 'nueva orden',
+            'header' => "órdenes",
+            'indications' => "seleccione una opción para crear, actualizar o eliminar órdenes",
+            'input_placeholder_search' => "buscar orden",
+            'button_label_search' => "buscar",
+            'dropdown' => [
+                'order_number' => 'número de orden',
+                'status' => 'estado',
+                'client' => 'cliente',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'ver orden',
+                    'create' => 'crear orden',
+                    'update' => 'actualizar orden'
+                ],
+                'fields' => [
+                    'order_number' => 'número de orden',
+                    'status' => 'estado',
+                    'details' => 'detalles',
+                    'net_amount' => 'monto neto',
+                    'taxes' => 'impuestos',
+                    'operative_cost' => 'costo operativo',
+                    'numero_dam' => 'número DAM',
+                    'manifest' => 'manifiesto',
+                    'channel' => 'canal',
+                    'client_id' => 'cliente'
+                ],
+                'placeholders' => [
+                    'order_number' => 'Ingrese el número de orden',
+                    'status' => 'Ingrese el estado',
+                    'details' => 'Ingrese los detalles',
+                    'net_amount' => 'Ingrese el monto neto',
+                    'taxes' => 'Ingrese los impuestos',
+                    'operative_cost' => 'Ingrese el costo operativo',
+                    'numero_dam' => 'Ingrese el número DAM',
+                    'manifest' => 'Ingrese el manifiesto',
+                    'channel' => 'Ingrese el canal',
+                    'client_id' => 'Seleccione el cliente'
+                ],
+                'buttons' => [
+                    'cancel' => 'cancelar',
+                    'create' => 'crear orden',
+                    'update' => 'actualizar orden'
+                ],
+                'validations' => [
+                    'order_number_required' => 'El campo de número de orden es obligatorio.',
+                    'order_number_string' => 'El número de orden debe ser una cadena válida.',
+                    'order_number_max' => 'El número de orden no puede tener más de 255 caracteres.',
+
+                    'status_required' => 'El campo de estado es obligatorio.',
+                    'status_string' => 'El estado debe ser una cadena válida.',
+                    'status_max' => 'El estado no puede tener más de 255 caracteres.',
+                    'status_in' => 'The status is not inside the available options.',
+
+                    'details_required' => 'El campo de detalles es obligatorio.',
+                    'details_string' => 'Los detalles deben ser una cadena válida.',
+
+                    'net_amount_required' => 'El campo de monto neto es obligatorio.',
+                    'net_amount_numeric' => 'El monto neto debe ser un número válido.',
+
+                    'taxes_required' => 'El campo de impuestos es obligatorio.',
+                    'taxes_numeric' => 'Los impuestos deben ser un número válido.',
+
+                    'operative_cost_required' => 'El campo de costo operativo es obligatorio.',
+                    'operative_cost_numeric' => 'El costo operativo debe ser un número válido.',
+
+                    'numero_dam_required' => 'El campo de número DAM es obligatorio.',
+                    'numero_dam_integer' => 'El número DAM debe ser un número entero.',
+
+                    'manifest_required' => 'El campo de manifiesto es obligatorio.',
+                    'manifest_integer' => 'El manifiesto debe ser un número entero.',
+
+                    'channel_required' => 'El campo de canal es obligatorio.',
+                    'channel_integer' => 'El canal debe ser un número entero.',
+
+                    'client_id_required' => 'El campo de cliente es obligatorio.',
+                    'client_id_exists' => 'El cliente seleccionado no existe.',
+                ],
+                'success' => [
+                    'create' => 'Orden creada con éxito',
+                    'update' => 'Orden actualizada con éxito',
+                    'delete' => 'Orden eliminada con éxito'
+                ],
+                'error' => [
+                    'not_found' => "Orden no encontrada.",
+                    'validation_failed' => "Hubo errores en el envío del formulario."
+                ],
+                'modal' => [
+                    'delete_header' => "¿Está seguro de que desea eliminar esta orden?",
+                    'delete_content' => "No podrá restaurar la información una vez eliminada."
+                ]
+            ]
+        ],
+        'client' => [
+            'name' => 'cliente',
+            'new_entity' => 'nuevo cliente',
+            'header' => "clientes",
+            'indications' => "seleccione una opción para crear, actualizar o eliminar clientes",
+            'input_placeholder_search' => "buscar cliente",
+            'button_label_search' => "buscar",
+            'dropdown' => [
+                'client_id' => 'ID del Cliente',
+                'company' => 'Compañía',
+                'RUC' => 'RUC',
+                'cellphone' => 'Celular',
+                'email' => 'Correo Electrónico',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'ver cliente',
+                    'create' => 'crear cliente',
+                    'update' => 'actualizar cliente'
+                ],
+                'fields' => [
+                    'client_id' => 'ID del Cliente',
+                    'company' => 'Compañía',
+                    'RUC' => 'RUC',
+                    'cellphone' => 'Celular',
+                    'email' => 'Correo Electrónico'
+                ],
+                'placeholders' => [
+                    'client_id' => 'Ingrese el ID del cliente',
+                    'company' => 'Ingrese el nombre de la compañía',
+                    'RUC' => 'Ingrese el RUC',
+                    'cellphone' => 'Ingrese el número de celular',
+                    'email' => 'Ingrese el correo electrónico'
+                ],
+                'buttons' => [
+                    'cancel' => 'cancelar',
+                    'create' => 'crear cliente',
+                    'update' => 'actualizar cliente'
+                ],
+                'validations' => [
+                    'client_id_required' => 'El campo de ID del cliente es obligatorio.',
+                    'client_id_integer' => 'El ID del cliente debe ser un número entero válido.',
+
+                    'company_required' => 'El campo de compañía es obligatorio.',
+                    'company_string' => 'La compañía debe ser una cadena válida.',
+                    'company_max' => 'La compañía no puede tener más de 255 caracteres.',
+
+                    'RUC_required' => 'El campo de RUC es obligatorio.',
+                    'RUC_string' => 'El RUC debe ser una cadena válida.',
+                    'RUC_max' => 'El RUC no puede tener más de 13 caracteres.',
+
+                    'cellphone_required' => 'El campo de celular es obligatorio.',
+                    'cellphone_string' => 'El celular debe ser una cadena válida.',
+                    'cellphone_max' => 'El celular no puede tener más de 15 caracteres.',
+
+                    'email_required' => 'El campo de correo electrónico es obligatorio.',
+                    'email_email' => 'El correo electrónico debe ser una dirección válida.',
+                    'email_max' => 'El correo electrónico no puede tener más de 255 caracteres.',
+                ],
+                'success' => [
+                    'create' => 'Cliente creado con éxito.',
+                    'update' => 'Cliente actualizado con éxito.',
+                    'delete' => 'Cliente eliminado con éxito.'
+                ],
+                'error' => [
+                    'not_found' => "Cliente no encontrado.",
+                    'validation_failed' => "Hubo errores en el envío del formulario."
+                ],
+                'modal' => [
+                    'delete_header' => "¿Está seguro de que desea eliminar este cliente?",
+                    'delete_content' => "No podrá restaurar este cliente una vez eliminado."
+                ]
+            ]
+        ],
     ]
 ];

@@ -14,13 +14,17 @@ return new class extends Migration
         Schema::create('freights', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->string('order_number');
+            $table->string('name');
+            $table->string('description');
             $table->string('origin');
-            $table->float('dimensions');
-            $table->float('weigth');
-            $table->float('volume');
+            $table->string('dimensions_units')->nullable();
+            $table->float('dimensions')->nullable();
+            $table->string('weigth_units')->nullable();
+            $table->float('weigth')->nullable();
+            $table->string('volume_units')->nullable();
+            $table->float('volume')->nullable();
             $table->integer('packages');
-            $table->string('incoterms');
+            $table->string('incoterms')->nullable();
             $table->timestamps();
         });
     }

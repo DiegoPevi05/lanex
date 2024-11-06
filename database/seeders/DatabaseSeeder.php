@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(WebServiceSeeder::class);
         $this->call(WebReviewSeeder::class);
+        $this->call(OrderSeeder::class);
+        $this->call(AdminSeeder::class);
     }
 }
