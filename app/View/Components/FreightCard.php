@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class FreightCard extends Component
 {
+    public $freight;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($freight)
     {
-        //
+        $this->freight = $freight;
     }
 
     /**

@@ -21,7 +21,9 @@ class FreightFactory extends Factory
     {
 
         return [
-            'name' => $this->faker->text(40),
+
+            'freight_id' => Freight::generateFreightId(),
+            'name' => $this->faker->text(20),
             'description' => $this->faker->text(200),
             'origin' => $this->faker->text(40),
             'dimensions_units' => 'cm',

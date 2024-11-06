@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('freights', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->string('freight_id');
             $table->string('name');
             $table->string('description');
             $table->string('origin');

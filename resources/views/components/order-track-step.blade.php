@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="absolute top-full left-1/2 -translate-x-1/2 w-auto mt-2">
-                <p class="text-[10px] sm:text-xs text-nowrap">{{$step['city']}}</p>
+                <p class="text-[10px] sm:text-xs text-nowrap">{{$step->transportType->type}}</p>
             </div>
         </div>
     @endforeach

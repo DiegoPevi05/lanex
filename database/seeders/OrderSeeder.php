@@ -19,16 +19,29 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         // Create 10 random transport types
-        $transport_types = TransportType::factory(10)->create();
+        $transport_types = collect();
+
+        for ($i = 0; $i < 12; $i++) {
+            $transport_types->push(TransportType::factory()->withIndex($i)->create());
+        }
+
+        // Split transport types into two halves
+        $first_half_transport_types = $transport_types->slice(0, 6)->values(); // First 6 transport types (index 0-5)
+        $second_half_transport_types = $transport_types->slice(6, 6)->values(); // Last 6 transport types (index 6-11)
 
         // Create 4 orders and attach related data
-        $orders = Order::factory(4)->create()->each(function ($order) use ($transport_types) {
+        $orders = Order::factory(4)->create()->each(function ($order, $index) use ($first_half_transport_types, $second_half_transport_types) {
 
-            $tracking_steps = TrackingStep::factory(5)->make()->each(function ($tracking_step) use ($order, $transport_types) {
-                $transport = $transport_types->random();
+            $transport_group = $index < 2 ? $first_half_transport_types : $second_half_transport_types;
+
+            $transport_index = 0;
+
+            $tracking_steps = TrackingStep::factory(6)->make()->each(function ($tracking_step) use ($order, $transport_group, &$transport_index) {
+                $tracking_step->transport_type_id = $transport_group[$transport_index]->id;
                 $tracking_step->order_id = $order->id; // Set order_id directly
-                $tracking_step->transport_type_id = $transport->id; // Set transport_type_id directly
                 $tracking_step->save();
+                // Move to the next transport type, wrapping around if we reach the end
+                $transport_index = ($transport_index + 1) % $transport_group->count();
             });
 
             // Create and associate freights with the order

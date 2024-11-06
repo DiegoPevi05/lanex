@@ -12,6 +12,7 @@ class Freight extends Model
     protected $table = 'freights';
 
     protected $fillable = [
+        'freight_id',
         'name',
         'description',
         'origin',
@@ -39,6 +40,10 @@ class Freight extends Model
     public static function getFillableFields($validatedFields, Request $request, Freight $entity = null)
     {
         return [
+            'freight_id' => $validatedFields['freight_id'] ?? null,
+            'freight_id' => $entity && $entity->freight_id
+            ? $entity->freight_id
+            : (isset($validatedFields['freight_id']) ? $validatedFields['freight_id'] : self::generateFreightId()),
             'name' => $validatedFields['name'] ?? null,
             'description' => $validatedFields['description'] ?? null,
             'origin' => $validatedFields['origin'] ?? null,
@@ -51,6 +56,15 @@ class Freight extends Model
             'packages' => $validatedFields['packages'] ?? null,
             'incoterms' => $validatedFields['incoterms'] ?? null,
         ];
+    }
+
+    /**
+     * Generate a new order ID.
+     */
+    protected static function generateFreightId()
+    {
+        // Combine date, time, and a random number for a short unique ID
+        return 'fr_' . date('ymd') . bin2hex(random_bytes(2));
     }
 
     /**
@@ -71,6 +85,8 @@ class Freight extends Model
     public static function getValidationRules($isUpdate = false)
     {
         return [
+
+            'freight_id' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'description' => $isUpdate ? 'sometimes|nullable|string|max:500' : 'nullable|string|max:500',
             'origin' => $isUpdate ? 'sometimes|required|string|max:100' : 'required|string|max:100',
@@ -91,6 +107,11 @@ class Freight extends Model
     public static function getValidationMessages()
     {
         return [
+
+            'freight_id.required' => __('messages.dashboard.freight.form.validations.freight_id_required'),
+            'freight_id.string' => __('messages.dashboard.freight.form.validations.freight_id_string'),
+            'freight_id.max' => __('messages.dashboard.freight.form.validations.freight_id_max'),
+
             'name.required' => __('messages.dashboard.freight.form.validations.name_required'),
             'name.string' => __('messages.dashboard.freight.form.validations.name_string'),
             'name.max' => __('messages.dashboard.freight.form.validations.name_max'),
@@ -168,8 +189,8 @@ class Freight extends Model
                 'value' => 'volume',
             ],
             [
-                'label' => 'messages.dashboard.freight.dropdown.weight',
-                'value' => 'weight',
+                'label' => 'messages.dashboard.freight.dropdown.freight_id',
+                'value' => 'freight_id',
             ],
         ];
     }

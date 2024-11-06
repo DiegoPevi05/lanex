@@ -1113,6 +1113,125 @@ return [
                     'delete_content' => "You won't be able to restore this client once deleted."
                 ]
             ]
-        ]
+        ],
+        'freight' => [
+            'name' => 'freight',
+            'new_entity' => 'new freight',
+            'empty_content' => 'no freights to show',
+            'header' => "freights",
+            'indications' => "select an option to create, update or delete freights",
+            'input_placeholder_search' => "search freight",
+            'button_label_search' => "search",
+            'card' => [
+                'header' => 'freight',
+                'name' => 'name',
+                'updated' => 'updated',
+                'actions' => 'actions',
+                'origin' => 'origin',
+            ],
+            'dropdown' => [
+                'name' => 'name',
+                'origin' => 'origin',
+                'dimensions' => 'dimensions',
+                'weight' => 'weight',
+                'volume' => 'volume',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'view freight',
+                    'create' => 'create freight',
+                    'update' => 'update freight',
+                ],
+                'fields' => [
+                    'freight_id' => 'freight ID',
+                    'name' => 'name',
+                    'description' => 'description',
+                    'origin' => 'origin',
+                    'dimensions_units' => 'dimensions units',
+                    'dimensions' => 'dimensions',
+                    'weight_units' => 'weight units',
+                    'weight' => 'weight',
+                    'volume_units' => 'volume units',
+                    'volume' => 'volume',
+                    'packages' => 'packages',
+                    'incoterms' => 'incoterms',
+                ],
+                'placeholders' => [
+                    'freight_id' => 'Enter Freight ID',
+                    'name' => 'Enter Name',
+                    'description' => 'Enter Description',
+                    'origin' => 'Enter Origin',
+                    'dimensions_units' => 'Select Dimensions Units',
+                    'dimensions' => 'Enter Dimensions',
+                    'weight_units' => 'Select Weight Units',
+                    'weight' => 'Enter Weight',
+                    'volume_units' => 'Select Volume Units',
+                    'volume' => 'Enter Volume',
+                    'packages' => 'Enter Packages Count',
+                    'incoterms' => 'Enter Incoterms',
+                ],
+                'buttons' => [
+                    'cancel' => 'cancel',
+                    'create' => 'create freight',
+                    'update' => 'update freight',
+                ],
+                'validations' => [
+                    'freight_id_required' => 'The freight ID field is required.',
+                    'freight_id_string' => 'The freight ID must be a valid string.',
+                    'freight_id_max' => 'The freight ID may not be greater than 255 characters.',
+
+                    'name_required' => 'The name field is required.',
+                    'name_string' => 'The name must be a valid string.',
+                    'name_max' => 'The name may not be greater than 255 characters.',
+
+                    'origin_required' => 'The origin field is required.',
+                    'origin_string' => 'The origin must be a valid string.',
+                    'origin_max' => 'The origin may not be greater than 100 characters.',
+
+                    'description_string' => 'The description must be a valid string.',
+                    'description_max' => 'The description may not be greater than 500 characters.',
+
+                    'dimensions_units_required' => 'The dimensions units field is required.',
+                    'dimensions_units_string' => 'The dimensions units must be a valid string.',
+                    'dimensions_units_max' => 'The dimensions units may not be greater than 10 characters.',
+
+                    'dimensions_required' => 'The dimensions field is required.',
+                    'dimensions_string' => 'The dimensions must be a valid string.',
+                    'dimensions_max' => 'The dimensions may not be greater than 50 characters.',
+
+                    'weight_units_required' => 'The weight units field is required.',
+                    'weight_units_string' => 'The weight units must be a valid string.',
+                    'weight_units_max' => 'The weight units may not be greater than 10 characters.',
+
+                    'weight_required' => 'The weight field is required.',
+                    'weight_string' => 'The weight must be a valid string.',
+                    'weight_max' => 'The weight may not be greater than 50 characters.',
+
+                    'volume_units_required' => 'The volume units field is required.',
+                    'volume_units_string' => 'The volume units must be a valid string.',
+                    'volume_units_max' => 'The volume units may not be greater than 10 characters.',
+
+                    'volume_required' => 'The volume field is required.',
+                    'volume_string' => 'The volume must be a valid string.',
+                    'volume_max' => 'The volume may not be greater than 50 characters.',
+
+                    'packages_required' => 'The packages field is required.',
+                    'packages_integer' => 'The packages must be a valid integer.',
+                ],
+                'success' => [
+                    'create' => 'Freight created successfully',
+                    'update' => 'Freight updated successfully',
+                    'delete' => 'Freight deleted successfully',
+                ],
+                'error' => [
+                    'not_found' => 'Freight not found.',
+                    'validation_failed' => 'There were errors in the form submission.',
+                ],
+                'modal' => [
+                    'delete_header' => 'Are you sure you want to delete this Freight?',
+                    'delete_content' => 'You won’t be able to restore this information once deleted.',
+                ],
+            ],
+        ],
     ]
 ];

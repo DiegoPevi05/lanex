@@ -2,6 +2,7 @@
 // Assuming $icon contains the file name or path within `storage`
 $transportType = $order->getCurrentTrackStep()->transportType;
 $svgContent = file_get_contents(storage_path('app/public/' . $transportType->icon ));
+$currentTransportType = $transportType->type;
 ?>
 
 <div id="content-card-{{$order->getType()}}-{{$order->id}}" class="w-full h-full border-2 border-gray-light rounded-xl animation-element slide-in-up">
@@ -42,7 +43,7 @@ $svgContent = file_get_contents(storage_path('app/public/' . $transportType->ico
                         {!! $svgContent !!}
                     </div>
                     <p class="font-bold text-secondary-dark text-sm">
-                        {{ __('messages.track.order.air_ship') }}:
+                        {{ $currentTransportType }}:
                     </p>
                 </span>
             </div>
@@ -53,13 +54,13 @@ $svgContent = file_get_contents(storage_path('app/public/' . $transportType->ico
                     <p>{{ __('messages.track.order.origin') }}</p>
                 </div>
                 <div class="col-span-1 text-secondary-dark flex justify-center items-center text-center px-4">
-                    <p>{{ $order->getCurrentTrackStep()->country }}</p>
+                    <p class="text-sm">{{ $order->getCurrentTrackStep()->country }}</p>
                 </div>
                 <div class="col-span-1 flex justify-center items-center">
                     <p>{{ __('messages.track.order.destiny') }}</p>
                 </div>
                 <div class="col-span-1 text-secondary-dark flex justify-center items-center text-center px-4">
-                    <p>{{$order->getLastTrackStep()->country}}</p>
+                    <p class="text-sm">{{$order->getLastTrackStep()->country}}</p>
                 </div>
                 <div class="absolute w-[2px] h-[80%] bg-primary left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
                     <div class="absolute w-[10px] h-[10px] bg-primary rounded-xl top-0 -translate-x-1/2"></div>
@@ -68,7 +69,7 @@ $svgContent = file_get_contents(storage_path('app/public/' . $transportType->ico
             </div>
             <div class="w-2/4 h-full flex flex-col justify-start items-end gap-y-4">
                 <p class="text-secondary-dark text-sm">{{ __('messages.track.order.destiny_city') }}</p>
-                <span class="bg-primary rounded-xl w-auto px-4"><p class="text-white">{{ $order->getLastTrackStep()->city}}</p></span>
+                <span class="bg-primary rounded-xl w-auto px-4 py-1"><p class="text-white">{{ $order->getLastTrackStep()->city}}</p></span>
 
             </div>
         </div>
@@ -114,11 +115,16 @@ $svgContent = file_get_contents(storage_path('app/public/' . $transportType->ico
             <div class="col-span-2 flex flex-col justify-start items-start">
                 <x-order-track-step :order="$order"/>
             </div>
-            <div class="col-span-2 flex flex-col justify-start items-start mt-4">
+            <div class="col-span-2 flex flex-col justify-start items-start mt-6">
                 <p class="text-md font-bold text-secondary-dark capitalize inline-flex gap-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
                     {{ __('messages.dashboard.freight.name').'s' }}
                 </p>
+                <div class="w-full h-auto flex flex-col p-2 gap-y-4">
+                    @foreach ($order->freights as $freight)
+                        <x-freight-card :freight="$freight"/>
+                    @endforeach
+                </div>
             </div>
         </div>
     </x-content-wrapper>

@@ -6,7 +6,7 @@
             <svg id="iconClose_{{$id}}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="m18 15-6-6-6 6"/></svg>
         </button>
     </div>
-    <div id="detail_contaniner_{{$id}}" class="w-full h-auto overflow-y-scroll !h-[0px] no-scroll-bar transition-all duration-300">
+    <div id="detail_contaniner_{{$id}}" class="w-full h-auto overflow-y-scroll !h-[0px] transition-all duration-300">
         <div id="detail_content_{{$id}}" class="w-full h-full transition-all duration-300 opacity-0">
             {{ $slot }}
         </div>

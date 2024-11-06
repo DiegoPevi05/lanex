@@ -20,12 +20,55 @@ class TransportTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => $this->faker->text(40),
-            'icon' => '/images/test/truck.svg',
+            'type' => $this->faker->randomElement(self::$types),
+            'icon' => $this->faker->randomElement(self::$icons),
             'name' => $this->faker->company(),
             'description' => $this->faker->text(200),
             'status' => 'ACTIVE'
         ];
     }
+    // Add a custom method to set icon and type based on index
+    public function withIndex(int $i): static
+    {
+        return $this->state(function () use ($i) {
+            return [
+                'type' => self::$types[$i % count(self::$types)],
+                'icon' => self::$icons[$i % count(self::$icons)],
+            ];
+        });
+    }
+
+    // Define a static array of icons and types you want to use
+    private static array $icons = [
+        '/images/svgs/warehouse.svg',
+        '/images/svgs/plane-takeoff.svg',
+        '/images/svgs/plane-landing.svg',
+        '/images/svgs/container.svg',
+        '/images/svgs/truck.svg',
+        '/images/svgs/house.svg',
+
+        '/images/svgs/warehouse.svg',
+        '/images/svgs/ship.svg',
+        '/images/svgs/anchor.svg',
+        '/images/svgs/container.svg',
+        '/images/svgs/truck.svg',
+        '/images/svgs/house.svg',
+    ];
+
+    private static array $types = [
+        'Proveedor',
+        'Despegue',
+        'Aterrizaje',
+        'Aduanas',
+        'Currier',
+        'Destinatario',
+
+        'Proveedor',
+        'Embarcacion',
+        'Anclaje',
+        'Aduanas',
+        'Currier',
+        'Destinatario',
+    ];
 
 }

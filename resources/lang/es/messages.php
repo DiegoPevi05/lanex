@@ -1114,5 +1114,124 @@ return [
                 ]
             ]
         ],
+        'freight' => [
+            'name' => 'flete',
+            'new_entity' => 'nuevo flete',
+            'empty_content' => 'no hay fletes para mostrar',
+            'header' => "fletes",
+            'indications' => "seleccione una opción para crear, actualizar o eliminar fletes",
+            'input_placeholder_search' => "buscar flete",
+            'button_label_search' => "buscar",
+            'card' => [
+                'header' => 'flete',
+                'name' => 'nombre',
+                'updated' => 'actualizado',
+                'actions' => 'acciones',
+                'origin' => 'origen',
+            ],
+            'dropdown' => [
+                'name' => 'nombre',
+                'origin' => 'origen',
+                'dimensions' => 'dimensiones',
+                'weight' => 'peso',
+                'volume' => 'volumen',
+            ],
+            'form' => [
+                'headers' => [
+                    'view' => 'ver flete',
+                    'create' => 'crear flete',
+                    'update' => 'actualizar flete',
+                ],
+                'fields' => [
+                    'freight_id' => 'ID de flete',
+                    'name' => 'nombre',
+                    'description' => 'descripción',
+                    'origin' => 'origen',
+                    'dimensions_units' => 'unidades de dimensiones',
+                    'dimensions' => 'dimensiones',
+                    'weight_units' => 'unidades de peso',
+                    'weight' => 'peso',
+                    'volume_units' => 'unidades de volumen',
+                    'volume' => 'volumen',
+                    'packages' => 'paquetes',
+                    'incoterms' => 'incoterms',
+                ],
+                'placeholders' => [
+                    'freight_id' => 'Ingrese ID de Flete',
+                    'name' => 'Ingrese Nombre',
+                    'description' => 'Ingrese Descripción',
+                    'origin' => 'Ingrese Origen',
+                    'dimensions_units' => 'Seleccione Unidades de Dimensiones',
+                    'dimensions' => 'Ingrese Dimensiones',
+                    'weight_units' => 'Seleccione Unidades de Peso',
+                    'weight' => 'Ingrese Peso',
+                    'volume_units' => 'Seleccione Unidades de Volumen',
+                    'volume' => 'Ingrese Volumen',
+                    'packages' => 'Ingrese Cantidad de Paquetes',
+                    'incoterms' => 'Ingrese Incoterms',
+                ],
+                'buttons' => [
+                    'cancel' => 'cancelar',
+                    'create' => 'crear flete',
+                    'update' => 'actualizar flete',
+                ],
+                'validations' => [
+                    'freight_id_required' => 'El campo ID de flete es obligatorio.',
+                    'freight_id_string' => 'El ID de flete debe ser una cadena válida.',
+                    'freight_id_max' => 'El ID de flete no debe exceder los 255 caracteres.',
+
+                    'name_required' => 'El campo nombre es obligatorio.',
+                    'name_string' => 'El nombre debe ser una cadena válida.',
+                    'name_max' => 'El nombre no debe exceder los 255 caracteres.',
+
+                    'origin_required' => 'El campo origen es obligatorio.',
+                    'origin_string' => 'El origen debe ser una cadena válida.',
+                    'origin_max' => 'El origen no debe exceder los 100 caracteres.',
+
+                    'description_string' => 'La descripción debe ser una cadena válida.',
+                    'description_max' => 'La descripción no debe exceder los 500 caracteres.',
+
+                    'dimensions_units_required' => 'El campo unidades de dimensiones es obligatorio.',
+                    'dimensions_units_string' => 'Las unidades de dimensiones deben ser una cadena válida.',
+                    'dimensions_units_max' => 'Las unidades de dimensiones no deben exceder los 10 caracteres.',
+
+                    'dimensions_required' => 'El campo dimensiones es obligatorio.',
+                    'dimensions_string' => 'Las dimensiones deben ser una cadena válida.',
+                    'dimensions_max' => 'Las dimensiones no deben exceder los 50 caracteres.',
+
+                    'weight_units_required' => 'El campo unidades de peso es obligatorio.',
+                    'weight_units_string' => 'Las unidades de peso deben ser una cadena válida.',
+                    'weight_units_max' => 'Las unidades de peso no deben exceder los 10 caracteres.',
+
+                    'weight_required' => 'El campo peso es obligatorio.',
+                    'weight_string' => 'El peso debe ser una cadena válida.',
+                    'weight_max' => 'El peso no debe exceder los 50 caracteres.',
+
+                    'volume_units_required' => 'El campo unidades de volumen es obligatorio.',
+                    'volume_units_string' => 'Las unidades de volumen deben ser una cadena válida.',
+                    'volume_units_max' => 'Las unidades de volumen no deben exceder los 10 caracteres.',
+
+                    'volume_required' => 'El campo volumen es obligatorio.',
+                    'volume_string' => 'El volumen debe ser una cadena válida.',
+                    'volume_max' => 'El volumen no debe exceder los 50 caracteres.',
+
+                    'packages_required' => 'El campo paquetes es obligatorio.',
+                    'packages_integer' => 'Los paquetes deben ser un entero válido.',
+                ],
+                'success' => [
+                    'create' => 'Flete creado con éxito',
+                    'update' => 'Flete actualizado con éxito',
+                    'delete' => 'Flete eliminado con éxito',
+                ],
+                'error' => [
+                    'not_found' => 'Flete no encontrado.',
+                    'validation_failed' => 'Hubo errores en el envío del formulario.',
+                ],
+                'modal' => [
+                    'delete_header' => '¿Está seguro de que desea eliminar este flete?',
+                    'delete_content' => 'No podrá restaurar esta información una vez eliminada.',
+                ],
+            ],
+        ],
     ]
 ];
