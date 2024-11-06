@@ -2,6 +2,8 @@
 
 return [
     'common' => [
+        'ACTIVE' => 'activo',
+        'INACTIVE' => 'inactivo',
         'delete' => 'borrar',
         'cancel' => 'cancelar',
         'quote' => 'Cotización',
@@ -771,10 +773,18 @@ return [
         'transport_type' => [
             'name' => 'tipo de transporte',
             'new_entity' => 'nuevo transporte',
+            'empty_content' => 'no hay transportes para mostrar',
             'header' => "tipos de transporte",
             'indications' => "seleccione una opción para crear, actualizar o eliminar transportes",
             'input_placeholder_search' => "buscar transporte",
             'button_label_search' => "buscar",
+            'card' => [
+                'header' => 'transporte',
+                'name' => 'nombre',
+                'updated' => 'actualizado',
+                'actions' => 'acciones',
+                'status' => 'estatus'
+            ],
             'dropdown' => [
                 'name' => 'nombre',
                 'description' => 'descripción',

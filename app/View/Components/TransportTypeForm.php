@@ -11,12 +11,14 @@ class TransportTypeForm extends Component
 
     public $formRequest;
     public $transport_type;
+    public $icons;
     /**
      * Create a new component instance.
      */
-    public function __construct($formRequest = null, $transport_type = null)
+    public function __construct($formRequest = null, $transport_type = null, $icons = [])
     {
         $this->formRequest = $formRequest;
+        $this->icons = $icons;
         $this->transport_type = $transport_type;
     }
 
@@ -27,6 +29,7 @@ class TransportTypeForm extends Component
     {
         return view('components.transport-type-form',[
             'formRequest' => $this->formRequest,
+            'icons' => $this->icons,
             'transport_type' => $this->transport_type
         ]);
     }

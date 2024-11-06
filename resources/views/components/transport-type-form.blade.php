@@ -10,24 +10,36 @@
         @if($formRequest === 'update')
             @method('PUT') <!-- Specify PUT method for updating -->
         @endif
+        <!-- Type Field -->
+        <div class="mb-4 mt-4">
+            <label for="type" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.type") }}</label>
+            <input type="text" id="type" name="type" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('type', $transport_type->type ?? '') }}" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.type") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+            <span class="text-primary font-bold text-xs error-message" id="error-type"></span>
+        </div>
+
+        <!-- Icon Field -->
+        <div class="mb-4 mt-4">
+            <label for="icon" class="block text-sm font-bold text-secondary-dark capitalize">
+                {{ __("messages.dashboard.transport_type.form.fields.icon") }}
+            </label>
+
+            <select id="icon" name="icon" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
+                <option value="" selected>{{ __("messages.dashboard.transport_type.form.placeholders.icon") }}</option>
+
+                @foreach($icons as $filename => $content)
+                    <option value="{{ $content }}" {{ old('icon', $transport_type->icon ?? '') === $content ? 'selected' : '' }}>
+                        {{ $filename }}
+                    </option>
+                @endforeach
+            </select>
+
+            <span class="text-primary font-bold text-xs error-message" id="error-icon"></span>
+        </div>
         <!-- Name Field -->
         <div class="mb-4 mt-4">
             <label for="name" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.name") }}</label>
             <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('name', $transport_type->name ?? '') }}" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-name"></span>
-        </div>
-
-        <div class="mb-4 mt-4">
-            <label for="image" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.transport_type.form.fields.image") }}</label>
-            <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" style="background-image:url({{ $transport_type ? asset('storage/' . $transport_type->image) : '' }})">
-
-                </div>
-                <div class="file-select" id="src-tent-image" >
-                  <input type="file" name="image" aria-label="image" onchange="previewImage(event, 'image')" {{$formRequest === "view" ? "disabled" : ""}}/>
-                </div>
-            </div>
-            <span class="text-primary font-bold text-xs error-message" id="error-image"></span>
         </div>
 
 
@@ -38,18 +50,25 @@
             <span class="text-primary font-bold text-xs error-message" id="error-description"></span>
         </div>
 
-        <!-- Stars Field -->
-        <div class="mb-4">
-            <label for="stars" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.transport_type.form.fields.stars') }}</label>
-            <input type="number" id="stars" name="stars" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" min="1" max="5" value="{{ old('stars', $transport_type->stars ?? '') }}"  placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.stars") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-            <span class="text-primary font-bold text-xs error-message" id="error-stars"></span>
-        </div>
-
-        <!-- Name Field -->
+        <!-- Status Field -->
         <div class="mb-4 mt-4">
-            <label for="EAN" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.EAN") }}</label>
-            <input type="text" id="EAN" name="EAN" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('EAN', $transport_type->EAN ?? '') }}" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.EAN") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-            <span class="text-primary font-bold text-xs error-message" id="error-EAN"></span>
+            <label for="status" class="block text-sm font-bold text-secondary-dark capitalize">
+                {{ __("messages.dashboard.transport_type.form.fields.status") }}
+            </label>
+
+            <select id="status" name="status" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
+                <option value="" disabled selected>{{ __("messages.dashboard.transport_type.form.placeholders.status") }}</option>
+
+                <option value="ACTIVE" {{ old('status', $transport_type->status ?? '') === "ACTIVE" ? 'selected' : '' }}>
+                {{__('messages.common.ACTIVE')}}
+                </option>
+
+                <option value="INACTIVE" {{ old('status', $transport_type->status ?? '') === "INACTIVE" ? 'selected' : '' }}>
+                {{__('messages.common.INACTIVE')}}
+                </option>
+            </select>
+
+            <span class="text-primary font-bold text-xs error-message" id="error-status"></span>
         </div>
 
         <!-- Submit Button -->

@@ -2,6 +2,8 @@
 
 return [
     'common' => [
+        'ACTIVE' => 'active',
+        'INACTIVE' => 'inactive',
         'delete' => 'delete',
         'cancel' => 'cancel',
         'quote' => 'Quote',
@@ -771,10 +773,18 @@ return [
         'transport_type' => [
             'name' => 'transport type',
             'new_entity' => 'new transport',
+            'empty_content' => 'no transports to show',
             'header' => "transport types",
             'indications' => "select an option to create, update or delete transports",
             'input_placeholder_search' => "search transport",
             'button_label_search' => "search",
+            'card' => [
+                'header' => 'transport',
+                'name' => 'name',
+                'updated' => 'updated',
+                'actions' => 'actions',
+                'status' => 'status'
+            ],
             'dropdown' => [
                 'name' => 'name',
                 'description' => 'description',

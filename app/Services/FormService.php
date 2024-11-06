@@ -34,8 +34,10 @@ class FormService
             $formComponent = new WebSupplierForm($formRequest, $entity);
 
         }elseif($typeEntity == "transport_type"){
-            $formComponent = new TransportTypeForm($formRequest, $entity);
 
+            $icons = IconService::getAllSvgIcons();
+
+            $formComponent = new TransportTypeForm($formRequest, $entity, $icons);
         }
 
         return $formComponent;
