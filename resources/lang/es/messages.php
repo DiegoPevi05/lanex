@@ -860,8 +860,8 @@ return [
             'button_label_search' => 'buscar',
             'dropdown' => [
                 'status' => 'estado',
-                'origin' => 'origen',
-                'destination' => 'destino'
+                'country' => 'pais',
+                'city' => 'ciudad'
             ],
             'form' => [
                 'headers' => [
@@ -872,16 +872,18 @@ return [
                 'fields'=> [
                     'status'=> 'estado',
                     'sequence'=> 'secuencia',
-                    'origin'=> 'origen',
-                    'destination'=> 'destino',
+                    'country'=> 'pais',
+                    'city'=> 'ciudad',
+                    'address'=> 'dirección',
                     'order_id'=> 'ID de pedido',
                     'transport_type_id'=> 'ID de tipo de transporte'
                 ],
                 'placeholders' => [
                     'status' => 'Ingrese el estado (ej., PENDIENTE, EN TRÁNSITO, COMPLETADO)',
                     'sequence' => 'Ingrese el número de secuencia',
-                    'origin' => 'Ingrese el origen',
-                    'destination' => 'Ingrese el destino',
+                    'country'=> 'Ingrese pais',
+                    'city'=> 'Ingrese ciudad',
+                    'address'=> 'Ingrese dirección',
                     'order_id' => 'Ingrese el ID del pedido',
                     'transport_type_id' => 'Ingrese el ID del tipo de transporte'
                 ],
@@ -900,11 +902,14 @@ return [
                     'sequence_integer'=> 'La secuencia debe ser un número entero.',
                     'sequence_min'=> 'La secuencia debe ser al menos 1.',
 
-                    'origin_string'=> 'El origen debe ser una cadena válida.',
-                    'origin_max'=> 'El origen no puede tener más de 255 caracteres.',
+                    'country_string'=> 'El pais debe ser una cadena válida.',
+                    'country_max'=> 'El pais no puede tener más de 255 caracteres.',
 
-                    'destination_string'=> 'El destino debe ser una cadena válida.',
-                    'destination_max'=> 'El destino no puede tener más de 255 caracteres.',
+                    'city_string'=> 'La ciudad debe ser una cadena válida.',
+                    'city_max'=> 'La ciudad no puede tener más de 255 caracteres.',
+
+                    'address_string'=> 'La dirección debe ser una cadena válida.',
+                    'address_max'=> 'La dirección no puede tener más de 255 caracteres.',
 
                     'order_id_required'=> 'El campo ID de pedido es obligatorio.',
                     'order_id_exists'=> 'El ID de pedido seleccionado es inválido.',
@@ -948,6 +953,9 @@ return [
                 'fields' => [
                     'order_number' => 'número de orden',
                     'status' => 'estado',
+                    'PENDING' => 'pendiente',
+                    'IN TRANSIT' => 'en transito',
+                    'COMPLETED' => 'completado',
                     'details' => 'detalles',
                     'net_amount' => 'monto neto',
                     'taxes' => 'impuestos',
@@ -1027,9 +1035,18 @@ return [
             'name' => 'cliente',
             'new_entity' => 'nuevo cliente',
             'header' => "clientes",
+            'empty_content' => "No hay clientes para mostrar",
             'indications' => "seleccione una opción para crear, actualizar o eliminar clientes",
             'input_placeholder_search' => "buscar cliente",
             'button_label_search' => "buscar",
+            'card' => [
+                'PENDING' => 'pendiente',
+                'header' => 'cliente',
+                'company' => 'compañia',
+                'RUC' => 'RUC',
+                'actions' => 'acciones',
+                'updated' => 'actualizado'
+            ],
             'dropdown' => [
                 'client_id' => 'ID del Cliente',
                 'company' => 'Compañía',

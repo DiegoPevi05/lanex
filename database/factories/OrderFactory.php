@@ -21,7 +21,7 @@ class OrderFactory extends Factory
     {
 
         return [
-            'order_number' => $this->faker->text(10),
+            'order_number' => Order::generateOrderNumber(),
             'status' => 'PENDING',
             'details' => $this->faker->text(200),
             'net_amount' => $this->faker->numberBetween(0, 1000),

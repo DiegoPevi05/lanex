@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreignId('transport_type_id')->constrained('transport_types')->onDelete('cascade');
             $table->string('status')->default('PENDING'); // e.g., "Pending", "In Transit", "Completed"
             $table->unsignedInteger('sequence')->comment('Order of this step in the tracking sequence');
-            $table->string('origin')->nullable(); // e.g., "Warehouse"
-            $table->string('destination')->nullable(); // e.g., "Port"
+            $table->string('country')->nullable(); // e.g., "Warehouse"
+            $table->string('city')->nullable(); // e.g., "Port"
+            $table->string('address')->nullable(); // e.g., "Port"
             $table->timestamps();
         });
     }

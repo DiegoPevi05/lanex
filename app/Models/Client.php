@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Client extends Model
 {
@@ -33,12 +34,23 @@ class Client extends Model
     public static function getFillableFields($validatedFields, Request $request, Client $entity = null)
     {
         return [
-            'client_id' => $validatedFields['client_id'] ?? null,
+            'client_id' => $entity && $entity->client_id
+            ? $entity->client_id
+            : (isset($validatedFields['client_id']) ? $validatedFields['client_id'] : self::generateClientId()),
             'company' => $validatedFields['company'] ?? null,
             'RUC' => $validatedFields['RUC'] ?? null,
             'cellphone' => $validatedFields['cellphone'] ?? null,
             'email' => $validatedFields['email'] ?? null,
         ];
+    }
+
+    /**
+     * Generate a new client ID.
+     */
+    protected static function generateClientId()
+    {
+        // Combine date, time, and a random number for a short unique ID
+        return 'client_' . date('ymd') . bin2hex(random_bytes(2));
     }
 
     /**

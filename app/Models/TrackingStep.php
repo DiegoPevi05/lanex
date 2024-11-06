@@ -14,8 +14,9 @@ class TrackingStep extends Model
     protected $fillable = [
         'status',
         'sequence',
-        'origin',
-        'destination',
+        'country',
+        'city',
+        'address',
         'order_id',
         'transport_type_id',
     ];
@@ -30,8 +31,9 @@ class TrackingStep extends Model
         return [
             'status' => $validatedFields['status'] ?? 'PENDING',
             'sequence' => $validatedFields['sequence'] ?? null,
-            'origin' => $validatedFields['origin'] ?? null,
-            'destination' => $validatedFields['destination'] ?? null,
+            'country' => $validatedFields['country'] ?? null,
+            'city' => $validatedFields['city'] ?? null,
+            'address' => $validatedFields['address'] ?? null,
             'order_id' => $validatedFields['order_id'] ?? null,
             'transport_type_id' => $validatedFields['transport_type_id'] ?? null,
         ];
@@ -63,8 +65,9 @@ class TrackingStep extends Model
         return [
             'status' => [ $isUpdate ? 'sometimes|required' : 'required', 'string', 'max:255', 'in:PENDING,IN TRANSIT,COMPLETED'],
             'sequence' => 'required|integer|min:1',
-            'origin' => 'nullable|string|max:255',
-            'destination' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
             'order_id' => 'required|exists:orders,id',
             'transport_type_id' => 'required|exists:transport_types,id',
         ];
@@ -82,11 +85,14 @@ class TrackingStep extends Model
             'sequence.integer' => __('messages.dashboard.tracking_step.form.validations.sequence_integer'),
             'sequence.min' => __('messages.dashboard.tracking_step.form.validations.sequence_min'),
 
-            'origin.string' => __('messages.dashboard.tracking_step.form.validations.origin_string'),
-            'origin.max' => __('messages.dashboard.tracking_step.form.validations.origin_max'),
+            'country.string' => __('messages.dashboard.tracking_step.form.validations.country_string'),
+            'country.max' => __('messages.dashboard.tracking_step.form.validations.country_max'),
 
-            'destination.string' => __('messages.dashboard.tracking_step.form.validations.destination_string'),
-            'destination.max' => __('messages.dashboard.tracking_step.form.validations.destination_max'),
+            'city.string' => __('messages.dashboard.tracking_step.form.validations.city_string'),
+            'city.max' => __('messages.dashboard.tracking_step.form.validations.city_max'),
+
+            'address.string' => __('messages.dashboard.tracking_step.form.validations.address_string'),
+            'address.max' => __('messages.dashboard.tracking_step.form.validations.address_max'),
 
             'order_id.required' => __('messages.dashboard.tracking_step.form.validations.order_id_required'),
             'order_id.exists' => __('messages.dashboard.tracking_step.form.validations.order_id_exists'),
@@ -124,12 +130,12 @@ class TrackingStep extends Model
                 'value' => 'status',
             ],
             [
-                'label' => 'messages.dashboard.tracking_step.dropdown.origin',
+                'label' => 'messages.dashboard.tracking_step.dropdown.country',
                 'value' => 'origin',
             ],
             [
-                'label' => 'messages.dashboard.tracking_step.dropdown.destination',
-                'value' => 'destination',
+                'label' => 'messages.dashboard.tracking_step.dropdown.city',
+                'value' => 'origin',
             ],
         ];
     }
@@ -139,8 +145,9 @@ class TrackingStep extends Model
         return json_encode([
             'status' => $this->status,
             'sequence' => $this->sequence,
-            'origin' => $this->origin,
-            'destination' => $this->destination,
+            'country' => $this->country,
+            'city' => $this->city,
+            'address' => $this->address,
             'order_id' => $this->order_id,
             'transport_type_id' => $this->transport_type_id,
         ]);
@@ -152,8 +159,9 @@ class TrackingStep extends Model
         return new self([
             'status' => $data['status'],
             'sequence' => $data['sequence'],
-            'origin' => $data['origin'],
-            'destination' => $data['destination'],
+            'country' => $data['country'],
+            'city' => $data['city'],
+            'address' => $data['address'],
             'order_id' => $data['order_id'],
             'transport_type_id' => $data['transport_type_id'],
         ]);

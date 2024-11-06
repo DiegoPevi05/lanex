@@ -42,9 +42,9 @@
                         @if($EntityType == "transport_type")
                             <x-transport-type-card :data="$paginate"/>
                         @elseif($EntityType == "client")
-                            <div>client</div>
+                            <x-client-card :data="$paginate"/>
                         @elseif($EntityType == "order")
-                            <div>order</div>
+                            <x-order-card :data="$paginate"/>
                         @endif
                     @endforeach
                 </div>

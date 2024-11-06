@@ -21,8 +21,8 @@ class ClientFactory extends Factory
     {
 
         return [
-            'client_id' => $this->faker->unique()->regexify('[A-Z0-9]{10}'),
-            'company' => 'PENDING',
+            'client_id' => Client::generateClientId(),
+            'company' => $this->faker->company(),
             'RUC' => $this->faker->numerify('###########'),
             'cellphone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,

@@ -816,7 +816,6 @@ return [
                     'update' => 'update transport type'
                 ],
                 'validations' => [
-
                     'type_required' => 'The type field is required.',
                     'type_string' => 'The type must be a valid string.',
                     'type_max' => 'The type may not be greater than 255 characters.',
@@ -836,7 +835,6 @@ return [
                     'status_required' => 'The status field is required.',
                     'status_string' => 'The status must be a valid string.',
                     'status_max' => 'The status may not be greater than 255 characters.',
-
                 ],
                 'success' => [
                     'create' => 'Create Transport Type Successfully',
@@ -862,8 +860,8 @@ return [
             'button_label_search' => 'search',
             'dropdown' => [
                 'status' => 'status',
-                'origin' => 'origin',
-                'destination' => 'destination'
+                'country' => 'country',
+                'city' => 'city'
             ],
             'form' => [
                 'headers' => [
@@ -874,16 +872,18 @@ return [
                 'fields'=> [
                     'status'=> 'status',
                     'sequence'=> 'sequence',
-                    'origin'=> 'origin',
-                    'destination'=> 'destination',
+                    'country'=> 'country',
+                    'city'=> 'city',
+                    'address'=> 'address',
                     'order_id'=> 'order ID',
                     'transport_type_id'=> 'transport type ID'
                 ],
                 'placeholders' => [
                     'status' => 'Enter status (e.g., PENDING, IN TRANSIT, COMPLETED)',
                     'sequence' => 'Enter sequence number',
-                    'origin' => 'Enter origin',
-                    'destination' => 'Enter destination',
+                    'country'=> 'Enter country',
+                    'city'=> 'Enter city',
+                    'address'=> 'Enter address',
                     'order_id' => 'Enter order ID',
                     'transport_type_id' => 'Enter transport type ID'
                 ],
@@ -902,11 +902,14 @@ return [
                     'sequence_integer'=> 'The sequence must be an integer.',
                     'sequence_min'=> 'The sequence must be at least 1.',
 
-                    'origin_string'=> 'The origin must be a valid string.',
-                    'origin_max'=> 'The origin may not be greater than 255 characters.',
+                    'country_string'=> 'The country must be a valid string.',
+                    'country_max'=> 'The country may not be greater than 255 characters.',
 
-                    'destination_string'=> 'The destination must be a valid string.',
-                    'destination_max'=> 'The destination may not be greater than 255 characters.',
+                    'city_string'=> 'The city must be a valid string.',
+                    'city_max'=> 'The city may not be greater than 255 characters.',
+
+                    'address_string'=> 'The address must be a valid string.',
+                    'address_max'=> 'The address may not be greater than 255 characters.',
 
                     'order_id_required'=> 'The order ID field is required.',
                     'order_id_exists'=> 'The selected order ID is invalid.',
@@ -950,6 +953,9 @@ return [
                 'fields' => [
                     'order_number' => 'order number',
                     'status' => 'status',
+                    'PENDING' => 'pending',
+                    'IN TRANSIT' => 'in transit',
+                    'COMPLETED' => 'completed',
                     'details' => 'details',
                     'net_amount' => 'net amount',
                     'taxes' => 'taxes',
@@ -1029,9 +1035,18 @@ return [
             'name' => 'client',
             'new_entity' => 'new client',
             'header' => "clients",
+            'empty_content' => "No content to show",
             'indications' => "select an option to create, update or delete clients",
             'input_placeholder_search' => "search client",
             'button_label_search' => "search",
+            'card' => [
+                'PENDING' => 'pending',
+                'header' => 'client',
+                'company' => 'company',
+                'RUC' => 'RUC',
+                'actions' => 'actions',
+                'updated' => 'updated'
+            ],
             'dropdown' => [
                 'client_id' => 'Client ID',
                 'company' => 'Company',

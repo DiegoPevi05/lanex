@@ -25,8 +25,9 @@ class TrackingStepFactory extends Factory
 
         return [
             'sequence' => $sequence,
-            'origin' => $this->faker->text(40),
-            'destination' => $this->faker->text(40),
+            'country' =>  $this->faker->country,
+            'city' => $this->faker->city,
+            'address' => $this->faker->address,
             'status' => 'PENDING'
         ];
     }

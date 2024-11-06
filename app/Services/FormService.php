@@ -6,6 +6,7 @@ use App\View\Components\WebServiceForm;
 use App\View\Components\WebProductForm;
 use App\View\Components\WebSupplierForm;
 use App\View\Components\TransportTypeForm;
+use App\View\Components\ClientForm;
 use App\Services\IconService;
 
 class FormService
@@ -38,6 +39,10 @@ class FormService
             $icons = IconService::getAllSvgIcons();
 
             $formComponent = new TransportTypeForm($formRequest, $entity, $icons);
+
+        }elseif($typeEntity == "client"){
+
+            $formComponent = new ClientForm($formRequest, $entity, );
         }
 
         return $formComponent;

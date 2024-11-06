@@ -33,7 +33,10 @@ class Order extends Model
     public static function getFillableFields($validatedFields, Request $request, Order $entity = null)
     {
         return [
-            'order_number' => $validatedFields['order_number'] ?? null,
+            'order_number' => $entity && $entity->order_number
+            ? $entity->order_number
+            : (isset($validatedFields['order_number']) ? $validatedFields['order_number'] : self::generateOrderNumber()),
+
             'status' => $validatedFields['status'] ?? 'PENDING',
             'details' => $validatedFields['details'] ?? null,
             'net_amount' => $validatedFields['net_amount'] ?? 0,
@@ -44,6 +47,15 @@ class Order extends Model
             'channel' => $validatedFields['channel'] ?? null,
             'client_id' => $validatedFields['client_id'] ?? null,
         ];
+    }
+
+    /**
+     * Generate a new order ID.
+     */
+    protected static function generateOrderNumber()
+    {
+        // Combine date, time, and a random number for a short unique ID
+        return 'ord_' . date('ymd') . bin2hex(random_bytes(2));
     }
 
     public static function getRoutes()
@@ -203,6 +215,59 @@ class Order extends Model
     public function trackingSteps()
     {
         return $this->hasMany(TrackingStep::class,'order_id'); // One-to-many relationship with tracking steps
+    }
+
+    public function getCurrentTrackStep()
+    {
+        // Step 1: Try to find the "IN TRANSIT" tracking step
+        $inTransitStep = $this->trackingSteps()->where('status', 'IN TRANSIT')->first();
+
+        // Step 2: If no "IN TRANSIT" step found, get the last "COMPLETED" step by highest sequence
+        if (!$inTransitStep) {
+            $inTransitStep = $this->trackingSteps()
+                ->where('status', 'COMPLETED')
+                ->orderByDesc('sequence')
+                ->first();
+        }
+
+        // Step 3: If no "COMPLETED" step found, get the first "PENDING" step by lowest sequence
+        if (!$inTransitStep) {
+            $inTransitStep = $this->trackingSteps()
+                ->where('status', 'PENDING')
+                ->orderBy('sequence')
+                ->first();
+        }
+
+        return $inTransitStep;
+    }
+
+    public function getNextTrackStep()
+    {
+        // Get the current step (this could be IN TRANSIT, COMPLETED, or PENDING)
+        $currentStep = $this->getCurrentTrackStep();
+
+        // If no current step found, return null or handle the case as needed
+        if (!$currentStep) {
+            return null;
+        }
+
+        // Get the next tracking step by finding the one with sequence + 1
+        $nextStep = $this->trackingSteps()
+            ->where('sequence', $currentStep->sequence + 1)
+            ->first();
+
+        // If no next step is found, return the current step (or handle it as per requirements)
+        return $nextStep ?? $currentStep;
+    }
+
+    public function getLastTrackStep()
+    {
+        // Get the last tracking step by highest sequence (most recent step)
+        $lastStep = $this->trackingSteps()
+            ->orderByDesc('sequence')
+            ->first();
+
+        return $lastStep;
     }
 
     public function client()

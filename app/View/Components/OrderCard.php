@@ -6,16 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ClientCard extends Component
+class OrderCard extends Component
 {
 
-    public $client;
+    public $order;
     /**
      * Create a new component instance.
      */
     public function __construct($data)
     {
-        $this->client = $data;
+        $this->order = $data;
     }
 
     /**
@@ -23,6 +23,6 @@ class ClientCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.client-card');
+        return view('components.order-card');
     }
 }
