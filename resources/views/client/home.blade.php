@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="hidden sm:flex w-full h-full p-none m-none">
-                    @if($reviews && $reviews[0])
+                    @if(!empty($reviews) && isset($reviews[0]))
                         <x-review
                             :stars="$reviews[0]['stars']"
                             :content="$reviews[0]['review']"
@@ -162,7 +162,7 @@
 
                 <div class="flex sm:hidden w-full h-full p-none m-none">
 
-                    @if($reviews && $reviews[0])
+                    @if(!empty($reviews) && isset($reviews[0]))
                     <x-review
                         :stars="$reviews[0]['stars']"
                         :content="$reviews[0]['review']"
@@ -173,7 +173,7 @@
                     @endif
                 </div>
 
-                @if($reviews && $reviews[1])
+                @if(!empty($reviews) && isset($reviews[1]))
                 <x-review
                     :stars="$reviews[1]['stars']"
                     :content="$reviews[1]['review']"
@@ -182,7 +182,7 @@
                 />
                 @endif
 
-                @if($reviews && $reviews[2])
+                @if(!empty($reviews) && isset($reviews[2]))
                 <x-review
                     :stars="$reviews[2]['stars']"
                     :content="$reviews[2]['review']"
@@ -191,7 +191,7 @@
                 />
                 @endif
 
-                @if($reviews && $reviews[3])
+                @if(!empty($reviews) && isset($reviews[3]))
                 <x-review
                     :stars="$reviews[3]['stars']"
                     :content="$reviews[3]['review']"
