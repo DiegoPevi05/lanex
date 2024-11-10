@@ -21,7 +21,7 @@ class WebServiceFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'icon' => '/images/test/truck.svg',
+            'icon' => '/images/svgs/ship.svg',
             'short_description' => $this->faker->text(80),
             'webcontent' => json_encode([
                 'image' => '/images/test/aboutus.jpg',
