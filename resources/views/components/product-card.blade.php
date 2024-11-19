@@ -14,6 +14,6 @@
         <p class="!text-xs text-justify hidden xl:block">{{$product['description']}} </p>
     </div>
     <div class="h-full w-full flex justify-center items-center mt-6">
-        <x-button url="#" text="Cotizar Ahora" variant="primary"/>
+        <x-button :url="route('quote') . '?type=product&id=' . $product['id']" text="Cotizar Ahora" variant="primary"/>
     </div>
 </div>

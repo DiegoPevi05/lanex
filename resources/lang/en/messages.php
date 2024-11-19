@@ -29,34 +29,90 @@ return [
     ],
     'home' => [
         'hero' => [
-            'header' => 'WE ARE THE BEST LOGISTICS COMPANY',
-            'title' => 'Optimize your shipments with our cargo services',
-            'description' => 'Simplify your shipping process and make it more efficient with our cargo services. From start to finish, we will handle everything to ensure your cargo arrives safely.',
+            'header' => 'WE ARE YOUR BEST ALLY IN LOGISTICS OPERATIONS',
+            'title' => 'Optimize your time with our integrated system for foreign trade operations',
+            'description' => 'Simplify your foreign trade operations with our diverse international freight services.',
             'card_1_number' => '26K',
-            'card_1_label' => 'Satisfied Customers',
+            'card_1_label' => 'Satisfied Clients',
             'card_2_number' => '12+',
-            'card_2_label' => 'Satisfied Customers',
+            'card_2_label' => 'Years of Experience',
         ],
         'step' => [
-            'header' => 'How It Works',
-            'title' => 'Simplify Your Shipping Experience with Our Easy Step Process',
-            'content' => 'At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.',
+            'header' => 'How does it work?',
+            'title' => 'Simplify your international purchases and shipments in easy steps',
+            'content' => 'At Lanex, we strive to provide our clients with personalized and efficient logistics solutions that meet their specific needs. We are dedicated to optimizing your business with hassle-free shipping experiences.',
             'step_1_label' => 'Step 1',
             'step_1_title' => 'Request a Quote',
-            'step_1_content' => 'We believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs.',
+            'step_1_content' => 'We believe in providing our clients with personalized and efficient logistics solutions tailored to their unique needs.',
             'step_2_label' => 'Step 2',
-            'step_2_title' => 'Request a Quote',
-            'step_2_content' => 'We believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs.',
+            'step_2_title' => 'Confirm Your Shipment',
+            'step_2_content' => 'Confirm the details of your shipment and leave the rest to us.',
             'step_3_label' => 'Step 3',
-            'step_3_title' => 'Request a Quote',
-            'step_3_content' => 'We believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs.',
+            'step_3_title' => 'Receive Your Freight',
+            'step_3_content' => 'Receive your freight at the selected destination safely and on time.',
+        ],
+        'services'=> [
+            'title'=> 'Some of our Services'
         ],
         'brands' => 'Companies We Work With',
         'reviews' => [
             'header' => 'Testimonials',
             'title' => 'Our Clients Speak for Us',
         ],
-        'questions' => 'Frequently Asked Questions',
+'questions' => [
+    'title' => 'Frequently Asked Questions',
+    'questions' => [
+        'question_1' => [
+            'question' => 'What are restricted goods?',
+            'answer' => 'Restricted goods in international trade are those that have specific limitations for their import or export due to various reasons:<br>
+            <br>
+&nbsp;&nbsp;&nbsp;&nbsp;1. <strong>Health Regulations</strong>: Products that may affect public health.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2. <strong>Environmental Regulations</strong>: Goods that may harm the environment.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3. <strong>Security Regulations</strong>: Items that may pose a risk to national security.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4. <strong>Protection of Local Industry</strong>: Products that may unfairly compete with national production.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5. <strong>Licenses and Permits</strong>: Some goods require specific licenses for international trade.<br>
+<br>
+Failure to comply with these regulations may result in penalties, fines, additional costs, or the prohibition of the goods entry.'
+        ],
+        'question_2' => [
+            'question' => 'What are prohibited goods?',
+            'answer' => 'These are goods that, for various reasons, cannot be imported or exported. These restrictions may be established for reasons such as national security, public health, environmental protection, compliance with international treaties, or cultural preservation.<br>
+<br>
+Examples include:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1. <strong>Drugs and controlled substances</strong>: Illegal products that affect health.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2. <strong>Weapons and ammunition</strong>: Their trade is strictly regulated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3. <strong>Endangered species</strong>: Trade is prohibited to protect biodiversity.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4. <strong>Counterfeit products</strong>: Goods that infringe on intellectual property rights.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5. <strong>Hazardous materials</strong>: Such as certain chemicals that may be harmful.<br>
+<br>
+Each country has its own list of prohibited goods, and it is crucial for businesses and traders to be informed about these regulations to avoid penalties or confiscation of products.'
+        ],
+        'question_3' => [
+            'question' => 'Can I import without an RUC 10?',
+            'answer' => 'Individuals who occasionally import goods with an FOB value per transaction not exceeding one thousand dollars (US $1,000.00) and register up to three (3) annual imports at most.<br>
+<br>
+Individuals who, for a single time in a calendar year, import goods with an FOB value exceeding one thousand dollars (US $1,000.00) but not exceeding three thousand dollars (US $3,000.00).<br>
+<br>
+Members of the national or foreign diplomatic service, who, in the exercise of their functions, import their vehicles and household items.'
+        ],
+        'question_4' => [
+            'question' => 'What are the requirements for exporting and importing?',
+            'answer' => 'An exporting company must have documentation that meets customs requirements, and the process must also comply with commercial regulations and international agreements.<br>
+<br>
+The basic documents include:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1. <strong>Commercial Invoice</strong>: Details the value, quantity, and price of the goods sold, as well as the terms of sale, among other important information. This legal document is issued by the seller or exporter to the buyer or importer as proof of the transaction.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2. <strong>Bill of Lading</strong>: Essential in every international transaction, specifying who owns the cargo and serving as a transport contract. Its electronic issuance increased significantly after the pandemic.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3. <strong>Certificate of Origin</strong>: Identifies the place of origin of the goods, i.e., where they were manufactured. It also enables products to enjoy tariff benefits under existing international agreements (FTAs). This document is issued by the manufacturer and certified by a state administrative institution.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4. <strong>Insurance Policy</strong>: Certifies that the cargo is insured against any eventuality during international transport. This is a crucial document, as one of the greatest fears of importers and exporters is the loss or damage of goods during transit.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5. <strong>Packing List</strong>: Specifies the goods to be shipped and includes details on how they were packed, the number of boxes used, and their dimensions. This document facilitates the identification of items in the container.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;6. <strong>Quality Certificate</strong>: A complementary document ensuring that the transported products meet the minimum quality guarantees required by the importer.<br>
+<br>
+It is important for every company involved in international trade to be trained in documentation, requirements, regulations, and other customs knowledge to conduct operations more efficiently and securely.'
+        ],
+    ],
+],
     ],
     'about' => [
         'hero' => [

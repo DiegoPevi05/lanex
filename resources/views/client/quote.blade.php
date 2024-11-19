@@ -123,7 +123,7 @@
                                     {{__('messages.quote.form.quote_form_product_identificator_label')}}
                                 </p>
                             </label>
-                            <input id="quote_form_product_identifier" name="product_identifier" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_product_identificator_placeholder')}}" />
+                            <input id="quote_form_product_identifier" name="product_identifier" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" value="{{ $product ? $product->EAN : '' }}"  placeholder="{{__('messages.quote.form.quote_form_product_identificator_placeholder')}}" />
                         </div>
                     </div>
                 </div>

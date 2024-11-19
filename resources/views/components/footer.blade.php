@@ -3,7 +3,7 @@
     <div class="w-full h-auto grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-12 padding-y">
         <div class="col-span-1 flex flex-col gap-y-4 justify-start items-start">
 
-            <div class="w-full h-auto flex flex-row items-center">
+            <a href="{{route('home')}}"  class="w-full h-auto flex flex-row items-center">
                 <div class="w-[60px] h-auto p-none">
                     <img src="/images/logo.png" class="h-auto w-full" />
                 </div>
@@ -15,19 +15,19 @@
                         Ex
                     </h2>
                 </div>
-            </div>
+            </a>
             <p>{{ __('messages.footer.caption') }}</p>
             <div class="flex flex-row gap-x-4">
-                <a href="">
+                <a href="https://www.linkedin.com/company/expresslane-logistics-s-a-c/" target="_blank">
+                    <x-bi-linkedin class="w-8 h-8" />
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61566765038948" target="_blank">
                     <x-bi-facebook class="w-8 h-8" />
                 </a>
-                <a href="">
+                <a href="https://www.instagram.com/expresslanelogisticssac" target="_blank">
                     <x-bi-instagram class="w-8 h-8"/>
                 </a>
-                <a href="">
-                    <x-bi-twitter class="w-8 h-8"/>
-                </a>
-                <a href="">
+                <a href="https://www.tiktok.com/@expresslanelogisticssac" target="_blank">
                     <x-bi-tiktok class="w-8 h-8"/>
                 </a>
             </div>

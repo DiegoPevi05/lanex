@@ -7,6 +7,7 @@ use App\Services\FlightTracker;
 use App\Models\WebService;
 use App\Models\WebSupplier;
 use App\Models\WebReview;
+use App\Models\WebProduct;
 use App\Notifications\CustomEmailNotification;
 use App\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Log;
@@ -28,23 +29,23 @@ class WebController extends Controller
         $questions = [
             [
                 'id' => 1,
-                'question' => 'What is the return policy?',
-                'answer' => 'You can return any item within 30 days of purchase.',
+                'question' => __('messages.home.questions.questions.question_1.question'),
+                'answer' => __('messages.home.questions.questions.question_1.answer'),
             ],
             [
                 'id' => 2,
-                'question' => 'How do I track my order?',
-                'answer' => 'You will receive a tracking number via email once your order has shipped.',
+                'question' => __('messages.home.questions.questions.question_2.question'),
+                'answer' => __('messages.home.questions.questions.question_2.answer'),
             ],
             [
                 'id' => 3,
-                'question' => 'Do you offer international shipping?',
-                'answer' => 'Yes, we ship to many countries worldwide. Check our shipping page for details.',
+                'question' => __('messages.home.questions.questions.question_3.question'),
+                'answer' => __('messages.home.questions.questions.question_3.answer'),
             ],
             [
                 'id' => 4,
-                'question' => 'How can I contact customer support?',
-                'answer' => 'You can reach customer support via the contact form on our website or by calling our hotline.',
+                'question' => __('messages.home.questions.questions.question_4.question'),
+                'answer' => __('messages.home.questions.questions.question_4.answer'),
             ],
         ];
 
@@ -197,8 +198,21 @@ class WebController extends Controller
 
     }
 
-    public function quote()
+    public function quote(Request $request)
     {
+        // Retrieve the query parameters, set default to null if not provided
+        $type = $request->query('type', null);
+        $id = $request->query('id',null);
+
+        // If the 'type' is present and 'id' is provided, fetch the product
+        $product = null;
+        if ($type && $id) {
+            if($type == 'product'){
+                $product = WebProduct::findOrFail($id);
+            }
+        };
+
+        // Static questions (same as before)
         $questions = [
             [
                 'id' => 1,
@@ -222,7 +236,12 @@ class WebController extends Controller
             ],
         ];
 
-        return view('client.quote' , ['questions' => $questions]);
+        // Pass type, product, and questions to the view
+        return view('client.quote',
+        ['questions' => $questions,
+            'product' => $product,
+            'type' => $type
+        ]);
     }
 
      public function QuoteForm(Request $request)

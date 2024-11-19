@@ -80,10 +80,6 @@
 
                         {{ __('messages.home.step.step_1_title') }}
                     </h4>
-                    <p class="text-center">
-                        {{ __('messages.home.step.step_1_content') }}
-                    </p>
-
                 </div>
 
                 <div class="w-full sm:w-1/3 h-full flex flex-col items-center justify-center xl:justify-start gap-y-4 animation-element slide-in-left">
@@ -99,10 +95,6 @@
                     <h4 class="font-bold text-primary-dark text-center">
                         {{ __('messages.home.step.step_2_title') }}
                     </h4>
-                    <p class="text-center">
-                        {{ __('messages.home.step.step_2_content') }}
-                    </p>
-
                 </div>
 
                 <div class="w-full sm:w-1/3 h-full flex flex-col items-center justify-center xl:justify-start gap-y-4 animation-element slide-in-left">
@@ -117,17 +109,13 @@
                     <h4 class="font-bold text-primary-dark text-center">
                         {{ __('messages.home.step.step_3_title') }}
                     </h4>
-                    <p class="text-center">
-                        {{ __('messages.home.step.step_3_content') }}
-                    </p>
-
                 </div>
             </div>
         </div>
     </section>
     <x-brands  title="{{ __('messages.home.brands') }}" :suppliers="$suppliers"/>
     <x-services-section />
-    <x-questions title="{{ __('messages.home.questions') }}" :questions="$questions" />
+    <x-questions title="{{ __('messages.home.questions.title') }}" :questions="$questions" />
     <section id="reviews" class="w-full h-auto xl:min-h-screen bg-white text-body">
         <div class="relative w-full h-full padding flex flex-col sm:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
             <div class="w-full sm:w-1/2 h-full flex flex-col justify-start items-start gap-y-6">

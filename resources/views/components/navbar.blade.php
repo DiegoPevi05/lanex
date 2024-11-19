@@ -8,7 +8,7 @@
                 operaciones@lanex.com
             </label>
             <label class="px-4">
-                +1 (333) 000-0000
+                +51 992-764-991
             </label>
         </div>
         <div class="w-auto h-auto

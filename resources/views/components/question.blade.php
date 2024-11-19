@@ -12,7 +12,7 @@
     </div>
     <div id="answerContainer_{{$id}}" class="w-full px-none sm:px-6 xl:px-12 border-b-2 border-gray-light pb-2 sm:py-4 transition-all duration-300 overflow-y-scroll h-[0px] no-scroll-bar">
         <p id="answer_{{$id}}" class="w-full h-full transition-all duration-300 opacity-0">
-            {{ $answer }}
+            {!! $answer !!}
         </p>
     </div>
 </div>
@@ -29,8 +29,8 @@
         toggleButton.addEventListener("click", function() {
             // Toggle the height and opacity classes
             answerContainer.classList.toggle("h-[0px]");
-            answerContainer.classList.toggle("h-[80px]");
-            answerContainer.classList.toggle("sm:h-[100px]");
+            answerContainer.classList.toggle("h-[100px]");
+            answerContainer.classList.toggle("sm:h-[200px]");
 
             // Toggle opacity for the answer text
             answerText.classList.toggle("opacity-0");

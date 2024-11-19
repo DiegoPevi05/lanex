@@ -29,18 +29,18 @@ return [
     ],
     'home' => [
         'hero' => [
-            'header' => 'SOMOS LA MEJOR EMPRESA DE LOGÍSTICA',
-            'title' => 'Optimiza tus envíos con nuestros servicios de carga',
-            'description' => 'Simplifica tu proceso de envío y hazlo más eficiente con nuestros servicios de carga. Desde el inicio hasta el final, nos encargaremos de todo para asegurar que tu carga llegue de manera segura.',
+            'header' => 'SOMOS TU MEJOR ALIADO EN OPERACIONES LOGISTICAS',
+            'title' => 'Optimiza tus tiempos con nuestro sistema integrado en operaciones de comercio exterior',
+            'description' => 'Simplifica tus operaciones de comercio exterior con nuestros diferentes servicios en carga internacional.',
             'card_1_number' => '26K',
             'card_1_label' => 'Clientes Satisfechos',
             'card_2_number' => '12+',
             'card_2_label' => 'Años de Experiencia',
         ],
         'step' => [
-            'header' => 'Cómo Funciona',
-            'title' => 'Simplifica Tu Experiencia de Envío con Nuestro Proceso de Pasos Sencillos',
-            'content' => 'En FastGo, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas. Con años de experiencia y un equipo de expertos, nos dedicamos a empoderar tu negocio con experiencias de envío sin complicaciones.',
+            'header' => '¿Cómo funciona?',
+            'title' => 'Simplifica tus compras y envíos internacionales con simples pasos',
+            'content' => 'En Lanex, buscamos brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades específicas. Nos dedicamos a optimizar su negocio con experiencias de envió sin inconvenientes.',
             'step_1_label' => 'Paso 1',
             'step_1_title' => 'Solicita una Cotización',
             'step_1_content' => 'Creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas.',
@@ -51,12 +51,79 @@ return [
             'step_3_title' => 'Recibe tu Carga',
             'step_3_content' => 'Recibe tu carga en el destino seleccionado de manera segura y puntual.',
         ],
+        'services'=> [
+            'title'=> 'Algunos De Nuestros Servicios'
+        ],
         'brands' => 'Compañías con las que Trabajamos',
         'reviews' => [
             'header' => 'Testimonios',
             'title' => 'Nuestros Clientes Hablan por Nosotros',
         ],
-        'questions' => 'Preguntas Frecuentes',
+        'questions' => [
+            'title' => 'Preguntas Frecuentes',
+            'questions' => [
+                'question_1' => [
+                    'question' => '¿Qué son mercancías restringidas?',
+                    'answer' => 'Las mercancías restringidas en el comercio exterior son aquellas que tienen limitaciones específicas para su importación o exportación debido a diversas razones:<br>
+                    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;1.	<strong>Normativas Sanitarias</strong>: Productos que pueden afectar la salud pública.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;2.	<strong>Normativas Ambientales</strong>: Mercancías que pueden causar daño al medio ambiente.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;3.	<strong>Regulaciones de Seguridad</strong>: Artículos que pueden representar un riesgo para la seguridad nacional.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;4.	<strong>Protección de la Industria Local</strong>: Productos que pueden competir deslealmente con la producción nacional.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;5.	<strong>Licencias y Permisos</strong>: Algunas mercancías requieren licencias específicas para su comercialización internacional.<br>
+<br>
+    El incumplimiento de estas regulaciones puede resultar en sanciones, multas, sobrecostos o la prohibición del ingreso de la mercancía.
+                    '
+                ],
+                'question_2' => [
+                    'question' => '¿Qué son mercancías prohibidas?',
+                    'answer' => '
+            Son aquellas que, por diversas razones, no pueden ser importadas o exportadas. Estas restricciones pueden ser establecidas por razones de seguridad nacional, salud pública, protección del medio ambiente, cumplimiento de tratados internacionales o preservación de la cultura.<br>
+<br>
+            Entre ellas tenemos:<br>
+<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;1.	<strong>Drogas y sustancias controladas</strong>: Productos ilegales que afectan la salud.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;2.	<strong>Armas y municiones</strong>: Su comercio está regulado estrictamente.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;3.	<strong>Especies en peligro de extinción</strong>: Su comercio está prohibido para proteger la biodiversidad.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;4.	<strong>Productos falsificados</strong>: Mercancías que infringen derechos de propiedad intelectual.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;5.	<strong>Materiales peligrosos</strong>: Como ciertos químicos que pueden ser nocivos.<br>
+<br>
+            Cada país tiene su propia lista de mercancías prohibidas, y es crucial que las empresas y comerciantes estén informados sobre estas regulaciones para evitar sanciones o la confiscación de los productos.
+                    '
+                ],
+                'question_3' => [
+                    'question' => '¿Puedo importar si no cuento con RUC 10?',
+                    'answer' => '
+
+Las personas naturales que realicen en forma ocasional importaciones de mercancías, cuyo valor FOB por operación no exceda de mil dólares (US $ 1 000,00) y siempre que registren hasta tres (3) importaciones anuales como máximo.<br>
+<br>
+Las personas naturales que por única vez, en un año calendario, importen mercancías cuyo valor FOB exceda los un mil dólares de los (US $ 1 000,00) y siempre que no supere los tres mil dólares (US $ 3 000,00).<br>
+<br>
+Los miembros del servicio diplomático nacional o extranjero, que en ejercicio de sus funciones, importen sus vehículos y menaje de casa.
+
+                    '
+                ],
+                'question_4' => [
+                    'question' => '¿Cuáles son los requisitos para exportar e importar?',
+                    'answer' => '
+
+Una empresa exportadora deberá contar con la documentación que responda a las exigencias aduaneras, el proceso también debe realizarse tomando en cuenta la normativa comercial y los acuerdos internacionales.<br>
+<br>
+Siendo los documentos básicos:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.	Factura comercial (invoice). Detalla el valor, la cantidad y el precio de las mercancías que se venden, así como las condiciones en que se realiza la compraventa, entre otros datos importantes. El vendedor o exportador emite este documento legal al comprador o importador como prueba de que la transacción se realizó de manera correcta.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.	Conocimiento de embarque (bill of landing). Es esencial en toda transacción internacional, ya que especifica quién es el dueño de la carga, es decir, constituye un contrato de transporte. Su emisión electrónica se amplió de manera considerable tras la pandemia.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3.	Certificado de origen. Sirve para identificar el lugar de procedencia de los bienes, es decir, dónde se elaboraron. También permite que los productos gocen de beneficios arancelarios, mediante los acuerdos internacionales (TLC) existentes. Este documento es emitido por el fabricante y certificado por una institución administrativa del Estado.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4.	Póliza de seguro. Su finalidad es certificar que la carga está asegurada frente a cualquier eventualidad que ocurriese durante el transporte internacional. Es un documento sumamente importante, ya que uno de los mayores temores de los importadores y exportadores es, precisamente, que su mercadería se pierda o degrade durante el viaje.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5.	Lista de empaque (packing list). Especifica los bienes que serán embarcados e incluye datos sobre la manera en que se empacaron, el número de cajas empleadas y sus correspondientes dimensiones. El objetivo de este documento es facilitar la identificación de los bultos que se encuentran en el contenedor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;6.	Certificado de calidad. Este documento informativo complementa a los antes mencionados y asegura que los productos transportados cuentan con garantías mínimas de calidad requeridas por el importador.<br>
+<br>
+Es importante que toda empresa dedicada al comercio exterior se capacite sobre la documentación, los requisitos, las normativas y otros conocimientos aduaneros que les permitan realizar sus operaciones con mayor eficiencia y seguridad.
+
+                    '
+                ],
+            ],
+        ],
     ],
     'about' => [
         'hero' => [
