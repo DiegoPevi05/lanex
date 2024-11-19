@@ -9,7 +9,7 @@
 
             @if(!empty($suppliers) && isset($suppliers[0]))
                 @foreach ($suppliers as $supplier)
-                    <div class="col-span-1 flex flex-col justify-start items-start h-[400px] animation-element slide-in-left">
+                    <div class="col-span-1 flex flex-col justify-start items-start h-auto animation-element slide-in-left">
                         <div class="w-full min-h-[200px] flex justify-center items-center p-4">
                             <img src="{{ asset('storage/' . $supplier['logo']) }}" class="w-auto h-16"/>
                         </div>
@@ -25,6 +25,9 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="col-span-3">
+                    {{ $suppliers->links() }}
+                </div>
             @else
                 <div class="col-span-1 sm:col-span-2 xl:col-span-3 flex flex-col items-center justify-center py-24 gap-y-12">
                     <h5 class="font-bold text-primary">Currently no Products for this Supplier</h5>

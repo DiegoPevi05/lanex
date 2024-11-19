@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Request;
 use App\Models\WebSupplier;
 
 class SuppliersSection extends Component
@@ -19,12 +20,19 @@ class SuppliersSection extends Component
     {
         $this->header = $header;
         $this->title = $title;
-        // Fetch all suppliers and ensure it's not null
-        $this->suppliers = WebSupplier::limit(6)->get();
+        // Get the current page from the request, default to 1
+        $page = Request::query('page_suppliers', 1);
+
+        // Paginate suppliers with a limit of 6 items per page
+        $this->suppliers = WebSupplier::paginate(6, ['*'], 'page', $page);
+
+        // Append the custom query parameter for pagination links
+        $this->suppliers->appends(['page_suppliers' => $page]);
 
         // Decode details for each supplier
-        $this->suppliers->each(function ($supplier) {
+        $this->suppliers->getCollection()->transform(function ($supplier) {
             $supplier->details = json_decode($supplier->details, true);
+            return $supplier;
         });
     }
 
