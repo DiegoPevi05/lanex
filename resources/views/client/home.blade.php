@@ -5,7 +5,7 @@
     <section id="home_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white bg-green-100">
         <img src="/images/home.jpg" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
-            <div class="w-full h-full flex flex-col justify-center xl:justify-end gap-y-12">
+            <div class="w-full h-full flex flex-col justify-center xl:justify-end max-sm:gap-y-6">
 
                 <div class="w-full xl:w-[60%] h-auto flex flex-col gap-y-4 animation-element slide-in-up">
                     <div class="w-full h-auto flex flex-col gap-y-2">
@@ -22,7 +22,7 @@
                             flex flex-col items-start justify-start
                             p-2
                             bg-primary rounded-xl">
-                            <h1 class="font-bold text-[32px] sm:!text-[48px]">{{ __('messages.home.hero.card_1_number') }}</h1>
+                            <h1 class="font-bold text-[2rem] sm:!text-[48px]">{{ __('messages.home.hero.card_1_number') }}</h1>
                             <p class="font-bold">{{ __('messages.home.hero.card_1_label') }}</p>
                         </div>
 
@@ -31,7 +31,7 @@
                             animation-element slide-in-right
                             p-2
                             bg-primary rounded-xl">
-                            <h1 class="font-bold text-[32px] sm:!text-[48px]">{{ __('messages.home.hero.card_2_number') }}</h1>
+                            <h1 class="font-bold text-[2rem] sm:!text-[48px]">{{ __('messages.home.hero.card_2_number') }}</h1>
                             <p class="font-bold">{{ __('messages.home.hero.card_2_label') }}</p>
                         </div>
 
@@ -125,7 +125,7 @@
                         {{ __('messages.home.reviews.title') }}
                     </h1>
                     <div class="relative w-full h-full rounded-xl bg-secondary flex justify-center items-center p-6 sm:p-4 max-sm:mt-6">
-                        <div class="absolute rounded-xl -top-6 sm:-top-12 -right-6 sm:-right-12 h-12 sm:h-24 w-12 sm:w-24 bg-primary-dark flex justify-center items-center">
+                        <div class="absolute rounded-xl -top-6 sm:-top-12 -right-3 sm:-right-12 h-12 sm:h-24 w-12 sm:w-24 bg-primary-dark flex justify-center items-center">
                             <img src="{{ asset('storage/' . 'images/web/quotes.svg' ) }}" class="h-6 sm:h-12 w-6 sm:w-12" />
 
                         </div>

@@ -16,7 +16,7 @@
                     </h2>
                 </div>
             </a>
-            <p>{{ __('messages.footer.caption') }}</p>
+            <p class="text-justify">{{ __('messages.footer.caption') }}</p>
             <div class="flex flex-row gap-x-4">
                 <a href="https://www.linkedin.com/company/expresslane-logistics-s-a-c/" target="_blank">
                     <x-bi-linkedin class="w-8 h-8" />
@@ -53,8 +53,8 @@
 
         <div class="hidden sm:flex col-span-1 flex-col gap-y-4 justify-start items-start">
             <span class="font-bold">{{ __('messages.footer.subscribe') }}</span>
-            <input placeholder="Ingresa tu correo" class="w-full bg-body border-2 border-body rounded-md p-4 text-sm placeholder:text-secondary text-secondary" />
-            <x-button text="Subscribete Ahora" variant="tertiary" url="#" extraClasses="uppercase py-4 w-full"/>
+            <input placeholder="{{__('messages.footer.subscribe_placeholder')}}" class="w-full bg-body border-2 border-body rounded-md p-4 text-sm placeholder:text-secondary text-secondary" />
+            <x-button text="{{__('messages.footer.subscribe_btn')}}" variant="tertiary" url="#" extraClasses="uppercase py-4 w-full"/>
         </div>
     </div>
     <div class="w-full h-auto flex flex-col justify-start items-start border-t-2 border-secondary-dark border-dashed gap-y-2">

@@ -107,20 +107,20 @@ caption{
 
 @media (max-width: 640px) {
     h1{
-        font-size:24px;
+        font-size:1.3rem;
     }
     h2{
-        font-size:24px;
+        font-size:1.2rem;
     }
     h3{
-        font-size:20px;
+        font-size:1.1rem;
     }
     h4{
-        font-size:20px;
+        font-size:1rem;
     }
 
     h5{
-        font-size:14px;
+        font-size:0.8rem;
     }
 
     p{
@@ -180,7 +180,7 @@ caption{
 @media (max-width: 640px) {
 
     .padding-x {
-        padding: 0px 40px;
+        padding: 0px 30px;
     }
     .padding-b{
         padding-bottom:40px;
@@ -189,7 +189,7 @@ caption{
         padding: 40px 0px;
     }
     .padding{
-        padding:40px 40px;
+        padding:40px 30px;
 
     }
 }

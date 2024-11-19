@@ -18,7 +18,7 @@
             <x-language-selector id="xl" />
         </div>
     </div>
-    <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-xl:mt-12">
+    <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-sm:mt-6 max-xl:mt-12">
         <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center">
             <div class="w-[60px] h-auto p-none">
                 <img src="/images/logo.png" class="h-auto w-full" />
@@ -46,11 +46,14 @@
             <x-heroicon-o-bars-3 class="h-6 sm:h-12 w-6 sm:w-12 text-white" />
         </div>
     </div>
-    <div id="navbar_menu_scroll" class="fixed top-0 left-0 bottom-0 right-0 w-screen h-screen bg-white translate-x-[100%] transition-all duration-300 xl:hidden flex flex-col justify-start item-start p-12 sm:p-16">
-        <div class="navbar_menu_toggle_button ml-auto w-auto flex justify-center items-center bg-primary p-2 rounded-xl shadow-md active:scale-95 duration-300">
-            <x-heroicon-o-x-mark class="h-6 sm:h-12 w-6 sm:w-12 text-white" />
+    <aside id="navbar_menu_scroll" class="fixed top-0 left-0 bottom-0 right-0 w-screen h-screen bg-white translate-x-[100%] transition-all duration-300 xl:hidden flex flex-col justify-start item-start px-8 py-10 sm:p-16">
+        <div class="w-full flex justify-between items-center bg-transparent">
+            <x-language-selector id="sm" />
+            <span class="navbar_menu_toggle_button w-auto bg-primary p-2 rounded-xl shadow-md active:scale-95 duration-300 hover:bg-primary-dark">
+                <x-heroicon-o-x-mark class="h-6 sm:h-12 w-6 sm:w-12 text-white" />
+            </span>
         </div>
-        <div class="w-full h-auto flex flex-between items-center">
+        <div class="w-full h-auto flex flex-between items-center mt-4">
             <div class="w-full h-auto flex flex-row items-center">
                 <div class="w-[60px] h-auto p-none">
                     <img src="/images/logo.png" class="h-auto w-full" />
@@ -64,9 +67,8 @@
                     </h2>
                 </div>
             </div>
-            <x-language-selector id="sm" />
         </div>
-        <div class="w-auto h-auto flex flex-col gap-y-6 sm:gap-y-12 text-primary mt-12">
+        <div class="w-auto h-auto flex flex-col gap-y-6 sm:gap-y-12 text-primary mt-6">
             <a href="{{ route('home')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.home') }}</h4></a>
             <a href="{{ route('about')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.aboutus') }}</h4></a>
             <a href="{{ route('services')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.services') }}</h4></a>
@@ -75,24 +77,25 @@
         </div>
         <div class="w-auto h-auto
             flex flex-row justify-start gap-x-4 items-center mt-12">
-            <x-button url="{{route('quote')}}" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-12 py-2" />
-            <x-button url="{{route('track')}}" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-12 py-2" />
+            <x-button url="{{route('quote')}}" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-6 py-2" />
+            <x-button url="{{route('track')}}" size="lg" text="{{ __('messages.common.track') }}" extraClasses="px-6 py-2" />
         </div>
+
         <div class="flex flex-row gap-x-6 mt-auto text-primary">
-            <a href="">
+            <a href="https://www.linkedin.com/company/expresslane-logistics-s-a-c/" target="_blank">
+                <x-bi-linkedin class="w-8 sm:w-12 h-8 sm:h-12" />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61566765038948" target="_blank">
                 <x-bi-facebook class="w-8 sm:w-12 h-8 sm:h-12" />
             </a>
-            <a href="">
+            <a href="https://www.instagram.com/expresslanelogisticssac" target="_blank">
                 <x-bi-instagram class="w-8 sm:w-12 h-8 sm:h-12"/>
             </a>
-            <a href="">
-                <x-bi-twitter class="w-8 sm:w-12 h-8 sm:h-12"/>
-            </a>
-            <a href="">
+            <a href="https://www.tiktok.com/@expresslanelogisticssac" target="_blank">
                 <x-bi-tiktok class="w-8 sm:w-12 h-8 sm:h-12"/>
             </a>
         </div>
-    </div>
+    </aside>
 </nav>
 
 <script>

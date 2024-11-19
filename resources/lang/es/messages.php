@@ -21,8 +21,10 @@ return [
         'contact' => 'Contáctenos',
     ],
     'footer' => [
-        'caption' => 'En FastGo, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas.',
+        'caption' => 'En Lanex, nos dedicamos a ofrecer soluciones logísticas personalizadas y eficientes diseñadas para satisfacer las necesidades únicas de nuestros clientes. Confíe en nosotros para impulsar su negocio.',
         'subscribe' => 'Suscribirse',
+        'subscribe_placeholder'=>'Ingresa tu correo',
+        'subscribe_btn' => 'Subscribete Ahora',
         'projects' => 'Proyectos Personales',
         'developed_by' => 'Desarrollado por',
         'navigation' => 'Navegación',
