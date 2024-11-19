@@ -164,7 +164,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         'hero' => [
             'header' => 'Compartimos con usted algunos de nuestros trabajos',
             'title' => 'Descubre Todos Nuestros Proveedores',
-            'input_placeholder' => 'Ubicación',
+            'input_placeholder' => 'Nombre del Proveedor',
             'input_button' => 'Buscar',
         ],
         'supplier_section' => [

@@ -153,7 +153,7 @@ It is important for every company involved in international trade to be trained 
         'hero' => [
             'header' => 'We share with you some of our work',
             'title' => 'Discover All Our Suppliers',
-            'input_placeholder' => 'Location',
+            'input_placeholder' => 'Supplier Name',
             'input_button' => 'Search',
         ],
         'supplier_section' => [

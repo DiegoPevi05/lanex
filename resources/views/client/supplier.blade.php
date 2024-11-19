@@ -37,15 +37,54 @@
 
             </h1>
         </div>
-        <div class="h-full w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-x-24 xl:gap-y-12 animation-group">
-            @if(!empty($supplier['products']) && isset($supplier['products'][0]))
-                @foreach ($supplier['products'] as $product)
+        <div class="h-full w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-3 gap-6 xl:gap-x-24 xl:gap-y-12 animation-group">
+            @if(!empty($products) && isset($products[0]))
+                @foreach ($products as $product)
                     <div class="col-span-1 row-span-1 flex flex-col justify-center items-start animation-element slide-in-right">
                         <div class="w-full xl:w-[350px] h-auto x:h-[500px] hover:-translate-y-[20px] duration-300">
                             <x-product-card :product="$product" />
                         </div>
                     </div>
                 @endforeach
+
+<div class="col-span-3 sm:col-span-4 xl:col-span-3 flex flex-row justify-around">
+    <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
+        <!-- First Page -->
+        <a href="{{ route('supplier', ['id' => $supplier->id, 'page_products' => 1]) }}"
+           class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white
+           {{ Request::query('page_products', 1) == 1 ? 'bg-gray-300 pointer-events-none border-gray-200 text-gray-200' : ' text-white bg-primary hover:bg-white hover:text-primary border-primary' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-left">
+                <path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path>
+            </svg>
+        </a>
+        <!-- Previous Page -->
+        <a href="{{ route('supplier', ['id' => $supplier->id, 'page_products' => max(1, $products->currentPage() - 1)]) }}"
+           class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white
+           {{ Request::query('page_products', 1) == 1 ? 'bg-gray-300 pointer-events-none border-gray-200 text-gray-200' : ' text-white bg-primary hover:bg-white hover:text-primary border-primary' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left">
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+        </a>
+    </div>
+    <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
+        <!-- Next Page -->
+        <a href="{{ route('supplier', ['id' => $supplier->id, 'page_products' => min($products->lastPage(), $products->currentPage() + 1)]) }}"
+           class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white
+           {{ $products->lastPage() == $products->currentPage()   ? 'bg-gray-300 pointer-events-none border-gray-200 text-gray-200' : ' text-white bg-primary hover:bg-white hover:text-primary border-primary' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </a>
+        <!-- Last Page -->
+        <a href="{{ route('supplier', ['id' => $supplier->id, 'page_products' => $products->lastPage()]) }}"
+           class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white
+           {{ $products->lastPage() == $products->currentPage()   ? 'bg-gray-300 pointer-events-none border-gray-200 text-gray-200' : ' text-white bg-primary hover:bg-white hover:text-primary border-primary' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-right">
+                <path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path>
+            </svg>
+        </a>
+    </div>
+</div>
             @else
                 <div class="col-span-1 sm:col-span-2 xl:col-span-3 flex flex-col items-center justify-center py-24 gap-y-12">
                     <h5 class="font-bold text-primary">{{ __('messages.common.no_products') }}</h5>
@@ -54,5 +93,5 @@
             @endif
         </div>
     </section>
-    <x-suppliers-section  header="{{ __('messages.supplier.supplier_section.header') }}" title="{{ __('messages.supplier.supplier_section.title') }}" />
+    <x-suppliers-section  header="{{ __('messages.supplier.supplier_section.header') }}" title="{{ __('messages.supplier.supplier_section.title') }}" parentUrl="supplier" parentUrlId="{{$supplier->id}}"/>
 @endsection
