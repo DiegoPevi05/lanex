@@ -84,7 +84,7 @@ class Client extends Model
     public static function getValidationRules($isUpdate = false)
     {
         return [
-            'client_id' => $isUpdate ? 'sometimes|required|integer' : 'required|integer',
+            'client_id' => $isUpdate ? 'sometimes|required|integer' : 'sometimes|integer',
             'company' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'RUC' => $isUpdate ? 'sometimes|required|string|max:13' : 'required|string|max:13',
             'cellphone' => $isUpdate ? 'sometimes|required|string|max:15' : 'required|string|max:15',

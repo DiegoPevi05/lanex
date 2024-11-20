@@ -7,7 +7,7 @@
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
             <div class="w-full h-full flex flex-col justify-center xl:justify-end gap-y-6">
 
-                <div class="w-full xl:w-[60%] h-auto flex flex-col gap-y-4 animation-element slide-in-up">
+                <div class="w-full xl:w-full h-auto flex flex-col gap-y-4 animation-element slide-in-up">
                     <div class="w-full h-auto flex flex-col gap-y-2">
                         <h5 class="font-bold">{{ __('messages.home.hero.header') }}</h5>
                         <h1 class="font-bold">{{ __('messages.home.hero.title') }}</h1>

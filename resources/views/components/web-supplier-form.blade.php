@@ -84,7 +84,7 @@
             </div>
             <!-- Container for dynamic points -->
             <div id="products-container" class="mb-4 mt-4">
-                @if($supplier->products)
+                @if($supplier && $supplier->products)
                     @foreach($supplier->products as $index => $product)
                         <div class="product-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
                             <div class="flex flex-row justify-between w-full h-auto">
@@ -121,7 +121,7 @@
             </div>
             <!-- Container for dynamic points -->
             <div id="services-container" class="mb-4 mt-4">
-                @if($supplier->services)
+                @if($supplier && $supplier->services)
                     @foreach($supplier->services as $index => $service)
                         <div class="service-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
                             <div class="flex flex-row justify-between w-full h-auto">

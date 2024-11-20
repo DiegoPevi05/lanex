@@ -12,10 +12,16 @@
         @endif
 
         <!-- Client Id Field -->
-        @if($client->client_id)
+        @if($client && $client->client_id)
             <div class="mb-4 mt-4">
                 <label for="client_id" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.client.form.fields.client_id") }}</label>
                 <input type="text" id="client_id" name="client_id" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('client_id', $client->client_id ?? '') }}" placeholder="{{ __("messages.dashboard.client.form.placeholders.client_id") }}" disabled>
+                <span class="text-primary font-bold text-xs error-message" id="error-client_id"></span>
+            </div>
+        @else
+            <div class="mb-4 mt-4">
+                <label for="client_id" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.client.form.fields.client_id") }}</label>
+                <input type="text" id="client_id" name="client_id" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.client.form.placeholders.client_id") }}" disabled>
                 <span class="text-primary font-bold text-xs error-message" id="error-client_id"></span>
             </div>
         @endif

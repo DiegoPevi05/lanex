@@ -1137,7 +1137,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'email' => 'Correo Electrónico'
                 ],
                 'placeholders' => [
-                    'client_id' => 'Ingrese el ID del cliente',
+                    'client_id' => 'El ID del cliente se generara automaticamente',
                     'company' => 'Ingrese el nombre de la compañía',
                     'RUC' => 'Ingrese el RUC',
                     'cellphone' => 'Ingrese el número de celular',

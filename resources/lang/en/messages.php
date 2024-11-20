@@ -1126,7 +1126,7 @@ It is important for every company involved in international trade to be trained 
                     'email' => 'Email'
                 ],
                 'placeholders' => [
-                    'client_id' => 'Enter Client ID',
+                    'client_id' => 'Client ID will be created automatically',
                     'company' => 'Enter Company Name',
                     'RUC' => 'Enter RUC',
                     'cellphone' => 'Enter Cellphone',

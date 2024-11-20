@@ -59,16 +59,16 @@
                 <div class="w-full h-auto flex flex-row gap-x-4">
                     <select name="suppliers_options" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body">
                         <option>{{ __("messages.common.no_suppliers_options") }}</option>
-                        @foreach($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-                        @endforeach
+                            @foreach($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            @endforeach
                     </select>
                     <button type="button" class="hover:bg-white hover:text-primary active:scale-95 duration-300 border-2 border-primary bg-primary text-white px-4 py-2 rounded-xl ml-auto disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-100 w-[30%]" onclick="addEntity('supplier','{{__('messages.dashboard.web.supplier.name')}}')" {{ $formRequest === 'view' ? 'disabled' :'' }}>{{ __("messages.dashboard.web.product.form.fields.add_supplier") }}</button>
                 </div>
             </div>
             <!-- Container for dynamic points -->
             <div id="suppliers-container" class="mb-4 mt-4">
-                @if($product->suppliers)
+                @if($product && $product->suppliers)
                     @foreach($product->suppliers as $index => $supplier)
                         <div class="supplier-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
                             <div class="flex flex-row justify-between w-full h-auto">
