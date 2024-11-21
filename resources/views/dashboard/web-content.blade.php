@@ -204,6 +204,12 @@
                     loadingContentForm.classList.add('hidden');
                     contentForm.classList.remove('hidden');
 
+                    if(typeEntity == "service"){
+                        // Attach the event listener for the select and image
+                        attachIconImageUpdate();
+                    }
+
+
                      // Check for errors and populate error messages
                     @if(session('errors'))
                         const errors = @json(session('errors')->toArray());
@@ -581,6 +587,31 @@
         });
         // Update detailIndex to the current count
         detailIndex = entityItems.length;
+    }
+
+    function attachIconImageUpdate() {
+        const iconSelect = document.getElementById('icon');
+        const iconImage = document.getElementById('icon-image');
+
+        if (iconSelect && iconImage) {
+            // Set the initial image based on the selected option
+            iconImage.src = iconSelect.value ? '/storage'+iconSelect.value : '/storage/images/svgs/ambulance.svg';
+
+            // Remove any existing event listeners to avoid duplicates
+            iconSelect.removeEventListener('change', updateIconImage);
+
+            // Add a new event listener to update the image
+            iconSelect.addEventListener('change', updateIconImage);
+        }
+    }
+
+    function updateIconImage() {
+        const iconSelect = document.getElementById('icon');
+        const iconImage = document.getElementById('icon-image');
+
+        // Update the image source to the selected option or default to ambulance
+        const selectedIcon = iconSelect.value;
+        iconImage.src = selectedIcon ? '/storage'+selectedIcon : '/storage/images/svgs/ambulance.svg';
     }
 
     </script>

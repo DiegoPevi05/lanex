@@ -21,17 +21,20 @@
                 {{ __("messages.dashboard.web.service.form.fields.icon") }}
             </label>
 
-            <select id="icon" name="icon" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
-                <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
+            <div class="w-full h-auto flex flex-row gap-x-4">
+                <select id="icon" name="icon" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
+                    <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
 
-                @foreach($icons as $filename => $content)
-                    <option value="{{ $content }}" {{ old('icon', $service->icon ?? '') === $content ? 'selected' : '' }}>
-                        {{ $filename }}
-                    </option>
-                @endforeach
-            </select>
+                    @foreach($icons as $filename => $content)
+                        <option value="{{ $content }}" {{ old('icon', $service->icon ?? '') === $content ? 'selected' : '' }}>
+                            {{ $filename }}
+                        </option>
+                    @endforeach
+                </select>
+                <img id="icon-image" src="/storage/images/svgs/ambulance.svg" class="h-12 w-12 shadow-md rounded-xl p-2 border-2 border-primary text-primary"/>
+            </div>
 
-            <span class="text-primary font-bold text-xs error-message" id="error-icon"></span>
+            <span  class="text-primary font-bold text-xs error-message" id="error-icon"></span>
         </div>
 
         <div class="mb-4 mt-4">
@@ -305,3 +308,7 @@
         </div>
     </form>
 </div>
+
+<script>
+
+</script>
