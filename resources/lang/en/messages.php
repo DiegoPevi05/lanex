@@ -158,7 +158,8 @@ It is important for every company involved in international trade to be trained 
         ],
         'supplier_section' => [
             'header' => 'Find Your Ideal Product',
-            'title' => 'Some of Our Most Notable Suppliers'
+            'title' => 'Some of Our Most Notable Suppliers',
+            'empty_content' => 'Currently no Suppliers to show'
         ]
     ],
     'supplier' => [

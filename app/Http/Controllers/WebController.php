@@ -85,10 +85,85 @@ class WebController extends Controller
         return view('client.service', ['service' => $service]);
     }
 
+    public function getSuppliers(Request $request)
+    {
+        // Get the current page from the query parameters, defaulting to 1
+        $page = $request->query('page_suppliers', 1);
+
+        // Get the supplier_name filter from the request
+        $supplierName = $request->query('supplier_name', null);
+
+        // Base query for suppliers
+        $query = WebSupplier::query();
+
+        // Apply case-insensitive name filter if supplier_name is present
+        if ($supplierName) {
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($supplierName) . '%']);
+        }
+
+        // Paginate suppliers with a limit of 6 items per page
+        $suppliers = $query->paginate(6, ['*'], 'page', $page);
+
+        // Append custom query parameters for pagination links
+        $suppliers->appends([
+            'page_suppliers' => $page,
+            'supplier_name' => $supplierName,
+        ]);
+
+        // Decode details for each supplier
+        $suppliers->getCollection()->transform(function ($supplier) {
+            $supplier->details = json_decode($supplier->details, true);
+            return $supplier;
+        });
+
+        // Return a JSON response with the paginated suppliers
+        return response()->json([
+            'suppliers' => $suppliers,
+        ]);
+    }
+
     public function suppliers()
     {
 
         return view('client.suppliers');
+    }
+
+    public function getSupplier(Request $request, $id)
+    {
+        // Fetch the supplier details
+        $supplier = WebSupplier::findOrFail($id);
+
+        // Ensure 'details' is an array
+        if (!is_array($supplier->details)) {
+            $supplier->details = json_decode($supplier->details, true);
+        }
+
+        // Get query parameters for filtering and pagination
+        $productEan = $request->query('product_ean', null);
+        $page = $request->query('page_products', 1);
+
+        // Fetch the products associated with the supplier using the relationship
+        $productsQuery = $supplier->products();
+
+        // Apply the EAN filter if present
+        if ($productEan) {
+            $productsQuery->where('EAN', 'like', '%' . strtolower($productEan) . '%');
+        }
+
+        // Paginate the products (3 per page)
+        $products = $productsQuery->paginate(3, ['*'], 'page_products', $page);
+
+        // Append query parameters for pagination links
+        $products->appends([
+            'product_ean' => $productEan,
+            'page_products' => $page,
+        ]);
+
+        // Return JSON response
+        return response()->json([
+            'supplier' => $supplier,
+            'products' => $products,
+        ]);
     }
 
     public function supplier(Request $request, $id)

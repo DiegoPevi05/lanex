@@ -29,22 +29,197 @@
             </div>
         </div>
     </section>
-    <x-suppliers-section  header="{{ __('messages.suppliers.supplier_section.header') }}" title="{{ __('messages.suppliers.supplier_section.title') }}" parentUrl="suppliers" />
+    <section id="suppliers-sections" class="relative w-full h-full padding flex flex-col justify-center items-center">
+        <h5 class="animation-element slide-in-up">{{ __('messages.suppliers.supplier_section.header') }}</h5>
+        <h1 class="font-bold text-primary-dark animation-element slide-in-up text-center">
+            {{ __('messages.suppliers.supplier_section.title') }}
+        </h1>
+
+        <div class="w-full h-auto min-h-[400px] py-12 xl:p-12 flex flex-col justify-center items-center duration-300 transition-all">
+            <div id="suppliers-items" class="h-full w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-3 gap-6 xl:gap-24 animation-element slide-in-down">
+
+            </div>
+            <div id="loader-suppliers-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-10 sm:h-20 w-10 sm:w-20 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            </div>
+            <div id="empty-suppliers-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
+                <h5 class="font-bold text-primary">{{__('messages.suppliers.supplier_section.empty_content')}}</h5>
+                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-48 w-auto"/>
+            </div>
+        </div>
+
+        <div class="w-full h-auto flex flex-row justify-around">
+            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
+                <!-- First Page -->
+                <button
+                   id="first-suppliers-page"
+                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-left">
+                        <path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path>
+                    </svg>
+                </button>
+                <!-- Previous Page -->
+                <button
+                   id="prev-suppliers-page"
+                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left">
+                        <path d="m15 18-6-6 6-6"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
+                <!-- Next Page -->
+                <button
+                   id="next-suppliers-page"
+                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </button>
+                <!-- Last Page -->
+                <button
+
+                   id="last-suppliers-page"
+                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-right">
+                        <path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+    </section>
 @endsection
 
 @push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById('searchButton').addEventListener('click', function () {
-            const supplierName = document.getElementById('supplierNameInput').value.trim();
-            if (supplierName) {
-                // Redirect to the route with the query parameter
-                window.location.href = `{{ route('suppliers') }}?supplier_name=${encodeURIComponent(supplierName)}`;
-            } else {
-                // Optionally, handle empty input case (e.g., show a message or clear the filter)
-                window.location.href = `{{ route('suppliers') }}`;
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const suppliersSections = document.getElementById('suppliers-sections');
+        const suppliersContainer = document.getElementById('suppliers-items');
+        const loaderSuppliersContent = document.getElementById('loader-suppliers-content');
+
+        const firstSupplierPageBtn = document.getElementById('first-suppliers-page');
+        const prevSupplierPageBtn = document.getElementById('prev-suppliers-page');
+        const nextSupplierPageBtn = document.getElementById('next-suppliers-page');
+        const lastSupplierPageBtn = document.getElementById('last-suppliers-page');
+        const searchSupplierBtn = document.getElementById('searchButton');
+
+        const emptySuppliersContent = document.getElementById('empty-suppliers-content')
+
+        let currentSupplierPage = 1;
+        let lastSupplierPage = 1;
+        // Function to fetch and render suppliers
+        async function fetchSuppliers(page = 1, supplierName = '') {
+            suppliersContainer.classList.add('hidden');
+            loaderSuppliersContent.classList.remove('hidden');
+            emptySuppliersContent.classList.add('hidden');
+
+            try {
+                // Fetch data from the API
+                const response = await fetch(`/suppliers/api?page_suppliers=${page}&supplier_name=${supplierName}`);
+                const data = await response.json();
+
+                // Clear existing suppliers
+                suppliersContainer.innerHTML = '';
+
+                if (data.suppliers.data.length === 0) {
+                    emptySuppliersContent.classList.remove('hidden');
+                    loaderSuppliersContent.classList.add('hidden');
+                    return;
+                }
+
+                // Populate suppliers
+                data.suppliers.data.forEach(supplier => {
+                    const supplierDiv = document.createElement('div');
+                    supplierDiv.classList.add('col-span-3', 'sm:col-span-2', 'xl:col-span-1', 'flex', 'flex-col', 'justify-start', 'items-start', 'h-auto');
+
+                    supplierDiv.innerHTML = `
+                        <div class="w-full min-h-[200px] flex justify-center items-center p-4">
+                            <img src="/storage/${supplier.logo}" class="w-auto h-16" alt="${supplier.name}">
+                        </div>
+                        <a href="/supplier/${supplier.id}" class="group p-none m-none">
+                            <span class="font-bold text-primary group-hover:underline">${supplier.name}</span>
+                        </a>
+                        <div class="w-full h-full p-6">
+                            <ul class="list-disc">
+                                ${supplier.details.map(detail => `<li><p>${detail}</p></li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+
+                    suppliersContainer.appendChild(supplierDiv);
+                });
+
+                // Update pagination
+                currentSupplierPage = data.suppliers.current_page;
+                lastSupplierPage = data.suppliers.last_page;
+
+                toggleDisableButton(firstSupplierPageBtn,currentSupplierPage === 1);
+                toggleDisableButton(prevSupplierPageBtn,currentSupplierPage === 1);
+                toggleDisableButton(nextSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
+                toggleDisableButton(lastSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
+
+                suppliersContainer.classList.remove('hidden');
+                loaderSuppliersContent.classList.add('hidden');
+            } catch (error) {
+                console.error('Error fetching suppliers:', error);
+                emptySuppliersContent.classList.remove('hidden');
+            }
+
+        }
+
+        function toggleDisableButton(button,disable){
+            if(disable){
+                button.classList.add('bg-gray-300','pointer-events-none','border-gray-200','text-gray-200')
+                button.classList.remove('text-white','bg-primary','hover:bg-white','hover:text-primary','border-primary')
+            }else{
+                button.classList.remove('bg-gray-300','pointer-events-none','border-gray-200','text-gray-200')
+                button.classList.add('text-white','bg-primary','hover:bg-white','hover:text-primary','border-primary')
+            }
+        }
+
+        function scrollToSuppliersSections() {
+            suppliersSections.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        searchSupplierBtn.addEventListener('click',()=>{
+            const nameInput = document.getElementById('supplierNameInput');
+            if(nameInput.value && nameInput.value.length != 0){
+                fetchSuppliers(1,nameInput.value);
+                scrollToSuppliersSections();
+            }else{
+                fetchSuppliers(1);
+                scrollToSuppliersSections();
             }
         });
-    })
+
+        firstSupplierPageBtn.addEventListener('click',()=> {
+            fetchSuppliers(1);
+            scrollToSuppliersSections();
+        })
+        // Event listeners for pagination
+        prevSupplierPageBtn.addEventListener('click', () => {
+            if (currentSupplierPage > 1) {
+                fetchSuppliers(currentSupplierPage - 1);
+            }
+            scrollToSuppliersSections();
+        });
+
+        nextSupplierPageBtn.addEventListener('click', () => {
+            fetchSuppliers(currentSupplierPage + 1);
+            scrollToSuppliersSections();
+        });
+
+        lastSupplierPageBtn.addEventListener('click',()=>{
+            fetchSuppliers(lastSupplierPage);
+            scrollToSuppliersSections();
+        });
+
+
+        // Initial load
+        fetchSuppliers();
+    });
 </script>
 @endpush

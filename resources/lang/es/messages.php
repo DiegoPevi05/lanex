@@ -169,7 +169,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         ],
         'supplier_section' => [
             'header' => 'Encuentra Tu Producto Ideal',
-            'title' => 'Algunos de Nuestros Proveedores Más Notables'
+            'title' => 'Algunos de Nuestros Proveedores Más Notables',
+            'empty_content' => 'Actualmente no hay proovedores para mostrar'
         ]
     ],
     'supplier' => [
