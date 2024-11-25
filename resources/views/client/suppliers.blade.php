@@ -30,7 +30,7 @@
         </div>
     </section>
     <section id="suppliers-sections" class="relative w-full h-full padding flex flex-col justify-center items-center">
-        <h5 class="animation-element slide-in-up">{{ __('messages.suppliers.supplier_section.header') }}</h5>
+        <h5 class="animation-element slide-in-up text-primary">{{ __('messages.suppliers.supplier_section.header') }}</h5>
         <h1 class="font-bold text-primary-dark animation-element slide-in-up text-center">
             {{ __('messages.suppliers.supplier_section.title') }}
         </h1>

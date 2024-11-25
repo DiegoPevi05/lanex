@@ -21,7 +21,7 @@ Route::get('/service/{id}', [WebController::class, 'service'])->name('service');
 Route::get('/suppliers', [WebController::class, 'suppliers'])->name('suppliers');
 Route::get('/suppliers/api', [WebController::class, 'getSuppliers'])->name('suppliers.get');
 Route::get('/supplier/{id}', [WebController::class, 'supplier'])->name('supplier');
-Route::get('/supplier/api/{id}', [WebController::class, 'getSupplier'])->name('supplier.get');
+Route::get('/supplier/products/api/{id}', [WebController::class, 'getSupplierProducts'])->name('supplier.get');
 Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 Route::post('/contact/submit', [WebController::class, 'submitContactForm'])->name('contact.submit');
 Route::get('/track', [WebController::class, 'track'])->name('track');

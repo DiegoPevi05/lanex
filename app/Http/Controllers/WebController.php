@@ -128,40 +128,33 @@ class WebController extends Controller
         return view('client.suppliers');
     }
 
-    public function getSupplier(Request $request, $id)
+    public function getSupplierProducts(Request $request, $id)
     {
-        // Fetch the supplier details
+        // Fetch the supplier to validate the ID and ensure the relationship exists
         $supplier = WebSupplier::findOrFail($id);
-
-        // Ensure 'details' is an array
-        if (!is_array($supplier->details)) {
-            $supplier->details = json_decode($supplier->details, true);
-        }
 
         // Get query parameters for filtering and pagination
         $productEan = $request->query('product_ean', null);
-        $page = $request->query('page_products', 1);
+        $page = $request->query('page', 1); // Renaming query parameter to 'page'
 
-        // Fetch the products associated with the supplier using the relationship
+        // Fetch the products associated with the supplier
         $productsQuery = $supplier->products();
 
-        // Apply the EAN filter if present
+        // Apply the EAN filter if provided
         if ($productEan) {
             $productsQuery->where('EAN', 'like', '%' . strtolower($productEan) . '%');
         }
 
         // Paginate the products (3 per page)
-        $products = $productsQuery->paginate(3, ['*'], 'page_products', $page);
+        $products = $productsQuery->paginate(6, ['*'], 'page', $page);
 
         // Append query parameters for pagination links
         $products->appends([
             'product_ean' => $productEan,
-            'page_products' => $page,
         ]);
 
         // Return JSON response
         return response()->json([
-            'supplier' => $supplier,
             'products' => $products,
         ]);
     }
