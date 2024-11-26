@@ -12,7 +12,7 @@
     </div>
     <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center justify-center px-12">
         <div class="w-[60px] h-auto p-none">
-            <img src="/images/logo.png" class="h-auto w-full" />
+            <img src="/images/logo.png" alt="logo" class="h-auto w-full" />
         </div>
         <div class="w-auto flex flex-row">
             <h3 class="font-bold text-primary">

@@ -16,7 +16,7 @@
             <x-button url="{{route('quote')}}" text="{{ __('messages.common.quote') }}"  />
             <x-button url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
             <x-language-selector id="xl" />
-            <a href={{ route('login') }} class="h-8 w-auto text-white hover:text-primary">
+            <a href={{ Auth::user() ? route('dashboard_home') : route('login') }} class="h-8 w-auto text-white hover:text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
             </a>
         </div>
@@ -59,7 +59,7 @@
         <div class="w-full h-auto flex flex-between items-center mt-4">
             <div class="w-full h-auto flex flex-row items-center">
                 <div class="w-[60px] h-auto p-none">
-                    <img src="/images/logo.png" class="h-auto w-full" />
+                    <img src="/images/logo.png" alt="logo" class="h-auto w-full" />
                 </div>
                 <div class="w-auto flex flex-row">
                     <h1 class="font-bold text-primary">
@@ -79,7 +79,7 @@
             <a href="{{ route('contact')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.contact') }}</h4></a>
         </div>
 
-        <a href={{ route('login') }} class="h-8 w-auto text-primary hover:text-primary-dark mr-auto my-4">
+        <a href={{ Auth::user() ? route('dashboard_home') : route('login') }} class="h-8 w-auto text-primary hover:text-primary-dark mr-auto my-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
         </a>
 
