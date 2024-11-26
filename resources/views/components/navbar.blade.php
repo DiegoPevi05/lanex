@@ -24,7 +24,7 @@
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-sm:mt-6 max-xl:mt-12">
         <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center">
             <div class="w-[60px] h-auto p-none">
-                <img src="/images/logo.png" class="h-auto w-full" />
+                <img src="/images/logo.png" alt="logo" class="h-auto w-full" />
             </div>
             <div class="w-auto flex flex-row">
                 <h2 class="font-bold text-primary">

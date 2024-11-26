@@ -1,6 +1,17 @@
 <?php
 
 return [
+    'meta' => [
+        'home' => 'Welcome to Express Lane Logistic, your trusted partner in global product imports. Simplify your logistics with our expert solutions.',
+        'aboutus' => 'Discover Express Lane Logistic, a leader in global product imports. Learn about our mission to streamline your supply chain.',
+        'services' => 'Explore our tailored services in import logistics, customs management, and global supply chain solutions.',
+        'service' => 'Learn about our specialized import services designed to meet your business needs with efficiency and reliability.',
+        'supplier' => 'Connect with reliable suppliers and source high-quality products through Express Lane Logistic’s trusted network.',
+        'contactus' => 'Have questions? Contact Express Lane Logistic for expert support in your product import projects.',
+        'quote' => 'Request a personalized quote from Express Lane Logistic. Competitive prices and tailored import solutions await.',
+        'track' => 'Track your shipments with Express Lane Logistic. Stay updated on your package’s location and delivery status in real-time with our reliable tracking system.',
+        'suppliers' => 'Browse our global network of trusted suppliers and find high-quality products to meet your business demands.',
+    ],
     'common' => [
         'ACTIVE' => 'active',
         'INACTIVE' => 'inactive',

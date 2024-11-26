@@ -1,6 +1,17 @@
 <?php
 
 return [
+    'meta' => [
+        'home' => 'Bienvenido a Express Lane Logistic, tu socio confiable en importación de productos. Simplifica tu logística con nuestras soluciones expertas.',
+                'aboutus' => 'Descubre Express Lane Logistic, líder en importación de productos. Conoce nuestra misión de optimizar tu cadena de suministro.',
+                'services' => 'Explora nuestros servicios personalizados en logística de importación, gestión aduanera y soluciones de cadena de suministro global.',
+                'service' => 'Conoce nuestros servicios especializados de importación diseñados para satisfacer las necesidades de tu negocio con eficiencia y confiabilidad.',
+                'supplier' => 'Conecta con proveedores confiables y adquiere productos de alta calidad a través de la red de confianza de Express Lane Logistic.',
+                'contactus' => '¿Tienes preguntas? Contacta a Express Lane Logistic para obtener soporte experto en tus proyectos de importación de productos.',
+                'quote' => 'Solicita una cotización personalizada de Express Lane Logistic. Precios competitivos y soluciones a medida te esperan.',
+                'track' => 'Rastrea tus envíos con Express Lane Logistic. Mantente informado sobre la ubicación y el estado de entrega de tu paquete en tiempo real con nuestro sistema confiable.',
+                'suppliers' => 'Explora nuestra red global de proveedores de confianza y encuentra productos de alta calidad para satisfacer las demandas de tu negocio.',
+    ],
     'common' => [
         'ACTIVE' => 'activo',
         'INACTIVE' => 'inactivo',

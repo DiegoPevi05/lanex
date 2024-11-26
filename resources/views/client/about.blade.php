@@ -1,3 +1,4 @@
+@section('meta_description', __('messages.meta.aboutus'))
 @extends('layouts.client')
 
 
