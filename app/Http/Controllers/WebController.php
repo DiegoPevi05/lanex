@@ -134,15 +134,15 @@ class WebController extends Controller
         $supplier = WebSupplier::findOrFail($id);
 
         // Get query parameters for filtering and pagination
-        $productEan = $request->query('product_ean', null);
+        $productName = $request->query('product_name', null);
         $page = $request->query('page', 1); // Renaming query parameter to 'page'
 
         // Fetch the products associated with the supplier
         $productsQuery = $supplier->products();
 
         // Apply the EAN filter if provided
-        if ($productEan) {
-            $productsQuery->where('EAN', 'like', '%' . strtolower($productEan) . '%');
+        if ($productName) {
+            $productsQuery->where('name', 'like', '%' . strtolower($productName) . '%');
         }
 
         // Paginate the products (3 per page)
@@ -150,7 +150,7 @@ class WebController extends Controller
 
         // Append query parameters for pagination links
         $products->appends([
-            'product_ean' => $productEan,
+            'product_name' => $productName,
         ]);
 
         // Return JSON response

@@ -25,9 +25,10 @@ return [
         'subscribe' => 'Suscribirse',
         'subscribe_placeholder'=>'Ingresa tu correo',
         'subscribe_btn' => 'Subscribete Ahora',
-        'projects' => 'Proyectos Personales',
+        'projects' => 'Mas sobre nosotros',
         'developed_by' => 'Desarrollado por',
         'navigation' => 'Navegación',
+        'projects_send' => 'Servicios'
     ],
     'home' => [
         'hero' => [
@@ -183,7 +184,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         ],
         'supplier_section' => [
             'header' => 'Encuentra Otro Proveedor',
-            'title' => 'Otros proveedores que venden productos similares'
+            'title' => 'Otros proveedores que venden productos similares',
+            'search_input_placeholder' => 'Buscar producto por nombre',
+            'search_button_label' => 'Buscar',
+            'quote_now' => 'Cotiza ahora',
         ]
     ],
     'contact' => [

@@ -29,7 +29,7 @@
         toggleButton.addEventListener("click", function() {
             // Toggle the height and opacity classes
             answerContainer.classList.toggle("h-[0px]");
-            answerContainer.classList.toggle("h-[100px]");
+            answerContainer.classList.toggle("h-[150px]");
             answerContainer.classList.toggle("sm:h-[200px]");
 
             // Toggle opacity for the answer text

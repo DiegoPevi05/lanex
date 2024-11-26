@@ -14,7 +14,7 @@
                         <h1 class="font-bold text-left lg:text-center">{{ __('messages.suppliers.hero.title') }}</h1>
                     </div>
                 </div>
-                <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1 bg-white p-6 rounded-xl animation-element slide-in-up">
+                <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1 bg-primary-dark sm:bg-white p-3 sm:p-6 rounded-xl animation-element slide-in-up" >
                     <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
                         <input
                             id="supplierNameInput"
@@ -44,7 +44,7 @@
             </div>
             <div id="empty-suppliers-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
                 <h5 class="font-bold text-primary">{{__('messages.suppliers.supplier_section.empty_content')}}</h5>
-                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-48 w-auto"/>
+                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-24 sm:h-48 w-auto"/>
             </div>
         </div>
 
@@ -105,6 +105,7 @@
         const nextSupplierPageBtn = document.getElementById('next-suppliers-page');
         const lastSupplierPageBtn = document.getElementById('last-suppliers-page');
         const searchSupplierBtn = document.getElementById('searchButton');
+        const searchSupplierInput = document.getElementById('supplierNameInput');
 
         const emptySuppliersContent = document.getElementById('empty-suppliers-content')
 
@@ -123,6 +124,15 @@
 
                 // Clear existing suppliers
                 suppliersContainer.innerHTML = '';
+
+                // Update pagination buttons
+                currentSupplierPage = data.suppliers.current_page;
+                lastSupplierPage = data.suppliers.last_page;
+
+                toggleDisableButton(firstSupplierPageBtn,currentSupplierPage === 1);
+                toggleDisableButton(prevSupplierPageBtn,currentSupplierPage === 1);
+                toggleDisableButton(nextSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
+                toggleDisableButton(lastSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
 
                 if (data.suppliers.data.length === 0) {
                     emptySuppliersContent.classList.remove('hidden');
@@ -152,14 +162,7 @@
                     suppliersContainer.appendChild(supplierDiv);
                 });
 
-                // Update pagination
-                currentSupplierPage = data.suppliers.current_page;
-                lastSupplierPage = data.suppliers.last_page;
 
-                toggleDisableButton(firstSupplierPageBtn,currentSupplierPage === 1);
-                toggleDisableButton(prevSupplierPageBtn,currentSupplierPage === 1);
-                toggleDisableButton(nextSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
-                toggleDisableButton(lastSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
 
                 suppliersContainer.classList.remove('hidden');
                 loaderSuppliersContent.classList.add('hidden');
@@ -184,14 +187,21 @@
             suppliersSections.scrollIntoView({ behavior: 'smooth' });
         }
 
-        searchSupplierBtn.addEventListener('click',()=>{
-            const nameInput = document.getElementById('supplierNameInput');
-            if(nameInput.value && nameInput.value.length != 0){
+        function handleSupplierSearch(){
+            if(searchSupplierInput.value && searchSupplierInput.value.length != 0){
                 fetchSuppliers(1,nameInput.value);
                 scrollToSuppliersSections();
             }else{
                 fetchSuppliers(1);
                 scrollToSuppliersSections();
+            }
+        }
+
+        searchSupplierBtn.addEventListener('click', handleSupplierSearch);
+
+        searchSupplierInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleProductSearch();
             }
         });
 

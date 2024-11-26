@@ -19,8 +19,8 @@
                     <h5 class="font-bold text-white">{{$supplier['name']}}</h5>
                     <h1 class="font-bold text-white">{{ __('messages.supplier.hero.header') }}</h1>
                     <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4 p-4 rounded-xl" style="background-color: rgba(255, 255, 255, 0.6);">
-                        <input placeholder="Buscar Producto por EAN" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
-                        <x-button text="Buscar" url="#" extraClasses="h-full uppercase font-bold"/>
+                        <input id="search_product_input" placeholder="{{__('messages.supplier.supplier_section.search_input_placeholder')}}" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
+                        <button id="search_product_btn" class="px-8 py-2 duration-300 active:scale-95 rounded-xl transition inline-flex gap-x-4 justify-center items-center  border-2 bg-primary hover:bg-primary-dark text-white border-primary hover:border-white h-full">{{__('messages.supplier.supplier_section.search_button_label')}}</button>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             </div>
             <div id="empty-products-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
                 <h5 class="font-bold text-primary">{{ __('messages.common.no_products') }}</h5>
-                <img src="{{ asset('/images/svg/empty.svg' ) }}" class="h-48 w-auto"/>
+                <img src="{{ asset('/images/svg/empty.svg' ) }}" class="h-24 sm:h-48 w-auto"/>
             </div>
         </div>
 
@@ -106,7 +106,7 @@
             </div>
             <div id="empty-suppliers-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
                 <h5 class="font-bold text-primary">{{__('messages.suppliers.supplier_section.empty_content')}}</h5>
-                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-48 w-auto"/>
+                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-24 sm:h-48 w-auto"/>
             </div>
         </div>
 
@@ -187,6 +187,16 @@
                 // Clear existing suppliers
                 suppliersContainer.innerHTML = '';
 
+                // Update pagination buttons
+                currentSupplierPage = data.suppliers.current_page;
+                lastSupplierPage = data.suppliers.last_page;
+
+                toggleDisableButton(firstSupplierPageBtn,currentSupplierPage === 1);
+                toggleDisableButton(prevSupplierPageBtn,currentSupplierPage === 1);
+                toggleDisableButton(nextSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
+                toggleDisableButton(lastSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
+
+
                 if (data.suppliers.data.length === 0) {
                     emptySuppliersContent.classList.remove('hidden');
                     loaderSuppliersContent.classList.add('hidden');
@@ -215,14 +225,6 @@
                     suppliersContainer.appendChild(supplierDiv);
                 });
 
-                // Update pagination
-                currentSupplierPage = data.suppliers.current_page;
-                lastSupplierPage = data.suppliers.last_page;
-
-                toggleDisableButton(firstSupplierPageBtn,currentSupplierPage === 1);
-                toggleDisableButton(prevSupplierPageBtn,currentSupplierPage === 1);
-                toggleDisableButton(nextSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
-                toggleDisableButton(lastSupplierPageBtn,currentSupplierPage === data.suppliers.last_page);
 
                 suppliersContainer.classList.remove('hidden');
                 loaderSuppliersContent.classList.add('hidden');
@@ -284,6 +286,10 @@
         const nextProductPageBtn = document.getElementById('next-products-page');
         const lastProductPageBtn = document.getElementById('last-products-page');
 
+        const searchProductInput = document.getElementById('search_product_input');
+        const searchProductBtn = document.getElementById('search_product_btn');
+
+
         const emptyProductsContent = document.getElementById('empty-products-content')
 
         let currentProductPage = 1;
@@ -296,51 +302,13 @@
 
             try {
                 // Fetch data from the API
-                const response = await fetch(`/supplier/products/api/{{$supplier['id']}}?page=${page}&product_ean=${productEan}`);
+                const response = await fetch(`/supplier/products/api/{{$supplier['id']}}?page=${page}&product_name=${productEan}`);
                 const data = await response.json();
 
                 // Clear existing products
                 productsContainer.innerHTML = '';
 
-                if (data.products.data.length === 0) {
-                    emptyProductsContent.classList.remove('hidden');
-                    loaderProductsContent.classList.add('hidden');
-                    return;
-                }
-
-                console.log(data.products)
-                // Populate products
-                data.products.data.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.id = `product_card_${product.id}`;
-                    productCard.classList.add(
-                        'w-full', 'h-full', 'rounded-xl', 'shadow-xl', 'flex', 'flex-col',
-                        'text-body', 'py-4', 'px-6'
-                    );
-                    productCard.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
-
-                    productCard.innerHTML = `
-                        <div class="h-auto w-full flex justify-center items-center">
-                            <div class="h-24 w-24 flex justify-center items-center border-2 border-gray-light rounded-xl p-1">
-                                <img src="/storage/${product.image}" class="w-auto h-full" alt="${product.name}" />
-                            </div>
-                        </div>
-                        <div class="h-auto w-full flex flex-col justify-start items-center gap-y-3">
-                            <div class="w-full flex flex-row justify-center items-center">
-                                ${Array(product.stars).fill('<svg class="h-6 sm:h-10 w-6 sm:w-10 text-primary"><use xlink:href="#heroicon-s-star"></use></svg>').join('')}
-                            </div>
-                            <p class="font-bold text-center">${product.name}</p>
-                            <p class="!text-xs text-justify hidden xl:block">${product.description}</p>
-                        </div>
-                        <div class="h-full w-full flex justify-center items-center mt-6">
-                            <a href="/quote?type=product&id=${product.id}" class="btn btn-primary">Cotizar Ahora</a>
-                        </div>
-                    `;
-
-                    productsContainer.appendChild(productCard);
-                });
-
-                // Update pagination
+                // Update pagination buttons
                 currentProductPage = data.products.current_page;
                 lastProductPage = data.products.last_page;
 
@@ -348,6 +316,46 @@
                 toggleDisableButton(prevProductPageBtn,currentProductPage === 1);
                 toggleDisableButton(nextProductPageBtn,currentProductPage === data.products.last_page);
                 toggleDisableButton(lastProductPageBtn,currentProductPage === data.products.last_page);
+
+
+
+                if (data.products.data.length === 0) {
+                    emptyProductsContent.classList.remove('hidden');
+                    loaderProductsContent.classList.add('hidden');
+                    return;
+                }
+
+                // Populate products
+                data.products.data.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.id = `product_card_${product.id}`;
+                    productCard.classList.add(
+                        'col-span-3','sm:col-span-2','xl:col-span-1','w-full', 'h-full', 'rounded-xl', 'shadow-xl', 'flex', 'flex-col',
+                        'text-body', 'py-4', 'px-6'
+                    );
+                    productCard.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+
+                    productCard.innerHTML = `
+                        <div class="h-auto flex justify-center items-center">
+                            <div class="h-24 w-24 flex justify-center items-center border-2 border-gray-light rounded-xl p-1">
+                                <img src="/storage/${product.image}" class="w-auto h-full" alt="${product.name}" />
+                            </div>
+                        </div>
+                        <div class="h-auto w-full flex flex-col justify-start items-center gap-y-3">
+                            <div class="w-full flex flex-row justify-center items-center text-primary py-4">
+                                ${Array(product.stars).fill('<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 sm:h-10 w-6 sm:w-10 lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>').join('')}
+                            </div>
+                            <p class="font-bold text-center">${product.name}</p>
+                            <p class="!text-xs text-justify hidden xl:block">${product.description}</p>
+                        </div>
+                        <div class="h-full w-full flex justify-center items-center mt-6">
+                            <a href="/quote?type=product&id=${product.id}" class="px-8 py-2 duration-300 active:scale-95 rounded-xl transition inline-flex gap-x-4 justify-center items-center  border-2 bg-primary hover:bg-primary-dark text-white border-primary hover:border-white">{{__('messages.supplier.supplier_section.quote_now')}}</a>
+                        </div>
+                    `;
+
+                    productsContainer.appendChild(productCard);
+                });
+
 
                 productsContainer.classList.remove('hidden');
                 loaderProductsContent.classList.add('hidden');
@@ -357,6 +365,23 @@
             }
 
         }
+
+        function handleProductSearch() {
+            if (searchProductInput.value && searchProductInput.value.length !== 0) {
+                fetchProducts(1, searchProductInput.value);
+            } else {
+                fetchProducts(1);
+            }
+            scrollToProductsSections();
+        }
+
+        // Add event listeners
+        searchProductBtn.addEventListener('click', handleProductSearch);
+        searchProductInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleProductSearch();
+            }
+        });
 
         function scrollToProductsSections() {
             productsSections.scrollIntoView({ behavior: 'smooth' });

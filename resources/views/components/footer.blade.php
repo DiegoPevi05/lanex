@@ -46,15 +46,19 @@
         <div class="hidden col-span-1 xl:flex flex-col gap-y-4 justify-start items-start">
 
             <span class="font-bold">{{ __('messages.footer.projects') }}</span>
-            <div class="w-full h-full bg-secondary-dark rounded-xl">
-
-            </div>
+            <a href="{{ route('services') }}" class="w-full h-full rounded-xl relative flex items-center justify-center hover:cursor-pointer group overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-full rounded-xl bg-center bg-cover bg-no-repeat z-[20] group-hover:scale-[1.2] transition-all duration-300" style="background-image: url('{{ asset('storage/images/web/cosco.jpg') }}');">
+                </div>
+                <div class="absolute top-0 left-0 w-full h-full rounded-xl z-[40]" style="background-color: rgba(0,0,0,0.2);">
+                </div>
+                <h5 class="z-50 font-bold text-primary text-white group-hover:text-secondary">{{ __('messages.footer.projects_send') }}</h5>
+            </a>
         </div>
 
         <div class="hidden sm:flex col-span-1 flex-col gap-y-4 justify-start items-start">
             <span class="font-bold">{{ __('messages.footer.subscribe') }}</span>
             <input placeholder="{{__('messages.footer.subscribe_placeholder')}}" class="w-full bg-body border-2 border-body rounded-md p-4 text-sm placeholder:text-secondary text-secondary" />
-            <x-button text="{{__('messages.footer.subscribe_btn')}}" variant="tertiary" url="#" extraClasses="uppercase py-4 w-full"/>
+            <x-button text="{{__('messages.footer.subscribe_btn')}}" variant="tertiary" url="#" extraClasses="uppercase py-4 w-full font-bold"/>
         </div>
     </div>
     <div class="w-full h-auto flex flex-col justify-start items-start border-t-2 border-secondary-dark border-dashed gap-y-2">

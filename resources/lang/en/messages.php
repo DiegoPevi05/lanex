@@ -25,9 +25,10 @@ return [
         'subscribe' => 'Subscribe',
         'subscribe_placeholder'=>'Input your email',
         'subscribe_btn' => 'Subscribe now',
-        'projects' => 'Personal Projects',
+        'projects' => 'More about Us',
         'developed_by' => 'Developed by',
         'navigation' => 'Navigation',
+        'projects_send' => 'Services'
     ],
     'home' => [
         'hero' => [
@@ -172,7 +173,10 @@ It is important for every company involved in international trade to be trained 
         ],
         'supplier_section' => [
             'header' => 'Find Another Supplier',
-            'title' => 'Other suppliers selling similar products'
+            'title' => 'Other suppliers selling similar products',
+            'search_input_placeholder' => 'Search product by name',
+            'search_button_label' => 'Search',
+            'quote_now' => 'Quote Now'
         ]
     ],
     'contact' => [
