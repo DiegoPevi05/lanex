@@ -4,7 +4,7 @@
 @section('content-client')
     <section id="suppliers_hero_section" class="w-full flex flex-col h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
 
-        <img src="{{ asset('storage/'.'images/web/localization.jpg')}}" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
+        <img src="{{ asset('storage/'.'images/web/localization.jpg')}}" alt="suppliers_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
             <div class="w-full h-full flex flex-col justify-center gap-y-12 animation-group">
 
@@ -147,7 +147,7 @@
 
                     supplierDiv.innerHTML = `
                         <div class="w-full min-h-[200px] flex justify-center items-center p-4">
-                            <img src="/storage/${supplier.logo}" class="w-auto h-16" alt="${supplier.name}">
+                            <img src="/storage/${supplier.logo}" alt="supplier_logo_image" class="w-auto h-16" alt="${supplier.name}">
                         </div>
                         <a href="/supplier/${supplier.id}" class="group p-none m-none">
                             <span class="font-bold text-primary group-hover:underline">${supplier.name}</span>

@@ -79,7 +79,7 @@
                 </span>
             </div>
             <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center">
-                <img src="/images/svg/empty.svg" class="w-[40%] h-auto"/>
+                <img src="/images/svg/empty.svg" alt="empty_logo" class="w-[40%] h-auto"/>
                 <label>{{__('messages.dashboard.web.empty_content')}}</label>
             </div>
             <div id="loading-content-form" class="hidden w-full h-full flex items-center justify-center">

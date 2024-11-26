@@ -2,16 +2,16 @@
 
 @section('content')
     <div class="bg-white h-screen w-full">
-        <div class="h-full w-full flex justify-center items-center">
+        <div class="h-full w-full flex justify-center items-center max-sm:px-4">
             <div class="h-auto w-full sm:w-[400px] flex justify-center items-center flex-col shadow-xl border-2 border-gray-light rounded-xl p-6 gap-y-4">
                 <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center justify-center px-12">
                     <div class="w-auto flex flex-row">
-                        <h3 class="font-bold text-primary">
+                        <h2 class="font-bold text-primary">
                             Lan
-                        </h3>
-                        <h3 class="font-bold text-primary-dark">
+                        </h2>
+                        <h2 class="font-bold text-primary-dark">
                             Ex
-                        </h3>
+                        </h2>
                     </div>
                 </a>
 

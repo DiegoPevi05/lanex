@@ -16,6 +16,9 @@
             <x-button url="{{route('quote')}}" text="{{ __('messages.common.quote') }}"  />
             <x-button url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
             <x-language-selector id="xl" />
+            <a href={{ route('login') }} class="h-8 w-auto text-white hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+            </a>
         </div>
     </div>
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-sm:mt-6 max-xl:mt-12">
@@ -75,6 +78,11 @@
             <a href="{{ route('suppliers')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.suppliers') }}</h4></a>
             <a href="{{ route('contact')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.contact') }}</h4></a>
         </div>
+
+        <a href={{ route('login') }} class="h-8 w-auto text-primary hover:text-primary-dark mr-auto my-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+        </a>
+
         <div class="w-auto h-auto
             flex flex-row justify-start gap-x-4 items-center mt-12">
             <x-button url="{{route('quote')}}" size="lg" text="{{ __('messages.common.quote') }}" extraClasses="px-6 py-2" />

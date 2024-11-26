@@ -4,7 +4,7 @@
 <div class="w-full h-screen bg-secondary flex flex-col items-center justify-center">
         <div class="w-auto h-auto flex flex-row items-center mb-6">
             <div class="w-[60px] h-auto p-none">
-                <img src="/images/logo.png" class="h-auto w-full" />
+                <img src="/images/logo.png" alt="not_found_image" class="h-auto w-full" />
             </div>
             <div class="w-auto flex flex-row">
                 <h1 class="font-bold text-primary">

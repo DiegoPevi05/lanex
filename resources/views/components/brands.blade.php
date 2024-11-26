@@ -11,7 +11,7 @@
                 @foreach ($suppliers as $supplier)
                 <a href="{{route('supplier',$supplier['id'])}}" class="p-none m-none">
                   <div class="reviews-slide-card w-[280px] h-[40px] flex justify-center items-center px-12">
-                    <img src="{{ asset('storage/' . $supplier->logo)}}" class="w-auto h-full">
+                    <img src="{{ asset('storage/' . $supplier->logo)}}" alt="brands_logo_image" class="w-auto h-full">
                   </div>
                 </a>
                 @endforeach
@@ -20,7 +20,7 @@
                 @foreach ($suppliers as $supplier)
                 <a href="{{route('supplier',$supplier['id'])}}" class="p-none m-none">
                   <div class="reviews-slide-card w-[280px] h-[40px] flex justify-center items-center px-12">
-                        <img src="{{ asset('storage/' . $supplier->logo)}}" class="w-auto h-full">
+                        <img src="{{ asset('storage/' . $supplier->logo)}}" alt="brands_logo_image_replicate" class="w-auto h-full">
                   </div>
                 </a>
                 @endforeach
