@@ -3,7 +3,7 @@
 
 @section('content-client')
     <section id="home_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white bg-green-100">
-        <img src="/images/home.jpg" alt="home_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
+        <img src="{{ asset('storage/'.'images/web/home.webp') }}" alt="home_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
             <div class="w-full h-full flex flex-col justify-center xl:justify-end gap-y-6">
 
@@ -49,7 +49,7 @@
             <div class="h-auto sm:h-1/2 w-full flex flex-col-reverse xl:flex-row gap-y-12 sm:gap-x-12 border-primary">
                 <div class="w-full xl:w-1/2 h-full">
                     <div class="w-full h-full bg-secondary py-6 px-4 rounded-lg flex items-center justify-center">
-                        <img src="/images/svg/aircraft.svg" alt="home_airplane_icon" class="w-auto h-full"/>
+                        <img src="storage/images/web/aircraft.svg" alt="home_airplane_icon" class="w-auto h-full"/>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                         </p>
                     </div>
                     <div class="rounded-xl flex items-center justify-center w-20 sm:w-36 h-20 sm:h-36 bg-primary p-4 sm:p-8">
-                        <img src="/images/svg/dollar.svg" alt="step_guide_dollar_icon" class="w-full h-full"/>
+                        <img src="storage/images/web/dollar.svg" alt="step_guide_dollar_icon" class="w-full h-full"/>
                     </div>
                     <h4 class="font-bold text-primary-dark text-center">
 
@@ -89,7 +89,7 @@
                         </p>
                     </div>
                     <div class="rounded-xl flex items-center justify-center w-20 sm:w-36 h-20 sm:h-36 bg-primary p-4 sm:p-8">
-                        <img src="/images/svg/package-check.svg" alt="step_guide_package_icon" class="w-full h-full"/>
+                        <img src="storage/images/web/package-check.svg" alt="step_guide_package_icon" class="w-full h-full"/>
 
                     </div>
                     <h4 class="font-bold text-primary-dark text-center">
@@ -104,7 +104,7 @@
                         </p>
                     </div>
                     <div class="rounded-xl flex items-center justify-center w-20 sm:w-36 h-20 sm:h-36 bg-primary p-4 sm:p-8">
-                        <img src="/images/svg/container.svg" alt="step_guide_container_icon" class="w-full h-full"/>
+                        <img src="storage/images/web/container.svg" alt="step_guide_container_icon" class="w-full h-full"/>
                     </div>
                     <h4 class="font-bold text-primary-dark text-center">
                         {{ __('messages.home.step.step_3_title') }}

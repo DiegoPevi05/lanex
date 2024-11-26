@@ -211,14 +211,14 @@
         // Initialize and add the map
         let typeTransport = 'airplaine';
         let map;
-        
+
         async function initMap() {
           // The location of Uluru
         const position = { lat: -12.046374, lng: -77.042793 };
         // A marker with a with a URL pointing to a PNG.
         const iconTransport = document.createElement("img");
-        
-        iconTransport.src = typeTransport == 'ship' ? "/images/svg/ship_map.svg" : "/images/svg/aircraft.svg";
+
+        iconTransport.src = typeTransport == 'ship' ? "storage/images/web/ship_map.svg" : "storage/images/web/aircraft.svg";
         iconTransport.height = typeTransport == 'ship' ? 48 : 96; // or any desired value
         iconTransport.width = typeTransport == 'ship' ? 48 : 96;
 
@@ -226,7 +226,7 @@
           //@ts-ignore
           const { Map } = await google.maps.importLibrary("maps");
           const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-        
+
           // The map, centered at Uluru
           map = new Map(document.getElementById("map"), {
             zoom: 3,
@@ -235,7 +235,7 @@
             zoomControl: false,
             mapId: "DEMO_MAP_ID",
           });
-        
+
         const beachFlagMarkerView = new AdvancedMarkerElement({
           map,
           position: position,
@@ -243,7 +243,7 @@
           title: "A marker using a custom PNG Image",
         });
         }
-        
+
         initMap();
 
         document.getElementById('search_track_order').addEventListener('submit', async function(e) {

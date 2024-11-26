@@ -47,7 +47,7 @@
 
             <span class="font-bold">{{ __('messages.footer.projects') }}</span>
             <a href="{{ route('services') }}" class="w-full h-full rounded-xl relative flex items-center justify-center hover:cursor-pointer group overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-full rounded-xl bg-center bg-cover bg-no-repeat z-[20] group-hover:scale-[1.2] transition-all duration-300" style="background-image: url('{{ asset('storage/images/web/cosco.jpg') }}');">
+                <div class="absolute top-0 left-0 w-full h-full rounded-xl bg-center bg-cover bg-no-repeat z-[20] group-hover:scale-[1.2] transition-all duration-300" style="background-image: url('{{ asset('storage/images/web/cosco.webp') }}');">
                 </div>
                 <div class="absolute top-0 left-0 w-full h-full rounded-xl z-[40]" style="background-color: rgba(0,0,0,0.2);">
                 </div>

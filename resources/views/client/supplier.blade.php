@@ -3,7 +3,7 @@
 
 @section('content-client')
     <section id="suppliers_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
-        <img src="{{ asset('storage/'. '/images/web/supplier.jpg') }}" alt="supplier_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
+        <img src="{{ asset('storage/'. '/images/web/supplier.webp') }}" alt="supplier_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30 bg-transparent">
             <div class="w-full h-full flex flex-col-reverse xl:flex-row justify-center gap-y-12">
 
