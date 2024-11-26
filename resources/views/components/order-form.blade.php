@@ -12,7 +12,7 @@
         @endif
 
         <!-- Order Number Field -->
-        @if($order->order_number)
+        @if($order && $order->order_number)
             <div class="mb-4 mt-4">
                 <label for="order_number" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.order_number") }}</label>
                 <input type="text" id="order_number" name="order_number" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('order_number', $order->order_number ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.order_number") }}" disabled>
@@ -68,6 +68,13 @@
             <input type="text" id="channel" name="channel" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('channel', $order->channel ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.channel") }}" {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-channel"></span>
         </div>
+
+        <!-- Freights In the order -->
+        <div class="mb-4 mt-4">
+            <label for="freights" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name').'s' }}</label>
+
+        </div>
+
 
 
         <!-- Submit Button -->
