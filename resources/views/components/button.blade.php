@@ -1,4 +1,6 @@
 <a href="{{ $url }}"
+    aria-label="{{__($arialabel)}}"
+    title="{{__($title)}}"
     class="inline-flex gap-x-4 justify-center items-center  border-2
     {{ $size ===  'md' ? 'px-8 py-2' : ($size === 'lg' ? 'px-12 sm:px-24 py-2 lg:py-3 sm:py-4': 'px-4 py-2') }}
     {{ $variant === 'primary' ? 'bg-primary hover:bg-primary-dark text-white border-primary hover:border-white' : '' }}

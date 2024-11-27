@@ -16,10 +16,12 @@ class Button extends Component
     public $variant;
     public $extraClasses;
     public $size;
+    public $arialabel;
+    public $title;
     /**
      * Create a new component instance.
      */
-    public function __construct($url, $text = '', $leftIcon = null, $rightIcon = null , $variant = 'primary', $extraClasses = '', $size='md')
+    public function __construct($url, $text = '', $leftIcon = null, $rightIcon = null , $variant = 'primary', $extraClasses = '', $size='md', $arialabel = 'messages.aria_labels.default', $title  = 'messages.titles.default')
     {
         $this->url = $url;
         $this->leftIcon = $leftIcon;
@@ -28,6 +30,8 @@ class Button extends Component
         $this->variant = $variant;
         $this->extraClasses = $extraClasses;
         $this->size = $size;
+        $this->arialabel = $arialabel;
+        $this->title = $title;
     }
 
     /**

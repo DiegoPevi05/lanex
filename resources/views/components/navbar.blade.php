@@ -16,13 +16,17 @@
             <x-button url="{{route('quote')}}" text="{{ __('messages.common.quote') }}"  />
             <x-button url="{{route('track')}}" text="{{ __('messages.common.track') }}" variant="secondary" />
             <x-language-selector id="xl" />
-            <a href={{ Auth::user() ? route('dashboard_home') : route('login') }} class="h-8 w-auto text-white hover:text-primary">
+            <a href={{ Auth::user() ? route('dashboard_home') : route('login') }}
+                class="h-8 w-auto text-white hover:text-primary"
+                aria-label="{{ Auth::user() ? __('messages.aria_labels.dashboard') : __('messages.aria_labels.login') }}"
+                title="{{ Auth::user() ? __('messages.titles.dashboard') : __('messages.titles.login') }}"
+                >
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
             </a>
         </div>
     </div>
     <div class="w-full mx-auto flex justify-between items-center bg-transparent xl:bg-white text-body px-6 sm:px-12 xl:px-20 h-[80px] max-sm:mt-6 max-xl:mt-12">
-        <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center">
+        <a href="{{ route('home') }}" class="w-full h-auto flex flex-row items-center" aria-label="{{ __('messages.aria_labels.home') }}" title="{{ __('messages.titles.home') }}">
             <div class="w-[60px] h-auto p-none">
                 <img src="/images/logo.png" alt="logo" class="h-auto w-full" />
             </div>
@@ -37,11 +41,26 @@
         </a>
         <div class="hidden xl:flex w-auto h-auto flex-row text-primary-dark">
             <div class="w-auto h-auto flex flex-row gap-x-4">
-                <a href="{{ route('home')  }}"><label class="font-bold {{ request()->routeIs('home')  ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.home') }}</label></a>
-                <a href="{{ route('about')  }}"><label class="font-bold {{ request()->routeIs('about') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.aboutus') }}</label></a>
-                <a href="{{ route('services')  }}"><label class="font-bold {{ request()->routeIs('services') || request()->routeIs('service') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.services') }}</label></a>
-                <a href="{{ route('suppliers')  }}"><label class="font-bold {{ request()->routeIs('suppliers') || request()->routeIs('supplier') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.suppliers') }}</label></a>
-                <a href="{{ route('contact')  }}"><label class="font-bold {{ request()->routeIs('contact') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.contact') }}</label></a>
+                <a href="{{ route('home')  }}"
+                    aria-label="{{ __('messages.aria_labels.home') }}"
+                    title="{{ __('messages.titles.home') }}"
+                    ><label class="font-bold {{ request()->routeIs('home')  ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.home') }}</label></a>
+                <a href="{{ route('about')  }}"
+                    aria-label="{{ __('messages.aria_labels.aboutus') }}"
+                    title="{{ __('messages.titles.aboutus') }}"
+                    ><label class="font-bold {{ request()->routeIs('about') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.aboutus') }}</label></a>
+                <a href="{{ route('services')  }}"
+                    aria-label="{{ __('messages.aria_labels.services') }}"
+                    title="{{ __('messages.titles.services') }}"
+                    ><label class="font-bold {{ request()->routeIs('services') || request()->routeIs('service') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.services') }}</label></a>
+                <a href="{{ route('suppliers')  }}"
+                    aria-label="{{ __('messages.aria_labels.suppliers') }}"
+                    title="{{ __('messages.titles.suppliers') }}"
+                    ><label class="font-bold {{ request()->routeIs('suppliers') || request()->routeIs('supplier') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.suppliers') }}</label></a>
+                <a href="{{ route('contact')  }}"
+                    aria-label="{{ __('messages.aria_labels.contactus') }}"
+                    title="{{ __('messages.titles.contactus') }}"
+                    ><label class="font-bold {{ request()->routeIs('contact') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.contact') }}</label></a>
             </div>
         </div>
 
@@ -72,14 +91,33 @@
             </div>
         </div>
         <div class="w-auto h-auto flex flex-col gap-y-6 sm:gap-y-12 text-primary mt-6">
-            <a href="{{ route('home')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.home') }}</h4></a>
-            <a href="{{ route('about')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.aboutus') }}</h4></a>
-            <a href="{{ route('services')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.services') }}</h4></a>
-            <a href="{{ route('suppliers')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.suppliers') }}</h4></a>
-            <a href="{{ route('contact')  }}"><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.contact') }}</h4></a>
+            <a href="{{ route('home')  }}"
+                aria-label="{{ __('messages.aria_labels.home') }}"
+                title="{{ __('messages.titles.home') }}"
+                ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.home') }}</h4></a>
+            <a href="{{ route('about')  }}"
+                aria-label="{{ __('messages.aria_labels.aboutus') }}"
+                title="{{ __('messages.titles.aboutus') }}"
+                ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.aboutus') }}</h4></a>
+            <a href="{{ route('services')  }}"
+                aria-label="{{ __('messages.aria_labels.services') }}"
+                title="{{ __('messages.titles.services') }}"
+                ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.services') }}</h4></a>
+            <a href="{{ route('suppliers')  }}"
+                aria-label="{{ __('messages.aria_labels.suppliers') }}"
+                title="{{ __('messages.titles.suppliers') }}"
+                ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.suppliers') }}</h4></a>
+            <a href="{{ route('contact')  }}"
+                aria-label="{{ __('messages.aria_labels.contactus') }}"
+                title="{{ __('messages.titles.contactus') }}"
+                ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.contact') }}</h4></a>
         </div>
 
-        <a href={{ Auth::user() ? route('dashboard_home') : route('login') }} class="h-8 w-auto text-primary hover:text-primary-dark mr-auto my-4">
+        <a href={{ Auth::user() ? route('dashboard_home') : route('login') }}
+            class="h-8 w-auto text-primary hover:text-primary-dark mr-auto my-4"
+            aria-label="{{ Auth::user() ? __('messages.aria_labels.dashboard') : __('messages.aria_labels.login') }}"
+            title="{{ Auth::user() ? __('messages.titles.dashboard') : __('messages.titles.login') }}"
+            >
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
         </a>
 
@@ -90,16 +128,29 @@
         </div>
 
         <div class="flex flex-row gap-x-6 mt-auto text-primary">
-            <a href="https://www.linkedin.com/company/expresslane-logistics-s-a-c/" target="_blank">
+            <a href="https://www.linkedin.com/company/expresslane-logistics-s-a-c/" target="_blank"
+            aria-label="{{  __('messages.aria_labels.linkedin') }}"
+            title="{{ __('messages.titles.linkedin') }}"
+                >
                 <x-bi-linkedin class="w-8 sm:w-12 h-8 sm:h-12" />
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61566765038948" target="_blank">
+            <a href="https://www.facebook.com/profile.php?id=61566765038948" target="_blank"
+            aria-label="{{  __('messages.aria_labels.facebook') }}"
+            title="{{ __('messages.titles.facebook') }}"
+                >
                 <x-bi-facebook class="w-8 sm:w-12 h-8 sm:h-12" />
             </a>
-            <a href="https://www.instagram.com/expresslanelogisticssac" target="_blank">
+            <a href="https://www.instagram.com/expresslanelogisticssac" target="_blank"
+            aria-label="{{  __('messages.aria_labels.instagram') }}"
+            title="{{ __('messages.titles.instagram') }}"
+                >
                 <x-bi-instagram class="w-8 sm:w-12 h-8 sm:h-12"/>
             </a>
-            <a href="https://www.tiktok.com/@expresslanelogisticssac" target="_blank">
+            <a href="https://www.tiktok.com/@expresslanelogisticssac" target="_blank"
+
+            aria-label="{{  __('messages.aria_labels.tiktok') }}"
+            title="{{ __('messages.titles.tiktok') }}"
+                >
                 <x-bi-tiktok class="w-8 sm:w-12 h-8 sm:h-12"/>
             </a>
         </div>

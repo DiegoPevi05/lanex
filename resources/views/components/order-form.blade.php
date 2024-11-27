@@ -73,8 +73,59 @@
         <div class="mb-4 mt-4">
             <label for="freights" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name').'s' }}</label>
 
-        </div>
+            @foreach ($order->freights as $freight)
+                <!-- Freight Card -->
+                <div class="w-full h-auto grid grid-cols-2 text-body gap-y-2 border-2 border-gray-light rounded-xl p-4">
+                    <div class="col-span-2 flex flex-col justify-start items-start">
+                        <div class="inline-flex gap-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
+                            <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name') .' '. $freight->id }} :</p>
+                        </div>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.name') }}:</p>
+                        <input type="text" id="freight[0]['name']" name="freight[0]['name']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['name']", $freight->name ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.description') }}:</p>
+                        <input type="text" id="freight[0]['description']" name="freight[0]['description']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['description']", $freight->description ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.description") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }}:</p>
+                        <input type="text" id="freight[0]['dimensions_units']" name="freight[0]['dimensions_units']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['dimensions_units']", $freight->dimensions_units ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }}:</p>
+                        <input type="text" id="freight[0]['dimensions']" name="freight[0]['dimensions']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['dimensions']", $freight->dimensions ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
+                        <input type="text" id="freight[0]['weigth_units']" name="freight[0]['weigth_units']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['weigth_units']", $freight->weigth_units ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
+                        <input type="text" id="freight[0]['weigth']" name="freight[0]['weigth']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['weigth']", $freight->weigth ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>
+                        <input type="text" id="freight[0]['volume_units']" name="freight[0]['volume_units']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['volume_units']", $freight->volume_units ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }}:</p>
+                        <input type="text" id="freight[0]['volume']" name="freight[0]['volume']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['volume']", $freight->volume ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.packages') }}:</p>
+                        <input type="text" id="freight[0]['packages']" name="freight[0]['packages']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['packages']", $freight->packages ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                    <div class="col-span-1 flex flex-col justify-start items-start">
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.incoterms') }}:</p>
+                        <input type="text" id="freight[0]['incoterms']" name="freight[0]['incoterms']" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old("freight[0]['incoterms']", $freight->incoterms ?? '') }}" placeholder="{{ __("messages.dashboard.freight.form.fields.incoterms") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    </div>
+                </div>
+            @endforeach
 
+        </div>
 
 
         <!-- Submit Button -->
