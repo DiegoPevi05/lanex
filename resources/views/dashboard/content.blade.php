@@ -203,6 +203,10 @@
                     loadingContentForm.classList.add('hidden');
                     contentForm.classList.remove('hidden');
 
+                    if(typeEntity == "order"){
+                        loadOrderFunction();
+                    }
+
                      // Check for errors and populate error messages
                     @if(session('errors'))
                         const errors = @json(session('errors')->toArray());
@@ -335,18 +339,95 @@
             entityIndex++;
         }
 
-    function updateEntityIndex(entity) {
-        const entityItems = document.querySelectorAll(`.${entity}-item`);
-        entityItems.forEach((entityItem, index) => {
+        function updateEntityIndex(entity) {
+            const entityItems = document.querySelectorAll(`.${entity}-item`);
+            entityItems.forEach((entityItem, index) => {
 
-            const hiddenInput = entityItem.querySelector("input[type='hidden']");
-            if (hiddenInput) {
-                hiddenInput.name = `${entity}s[${index}]`;
-            }
-        });
-        // Update detailIndex to the current count
-        detailIndex = entityItems.length;
-    }
+                const hiddenInput = entityItem.querySelector("input[type='hidden']");
+                if (hiddenInput) {
+                    hiddenInput.name = `${entity}s[${index}]`;
+                }
+            });
+            // Update detailIndex to the current count
+            detailIndex = entityItems.length;
+        }
+
+        let freightsContainer = null;
+        let addFreightButton = null;
+
+        // Function to add a new Freight Card
+        function addFreightCard() {
+            const index = freightsContainer.children.length;
+
+            // Create a new freight card div
+            const freightCard = document.createElement("div");
+            freightCard.classList.add("freight-card", "w-full", "h-auto", "grid", "grid-cols-2", "text-body", "gap-y-2", "border-2", "border-gray-light", "rounded-xl", "p-4", "gap-4");
+            freightCard.innerHTML = `
+                <div class="col-span-2 flex flex-col justify-start items-start">
+                    <div class="inline-flex gap-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                            <path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/>
+                            <path d="M10 21.9V14L2.1 9.1"/>
+                            <path d="m10 14 11.9-6.9"/>
+                            <path d="M14 19.8v-8.1"/>
+                            <path d="M18 17.5V9.4"/>
+                        </svg>
+                        <p class="text-sm font-bold text-secondary-dark capitalize">Freight ${index + 1}:</p>
+                    </div>
+                    <button type="button" class="delete_freight_btn text-red-500 mt-2">Delete Freight</button>
+                </div>
+
+                <div class="col-span-1">
+                    <input type="hidden" id="freight[${index}][id]" name="freight[${index}][id]" value="">
+                </div>
+
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">Name:</p>
+                    <input type="text" id="freight[${index}][name]" name="freight[${index}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="Enter freight name">
+                </div>
+
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">Description:</p>
+                    <input type="text" id="freight[${index}][description]" name="freight[${index}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="Enter description">
+                </div>
+
+                <!-- Add additional fields similarly -->
+            `;
+
+            // Append the new freight card to the container
+            freightsContainer.appendChild(freightCard);
+
+            // Add event listener for delete button
+            const deleteButton = freightCard.querySelector(".delete_freight_btn");
+            deleteButton.addEventListener("click", () => deleteFreightCard(freightCard));
+        }
+
+        // Function to delete a Freight Card
+        function deleteFreightCard(card) {
+            card.remove();
+            updateFreightIndices();
+        }
+
+        // Function to update the indices of Freight Cards
+        function updateFreightIndices() {
+            const freightCards = freightsContainer.children;
+            Array.from(freightCards).forEach((card, index) => {
+                card.querySelectorAll("input").forEach(input => {
+                    input.id = input.id.replace(/\[\d+\]/, `[${index}]`);
+                    input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+                });
+
+                card.querySelector("p.text-secondary-dark").innerText = `Freight ${index + 1}:`;
+            });
+        }
+
+        function loadOrderFunction(){
+            freightsContainer = document.getElementById("freights-items");
+            addFreightButton = document.getElementById("add_fregiht_btn");
+            // Add event listener for the add button
+            addFreightButton.addEventListener("click", addFreightCard);
+        }
+
 
     </script>
 @endpush
