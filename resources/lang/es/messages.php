@@ -24,6 +24,8 @@ return [
         'facebook' => 'Ir a Facebook',
         'instagram' => 'Ir a Instagram',
         'tiktok' => 'Ir a TikTok',
+        'quote' => 'Ir a Cotizar',
+        'whatsapp' => 'Chatea con nosotros en whatsapp',
         'default' => 'Enlace de LanEx a otra sección'
     ],
     'titles' => [
@@ -38,6 +40,8 @@ return [
         'facebook' => 'Ir a Facebook',
         'instagram' => 'Ir a Instagram',
         'tiktok' => 'Ir a TikTok',
+        'quote' => 'Ir a Cotizar',
+        'whatsapp' => 'Chatea con nosotros en whatsapp',
         'default' => 'Enlace de LanEx a otra sección'
     ],
     'common' => [
@@ -47,6 +51,7 @@ return [
         'cancel' => 'cancelar',
         'quote' => 'Cotización',
         'track' => 'Rastrear',
+        'search' => 'Buscar',
         'no_products' => 'Actualmente no hay productos para este proveedor',
         'no_suppliers_options' => 'No hay proveedores',
         'no_services_options' => 'No hay servicios',
@@ -78,6 +83,8 @@ return [
             'card_1_label' => 'Clientes Satisfechos',
             'card_2_number' => '12+',
             'card_2_label' => 'Años de Experiencia',
+            'input_helper_text' => 'Si tu busqueda no es valida envianos un mensaje a través de nuestros canales o envianos un mensaje',
+            'input_helper_help' => 'Ayuda'
         ],
         'step' => [
             'header' => '¿Cómo funciona?',
@@ -966,7 +973,9 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         ],
         'tracking_step' => [
             'name' => 'paso de seguimiento',
+            'plural' => 'Seguimiento de Envios',
             'new_entity' => 'nuevo paso de seguimiento',
+            'add_entity' => 'agregar step',
             'header' => 'pasos de seguimiento',
             'indications' => 'seleccione una opción para crear, actualizar o eliminar pasos de seguimiento',
             'input_placeholder_search' => 'buscar paso de seguimiento',
@@ -1064,6 +1073,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'update' => 'actualizar orden'
                 ],
                 'fields' => [
+                    'content' => 'detalles de la orden',
                     'order_number' => 'número de orden',
                     'status' => 'estado',
                     'PENDING' => 'pendiente',
@@ -1229,7 +1239,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         ],
         'freight' => [
             'name' => 'flete',
+            'plural' => 'fletes',
             'new_entity' => 'nuevo flete',
+            'add_entity' => 'agregar flete',
+            'delete_entity' => 'borrar flete',
             'empty_content' => 'no hay fletes para mostrar',
             'header' => "fletes",
             'indications' => "seleccione una opción para crear, actualizar o eliminar fletes",

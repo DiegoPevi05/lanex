@@ -24,6 +24,8 @@ return [
         'facebook' => 'Go to Facebook',
         'instagram' => 'Go to Instagram',
         'tiktok' => 'Go to TikTok',
+        'quote' => 'Go to Quote',
+        'whatsapp' => 'Chat with us on Whatsapp',
         'default' => 'LanEx page link to another section'
     ],
     'titles' => [
@@ -38,6 +40,8 @@ return [
         'facebook' => 'Go to Facebook',
         'instagram' => 'Go to Instagram',
         'tiktok' => 'Go to TikTok',
+        'quote' => 'Go to Quote',
+        'whatsapp' => 'Chat with us on Whatsapp',
         'default' => 'LanEx page link to another section'
     ],
     'common' => [
@@ -47,6 +51,7 @@ return [
         'cancel' => 'cancel',
         'quote' => 'Quote',
         'track' => 'Track',
+        'search' => 'Search',
         'no_products' => 'Currently no Products for this Supplier',
         'no_suppliers_options' => 'No Suppliers',
         'no_services_options' => 'No Services',
@@ -78,6 +83,8 @@ return [
             'card_1_label' => 'Satisfied Clients',
             'card_2_number' => '12+',
             'card_2_label' => 'Years of Experience',
+            'input_helper_text' => 'If your search is not valid contact us through our channels or send us a message',
+            'input_helper_help' => 'Help'
         ],
         'step' => [
             'header' => 'How does it work?',
@@ -955,7 +962,9 @@ It is important for every company involved in international trade to be trained 
         ],
         'tracking_step' => [
             'name' => 'tracking step',
+            'plural' => 'tracking steps',
             'new_entity' => 'new tracking step',
+            'add_entity' => 'add step',
             'header' => 'tracking steps',
             'indications' => 'select an option to create, update, or delete tracking steps',
             'input_placeholder_search' => 'search tracking step',
@@ -1053,6 +1062,7 @@ It is important for every company involved in international trade to be trained 
                     'update' => 'update order'
                 ],
                 'fields' => [
+                    'content' => 'order content',
                     'order_number' => 'order number',
                     'status' => 'status',
                     'PENDING' => 'pending',
@@ -1218,7 +1228,10 @@ It is important for every company involved in international trade to be trained 
         ],
         'freight' => [
             'name' => 'freight',
+            'plural' => 'freights',
             'new_entity' => 'new freight',
+            'add_entity' => 'add freight',
+            'delete_entity' => 'delete freight',
             'empty_content' => 'no freights to show',
             'header' => "freights",
             'indications' => "select an option to create, update or delete freights",

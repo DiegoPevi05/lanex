@@ -38,7 +38,37 @@
 
                     </div>
                     <div class="max-sm:m-none max-xl:ml-auto w-auto h-auto pt-6 sm:pt-12 xl:pt-24 animation-element slide-in-left">
-                        <livewire:search-form />
+                            <div class="w-full h-auto flex flex-col">
+                                <!-- Tabs -->
+                                <div class="w-auto flex flex-row justify-start rounded-t-lg">
+                                    <!-- Tab 1 -->
+                                    <div class="cursor-pointer py-3 px-6 rounded-tl-lg text-primary-dark bg-white font-bold group">
+                                         <label class="font-bold group-hover:cursor-pointer">Tracking</label>
+                                    </div>
+                                    <!-- Tab 2 -->
+                                    <a href="{{route('quote')}}"
+                                        aria-label="{{ __('messages.aria_labels.quote') }}"
+                                        title="{{ __('messages.titles.quote') }}"
+                                        class="cursor-pointer py-3 px-6 rounded-tr-lg bg-primary-dark group">
+                                         <label class="font-bold group-hover:cursor-pointer">{{__('messages.common.quote')}}</label>
+                                    </a>
+                                </div>
+
+                                <!-- Tab Content -->
+                                <div class="bg-white w-full sm:w-96 md:w-[500px] flex shadow-md rounded-b-lg rounded-tr-lg p-4">
+                                    <!-- Content for Tab 1 -->
+                                    <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1">
+                                        <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
+                                            <input id="tracking_id_input" placeholder="Tracking ID" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
+                                            <button id="tracking_id_btn" class=" duration-300 active:scale-95 rounded-xl transition h-full uppercase font-bold inline-flex gap-x-4 justify-center items-center  border-2  px-8 py-2  bg-primary hover:bg-primary-dark text-white border-primary hover:border-white">{{ __('messages.common.search') }}</button>
+                                        </div>
+                                        <p class="text-[12px]">{{ __('messages.home.hero.input_helper_text') }} <a href="{{route('contact')}}"
+                                                aria-label="{{ __('messages.aria_labels.default') }}"
+                                                title="{{ __('messages.titles.default') }}"
+                                                class="text-primary underline cursor-pointer">{{ __('messages.home.hero.input_helper_help') }}</a></p>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -194,3 +224,23 @@
     </section>
 
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('tracking_id_btn').addEventListener('click', function (e) {
+            // Get the value from the input field
+            const trackingIdInput = document.getElementById('tracking_id_input').value.trim();
+
+            // Check if the input is empty
+            if (!trackingIdInput) {
+                return; // Prevent redirection if the input is empty
+            }
+
+            // Redirect to the track route with the tracking_id as a query parameter
+            const routeUrl = "{{ route('track') }}";
+            window.location.href = `${routeUrl}?tracking_id=${encodeURIComponent(trackingIdInput)}`;
+        });
+    });
+</script>
+@endpush

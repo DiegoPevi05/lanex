@@ -614,5 +614,6 @@
         iconImage.src = selectedIcon ? '/storage'+selectedIcon : '/storage/images/svgs/ambulance.svg';
     }
 
+
     </script>
 @endpush

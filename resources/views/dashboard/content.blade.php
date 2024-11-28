@@ -363,7 +363,7 @@
             const freightCard = document.createElement("div");
             freightCard.classList.add("freight-card", "w-full", "h-auto", "grid", "grid-cols-2", "text-body", "gap-y-2", "border-2", "border-gray-light", "rounded-xl", "p-4", "gap-4");
             freightCard.innerHTML = `
-                <div class="col-span-2 flex flex-col justify-start items-start">
+                <div class="col-span-2 flex flex-row justify-between items-center">
                     <div class="inline-flex gap-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
                             <path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/>
@@ -372,33 +372,60 @@
                             <path d="M14 19.8v-8.1"/>
                             <path d="M18 17.5V9.4"/>
                         </svg>
-                        <p class="text-sm font-bold text-secondary-dark capitalize">Freight ${index + 1}:</p>
+                        <p class="text-sm font-bold text-secondary-dark capitalize">{{__("messages.dashboard.freight.name")}}:</p>
                     </div>
-                    <button type="button" class="delete_freight_btn text-red-500 mt-2">Delete Freight</button>
-                </div>
-
-                <div class="col-span-1">
-                    <input type="hidden" id="freight[${index}][id]" name="freight[${index}][id]" value="">
+                    <button type="button" id="delete_freight_btn_${index}" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95">{{__("messages.dashboard.freight.delete_entity")}}</button>
                 </div>
 
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">Name:</p>
-                    <input type="text" id="freight[${index}][name]" name="freight[${index}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="Enter freight name">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.name') }}:</p>
+                    <input type="text" id="freight[${index}][name]" name="freight[${index}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.name") }}">
                 </div>
 
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">Description:</p>
-                    <input type="text" id="freight[${index}][description]" name="freight[${index}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="Enter description">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.description') }}:</p>
+                    <input type="text" id="freight[${index}][description]" name="freight[${index}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.description") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }}:</p>
+                    <input type="text" id="freight[${index}][dimensions_units]" name="freight[${index}][dimensions_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.dimensions_units") }}">
                 </div>
 
-                <!-- Add additional fields similarly -->
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }}:</p>
+                    <input type="text" id="freight[${index}][dimensions]" name="freight[${index}][dimensions]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.dimensions") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
+                    <input type="text" id="freight[${index}][weight_units]" name="freight[${index}][weight_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.weight_units") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
+                    <input type="text" id="freight[${index}][weight]" name="freight[${index}][weight]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.weight") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>
+                    <input type="text" id="freight[${index}][volume_units]" name="freight[${index}][volume_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume_units") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }}:</p>
+                    <input type="text" id="freight[${index}][volume]" name="freight[${index}][volume]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.packages') }}:</p>
+                    <input type="text" id="freight[${index}][packages]" name="freight[${index}][packages]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume") }}">
+                </div>
+                <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.incoterms') }}:</p>
+                    <input type="text" id="freight[${index}][incoterms]" name="freight[${index}][incoterms]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.incoterms") }}">
+                </div>
             `;
 
             // Append the new freight card to the container
             freightsContainer.appendChild(freightCard);
 
             // Add event listener for delete button
-            const deleteButton = freightCard.querySelector(".delete_freight_btn");
+            const deleteButton = freightCard.querySelector(`#delete_freight_btn_${index}`);
             deleteButton.addEventListener("click", () => deleteFreightCard(freightCard));
         }
 
@@ -421,11 +448,78 @@
             });
         }
 
+        function handleToggleWrapScrollers(id){
+
+            const toggleButton = document.getElementById(`toggleButton_${id}`);
+            const wrapperContainer = document.getElementById(`wrapperContainer_${id}`);
+            const wrapperText = document.getElementById(`wrapper_${id}`);
+            const iconOpen = document.getElementById(`iconOpen_${id}`);
+            const iconClose = document.getElementById(`iconClose_${id}`);
+
+            // Toggle the height and opacity classes
+            wrapperContainer.classList.toggle("h-[0px]");
+            wrapperContainer.classList.toggle("h-[400px]");
+            wrapperContainer.classList.toggle("sm:h-[600px]");
+
+            // Toggle opacity for the wrapper text
+            wrapperText.classList.toggle("opacity-0");
+            wrapperText.classList.toggle("opacity-100");
+
+            // Toggle the icon
+            iconOpen.classList.toggle("hidden");
+            iconClose.classList.toggle("hidden");
+
+        }
+
+        function attachIconImageUpdate() {
+            const iconSelect = document.getElementById('icon-tracking-step');
+            const iconImage = document.getElementById('icon-tracking-step-image');
+
+            if (iconSelect && iconImage) {
+                // Set the initial image based on the selected option
+                iconImage.src = iconSelect.value ? '/storage'+iconSelect.value : '/storage/images/svgs/ambulance.svg';
+
+                // Remove any existing event listeners to avoid duplicates
+                iconSelect.removeEventListener('change', updateIconImage);
+
+                // Add a new event listener to update the image
+                iconSelect.addEventListener('change', updateIconImage);
+            }
+        }
+
+        function updateIconImage() {
+            const iconSelect = document.getElementById('icon-tracking-step');
+            const iconImage = document.getElementById('icon-tracking-step-image');
+
+            // Update the image source to the selected option or default to ambulance
+            const selectedIcon = iconSelect.value;
+            iconImage.src = selectedIcon ? '/storage'+selectedIcon : '/storage/images/svgs/ambulance.svg';
+        }
+
         function loadOrderFunction(){
             freightsContainer = document.getElementById("freights-items");
             addFreightButton = document.getElementById("add_fregiht_btn");
             // Add event listener for the add button
             addFreightButton.addEventListener("click", addFreightCard);
+
+            // Select all sub-sections with the "data-id" attribute
+            const subSections = document.querySelectorAll("[id^='sub_section_']");
+
+            // Iterate through each sub-section and attach the toggle functionality
+            subSections.forEach(subSection => {
+                const id = subSection.getAttribute("data-id");
+                const toggleButton = document.getElementById(`toggleButton_${id}`);
+
+                if (toggleButton) {
+                    toggleButton.addEventListener("click", function () {
+                        handleToggleWrapScrollers(id);
+                    });
+                }
+            });
+
+            //Attach Image update for the selected Icon for the tracking step
+            attachIconImageUpdate();
+
         }
 
 
