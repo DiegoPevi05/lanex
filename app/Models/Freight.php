@@ -64,7 +64,7 @@ class Freight extends Model
     protected static function generateFreightId()
     {
         // Combine date, time, and a random number for a short unique ID
-        return 'fr_' . date('ymd') . bin2hex(random_bytes(2));
+        return 'LNXFR' . date('ymd') . bin2hex(random_bytes(2));
     }
 
     /**

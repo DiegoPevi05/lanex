@@ -55,7 +55,7 @@ class Order extends Model
     protected static function generateOrderNumber()
     {
         // Combine date, time, and a random number for a short unique ID
-        return 'ord_' . date('ymd') . bin2hex(random_bytes(2));
+        return 'LNX' . date('ymd') . bin2hex(random_bytes(2));
     }
 
     public static function getRoutes()

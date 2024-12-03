@@ -910,6 +910,10 @@ It is important for every company involved in international trade to be trained 
                     'name' => 'name',
                     'icon' => 'icon',
                     'status' => 'status',
+                    'external_reference' => 'external reference',
+                    'AIR' => 'air',
+                    'SHIP' => 'ship',
+                    'CUSTOM' => 'custom',
                     'description' => 'description'
                 ],
                 'placeholders' => [
@@ -918,6 +922,7 @@ It is important for every company involved in international trade to be trained 
                     'icon' => 'Select the icon',
                     'status' => 'Enter status',
                     'description' => 'Enter description',
+                    'external_reference' => 'Enter the external reference',
                 ],
                 'buttons' => [
                     'cancel' => 'cancel',
@@ -1046,6 +1051,7 @@ It is important for every company involved in international trade to be trained 
         'order' => [
             'name' => 'order',
             'new_entity' => 'new order',
+            'empty_content' => 'no orders to show',
             'header' => "orders",
             'indications' => "select an option to create, update or delete orders",
             'input_placeholder_search' => "search order",

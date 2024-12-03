@@ -85,87 +85,107 @@
 
                 <div id="freights-items" class="w-full h-full flex flex-col justify-start items-start gap-y-4">
 
-                    @foreach ($order->freights as $index => $freight)
-                        <!-- Freight Card -->
-                        <div class="freight-card w-full h-auto grid grid-cols-2 text-body gap-y-2 border-2 border-gray-light rounded-xl p-4 gap-4">
-                            <div class="col-span-2 flex flex-row justify-between items-center">
-                                <div class="inline-flex gap-x-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name') .': '. $freight->freight_id }}</p>
+                    @if($order)
+                        @foreach ($order->freights as $index => $freight)
+                            <!-- Freight Card -->
+                            <div class="freight-card w-full h-auto grid grid-cols-2 text-body gap-y-2 border-2 border-gray-light rounded-xl p-4 gap-4">
+                                <div class="col-span-2 flex flex-row justify-between items-center">
+                                    <div class="inline-flex gap-x-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
+                                        <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name') .': '. $freight->freight_id }}</p>
+                                    </div>
+                                    <button id="delete_fregiht_btn_{{$index}}" type="button" onclick="this.closest('.freight-card').remove(); updateFreightIndices()" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
+
+                                        {{__('messages.dashboard.freight.delete_entity')}}
+                                    </button>
                                 </div>
-                                <button id="delete_fregiht_btn_{{$index}}" type="button" onclick="this.closest('.freight-card').remove(); updateFreightIndices()" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
+                                <div class="col-span-2 hidden">
+                                    <input type="text" id="freight[{{$index}}][id]" name="freight[{{$index}}][id]" class="hidden" value="{{ $freight->id ?? '' }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
 
-                                    {{__('messages.dashboard.freight.delete_entity')}}
-                                </button>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.name') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][name]" name="freight[{{$index}}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->name ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.description') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][description]" name="freight[{{$index}}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->description ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.description") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][dimensions_units]" name="freight[{{$index}}][dimensions_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->dimensions_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][dimensions]" name="freight[{{$index}}][dimensions]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->dimensions ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][weigth_units]" name="freight[{{$index}}][weigth_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weigth_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][weigth]" name="freight[{{$index}}][weigth]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weigth ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][volume_units]" name="freight[{{$index}}][volume_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][volume]" name="freight[{{$index}}][volume]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.packages') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][packages]" name="freight[{{$index}}][packages]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->packages ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.incoterms') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][incoterms]" name="freight[{{$index}}][incoterms]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->incoterms ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.incoterms") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
                             </div>
-                            <div class="col-span-2 hidden">
-                                <input type="text" id="freight[{{$index}}][id]" name="freight[{{$index}}][id]" class="hidden" value="{{ $freight->id ?? '' }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.name') }}:</p>
-                                <input type="text" id="freight[{{$index}}][name]" name="freight[{{$index}}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->name ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.description') }}:</p>
-                                <input type="text" id="freight[{{$index}}][description]" name="freight[{{$index}}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->description ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.description") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }}:</p>
-                                <input type="text" id="freight[{{$index}}][dimensions_units]" name="freight[{{$index}}][dimensions_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->dimensions_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }}:</p>
-                                <input type="text" id="freight[{{$index}}][dimensions]" name="freight[{{$index}}][dimensions]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->dimensions ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
-                                <input type="text" id="freight[{{$index}}][weigth_units]" name="freight[{{$index}}][weigth_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weigth_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
-                                <input type="text" id="freight[{{$index}}][weigth]" name="freight[{{$index}}][weigth]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weigth ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>
-                                <input type="text" id="freight[{{$index}}][volume_units]" name="freight[{{$index}}][volume_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }}:</p>
-                                <input type="text" id="freight[{{$index}}][volume]" name="freight[{{$index}}][volume]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.packages') }}:</p>
-                                <input type="text" id="freight[{{$index}}][packages]" name="freight[{{$index}}][packages]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->packages ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                            <div class="col-span-1 flex flex-col justify-start items-start">
-                                <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.incoterms') }}:</p>
-                                <input type="text" id="freight[{{$index}}][incoterms]" name="freight[{{$index}}][incoterms]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->incoterms ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.incoterms") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
 
             </div>
         </x-wrapper-scroll>
 
         <x-wrapper-scroll id="transport" title="messages.dashboard.tracking_step.plural">
-            <div class="py-4">
-                <div class="w-full h-auto flex flex-row justify-between py-4">
+            <div class="p-none">
+                <div class="w-full h-auto flex flex-row justify-between py-none">
                     <label for="transports" class="block text-lg font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.tracking_step.name').'s' }}</label>
-                    <button id="add_fregiht_btn" type="button" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
+                    <button id="add_transport_btn" type="button" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
                         {{__('messages.dashboard.tracking_step.add_entity')}}
                     </button>
                 </div>
 
             </div>
 
-            <div class="mb-4 mt-4">
-                <label for="icon-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">
-                    {{ __("messages.dashboard.tracking_step.form.fields.icon") }}
+            <div id="container_new_tracking_step" class="w-full h-auto grid grid-cols-2 text-body gap-y-2 border-2 border-gray-light rounded-xl p-4 gap-4 my-4">
+                <label for="icon-tracking-step" class="block col-span-2 text-sm font-bold text-secondary-dark capitalize">
+                    {{ __("messages.dashboard.transport_type.form.fields.icon") }}
                 </label>
 
-                <div class="w-full h-auto flex flex-row gap-x-4">
+                <!-- Country Field -->
+                <div class="col-span-1">
+                    <label for="country-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.country") }}</label>
+                    <input type="text" id="country-tracking-step" name="country-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                </div>
+
+                <!-- City Field -->
+                <div class="col-span-1">
+                    <label for="city-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.city") }}</label>
+                    <input type="text" id="city-tracking-step" name="city-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                </div>
+
+                <!-- Address Field -->
+                <div class="col-span-2">
+                    <label for="address-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.address") }}</label>
+                    <input type="text" id="address-tracking-step" name="address-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.address") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                </div>
+
+                <div class="col-span-2 flex flex-row gap-x-4">
                     <select id="icon-tracking-step" name="icon-tracking-step" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
                         <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
 
@@ -177,6 +197,83 @@
                     </select>
                     <img id="icon-tracking-step-image" src="/storage/images/svgs/ambulance.svg" class="h-12 w-12 shadow-md rounded-xl p-2 border-2 border-primary text-primary"/>
                 </div>
+
+                <!-- Type Field -->
+                <div class="col-span-1">
+                    <label for="type-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.type") }}</label>
+                    <select id="type-tracking-step" name="type-tracking-step" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.type") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                        <option value="AIR">{{ __("messages.dashboard.transport_type.form.fields.AIR") }}</option>
+                        <option value="SHIP">{{ __("messages.dashboard.transport_type.form.fields.SHIP") }}</option>
+                        <option value="CUSTOM">{{ __("messages.dashboard.transport_type.form.fields.CUSTOM") }}</option>
+                    </select>
+                </div>
+
+                <!-- Name Field -->
+                <div class="col-span-1">
+                    <label for="status-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.status") }}</label>
+                    <select id="status-tracking-step" name="status-tracking-step" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                        <option value="INACTIVE">{{ __("messages.common.INACTIVE") }}</option>
+                        <option value="ACTIVE">{{ __("messages.common.ACTIVE") }}</option>
+                    </select>
+                </div>
+
+                <!-- Name Field -->
+                <div class="col-span-1">
+                    <label for="name-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.name") }}</label>
+                    <input type="text" id="name-tracking-step" name="name-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                </div>
+
+                <!-- EXt Reference Field -->
+                <div class="col-span-1">
+                    <label for="external-reference-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }}</label>
+                    <input type="text" id="external-reference-tracking-step" name="name-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                </div>
+
+                <!-- Description Text Field -->
+                <div class="col-span-2">
+                    <label for="description-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.transport_type.form.fields.description') }}</label>
+                    <textarea id="description-tracking-step" name="description-tracking-step" rows="4" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.description") }}" {{$formRequest === "view" ? "disabled" : ""}}></textarea>
+                </div>
+
+            </div>
+
+            <label for="transports" class="block text-lg font-bold text-secondary-dark capitalize mb-4">{{ __('messages.dashboard.transport_type.name').'s' }}</label>
+
+            <div class="step-tracks w-full h-auto flex flex-col gap-y-4">
+
+                    @if($order)
+
+                        @foreach ($order->trackingSteps as $index => $trackingStep)
+                        <div class="step-track w-full h-auto flex flex-row items-center justify-between px-4 py-2 border-2 border-gray-200 rounded-xl">
+                            <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
+                                <p class="step-track-correlative text-sm font-bold text-body">{{$index}}</p>
+                                <img id="step-track-icon" onClick="updateTransportActiveState({{$index}})" src="{{ asset('storage/' . $trackingStep->transportType->icon) }}" class="step-track-icon h-12 w-12 shadow-md p-2 border-gray-light border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95"/>
+                                <label for="steps-track" class="block text-sm font-bold text-secondary-dark capitalize">{{$trackingStep->transportType->name}}</label>
+                            </div>
+
+                            <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
+                                <span class="text-gray-400 h-6 w-6 cursor-pointer hover:text-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
+                                </span>
+                                <button id="delete_transport_btn_{{$index}}" onclick="this.closest('.step-track').remove(); updateTransportIndices()" type="button" class="h-8 w-8 bg-primary hover:bg-white text-white hover:text-primary duration-300 rounded-full p-1 border-2 border-primary active:scale-95">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                </button>
+                            </div>
+
+                            <input type="text" id="transports[{{$index}}][country]" name="transports[{{$index}}][country]" class="hidden" value="{{$trackingStep->country}}">
+                            <input type="text" id="transports[{{$index}}][city]" name="transports[{{$index}}][city]" class="hidden" value="{{$trackingStep->city}}">
+                            <input type="text" id="transports[{{$index}}][address]" name="transports[{{$index}}][address]" class="hidden" value="{{$trackingStep->address}}">
+
+                            <input type="text" id="transports[{{$index}}][id]" name="transports[{{$index}}][id]" class="hidden" value="{{$trackingStep->transportType->id}}">
+                            <input type="text" id="transports[{{$index}}][name]" name="transports[{{$index}}][name]" class="hidden" value="{{$trackingStep->transportType->name}}">
+                            <input type="text" id="transports[{{$index}}][type]" name="transports[{{$index}}][type]" class="hidden" value="{{$trackingStep->transportType->type}}">
+                            <input type="text" id="transports[{{$index}}][status]" name="transports[{{$index}}][status]" class="hidden" value="{{$trackingStep->transportType->status}}">
+                            <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="hidden" value="{{$trackingStep->transportType->name}}">
+                            <input type="text" id="transports[{{$index}}][description]" name="transports[{{$index}}][description]" class="hidden" value="{{$trackingStep->transportType->description}}">
+                            <input type="text" id="transports[{{$index}}][icon]" name="transports[{{$index}}][icon]" class="hidden" value="">
+                        </div>
+                        @endforeach
+                    @endif
             </div>
 
         </x-wrapper-scroll>

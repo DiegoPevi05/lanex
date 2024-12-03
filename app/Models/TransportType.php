@@ -18,6 +18,7 @@ class TransportType extends Model
         'icon',
         'description',
         'status',
+        'external_reference'
     ];
 
     public static function getType(): string
@@ -34,6 +35,7 @@ class TransportType extends Model
             'icon' => $validatedFields['icon'] ?? null,
             'status' => $validatedFields['status'] ?? 'ACTIVE',
             'description' => $validatedFields['description'] ?? null,
+            'external_reference' => $validatedFields['external_reference'] ?? null,
         ];
 
         return $fillableFields;
@@ -76,6 +78,7 @@ class TransportType extends Model
             'icon' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'description' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
+            'external_reference' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'status' => $isUpdate ? 'sometimes|required|string|max:255|in:ACTIVE,INACTIVE' : 'required|string|max:255|in:ACTIVE,INACTIVE',
         ];
     }
@@ -98,6 +101,10 @@ class TransportType extends Model
             'description.required' => __('messages.dashboard.transport_type.form.validations.description_required'),
             'description.string' => __('messages.dashboard.transport_type.form.validations.description_string'),
             'description.max' => __('messages.dashboard.transport_type.form.validations.description_max'),
+
+            'external_reference.required' => __('messages.dashboard.transport_type.form.validations.external_reference_required'),
+            'external_reference.string' => __('messages.dashboard.transport_type.form.validations.external_reference_string'),
+            'external_reference.max' => __('messages.dashboard.transport_type.form.validations.external_reference_max'),
 
             'status.required' => __('messages.dashboard.transport_type.form.validations.status_required'),
             'status.string' => __('messages.dashboard.transport_type.form.validations.status_string'),
@@ -179,6 +186,7 @@ class TransportType extends Model
             'name' => $this->name,
             'icon' => $this->icon,
             'description' => $this->description,
+            'external_reference' => $this->external_reference,
             'status' => $this->status,
         ]);
     }
@@ -199,6 +207,7 @@ class TransportType extends Model
             'name' => $data['name'],
             'icon' => $data['icon'],
             'description' => $data['description'],
+            'external_reference' => $data['external_reference'],
             'status' => $data['status'],
         ]);
     }

@@ -77,9 +77,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </span>
             </div>
-            <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center">
-                <img src="/images/svg/empty.svg" class="w-[40%] h-auto"/>
-                <label>{{__('messages.dashboard.'.$EntityType.'.empty_content')}}</label>
+            <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center gap-y-4">
+                <img src="/storage/images/web/empty.svg" class="w-[30%] h-auto"/>
+                <label class="capitalize">{{__('messages.dashboard.'.$EntityType.'.empty_content')}}</label>
             </div>
             <div id="loading-content-form" class="hidden w-full h-full flex items-center justify-center">
                 <span class="animate-spin p-1 h-12 w-12 text-primary">
@@ -496,11 +496,221 @@
             iconImage.src = selectedIcon ? '/storage'+selectedIcon : '/storage/images/svgs/ambulance.svg';
         }
 
+
+        function initializeDragAndDrop(containerSelector, itemSelector) {
+          const container = document.querySelector(containerSelector);
+
+          if (!container) return;
+
+          let draggedItem = null;
+
+          // Handle drag start when clicking the SVG
+          container.addEventListener("mousedown", (e) => {
+            const svg = e.target.closest("span.cursor-pointer"); // Ensure the click is on the SVG container
+            const item = e.target.closest(`.${itemSelector}`);
+
+            if (svg && item) {
+              draggedItem = item;
+              item.setAttribute("draggable", true); // Enable drag only on click
+              item.classList.add("dragging");
+
+              // Start the drag
+              item.addEventListener("dragstart", (e) => {
+                // Hide the default drag image
+                e.dataTransfer.setDragImage(new Image(), 0, 0);
+
+                document.addEventListener("mousemove", moveDraggedItem);
+                setTimeout(() => (item.classList.add("block")), 0);
+              });
+
+              // End the drag
+              item.addEventListener("dragend", (e) => {
+                item.classList.remove("dragging");
+                item.classList.remove("block");
+                draggedItem = null;
+                document.removeEventListener("mousemove", moveDraggedItem);
+                item.setAttribute("draggable", false); // Disable dragging again
+              });
+            }
+          });
+
+          container.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(container, e.clientY);
+            if (draggedItem && afterElement == null) {
+              container.appendChild(draggedItem);
+            } else if (draggedItem) {
+              container.insertBefore(draggedItem, afterElement);
+            }
+            updateTransportIndices(); // Update the order during the drag
+          });
+
+        // Function to move the dragged item with the cursor
+          function moveDraggedItem(e) {
+            if (draggedItem) {
+              draggedItem.style.position = "absolute";
+              draggedItem.style.pointerEvents = "none"; // Prevent interference with the mouse
+              draggedItem.style.top = `${e.clientY}px`;
+              draggedItem.style.left = `${e.clientX}px`;
+              draggedItem.style.zIndex = "1000";
+            }
+          }
+
+          function getDragAfterElement(container, y) {
+            const draggableElements = [
+              ...container.querySelectorAll(`.${itemSelector}:not(.dragging)`),
+            ];
+
+            return draggableElements.reduce(
+              (closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                  return { offset: offset, element: child };
+                } else {
+                  return closest;
+                }
+              },
+              { offset: Number.NEGATIVE_INFINITY }
+            ).element;
+          }
+
+          // Initial call to ensure correct order
+          updateTransportIndices();
+        }
+
+        //add Transport Types
+
+        let transportsContainer = null;
+        let addTransportButton = null;
+        // Function to add a new Transport Card
+        function addTransportCard() {
+            const index = transportsContainer.children.length;
+
+            const container_fields = document.getElementById("container_new_tracking_step");
+
+            //extract fields
+
+            const country_field = document.getElementById("country-tracking-step").value;
+            const city_field = document.getElementById("city-tracking-step").value;
+            const address_field = document.getElementById("address-tracking-step").value;
+            const icon_field = document.getElementById("icon-tracking-step").value;
+            const type_field = document.getElementById("type-tracking-step").value;
+            const status_field = document.getElementById("status-tracking-step").value;
+            const name_field = document.getElementById("name-tracking-step").value;
+            const external_reference_field  = document.getElementById("external-reference-tracking-step").value;
+            const description_field  = document.getElementById("description-tracking-step").value;
+
+
+            // Create a new freight card div
+            const transportCard = document.createElement("div");
+            transportCard.classList.add("step-track", "w-full", "h-auto", "flex", "flex-row", "items-center", "justify-between", "px-4", "py-2", "border-2", "border-gray-200", "rounded-xl");
+            transportCard.innerHTML = `
+                <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
+                    <p class="step-track-correlative text-sm font-bold text-body">${index + 1}</p>
+                    <img id="step-track-icon" onClick="updateTransportActiveState(${index})" src="/storage/${icon_field}" class="step-track-icon h-12 w-12 shadow-md p-2 border-gray-light border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95"/>
+                    <label for="steps-track" class="block text-sm font-bold text-secondary-dark capitalize">${name_field}</label>
+                </div>
+
+                <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
+                    <span class="text-gray-400 h-6 w-6 cursor-pointer hover:text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
+                    </span>
+                    <button id="delete_transport_btn_${index}" type="button" class="h-8 w-8 bg-primary hover:bg-white text-white hover:text-primary duration-300 rounded-full p-1 border-2 border-primary active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+
+
+                <input type="text" id="transports[${index}][country]" name="transports[${index}][country]" class="hidden" value="${country_field}">
+                <input type="text" id="transports[${index}][city]" name="transports[${index}][city]" class="hidden" value="${city_field}">
+                <input type="text" id="transports[${index}][address]" name="transports[${index}][address]" class="hidden" value="${address_field}">
+                <input type="text" id="transports[${index}][name]" name="transports[${index}][name]" class="hidden" value="${name_field}">
+                <input type="text" id="transports[${index}][type]" name="transports[${index}][type]" class="hidden" value="${type_field}">
+                <input type="text" id="transports[${index}][status]" name="transports[${index}][status]" class="hidden" value="${status_field}">
+                <input type="text" id="transports[${index}][external_reference]" name="transports[${index}][external_reference]" class="hidden" value="${external_reference_field}">
+                <input type="text" id="transports[${index}][description]" name="transports[${index}][description]" class="hidden" value="${description_field}">
+                <input type="text" id="transports[${index}][icon]" name="transports[${index}][icon]" class="hidden" value="${icon_field}">
+            `;
+
+            // Append the new freight card to the container
+            transportsContainer.appendChild(transportCard);
+
+            const deleteButton = transportCard.querySelector(`#delete_transport_btn_${index}`);
+            deleteButton.addEventListener("click", () => deleteTransportCard(transportCard));
+        }
+
+        // Function to delete a Transport Card
+        function deleteTransportCard(card) {
+            card.remove();
+            updateTransportIndices();
+        }
+
+        function updateTransportActiveState(clickedIndex) {
+            const transportCards = document.querySelectorAll('.step-track');
+
+            transportCards.forEach((card, index) => {
+                const icon = card.querySelector('.step-track-icon');
+                const statusInput = card.querySelector(`input[id^="transports[${index}]"][name*="[status]"]`);
+
+                if (index <= clickedIndex) {
+                    // Set status to ACTIVE for current and previous steps
+                    statusInput.value = 'ACTIVE';
+
+                    // Add border-primary class to the icon
+                    icon.classList.add('border-primary');
+                    icon.classList.remove('border-gray-light');
+                } else {
+                    // Set status to INACTIVE for the remaining steps
+                    statusInput.value = 'INACTIVE';
+
+                    // Remove border-primary class from the icon
+                    icon.classList.remove('border-primary');
+                    icon.classList.add('border-gray-light');
+                }
+            });
+        }
+
+        // Function to update the indices of Transport Cards
+        function updateTransportIndices() {
+            const transportCards = transportsContainer.children;
+            Array.from(transportCards).forEach((card, index) => {
+                card.querySelectorAll("input").forEach(input => {
+                    input.id = input.id.replace(/\[\d+\]/, `[${index}]`);
+                    input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+                });
+
+                card.querySelector("p.step-track-correlative").innerText = `${index + 1}:`;
+
+                // Update the onClick attribute of the step-track-icon
+                const icon = card.querySelector(".step-track-icon");
+                icon.addEventListener("click", function(){
+                    updateTransportActiveState(index);
+                });
+
+                // Update the ID of the delete button
+                const deleteButton = card.querySelector('button[id^="delete_transport_btn_"]');
+                deleteButton.id = `delete_transport_btn_${index}`;
+            });
+
+        }
+
         function loadOrderFunction(){
             freightsContainer = document.getElementById("freights-items");
             addFreightButton = document.getElementById("add_fregiht_btn");
             // Add event listener for the add button
             addFreightButton.addEventListener("click", addFreightCard);
+
+            transportsContainer = document.querySelector(".step-tracks");
+            addTransportButton = document.getElementById("add_transport_btn");
+            // Add event listener for the add button
+            addTransportButton.addEventListener("click", addTransportCard);
+
+            document.querySelectorAll('.step-track-icon').forEach((icon, index) => {
+                icon.addEventListener('click', function () {
+                    updateTransportActiveState(index);
+                });
+            });
 
             // Select all sub-sections with the "data-id" attribute
             const subSections = document.querySelectorAll("[id^='sub_section_']");
@@ -519,6 +729,9 @@
 
             //Attach Image update for the selected Icon for the tracking step
             attachIconImageUpdate();
+
+            // Initialize drag and drop for .step-tracks and .step-track
+            initializeDragAndDrop(".step-tracks", "step-track");
 
         }
 

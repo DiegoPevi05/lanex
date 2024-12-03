@@ -1057,6 +1057,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         'order' => [
             'name' => 'orden',
             'new_entity' => 'nueva orden',
+            'empty_content' => 'no hay ordenes para mostrar',
             'header' => "órdenes",
             'indications' => "seleccione una opción para crear, actualizar o eliminar órdenes",
             'input_placeholder_search' => "buscar orden",
