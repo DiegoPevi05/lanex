@@ -49,8 +49,6 @@ abstract class AbstractEntityController extends Controller
         $idEntity = $request->input('idEntity');
         $entity = $idEntity ? $this->model->find($idEntity) : null;
 
-        //dd($entity);
-
         $formComponent = $this->formService->getFormComponent($formRequest, $typeEntity, $entity);
 
         return $formComponent ? $formComponent->render() : response()->json(['success' => false], 500);

@@ -21,11 +21,11 @@
     </div>
     <div class="col-span-1 flex flex-col justify-start items-start">
         <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
-        <p>{{$freight->weigth_units}}</p>
+        <p>{{$freight->weight_units}}</p>
     </div>
     <div class="col-span-1 flex flex-col justify-start items-start">
         <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
-        <p>{{$freight->weigth}}</p>
+        <p>{{$freight->weight}}</p>
     </div>
     <div class="col-span-1 flex flex-col justify-start items-start">
         <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>

@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\Freight;
 
 class Order extends Model
 {
@@ -22,7 +24,9 @@ class Order extends Model
         'numero_dam',
         'manifest',
         'channel',
-        'client_id'
+        'client_id',
+        'canceled',
+        'client_name'
     ];
 
      public static function getType(): string
@@ -42,10 +46,11 @@ class Order extends Model
             'net_amount' => $validatedFields['net_amount'] ?? 0,
             'taxes' => $validatedFields['taxes'] ?? 0,
             'operative_cost' => $validatedFields['operative_cost'] ?? 0,
-            'numero_dam' => $validatedFields['numero_dam'] ?? null,
-            'manifest' => $validatedFields['manifest'] ?? null,
-            'channel' => $validatedFields['channel'] ?? null,
+            'numero_dam' => $validatedFields['numero_dam'] ?? 0,
+            'manifest' => $validatedFields['manifest'] ?? 0,
+            'channel' => $validatedFields['channel'] ?? 0,
             'client_id' => $validatedFields['client_id'] ?? null,
+            'client_name' => $validatedFields['client_name'] ?? null,
         ];
     }
 
@@ -55,7 +60,7 @@ class Order extends Model
     protected static function generateOrderNumber()
     {
         // Combine date, time, and a random number for a short unique ID
-        return 'LNX' . date('ymd') . bin2hex(random_bytes(2));
+        return 'LNX' . date('ymd') . strtoupper(bin2hex(random_bytes(2)));
     }
 
     public static function getRoutes()
@@ -79,23 +84,27 @@ class Order extends Model
 
     public static function getValidationRules($isUpdate = false)
     {
-        return [
-            'order_number' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'status' => 'required|string|max:255|in:PENDING,IN TRANSIT,COMPLETED',
+        $orderRules = [
+            'order_number' => 'sometimes|required|string|max:255',
+            'status' => 'sometimes|string|max:255|in:PENDING,IN TRANSIT,COMPLETED',
             'details' => 'required|string',
             'net_amount' => 'required|numeric|min:0',
-            'taxes' => 'required|numeric|min:0',
-            'operative_cost' => 'required|numeric|min:0',
-            'numero_dam' => 'required|integer',
-            'manifest' => 'required|integer',
-            'channel' => 'required|integer',
+            'taxes' => 'sometimes|numeric|min:0',
+            'operative_cost' => 'sometimes|numeric|min:0',
+            'numero_dam' => 'sometimes|integer',
+            'manifest' => 'sometimes|integer',
+            'channel' => 'sometimes|integer',
             'client_id' => 'required|exists:clients,id',
+            'client_name' => 'required|string'
         ];
+
+        // Combine Order and Freight Validation Rules
+        return array_merge($orderRules, Freight::getValidationRules($isUpdate),TransportType::getValidationRules($isUpdate));
     }
 
     public static function getValidationMessages()
     {
-        return [
+        $order_messages = [
             'order_number.required' => __('messages.dashboard.order.form.validations.order_number_required'),
             'order_number.string' => __('messages.dashboard.order.form.validations.order_number_string'),
             'order_number.max' => __('messages.dashboard.order.form.validations.order_number_max'),
@@ -128,7 +137,13 @@ class Order extends Model
 
             'client_id.required' => __('messages.dashboard.order.form.validations.client_id_required'),
             'client_id.exists' => __('messages.dashboard.order.form.validations.client_id_exists'),
+
+            'client_name.required' => __('messages.dashboard.order.form.validations.client_name_required'),
+            'client_name.string' => __('messages.dashboard.order.form.validations.client_name_string'),
         ];
+
+        // Combine Order and Freight Validation Messages
+        return array_merge($order_messages, Freight::getValidationRules(), TransportType::getValidationMessages());
     }
 
     public static function getSuccessMessage($action)
@@ -166,7 +181,7 @@ class Order extends Model
         return [
             ['label' => 'messages.dashboard.order.dropdown.order_number', 'value' => 'order_number'],
             ['label' => 'messages.dashboard.order.dropdown.status', 'value' => 'status'],
-            ['label' => 'messages.dashboard.order.dropdown.client_id', 'value' => 'client_id'],
+            ['label' => 'messages.dashboard.order.dropdown.client', 'value' => 'client_name'],
         ];
     }
 

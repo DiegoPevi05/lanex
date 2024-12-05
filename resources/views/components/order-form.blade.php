@@ -4,7 +4,8 @@
     <form id="order-form"
       action="{{ $formRequest === 'create' ? route('order.store') : ($formRequest === 'update' ? route('order.update', $order->id) : '#') }}"
       enctype="multipart/form-data"
-      method="POST">
+      method="POST"
+      >
         @csrf <!-- Include CSRF token for security -->
 
         @if($formRequest === 'update')
@@ -20,56 +21,71 @@
             </div>
         @endif
 
+        <div class="mb-4 mt-4 relative">
+            <label for="client_name" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.client_id") }}</label>
+            <input type="text" id="client_id" name="client_id" class="hidden" value="{{ old('client_id', $order->client_id ?? '')  }}">
+            <input type="text" id="client_name" name="client_name" class="client_name_input mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('client_name', $order->client_name ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.client_id") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+            <ul id="client_list" class="absolute left-0 top-[100%] bg-white w-full h-[100px] overflow-y-scroll border-2 border-gray-light hidden flex items-center justify-start flex-col py-2">
+                <span id="client_list_loader" class="w-12 h-12 text-primary flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                </span>
+            </ul>
+            <span class="text-primary font-bold text-xs error-message" id="error-client_id"></span>
+        </div>
+
         <x-wrapper-scroll id="order_content" title="messages.dashboard.order.form.fields.content">
 
-            <!-- Order Details -->
-            <div class="mb-4 mt-4">
-                <label for="details" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.details") }}</label>
-                <textarea type="text" id="details" name="details" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.order.form.placeholders.details") }}" {{$formRequest === "view" ? "disabled" : ""}}>{{ old('details', $order->details ?? '') }}</textarea>
-                <span class="text-primary font-bold text-xs error-message" id="error-details"></span>
+            <div class="w-full grid grid-cols-1 gap-4 justify-start items-start">
+                <!-- Order Details -->
+                <div class="col-span-1">
+                    <label for="details" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.details") }}:</label>
+                    <textarea type="text" id="details" name="details" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.order.form.placeholders.details") }}" {{$formRequest === "view" ? "disabled" : ""}}>{{ old('details', $order->details ?? '') }}</textarea>
+                    <span class="text-primary font-bold text-xs error-message" id="error-details"></span>
+                </div>
+
+                <!-- Order Net Amount Field -->
+                <div class="col-span-1">
+                    <label for="net_amount" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.net_amount") }}:</label>
+                    <input type="number" step="0.01" id="net_amount" name="net_amount" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('net_amount', $order->net_amount ?? 0) }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.net_amount") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <span class="text-primary font-bold text-xs error-message" id="error-net_amount"></span>
+                </div>
+
+                <!-- Order Taxes Field  -->
+                <div class="col-span-1">
+                    <label for="taxes" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.taxes") }} ({{ __('messages.common.optional') }}):</label>
+                    <input type="number" step="0.01" id="taxes" name="taxes" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('taxes', $order->taxes ?? 0) }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.taxes") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <span class="text-primary font-bold text-xs error-message" id="error-taxes"></span>
+                </div>
+
+                <!-- Order Operative Cost Field  -->
+                <div class="col-span-1">
+                    <label for="operative_cost" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.operative_cost") }} ({{ __('messages.common.optional') }}):</label>
+                    <input type="number" id="operative_cost" name="operative_cost" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('operative_cost', $order->operative_cost ?? 0) }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.operative_cost") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <span class="text-primary font-bold text-xs error-message" id="error-operative_cost"></span>
+                </div>
+
+                <!--  Numero Dam Field  -->
+                <div class="col-span-1">
+                    <label for="numero_dam" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.numero_dam") }} ({{ __('messages.common.optional') }}):</label>
+                    <input type="number" id="numero_dam" name="numero_dam" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('numero_dam', $order->numero_dam ?? 0) }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.numero_dam") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <span class="text-primary font-bold text-xs error-message" id="error-numero_dam"></span>
+                </div>
+
+                <!--  Manifest Field  -->
+                <div class="col-span-1">
+                    <label for="manifest" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.manifest") }} ({{ __('messages.common.optional') }}):</label>
+                    <input type="number" id="manifest" name="manifest" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('manifest', $order->manifest ?? 0) }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.manifest") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <span class="text-primary font-bold text-xs error-message" id="error-manifest"></span>
+                </div>
+
+                <!--  channel Field  -->
+                <div class="col-span-1">
+                    <label for="channel" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.channel") }} ({{ __('messages.common.optional') }}):</label>
+                    <input type="number" id="channel" name="channel" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('channel', $order->channel ?? 0) }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.channel") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <span class="text-primary font-bold text-xs error-message" id="error-channel"></span>
+                </div>
             </div>
 
-            <!-- Order Net Amount Field -->
-            <div class="mb-4 mt-4">
-                <label for="net_amount" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.net_amount") }}</label>
-                <input type="number" step="0.01" id="net_amount" name="net_amount" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('net_amount', $order->net_amount ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.net_amount") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                <span class="text-primary font-bold text-xs error-message" id="error-net_amount"></span>
-            </div>
-
-            <!-- Order Taxes Field  -->
-            <div class="mb-4 mt-4">
-                <label for="taxes" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.taxes") }}</label>
-                <input type="number" step="0.01" id="taxes" name="taxes" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('taxes', $order->taxes ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.taxes") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                <span class="text-primary font-bold text-xs error-message" id="error-taxes"></span>
-            </div>
-
-            <!-- Order Operative Cost Field  -->
-            <div class="mb-4 mt-4">
-                <label for="operative_cost" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.operative_cost") }}</label>
-                <input type="text" id="operative_cost" name="operative_cost" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('operative_cost', $order->operative_cost ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.operative_cost") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                <span class="text-primary font-bold text-xs error-message" id="error-operative_cost"></span>
-            </div>
-
-            <!--  Numero Dam Field  -->
-            <div class="mb-4 mt-4">
-                <label for="numero_dam" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.numero_dam") }}</label>
-                <input type="text" id="numero_dam" name="numero_dam" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('numero_dam', $order->numero_dam ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.numero_dam") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                <span class="text-primary font-bold text-xs error-message" id="error-numero_dam"></span>
-            </div>
-
-            <!--  Manifest Field  -->
-            <div class="mb-4 mt-4">
-                <label for="manifest" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.manifest") }}</label>
-                <input type="text" id="manifest" name="manifest" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('manifest', $order->manifest ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.manifest") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                <span class="text-primary font-bold text-xs error-message" id="error-manifest"></span>
-            </div>
-
-            <!--  channel Field  -->
-            <div class="mb-4 mt-4">
-                <label for="channel" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.order.form.fields.channel") }}</label>
-                <input type="text" id="channel" name="channel" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('channel', $order->channel ?? '') }}" placeholder="{{ __("messages.dashboard.order.form.placeholders.channel") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                <span class="text-primary font-bold text-xs error-message" id="error-channel"></span>
-            </div>
         </x-wrapper-scroll>
 
 
@@ -78,7 +94,7 @@
             <div class="py-4">
                 <div class="w-full h-auto flex flex-row justify-between py-4">
                     <label for="freights" class="block text-lg font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name').'s' }}</label>
-                    <button id="add_fregiht_btn" type="button" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
+                    <button id="add_fregiht_btn" type="button" class="text-sm bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
                         {{__('messages.dashboard.freight.add_entity')}}
                     </button>
                 </div>
@@ -94,7 +110,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
                                         <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.name') .': '. $freight->freight_id }}</p>
                                     </div>
-                                    <button id="delete_fregiht_btn_{{$index}}" type="button" onclick="this.closest('.freight-card').remove(); updateFreightIndices()" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
+                                    <button id="delete_fregiht_btn_{{$index}}" type="button" onclick="this.closest('.freight-card').remove(); updateFreightIndices()" class="text-sm bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize">
 
                                         {{__('messages.dashboard.freight.delete_entity')}}
                                     </button>
@@ -105,43 +121,70 @@
 
                                 <div class="col-span-1 flex flex-col justify-start items-start">
                                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.name') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][name]" name="freight[{{$index}}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->name ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <input type="text" id="freight[{{$index}}][name]" name="freight[{{$index}}][name]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->name ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                                 </div>
+
                                 <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.origin') }}:</p>
+                                    <input type="text" id="freight[{{$index}}][origin]" name="freight[{{$index}}][origin]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->origin ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.origin") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+
+                                <div class="col-span-2 flex flex-col justify-start items-start">
                                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.description') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][description]" name="freight[{{$index}}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->description ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.description") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <input type="text" id="freight[{{$index}}][description]" name="freight[{{$index}}][description]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->description ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.description") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                </div>
+
+                                <div class="col-span-1 flex flex-col justify-start items-start">
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }} ({{ __('messages.common.optional') }}):</p>
+                                    <select id="freight[{{$index}}][dimensions_units]" name="freight[{{$index}}][dimensions_units]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->dimensions_units ?? '' }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                        <option value="">{{ __("messages.dashboard.freight.form.fields.dimensions_units") }}</option>
+
+                                        <option value="m">{{ __("messages.common.meters") }}</option>
+                                        <option value="mm">{{ __("messages.common.milimeters") }}</option>
+                                        <option value="cm">{{ __("messages.common.centimeters") }}</option>
+                                        <option value="in">{{ __("messages.common.inches") }}</option>
+
+                                    </select>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][dimensions_units]" name="freight[{{$index}}][dimensions_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->dimensions_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }} ({{ __('messages.common.optional') }}):</p>
+                                    <input type="number" id="freight[{{$index}}][dimensions]" name="freight[{{$index}}][dimensions]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->dimensions ?? 0 }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][dimensions]" name="freight[{{$index}}][dimensions]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->dimensions ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.dimensions") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }} ({{ __('messages.common.optional') }}):</p>
+                                    <select id="freight[{{$index}}][weight_units]" name="freight[{{$index}}][weight_units]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weight_units ?? '' }}"  {{$formRequest === "view" ? "disabled" : ""}}>
+                                        <option value="">{{ __("messages.dashboard.freight.form.fields.weight_units") }}</option>
+                                        <option value="kg">{{ __("messages.common.kilograms") }}</option>
+                                        <option value="lbs">{{ __("messages.common.pounds") }}</option>
+                                    </select>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][weigth_units]" name="freight[{{$index}}][weigth_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weigth_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }} ({{ __('messages.common.optional') }}):</p>
+                                    <input type="number" id="freight[{{$index}}][weight]" name="freight[{{$index}}][weight]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weight ?? 0 }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weight") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][weigth]" name="freight[{{$index}}][weigth]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->weigth ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.weigth") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }} ({{ __('messages.common.optional') }}):</p>
+                                    <select id="freight[{{$index}}][volume_units]" name="freight[{{$index}}][volume_units]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume_units ?? '' }}"  {{$formRequest === "view" ? "disabled" : ""}}>
+
+                                        <option value="">{{ __("messages.dashboard.freight.form.fields.volume_units") }}</option>
+
+                                        <option value="m3">{{ __("messages.common.cubic_meters") }}</option>
+                                        <option value="mm3">{{ __("messages.common.cubic_milimeters") }}</option>
+                                        <option value="cm3">{{ __("messages.common.cubic_centimeters") }}</option>
+                                        <option value="in3">{{ __("messages.common.cubic_inches") }}</option>
+                                    </select>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][volume_units]" name="freight[{{$index}}][volume_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume_units ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume_units") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                                </div>
-                                <div class="col-span-1 flex flex-col justify-start items-start">
-                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][volume]" name="freight[{{$index}}][volume]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }} ({{ __('messages.common.optional') }}):</p>
+                                    <input type="number" id="freight[{{$index}}][volume]" name="freight[{{$index}}][volume]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->volume ?? 0 }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
                                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.packages') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][packages]" name="freight[{{$index}}][packages]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->packages ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.volume") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <input type="text" id="freight[{{$index}}][packages]" name="freight[{{$index}}][packages]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{  $freight->packages ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.packages") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                                 </div>
                                 <div class="col-span-1 flex flex-col justify-start items-start">
                                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.incoterms') }}:</p>
-                                    <input type="text" id="freight[{{$index}}][incoterms]" name="freight[{{$index}}][incoterms]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->incoterms ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.incoterms") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                    <input type="text" id="freight[{{$index}}][incoterms]" name="freight[{{$index}}][incoterms]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ $freight->incoterms ?? '' }}" placeholder="{{ __("messages.dashboard.freight.form.fields.incoterms") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                                 </div>
                             </div>
                         @endforeach
@@ -155,7 +198,7 @@
             <div class="p-none">
                 <div class="w-full h-auto flex flex-row justify-between py-none">
                     <label for="transports" class="block text-lg font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.tracking_step.name').'s' }}</label>
-                    <button id="add_transport_btn" type="button" class="bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
+                    <button id="add_transport_btn" type="button" class="text-sm bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
                         {{__('messages.dashboard.tracking_step.add_entity')}}
                     </button>
                 </div>
@@ -170,23 +213,27 @@
                 <!-- Country Field -->
                 <div class="col-span-1">
                     <label for="country-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.country") }}</label>
-                    <input type="text" id="country-tracking-step" name="country-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <select id="country-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}}>
+                        <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}</option>
+                    </select>
                 </div>
 
                 <!-- City Field -->
                 <div class="col-span-1">
                     <label for="city-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.city") }}</label>
-                    <input type="text" id="city-tracking-step" name="city-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <select id="city-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}}>
+                        <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>
+                    </select>
                 </div>
 
                 <!-- Address Field -->
                 <div class="col-span-2">
                     <label for="address-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.address") }}</label>
-                    <input type="text" id="address-tracking-step" name="address-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.address") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <input type="text" id="address-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.address") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                 </div>
 
                 <div class="col-span-2 flex flex-row gap-x-4">
-                    <select id="icon-tracking-step" name="icon-tracking-step" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
+                    <select id="icon-tracking-step" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
                         <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
 
                         @foreach($icons as $filename => $content)
@@ -201,9 +248,13 @@
                 <!-- Type Field -->
                 <div class="col-span-1">
                     <label for="type-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.type") }}</label>
-                    <select id="type-tracking-step" name="type-tracking-step" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.type") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <select id="type-tracking-step" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.type") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                        <option value="">{{ __("messages.dashboard.transport_type.form.fields.SELECT_TRANSPORT_TYPE") }}</option>
+
+                        <option value="LAND">{{ __("messages.dashboard.transport_type.form.fields.LAND") }}</option>
                         <option value="AIR">{{ __("messages.dashboard.transport_type.form.fields.AIR") }}</option>
                         <option value="SHIP">{{ __("messages.dashboard.transport_type.form.fields.SHIP") }}</option>
+
                         <option value="CUSTOM">{{ __("messages.dashboard.transport_type.form.fields.CUSTOM") }}</option>
                     </select>
                 </div>
@@ -211,7 +262,7 @@
                 <!-- Name Field -->
                 <div class="col-span-1">
                     <label for="status-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.status") }}</label>
-                    <select id="status-tracking-step" name="status-tracking-step" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <select id="status-tracking-step" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                         <option value="INACTIVE">{{ __("messages.common.INACTIVE") }}</option>
                         <option value="ACTIVE">{{ __("messages.common.ACTIVE") }}</option>
                     </select>
@@ -220,19 +271,19 @@
                 <!-- Name Field -->
                 <div class="col-span-1">
                     <label for="name-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.name") }}</label>
-                    <input type="text" id="name-tracking-step" name="name-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <input type="text" id="name-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                 </div>
 
                 <!-- EXt Reference Field -->
                 <div class="col-span-1">
-                    <label for="external-reference-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }}</label>
-                    <input type="text" id="external-reference-tracking-step" name="name-tracking-step" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                    <label for="external-reference-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }} ({{ __('messages.common.optional') }}):</label>
+                    <input type="text" id="external-reference-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}}>
                 </div>
 
                 <!-- Description Text Field -->
                 <div class="col-span-2">
                     <label for="description-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.transport_type.form.fields.description') }}</label>
-                    <textarea id="description-tracking-step" name="description-tracking-step" rows="4" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.description") }}" {{$formRequest === "view" ? "disabled" : ""}}></textarea>
+                    <textarea id="description-tracking-step" rows="4" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.description") }}" {{$formRequest === "view" ? "disabled" : ""}}></textarea>
                 </div>
 
             </div>
@@ -268,9 +319,9 @@
                             <input type="text" id="transports[{{$index}}][name]" name="transports[{{$index}}][name]" class="hidden" value="{{$trackingStep->transportType->name}}">
                             <input type="text" id="transports[{{$index}}][type]" name="transports[{{$index}}][type]" class="hidden" value="{{$trackingStep->transportType->type}}">
                             <input type="text" id="transports[{{$index}}][status]" name="transports[{{$index}}][status]" class="hidden" value="{{$trackingStep->transportType->status}}">
-                            <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="hidden" value="{{$trackingStep->transportType->name}}">
+                            <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="hidden" value="{{$trackingStep->transportType->external_reference}}">
                             <input type="text" id="transports[{{$index}}][description]" name="transports[{{$index}}][description]" class="hidden" value="{{$trackingStep->transportType->description}}">
-                            <input type="text" id="transports[{{$index}}][icon]" name="transports[{{$index}}][icon]" class="hidden" value="">
+                            <input type="text" id="transports[{{$index}}][icon]" name="transports[{{$index}}][icon]" class="hidden" value="{{$trackingStep->transportType->icon}}">
                         </div>
                         @endforeach
                     @endif

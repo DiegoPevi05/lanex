@@ -45,9 +45,20 @@ return [
         'default' => 'Enlace de LanEx a otra sección'
     ],
     'common' => [
+        'optional' => 'opcional',
+        'meters' => 'metros',
+        'milimeters' => 'milímetros',
+        'centimeters' => 'centímetros',
+        'inches' => 'pulgadas',
+        'cubic_meters' => 'metros cúbicos',
+        'cubic_milimeters' => 'milímetros cúbicos',
+        'cubic_centimeters' => 'centímetros cúbicos',
+        'cubic_inches' => 'pulgadas cúbicas',
+        'kilograms' => 'kilogramos',
+        'pounds' => 'libras',
         'ACTIVE' => 'activo',
         'INACTIVE' => 'inactivo',
-        'delete' => 'borrar',
+        'delete' => 'eliminar',
         'cancel' => 'cancelar',
         'quote' => 'Cotización',
         'track' => 'Rastrear',
@@ -919,8 +930,14 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 'fields' => [
                     'type' => 'tipo',
                     'name' => 'nombre',
-                    'icon' => 'icono',
+                    'icon' => 'ícono',
                     'status' => 'estado',
+                    'external_reference' => 'referencia externa',
+                    'SELECT_TRANSPORT_TYPE' => 'Seleccionar tipo de transporte',
+                    'LAND' => 'terrestre',
+                    'AIR' => 'aéreo',
+                    'SHIP' => 'marítimo',
+                    'CUSTOM' => 'personalizado',
                     'description' => 'descripción'
                 ],
                 'placeholders' => [
@@ -929,6 +946,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'icon' => 'Seleccione el icono',
                     'status' => 'Ingrese el estado',
                     'description' => 'Ingrese la descripción',
+                    'external_reference' => 'Ingrese la referencia externa',
                 ],
                 'buttons' => [
                     'cancel' => 'cancelar',
@@ -936,25 +954,45 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'update' => 'actualizar tipo de transporte'
                 ],
                 'validations' => [
-                    'type_required' => 'El campo tipo es obligatorio.',
-                    'type_string' => 'El tipo debe ser una cadena válida.',
+                    'transports_required' => 'El campo de transportes es obligatorio.',
+                    'transports_array' => 'Los transportes deben ser un arreglo válido.',
+                    'transports_min' => 'Se requiere al menos un transporte.',
+
+                    'country_required' => 'El campo de país es obligatorio.',
+                    'country_string' => 'El país debe ser una cadena de texto válida.',
+                    'country_max' => 'El país no puede tener más de 255 caracteres.',
+
+                    'city_required' => 'El campo de ciudad es obligatorio.',
+                    'city_string' => 'La ciudad debe ser una cadena de texto válida.',
+                    'city_max' => 'La ciudad no puede tener más de 255 caracteres.',
+
+                    'address_required' => 'El campo de dirección es obligatorio.',
+                    'address_string' => 'La dirección debe ser una cadena de texto válida.',
+                    'address_max' => 'La dirección no puede tener más de 255 caracteres.',
+
+                    'type_required' => 'El campo de tipo es obligatorio.',
+                    'type_string' => 'El tipo debe ser una cadena de texto válida.',
                     'type_max' => 'El tipo no puede tener más de 255 caracteres.',
 
-                    'name_required' => 'El campo nombre es obligatorio.',
-                    'name_string' => 'El nombre debe ser una cadena válida.',
+                    'icon_required' => 'El campo de ícono es obligatorio.',
+                    'icon_string' => 'El ícono debe ser una cadena de texto válida.',
+                    'icon_max' => 'El ícono no puede tener más de 255 caracteres.',
+
+                    'name_required' => 'El campo de nombre es obligatorio.',
+                    'name_string' => 'El nombre debe ser una cadena de texto válida.',
                     'name_max' => 'El nombre no puede tener más de 255 caracteres.',
 
-                    'icon_required' => 'El campo icono es obligatorio.',
-                    'icon_string' => 'El icono debe ser una cadena válida.',
-                    'icon_max' => 'El icono no puede tener más de 255 caracteres.',
+                    'description_required' => 'El campo de descripción es obligatorio.',
+                    'description_string' => 'La descripción debe ser una cadena de texto válida.',
+                    'description_max' => 'La descripción no puede tener más de 500 caracteres.',
 
-                    'description_required' => 'El contenido de la descripción es obligatorio.',
-                    'description_string' => 'El contenido de la descripción debe ser una cadena válida.',
-                    'description_max' => 'El contenido de la descripción no puede tener más de 500 caracteres.',
+                    'external_reference_string' => 'La referencia externa debe ser una cadena de texto válida.',
+                    'external_reference_max' => 'La referencia externa no puede tener más de 255 caracteres.',
 
-                    'status_required' => 'El campo estado es obligatorio.',
-                    'status_string' => 'El estado debe ser una cadena válida.',
+                    'status_required' => 'El campo de estado es obligatorio.',
+                    'status_string' => 'El estado debe ser una cadena de texto válida.',
                     'status_max' => 'El estado no puede tener más de 255 caracteres.',
+                    'status_in' => 'El estado debe ser ACTIVO o INACTIVO.',
                 ],
                 'success' => [
                     'create' => 'Tipo de transporte creado con éxito',
@@ -1150,8 +1188,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'validation_failed' => "Hubo errores en el envío del formulario."
                 ],
                 'modal' => [
-                    'delete_header' => "¿Está seguro de que desea eliminar esta orden?",
-                    'delete_content' => "No podrá restaurar la información una vez eliminada."
+                    'delete_header' => "¿Está seguro de que deseas cancelar esta orden?",
+                    'delete_content' => "Una vez cancelada la orden solo la podras ver en la pagina de historial."
                 ]
             ]
         ],

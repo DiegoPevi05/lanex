@@ -41,12 +41,15 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
     Route::get('/billing', [DashboardController::class, 'billing'])->name('dashboard_billing');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('dashboard_profile');
 
+    Route::get('/clients/search', [ClientController::class, 'searchByCompany']);
+
     Route::prefix('/client')->group(function(){
         Route::get('/', [ClientController::class, 'index'])->name('dashboard_client');
         Route::post('/form', [ClientController::class, 'renderForm'])->name('client.form');
         Route::post('/store', [ClientController::class, 'store'])->name('client.store');
         Route::put('/update/{id}', [ClientController::class, 'update'])->name('client.update');
         Route::delete('/destroy/{id}', [ClientController::class, 'destroy'])->name('client.destroy');
+
     });
 
     Route::prefix('/order')->group(function(){

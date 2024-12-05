@@ -45,6 +45,17 @@ return [
         'default' => 'LanEx page link to another section'
     ],
     'common' => [
+        'optional' => 'optional',
+        'meters' => 'meters',
+        'milimeters' => 'milimeters',
+        'centimeters' => 'centimeters',
+        'inches' => 'inches',
+        'cubic_meters' => 'cubic meters',
+        'cubic_milimeters' => 'cubic milimeters',
+        'cubic_centimeters' => 'cubic centimeters',
+        'cubic_inches' => 'inches',
+        'kilograms' => 'kilograms',
+        'pounds' => 'pounds',
         'ACTIVE' => 'active',
         'INACTIVE' => 'inactive',
         'delete' => 'delete',
@@ -911,6 +922,8 @@ It is important for every company involved in international trade to be trained 
                     'icon' => 'icon',
                     'status' => 'status',
                     'external_reference' => 'external reference',
+                    'SELECT_TRANSPORT_TYPE' => 'Select transport type',
+                    'LAND' => 'land',
                     'AIR' => 'air',
                     'SHIP' => 'ship',
                     'CUSTOM' => 'custom',
@@ -930,25 +943,45 @@ It is important for every company involved in international trade to be trained 
                     'update' => 'update transport type'
                 ],
                 'validations' => [
+                    'transports_required' => 'The transports field is required.',
+                    'transports_array' => 'The transports must be a valid array.',
+                    'transports_min' => 'At least one transport is required.',
+
+                    'country_required' => 'The country field is required.',
+                    'country_string' => 'The country must be a valid string.',
+                    'country_max' => 'The country may not be greater than 255 characters.',
+
+                    'city_required' => 'The city field is required.',
+                    'city_string' => 'The city must be a valid string.',
+                    'city_max' => 'The city may not be greater than 255 characters.',
+
+                    'address_required' => 'The address field is required.',
+                    'address_string' => 'The address must be a valid string.',
+                    'address_max' => 'The address may not be greater than 255 characters.',
+
                     'type_required' => 'The type field is required.',
                     'type_string' => 'The type must be a valid string.',
                     'type_max' => 'The type may not be greater than 255 characters.',
-
-                    'name_required' => 'The name field is required.',
-                    'name_string' => 'The name must be a valid string.',
-                    'name_max' => 'The name may not be greater than 255 characters.',
 
                     'icon_required' => 'The icon field is required.',
                     'icon_string' => 'The icon must be a valid string.',
                     'icon_max' => 'The icon may not be greater than 255 characters.',
 
-                    'description_required' => 'The description content is required.',
-                    'description_string' => 'The description content must be a valid string.',
-                    'description_max' => 'The description content may not be greater than 500 characters.',
+                    'name_required' => 'The name field is required.',
+                    'name_string' => 'The name must be a valid string.',
+                    'name_max' => 'The name may not be greater than 255 characters.',
+
+                    'description_required' => 'The description field is required.',
+                    'description_string' => 'The description must be a valid string.',
+                    'description_max' => 'The description may not be greater than 500 characters.',
+
+                    'external_reference_string' => 'The external reference must be a valid string.',
+                    'external_reference_max' => 'The external reference may not be greater than 255 characters.',
 
                     'status_required' => 'The status field is required.',
                     'status_string' => 'The status must be a valid string.',
                     'status_max' => 'The status may not be greater than 255 characters.',
+                    'status_in' => 'The status must be either ACTIVE or INACTIVE.',
                 ],
                 'success' => [
                     'create' => 'Create Transport Type Successfully',
@@ -1144,8 +1177,8 @@ It is important for every company involved in international trade to be trained 
                     'validation_failed' => "There were errors in the form submission."
                 ],
                 'modal' => [
-                    'delete_header' => "Are you sure you want to delete this order?",
-                    'delete_content' => "You won’t be able to restore once the information is deleted"
+                    'delete_header' => "Are you sure you want to cancel this order?",
+                    'delete_content' => "Once the order is canceled you could view it in the history page"
                 ]
             ]
         ],

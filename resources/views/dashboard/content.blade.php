@@ -379,45 +379,74 @@
 
                 <div class="col-span-1 flex flex-col justify-start items-start">
                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.name') }}:</p>
-                    <input type="text" id="freight[${index}][name]" name="freight[${index}][name]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.name") }}">
+                    <input type="text" id="freight[${index}][name]" name="freight[${index}][name]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.name") }}">
                 </div>
 
                 <div class="col-span-1 flex flex-col justify-start items-start">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.origin') }}:</p>
+                    <input type="text" id="freight[${index}][origin]" name="freight[${index}][origin]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.origin") }}">
+                </div>
+
+                <div class="col-span-2 flex flex-col justify-start items-start">
                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.description') }}:</p>
-                    <input type="text" id="freight[${index}][description]" name="freight[${index}][description]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.description") }}">
+                    <input type="text" id="freight[${index}][description]" name="freight[${index}][description]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white" placeholder="{{ __("messages.dashboard.freight.form.placeholders.description") }}">
                 </div>
+
+
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }}:</p>
-                    <input type="text" id="freight[${index}][dimensions_units]" name="freight[${index}][dimensions_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.dimensions_units") }}">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions_units') }} ({{ __('messages.common.optional') }}):</p>
+                    <select id="freight[${index}][dimensions_units]" name="freight[${index}][dimensions_units]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body">
+
+                        <option value="">{{ __("messages.dashboard.freight.form.fields.dimensions_units") }}</option>
+
+                        <option value="m">{{ __("messages.common.meters") }}</option>
+                        <option value="mm">{{ __("messages.common.milimeters") }}</option>
+                        <option value="cm">{{ __("messages.common.centimeters") }}</option>
+                        <option value="in">{{ __("messages.common.inches") }}</option>
+                    </select>
                 </div>
 
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }}:</p>
-                    <input type="text" id="freight[${index}][dimensions]" name="freight[${index}][dimensions]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.dimensions") }}">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.dimensions') }} ({{ __('messages.common.optional') }}):</p>
+                    <input type="number" id="freight[${index}][dimensions]" name="freight[${index}][dimensions]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.dimensions") }}">
                 </div>
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }}:</p>
-                    <input type="text" id="freight[${index}][weight_units]" name="freight[${index}][weight_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.weight_units") }}">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight_units') }} ({{ __('messages.common.optional') }}):</p>
+                    <select id="freight[${index}][weight_units]" name="freight[${index}][weight_units]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body">
+
+                        <option value="">{{ __("messages.dashboard.freight.form.fields.weight_units") }}</option>
+                        <option value="kg">{{ __("messages.common.kilograms") }}</option>
+                        <option value="lbs">{{ __("messages.common.pounds") }}</option>
+                    </select>
                 </div>
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }}:</p>
-                    <input type="text" id="freight[${index}][weight]" name="freight[${index}][weight]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.weight") }}">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.weight') }} ({{ __('messages.common.optional') }}):</p>
+                    <input type="number" id="freight[${index}][weight]" name="freight[${index}][weight]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.weight") }}">
                 </div>
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }}:</p>
-                    <input type="text" id="freight[${index}][volume_units]" name="freight[${index}][volume_units]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume_units") }}">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume_units') }} ({{ __('messages.common.optional') }}):</p>
+                    <select id="freight[${index}][volume_units]" name="freight[${index}][volume_units]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body">
+
+                        <option value="">{{ __("messages.dashboard.freight.form.fields.volume_units") }}</option>
+
+                        <option value="m3">{{ __("messages.common.cubic_meters") }}</option>
+                        <option value="mm3">{{ __("messages.common.cubic_milimeters") }}</option>
+                        <option value="cm3">{{ __("messages.common.cubic_centimeters") }}</option>
+                        <option value="in3">{{ __("messages.common.cubic_inches") }}</option>
+
+                    </select>
                 </div>
                 <div class="col-span-1 flex flex-col justify-start items-start">
-                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }}:</p>
-                    <input type="text" id="freight[${index}][volume]" name="freight[${index}][volume]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume") }}">
+                    <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.volume') }} ({{ __('messages.common.optional') }}):</p>
+                    <input type="number" id="freight[${index}][volume]" name="freight[${index}][volume]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume") }}">
                 </div>
                 <div class="col-span-1 flex flex-col justify-start items-start">
                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.packages') }}:</p>
-                    <input type="text" id="freight[${index}][packages]" name="freight[${index}][packages]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.volume") }}">
+                    <input type="text" id="freight[${index}][packages]" name="freight[${index}][packages]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.packages") }}">
                 </div>
                 <div class="col-span-1 flex flex-col justify-start items-start">
                     <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.freight.form.fields.incoterms') }}:</p>
-                    <input type="text" id="freight[${index}][incoterms]" name="freight[${index}][incoterms]" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.incoterms") }}">
+                    <input type="text" id="freight[${index}][incoterms]" name="freight[${index}][incoterms]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.freight.form.placeholders.incoterms") }}">
                 </div>
             `;
 
@@ -439,9 +468,9 @@
         function updateFreightIndices() {
             const freightCards = freightsContainer.children;
             Array.from(freightCards).forEach((card, index) => {
-                card.querySelectorAll("input").forEach(input => {
-                    input.id = input.id.replace(/\[\d+\]/, `[${index}]`);
-                    input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+                card.querySelectorAll("input, select").forEach(element => {
+                  element.id = element.id.replace(/\[\d+\]/, `[${index}]`);
+                  element.name = element.name.replace(/\[\d+\]/, `[${index}]`);
                 });
 
                 card.querySelector("p.text-secondary-dark").innerText = `Freight ${index + 1}:`;
@@ -675,9 +704,9 @@
         function updateTransportIndices() {
             const transportCards = transportsContainer.children;
             Array.from(transportCards).forEach((card, index) => {
-                card.querySelectorAll("input").forEach(input => {
-                    input.id = input.id.replace(/\[\d+\]/, `[${index}]`);
-                    input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+                card.querySelectorAll("input, select").forEach(element => {
+                  element.id = element.id.replace(/\[\d+\]/, `[${index}]`);
+                  element.name = element.name.replace(/\[\d+\]/, `[${index}]`);
                 });
 
                 card.querySelector("p.step-track-correlative").innerText = `${index + 1}:`;
@@ -694,6 +723,156 @@
             });
 
         }
+
+        function searchClientsForOrders() {
+            const clientIdInput = document.getElementById('client_id');
+            const clientInput = document.getElementById('client_name');
+            const clientList = document.getElementById('client_list');
+            const clientListLoader = document.getElementById('client_list_loader');
+
+            // Hide the list if clicked outside
+            document.addEventListener('click', function (e) {
+                if (!clientInput.contains(e.target) && !clientList.contains(e.target)) {
+                    clientList.classList.add('hidden');
+                    clientListLoader.classList.add('hidden');
+                }
+            });
+
+            clientInput.addEventListener('input', function () {
+                const query = clientInput.value.trim();
+                clientList.classList.remove('hidden');
+                clientListLoader.classList.remove('hidden');
+
+                fetch(`/dashboard/clients/search?company=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Remove only the <li> elements inside the clientList
+                        const listItems = clientList.querySelectorAll('li');
+                        listItems.forEach(li => li.remove());
+
+                        if (data.length > 0) {
+
+                            data.forEach(client => {
+                                const listItem = document.createElement('li');
+                                listItem.textContent = `${client.company}`;
+                                listItem.classList.add(
+                                    'w-full',
+                                    'h-auto',
+                                    'text-body',
+                                    'font-bold',
+                                    'hover:bg-primary',
+                                    'hover:text-white',
+                                    'p-2',
+                                    'cursor-pointer'
+                                );
+
+                                // On click, populate client_name and client_id, then hide the list
+                                listItem.addEventListener('click', function () {
+                                    clientInput.value = client.company; // Set client name
+                                    clientIdInput.value = client.id; // Set client ID
+                                    clientList.classList.add('hidden'); // Hide the list
+                                });
+
+                                clientList.appendChild(listItem);
+                            });
+                        } else {
+
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `No clients found`;
+                            listItem.classList.add(
+                                'w-full',
+                                'h-auto',
+                                'text-body',
+                                'font-bold',
+                                'hover:bg-primary',
+                                'hover:text-white',
+                                'p-2',
+                                'cursor-pointer'
+                            );
+
+                            clientList.appendChild(listItem);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Error fetching clients`;
+                        listItem.classList.add(
+                            'w-full',
+                            'h-auto',
+                            'text-body',
+                            'font-bold',
+                            'hover:bg-primary',
+                            'hover:text-white',
+                            'p-2',
+                            'cursor-pointer'
+                        );
+
+                        clientList.appendChild(listItem);
+                    })
+                    .finally(()=>{
+                        clientListLoader.classList.add('hidden');
+                    });
+
+            });
+        }
+
+        let countriesInfo = null;
+        // Function to fetch and populate the country dropdown
+        async function fetchCountries() {
+          try {
+            const response = await fetch('https://countriesnow.space/api/v0.1/countries'); // Fetch data from API
+            const countries = await response.json(); // Parse the JSON response
+
+            // Extract country names and sort them alphabetically
+            countriesInfo = countries.data;
+            const countryNames = countries.data
+             .map(country => country.country)
+             .sort((a, b) => a.localeCompare(b));
+
+            const selectInput = document.getElementById('country-tracking-step')
+
+            for (const country of countryNames) {
+              const option = document.createElement('option');
+              option.value = country;
+              option.textContent = country; // Set the text of the option
+              selectInput.appendChild(option); // Append the option to the select element
+            }
+
+          } catch (error) {
+            console.error('Error fetching country data:', error);
+          }
+        }
+
+        function loadCities(country){
+            if(countriesInfo != null){
+
+            const cityNames = countriesInfo
+              .find(info => info.country === country)?.cities
+              ?.sort((a, b) => a.localeCompare(b)) || [];
+
+                const selectInput = document.getElementById('city-tracking-step')
+
+                const cityOptions = selectInput.querySelectorAll('.city'); // Select all options with the class "city"
+                cityOptions.forEach(option => option.remove()); // Remove each option
+
+                for (const city of cityNames) {
+                  const option = document.createElement('option');
+                  option.classList.add('city');
+                  option.value = city;
+                  option.textContent = city; // Set the text of the option
+                  selectInput.appendChild(option); // Append the option to the select element
+                }
+
+            }
+        }
+
+
 
         function loadOrderFunction(){
             freightsContainer = document.getElementById("freights-items");
@@ -732,6 +911,16 @@
 
             // Initialize drag and drop for .step-tracks and .step-track
             initializeDragAndDrop(".step-tracks", "step-track");
+
+            //attach the Seach method
+            searchClientsForOrders();
+
+            fetchCountries();
+
+            const selectInput = document.getElementById('country-tracking-step');
+            selectInput.addEventListener('change', function(event) {
+              loadCities(event.target.value); // Pass the selected country value to loadCities
+            });
 
         }
 

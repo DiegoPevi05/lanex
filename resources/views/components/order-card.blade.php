@@ -42,8 +42,8 @@ $currentTransportType = $transportType->type;
                     <div class="w-6 h-auto text-secondary-dark">
                         {!! $svgContent !!}
                     </div>
-                    <p class="font-bold text-secondary-dark text-sm">
-                        {{ $currentTransportType }}:
+                    <p class="font-bold text-secondary-dark text-sm capitalize">
+                        {{ __('messages.dashboard.transport_type.form.fields.'. $currentTransportType)  }}:
                     </p>
                 </span>
             </div>

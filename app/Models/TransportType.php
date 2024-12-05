@@ -74,42 +74,64 @@ class TransportType extends Model
     public static function getValidationRules($isUpdate = false)
     {
         return [
-            'type' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'icon' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'description' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
-            'external_reference' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'status' => $isUpdate ? 'sometimes|required|string|max:255|in:ACTIVE,INACTIVE' : 'required|string|max:255|in:ACTIVE,INACTIVE',
+
+            'transports' => 'required|array|min:1',
+            'transports.*.country' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.city' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.address' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.type' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.icon' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.name' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.description' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
+
+            'transports.*.external_reference' => 'nullable|string|max:255',
+            'transports.*.status' => $isUpdate ? 'sometimes|required|string|max:255|in:ACTIVE,INACTIVE' : 'required|string|max:255|in:ACTIVE,INACTIVE',
         ];
     }
 
     public static function getValidationMessages()
     {
         return [
-            'type.required' => __('messages.dashboard.transport_type.form.validations.type_required'),
-            'type.string' => __('messages.dashboard.transport_type.form.validations.type_string'),
-            'type.max' => __('messages.dashboard.transport_type.form.validations.type_max'),
 
-            'icon.required' => __('messages.dashboard.transport_type.form.validations.icon_required'),
-            'icon.string' => __('messages.dashboard.transport_type.form.validations.icon_string'),
-            'icon.max' => __('messages.dashboard.transport_type.form.validations.icon_max'),
+            'transports.required' => __('messages.dashboard.transport_type.form.validations.transports_required'),
+            'transports.array' => __('messages.dashboard.transport_type.form.validations.transports_array'),
+            'transports.min' => __('messages.dashboard.transport_type.form.validations.transports_min'),
 
-            'name.required' => __('messages.dashboard.transport_type.form.validations.name_required'),
-            'name.string' => __('messages.dashboard.transport_type.form.validations.name_string'),
-            'name.max' => __('messages.dashboard.transport_type.form.validations.name_max'),
+            'transports.*.country.required' => __('messages.dashboard.transport_type.form.validations.country_required'),
+            'transports.*.country.string' => __('messages.dashboard.transport_type.form.validations.country_string'),
+            'transports.*.country.max' => __('messages.dashboard.transport_type.form.validations.country_max'),
 
-            'description.required' => __('messages.dashboard.transport_type.form.validations.description_required'),
-            'description.string' => __('messages.dashboard.transport_type.form.validations.description_string'),
-            'description.max' => __('messages.dashboard.transport_type.form.validations.description_max'),
+            'transports.*.city.required' => __('messages.dashboard.transport_type.form.validations.city_required'),
+            'transports.*.city.string' => __('messages.dashboard.transport_type.form.validations.city_string'),
+            'transports.*.city.max' => __('messages.dashboard.transport_type.form.validations.city_max'),
 
-            'external_reference.required' => __('messages.dashboard.transport_type.form.validations.external_reference_required'),
-            'external_reference.string' => __('messages.dashboard.transport_type.form.validations.external_reference_string'),
-            'external_reference.max' => __('messages.dashboard.transport_type.form.validations.external_reference_max'),
+            'transports.*.address.required' => __('messages.dashboard.transport_type.form.validations.address_required'),
+            'transports.*.address.string' => __('messages.dashboard.transport_type.form.validations.address_string'),
+            'transports.*.address.max' => __('messages.dashboard.transport_type.form.validations.address_max'),
 
-            'status.required' => __('messages.dashboard.transport_type.form.validations.status_required'),
-            'status.string' => __('messages.dashboard.transport_type.form.validations.status_string'),
-            'status.max' => __('messages.dashboard.transport_type.form.validations.status_max'),
-            'status.in' => __('messages.dashboard.transport_type.form.validations.status_in'),
+            'transports.*.type.required' => __('messages.dashboard.transport_type.form.validations.type_required'),
+            'transports.*.type.string' => __('messages.dashboard.transport_type.form.validations.type_string'),
+            'transports.*.type.max' => __('messages.dashboard.transport_type.form.validations.type_max'),
+
+            'transports.*.icon.required' => __('messages.dashboard.transport_type.form.validations.icon_required'),
+            'transports.*.icon.string' => __('messages.dashboard.transport_type.form.validations.icon_string'),
+            'transports.*.icon.max' => __('messages.dashboard.transport_type.form.validations.icon_max'),
+
+            'transports.*.name.required' => __('messages.dashboard.transport_type.form.validations.name_required'),
+            'transports.*.name.string' => __('messages.dashboard.transport_type.form.validations.name_string'),
+            'transports.*.name.max' => __('messages.dashboard.transport_type.form.validations.name_max'),
+
+            'transports.*.description.required' => __('messages.dashboard.transport_type.form.validations.description_required'),
+            'transports.*.description.string' => __('messages.dashboard.transport_type.form.validations.description_string'),
+            'transports.*.description.max' => __('messages.dashboard.transport_type.form.validations.description_max'),
+
+            'transports.*.external_reference.string' => __('messages.dashboard.transport_type.form.validations.external_reference_string'),
+            'transports.*.external_reference.max' => __('messages.dashboard.transport_type.form.validations.external_reference_max'),
+
+            'transports.*.status.required' => __('messages.dashboard.transport_type.form.validations.status_required'),
+            'transports.*.status.string' => __('messages.dashboard.transport_type.form.validations.status_string'),
+            'transports.*.status.max' => __('messages.dashboard.transport_type.form.validations.status_max'),
+            'transports.*.status.in' => __('messages.dashboard.transport_type.form.validations.status_in'),
 
         ];
     }

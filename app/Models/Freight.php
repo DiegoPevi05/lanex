@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Freight extends Model
 {
@@ -18,12 +19,13 @@ class Freight extends Model
         'origin',
         'dimensions_units',
         'dimensions',
-        'weigth_units',
-        'weigth',
+        'weight_units',
+        'weight',
         'volume_units',
         'volume',
         'packages',
-        'incoterms'
+        'incoterms',
+        'order_id'
     ];
 
     /**
@@ -40,7 +42,6 @@ class Freight extends Model
     public static function getFillableFields($validatedFields, Request $request, Freight $entity = null)
     {
         return [
-            'freight_id' => $validatedFields['freight_id'] ?? null,
             'freight_id' => $entity && $entity->freight_id
             ? $entity->freight_id
             : (isset($validatedFields['freight_id']) ? $validatedFields['freight_id'] : self::generateFreightId()),
@@ -48,11 +49,11 @@ class Freight extends Model
             'description' => $validatedFields['description'] ?? null,
             'origin' => $validatedFields['origin'] ?? null,
             'dimensions_units' => $validatedFields['dimensions_units'] ?? null,
-            'dimensions' => $validatedFields['dimensions'] ?? null,
+            'dimensions' => $validatedFields['dimensions'] ?? 0,
             'weight_units' => $validatedFields['weight_units'] ?? null,
-            'weight' => $validatedFields['weight'] ?? null,
+            'weight' => $validatedFields['weight'] ?? 0,
             'volume_units' => $validatedFields['volume_units'] ?? null,
-            'volume' => $validatedFields['volume'] ?? null,
+            'volume' => $validatedFields['volume'] ?? 0,
             'packages' => $validatedFields['packages'] ?? null,
             'incoterms' => $validatedFields['incoterms'] ?? null,
         ];
@@ -64,7 +65,7 @@ class Freight extends Model
     protected static function generateFreightId()
     {
         // Combine date, time, and a random number for a short unique ID
-        return 'LNXFR' . date('ymd') . bin2hex(random_bytes(2));
+        return 'LNXFR' . date('ymd') . strtoupper(bin2hex(random_bytes(2)));
     }
 
     /**
@@ -85,19 +86,19 @@ class Freight extends Model
     public static function getValidationRules($isUpdate = false)
     {
         return [
-
-            'freight_id' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'description' => $isUpdate ? 'sometimes|nullable|string|max:500' : 'nullable|string|max:500',
-            'origin' => $isUpdate ? 'sometimes|required|string|max:100' : 'required|string|max:100',
-            'dimensions_units' => $isUpdate ? 'sometimes|required|string|max:10' : 'required|string|max:10',
-            'dimensions' => $isUpdate ? 'sometimes|required|string|max:50' : 'required|string|max:50',
-            'weight_units' => $isUpdate ? 'sometimes|required|string|max:10' : 'required|string|max:10',
-            'weight' => $isUpdate ? 'sometimes|required|numeric' : 'required|numeric',
-            'volume_units' => $isUpdate ? 'sometimes|required|string|max:10' : 'required|string|max:10',
-            'volume' => $isUpdate ? 'sometimes|required|numeric' : 'required|numeric',
-            'packages' => $isUpdate ? 'sometimes|required|integer' : 'required|integer',
-            'incoterms' => $isUpdate ? 'sometimes|required|string|max:3' : 'required|string|max:3',
+            'freight' => 'required|array|min:1',
+            'freight.*.id' => 'sometimes|string|max:255',
+            'freight.*.name' =>  'required|string|max:255',
+            'freight.*.origin' =>  'required|string|max:255',
+            'freight.*.description' => 'nullable|string|max:500',
+            'freight.*.dimensions_units' => 'nullable|string|in:m,mm,cm,in',
+            'freight.*.dimensions' => 'nullable|numeric|min:0',
+            'freight.*.weight_units' => 'nullable|string|in:kg,lbs',
+            'freight.*.weight' => 'nullable|numeric|min:0',
+            'freight.*.volume_units' => 'nullable|string|in:m3,mm3,cm3,in3',
+            'freight.*.volume' => 'nullable|numeric|min:0',
+            'freight.*.packages' => 'required|integer|min:1',
+            'freight.*.incoterms' => 'sometimes|string|max:255',
         ];
     }
 
@@ -107,34 +108,45 @@ class Freight extends Model
     public static function getValidationMessages()
     {
         return [
+            'freight.required' => __('messages.dashboard.freight.form.validations.freight_required'),
+            'freight.array' => __('messages.dashboard.freight.form.validations.freight_array'),
+            'freight.min' => __('messages.dashboard.freight.form.validations.freight_min'),
 
-            'freight_id.required' => __('messages.dashboard.freight.form.validations.freight_id_required'),
-            'freight_id.string' => __('messages.dashboard.freight.form.validations.freight_id_string'),
-            'freight_id.max' => __('messages.dashboard.freight.form.validations.freight_id_max'),
+            'freight.*.id.string' => __('messages.dashboard.freight.form.validations.id_string'),
+            'freight.*.id.max' => __('messages.dashboard.freight.form.validations.id_max'),
 
-            'name.required' => __('messages.dashboard.freight.form.validations.name_required'),
-            'name.string' => __('messages.dashboard.freight.form.validations.name_string'),
-            'name.max' => __('messages.dashboard.freight.form.validations.name_max'),
+            'freight.*.name.required' => __('messages.dashboard.freight.form.validations.name_required'),
+            'freight.*.name.string' => __('messages.dashboard.freight.form.validations.name_string'),
+            'freight.*.name.max' => __('messages.dashboard.freight.form.validations.name_max'),
 
-            'origin.required' => __('messages.dashboard.freight.form.validations.origin_required'),
-            'origin.string' => __('messages.dashboard.freight.form.validations.origin_string'),
+            'freight.*.origin.required' => __('messages.dashboard.freight.form.validations.origin_required'),
+            'freight.*.origin.string' => __('messages.dashboard.freight.form.validations.origin_string'),
+            'freight.*.origin.max' => __('messages.dashboard.freight.form.validations.origin_max'),
 
-            'dimensions_units.required' => __('messages.dashboard.freight.form.validations.dimensions_units_required'),
-            'dimensions.required' => __('messages.dashboard.freight.form.validations.dimensions_required'),
+            'freight.*.description.string' => __('messages.dashboard.freight.form.validations.description_string'),
+            'freight.*.description.max' => __('messages.dashboard.freight.form.validations.description_max'),
 
-            'weight_units.required' => __('messages.dashboard.freight.form.validations.weight_units_required'),
-            'weight.required' => __('messages.dashboard.freight.form.validations.weight_required'),
-            'weight.numeric' => __('messages.dashboard.freight.form.validations.weight_numeric'),
+            'freight.*.dimensions_units.in' => __('messages.dashboard.freight.form.validations.dimensions_units_in'),
 
-            'volume_units.required' => __('messages.dashboard.freight.form.validations.volume_units_required'),
-            'volume.required' => __('messages.dashboard.freight.form.validations.volume_required'),
-            'volume.numeric' => __('messages.dashboard.freight.form.validations.volume_numeric'),
+            'freight.*.dimensions.numeric' => __('messages.dashboard.freight.form.validations.dimensions_numeric'),
+            'freight.*.dimensions.min' => __('messages.dashboard.freight.form.validations.dimensions_min'),
 
-            'packages.required' => __('messages.dashboard.freight.form.validations.packages_required'),
-            'packages.integer' => __('messages.dashboard.freight.form.validations.packages_integer'),
+            'freight.*.weight_units.in' => __('messages.dashboard.freight.form.validations.weigth_units_in'),
 
-            'incoterms.required' => __('messages.dashboard.freight.form.validations.incoterms_required'),
-            'incoterms.max' => __('messages.dashboard.freight.form.validations.incoterms_max'),
+            'freight.*.weight.numeric' => __('messages.dashboard.freight.form.validations.weigth_numeric'),
+            'freight.*.weight.min' => __('messages.dashboard.freight.form.validations.weigth_min'),
+
+            'freight.*.volume_units.in' => __('messages.dashboard.freight.form.validations.volume_units_in'),
+
+            'freight.*.volume.numeric' => __('messages.dashboard.freight.form.validations.volume_numeric'),
+            'freight.*.volume.min' => __('messages.dashboard.freight.form.validations.volume_min'),
+
+            'freight.*.packages.required' => __('messages.dashboard.freight.form.validations.packages_required'),
+            'freight.*.packages.integer' => __('messages.dashboard.freight.form.validations.packages_integer'),
+            'freight.*.packages.min' => __('messages.dashboard.freight.form.validations.packages_min'),
+
+            'freight.*.incoterms.string' => __('messages.dashboard.freight.form.validations.incoterms_string'),
+            'freight.*.incoterms.max' => __('messages.dashboard.freight.form.validations.incoterms_max'),
         ];
     }
 

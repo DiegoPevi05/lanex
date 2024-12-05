@@ -60,15 +60,6 @@
         </li>
 
         <li>
-            <a href="{{ route('dashboard_transport_type') }}" class="text-body w-full flex flex-row gap-x-4 hover:text-primary cursor-pointer duration-300 active:scale-95 hover:bg-slate-100 px-12 py-4 {{ request()->routeIs('dashboard_transport_type')  ? 'text-primary border-e-[3px] border-primary' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-            <p class="capitalize font-bold text-sm">
-                {{__('messages.dashboard.sidebar.transports')}}
-            </p>
-            </a>
-        </li>
-
-        <li>
             <a href="{{ route('dashboard_client') }}" class="text-body w-full flex flex-row gap-x-4 hover:text-primary cursor-pointer duration-300 active:scale-95 hover:bg-slate-100 px-12 py-4 {{ request()->routeIs('dashboard_client')  ? 'text-primary border-e-[3px] border-primary' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <p class="capitalize font-bold text-sm">
