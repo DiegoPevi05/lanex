@@ -6,6 +6,8 @@
 !images/svgs/**
 !images/web/
 !images/web/**
+!images/mail/
+!images/mail/**
 !images/test/
 !images/test/**
 
