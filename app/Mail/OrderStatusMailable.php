@@ -96,6 +96,11 @@ class OrderStatusMailable extends Mailable
                 $this->subheader_mail = trans('messages.mail.status.shipping_subheader');
                 $this->subject = trans('messages.mail.status.shipping_subject');
                 break;
+            case 'delivered':
+                $this->header_mail = trans('messages.mail.status.delivered_header');
+                $this->subheader_mail = trans('messages.mail.status.delivered_subheader');
+                $this->subject = trans('messages.mail.status.delivered_subject');
+                break;
             case 'cancellation':
                 $this->header_mail = trans('messages.mail.status.cancellation_header');
                 $this->subheader_mail = trans('messages.mail.status.cancellation_subheader');

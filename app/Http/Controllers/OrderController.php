@@ -268,30 +268,42 @@ class OrderController extends AbstractEntityController
 
     public function updateOrder(Request $request, $id)
     {
-        // Extract step, status, and email_notification from the request
-        $step = $request->input('step');
-        $status = $request->input('status');
-        $emailNotification = $request->input('email_notification', false); // Default to false if not provided
 
-        // Call the method to update the order's tracking steps status
-        $this->updateStatusOrder($id, $step, $status);
-
-        // Send the email only if email_notification is true
-        if ($emailNotification) {
-            $this->sendOrderStatusEmail($id, 'default');
-        }
-
-        return response()->json(['success' => ['Order status updated successfully. Email sent if requested.']]);
-    }
-
-    public function updateStatusOrder($id, $step, $status)
-    {
         $order = Order::find($id);
 
         if (!$order) {
             return response()->json(['error' => ['Order not found.']], 404);
         }
+        // Extract step, status, and email_notification from the request
+        $step = $request->input('step');
+        $status = $request->input('status','default');
+        $emailNotification = $request->input('email_notification', false); // Default to false if not provided
 
+        // Call the method to update the order's tracking steps status
+
+        $this->updateStatusOrder($order, $step, $status);
+        // Send the email only if email_notification is true
+        if ($emailNotification) {
+
+            $type = 'default';
+
+            $firstTrackStep = $order->getFirstTrackStep();
+            $lastTrackStep  = $order->getLastTrackStep();
+
+            if($firstTrackStep->status == 'IN_TRANSIT'){
+                $type = 'shipping';
+            }else if($lastTrackStep->status == 'COMPLETED'){
+                $type = 'delivered';
+            }
+
+            $this->sendOrderStatusEmail($order, $type);
+        }
+
+        return response()->json(['success' => ['Order status updated successfully. Email sent if requested.']]);
+    }
+
+    public function updateStatusOrder(Order $order, $step, $status)
+    {
         // Get all tracking steps for the order
         $trackingSteps = $order->trackingSteps;
 
@@ -327,20 +339,14 @@ class OrderController extends AbstractEntityController
         return response()->json(['success' => ['Order status updated successfully.']]);
     }
 
-    public function sendOrderStatusEmail($id, $type)
+    public function sendOrderStatusEmail(Order $order, $type)
     {
-        $order = Order::find($id);
-
-        if (!$order) {
-            return response()->json(['error' => 'Order not found.'], 404);
-        }
 
         $client = Client::find($order->client_id);
 
         if (!$client) {
             return response()->json(['error' => 'Client not found.'], 404);
         }
-
 
         // Send the email using the OrderStatusMailable
         Mail::to($client->email)->send(new OrderStatusMailable($order, $type));

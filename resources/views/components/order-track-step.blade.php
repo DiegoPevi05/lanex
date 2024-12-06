@@ -1,7 +1,7 @@
 <div class="w-full h-12 flex flex-row justify-center items-center gap-x-5 sm:gap-x-8 mb-6">
     @foreach ($order->trackingSteps as $index => $step)
         <!-- The before element pseudo-class -->
-        <div onClick="showOrderStatusModal({{$order->id}},{{$index}})" class="relative h-10 sm:w-16 h-10 sm:h-16 p-none m-none group hover:cursor-pointer">
+        <div onClick="showOrderStatusModal({{$order->id}},{{$index}},'IN_TRANSIT')" class="relative h-10 sm:w-16 h-10 sm:h-16 p-none m-none group hover:cursor-pointer">
             <div class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-1 sm:h-2 group-hover:bg-primary duration-300 {{ $step->status == 'IN_TRANSIT' || $step->status == 'COMPLETED' ? 'bg-primary': 'bg-gray-light'  }} group-hover:z-[15] z-[10] {{ $loop->first || $loop->last ? 'rounded-xl' : '' }} "></div>
             <div class="w-full h-full rounded-full duration-300 group-hover:bg-primary {{ $step->status == 'IN_TRANSIT' || $step->status == 'COMPLETED' ? 'bg-primary' : 'bg-gray-light' }} flex justify-center items-center p-[2px] sm:p-2 z-[20]">
 

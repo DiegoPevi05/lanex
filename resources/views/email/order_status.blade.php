@@ -273,6 +273,7 @@
         .order-details-table .table-cell-details {
             text-align: left;
             font-size: 14px;
+            border-radius: 0px 15px 15px 0px;
         }
 
         .order-details-table .table-cell-details p{
@@ -331,19 +332,19 @@
                                     <tr>
                                         <td class="card {{$current_step == 'confirmed' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+                                                <img src="{{ env('APP_URL') . 'storage/public/images/mail/check.png' }}" width="100%" height="100%" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_confirmed_label)}}</strong>
                                         </td>
                                         <td class="card {{$current_step == 'shipping' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                                                <img src="{{ env('APP_URL') . 'storage/public/images/mail/truck.png' }}" width="100%" height="100%" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_shipping_label)}}</strong>
                                         </td>
                                         <td class="card {{$current_step == 'delivered' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
+                                                <img src="{{ env('APP_URL') . 'storage/public/images/mail/package-check.png' }}" width="100%" height="100%" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_delivered_label)}}</strong>
                                         </td>
@@ -371,7 +372,7 @@
                                             <td class="table-cell-icon">
                                                 <div class="icon-container">
                                                     <div class="icon-svg">
-                                                        <img src="{{ env('APP_URL') . 'storage/public/images/mail/package.svg' }}" width="100%" height="100%" alt="Package Icon" />
+                                                        <img src="{{ env('APP_URL') . 'storage/public/images/mail/package.png' }}" width="100%" height="100%" alt="Package Icon" />
                                                     </div>
                                                 </div>
                                             </td>
@@ -391,9 +392,6 @@
                                                         <td style="padding:0; margin:0" colspan="1">{{ __('messages.mail.common.volume') }}: {{$freight->volume}} {{$freight->volume_units}}</td>
                                                     </tr>
                                                 </table>
-                                            </td>
-                                            <td class="table-cell-price">
-                                                <p>S/.1200.00</p>
                                             </td>
                                         </tr>
                                         <tr class="table-row" style="height:20px; background-color:transparent">
@@ -454,6 +452,7 @@
                                                 <td style="text-align: center;">
                                                     <div class="contact-icon-wrapper">
                                                         <div class="contact-icon">
+                                                            <img src="{{ env('APP_URL') . 'storage/public/images/mail/mail.png' }}" width="100%" height="100%" alt="Mail Icon" />
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
                                                                 <rect width="20" height="16" x="2" y="4" rx="2"/>
                                                                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
@@ -479,7 +478,7 @@
                                                 <td style="text-align: center;">
                                                     <div class="contact-icon-wrapper">
                                                         <div class="contact-icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                                            <img src="{{ env('APP_URL') . 'storage/public/images/mail/phone.png' }}" width="100%" height="100%" alt="Mail Icon" />
                                                         </div>
                                                     </div>
                                                 </td>
@@ -501,11 +500,13 @@
                         <td class="footer">
                             <div style="text-align:center; width:100%;">
                                 <a href="{{$instagram_link}}" target="_blank" class="media-icon">
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+                                    <img src="{{ env('APP_URL') . 'storage/public/images/mail/instagram.png' }}" width="100%" height="100%" alt="Instagram Icon" />
+                                </a>
                                 <a href="{{$facebook_link}}" target="_blank" class="media-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                                    <img src="{{ env('APP_URL') . 'storage/public/images/mail/facebook.png' }}" width="100%" height="100%" alt="Facebook Icon" />
+                                </a>
                                 <a href="{{$linkedin_link}}" target="_blank" class="media-icon">
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                                    <img src="{{ env('APP_URL') . 'storage/public/images/mail/linkedin.png' }}" width="100%" height="100%" alt="Linkedin Icon" />
                                 </a>
                             </div>
                             <p>

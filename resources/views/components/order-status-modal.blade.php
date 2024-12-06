@@ -1,5 +1,5 @@
 <div id="modal_status_component" class="modal_component animation-element no-delay pointer-events-none fixed h-screen w-screen top-0 bottom-0 left-0 right-0 z-[1500] flex items-center justify-center" style="background-color:rgba(0, 0, 0, 0.5);">
-    <div class="modal_content bg-white h-auto sm:h-screen  max-h-[400px] sm:min-h-[200px] sm:min-w-[400px] p-4 rounded-xl relative flex flex-col items-center justify-center p-4 gap-y-4">
+    <div class="modal_content bg-white h-auto sm:h-screen  max-h-[400px] sm:min-h-[200px] sm:min-w-[400px] p-4 rounded-xl relative flex flex-col items-center justify-center p-4 sm:p-12 gap-y-4">
         <span id="status_modal" class="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-red-500">✖</span>
 
         <span class="text-primary h-20 w-20">
@@ -32,9 +32,11 @@
 
 @push('scripts')
 <script>
+    let updateNewIndexOrder = null;
     let updateNewStatusOrder = null;
     let updateOrderId = null;
-    function showOrderStatusModal(order_id,newStatus) {
+    function showOrderStatusModal(order_id,newIndex,newStatus) {
+        updateNewIndexOrder = newIndex;
         updateNewStatusOrder = newStatus;
         updateOrderId = order_id;
         const modal = document.getElementById("modal_status_component");
@@ -81,8 +83,8 @@
         loader.classList.remove('hidden');
 
         const data = {
-            step: updateNewStatusOrder,  // Assuming newStatusOrder is the correct step
-            status: "IN_TRANSIT",  // Static status for now
+            step: updateNewIndexOrder,  // Assuming newStatusOrder is the correct step
+            status: updateNewStatusOrder,  // Static status for now
             email_notification: emailNotification,
             locale: "{{ app()->getLocale() }}"
         };

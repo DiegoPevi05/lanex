@@ -1439,6 +1439,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'shipping_subheader' => "¡Actualización emocionante! Tu pedido ha salido de nuestras instalaciones y está en camino. Rastrealo y prepárate para su llegada.",
             'shipping_subject' => 'El pedido se encuentra en camino',
 
+            'delivered_header' => '¡Tu pedido ha sido entregado!',
+            'delivered_subheader' => "¡Buenas noticias! Tu pedido ha llegado a su destino. Esperamos que disfrutes tu compra. ¡Gracias por comprar con nosotros!",
+            'delivered_subject' => 'Tu pedido ha sido entregado con éxito',
+
             'cancellation_header' => 'Pedido Cancelado',
             'cancellation_subheader' => "Lamentamos informarte que tu pedido ha sido cancelado. Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.",
             'cancellation_subject' => 'Pedido Cancelado',

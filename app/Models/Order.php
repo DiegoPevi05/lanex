@@ -275,6 +275,16 @@ class Order extends Model
         return $nextStep ?? $currentStep;
     }
 
+    public function getFirstTrackStep()
+    {
+        // Get the first tracking step by the lowest sequence (earliest step)
+        $firstStep = $this->trackingSteps()
+            ->orderBy('sequence', 'asc') // Order by ascending sequence
+            ->first();
+
+        return $firstStep;
+    }
+
     public function getLastTrackStep()
     {
         // Get the last tracking step by highest sequence (most recent step)

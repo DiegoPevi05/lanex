@@ -3,6 +3,7 @@
 $transportType = $order->getCurrentTrackStep()->transportType;
 $svgContent = file_get_contents(storage_path('app/public/' . $transportType->icon ));
 $currentTransportType = $transportType->type;
+$lastIndex = count($order->trackingSteps) - 1;
 ?>
 
 <div id="content-card-{{$order->getType()}}-{{$order->id}}" class="w-full h-full border-2 border-gray-light rounded-xl animation-element slide-in-up">
@@ -28,7 +29,7 @@ $currentTransportType = $transportType->type;
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </span>
 
-            <span onClick="showOrderStatusModal({{$order->id}},{{$index}})" class="h-8 w-8 bg-white border-2 border-gray-light rounded-xl flex items-center justify-center text-secondary-dark p-1 hover:bg-primary hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
+            <span onClick="showOrderStatusModal({{$order->id}},{{$lastIndex}}, 'COMPLETED')" class="h-8 w-8 bg-white border-2 border-gray-light rounded-xl flex items-center justify-center text-secondary-dark p-1 hover:bg-primary hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full lucide lucide-package-check"><path d="m16 16 2 2 4-4"/><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></svg>
             </span>
         </div>

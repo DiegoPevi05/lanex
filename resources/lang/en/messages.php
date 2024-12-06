@@ -1428,6 +1428,10 @@ It is important for every company involved in international trade to be trained 
             'shipping_subheader' => "Exciting Update! Your order has left our facility and is on its way to you. Track your shipment and get ready for its arrival.",
             'shipping_subject' => 'Order is Shipping now',
 
+            'delivered_header' => 'Your Order Has Been Delivered!',
+            'delivered_subheader' => "Great news! Your order has arrived at its destination. We hope you enjoy your purchase. Thank you for shopping with us!",
+            'delivered_subject' => 'Your Order Has Been Successfully Delivered',
+
             'cancellation_header' => 'Order Cancelled',
             'cancellation_subheader' => "We're sorry to inform you that your order has been cancelled. If you have any questions or need assistance, please don't hesitate to reach out to us.",
             'cancellation_subject' => 'Order Cancellation',
