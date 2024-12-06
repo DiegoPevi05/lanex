@@ -90,6 +90,7 @@
             </div>
         </div>
     </section>
+    <x-order-status-modal/>
 @endsection
 
 @push('scripts')

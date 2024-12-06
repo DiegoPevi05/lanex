@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Web\AbstractEntityController;
+use App\Models\Client;
 use App\Models\Order;
 use App\Models\Freight;
 use App\Models\TransportType;
 use App\Models\TrackingStep;
 use Illuminate\Http\Request;
 use App\Services\FormService;
+use App\Mail\OrderStatusMailable;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends AbstractEntityController
 {
@@ -218,16 +221,12 @@ class OrderController extends AbstractEntityController
         }
 
         // Delete Transports and Related TrackingSteps that are no longer linked to the order
-        $existingTransportIdsInRequest = array_column($transportsData, 'id');
-        $transportsToDelete = TransportType::where('order_id', $entity->id)
-            ->whereNotIn('id', $existingTransportIdsInRequest)
-            ->pluck('id')
-            ->toArray();
+        TrackingStep::where('order_id', $entity->id)
+            ->whereNotIn('transport_type_id', $existingTransportIds)
+            ->delete();
 
-        // Delete Related TrackingSteps
-        TrackingStep::whereIn('transport_type_id', $transportsToDelete)->delete();
-
-        // Delete Transports
+        // Delete Transport Types without any related TrackingSteps
+        $transportsToDelete = TransportType::whereDoesntHave('trackingSteps')->pluck('id')->toArray();
         TransportType::whereIn('id', $transportsToDelete)->delete();
 
         return redirect()->route($this->model::getRedirectRoutes("update"))
@@ -265,5 +264,87 @@ class OrderController extends AbstractEntityController
 
         return redirect()->route($this->model::getRedirectRoutes("destroy"))
             ->with('success', $this->model::getSuccessMessage('cancel'));
+    }
+
+    public function updateOrder(Request $request, $id)
+    {
+        // Extract step, status, and email_notification from the request
+        $step = $request->input('step');
+        $status = $request->input('status');
+        $emailNotification = $request->input('email_notification', false); // Default to false if not provided
+
+        // Call the method to update the order's tracking steps status
+        $this->updateStatusOrder($id, $step, $status);
+
+        // Send the email only if email_notification is true
+        if ($emailNotification) {
+            $this->sendOrderStatusEmail($id, 'default');
+        }
+
+        return response()->json(['success' => ['Order status updated successfully. Email sent if requested.']]);
+    }
+
+    public function updateStatusOrder($id, $step, $status)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json(['error' => ['Order not found.']], 404);
+        }
+
+        // Get all tracking steps for the order
+        $trackingSteps = $order->trackingSteps;
+
+        // Ensure the step index is within bounds
+        if ($step < 0 || $step >= $trackingSteps->count()) {
+            return response()->json(['error' => ['Invalid step index.']], 400);
+        }
+
+        foreach ($trackingSteps as $index => $trackingStep) {
+            if ($index < $step) {
+                // Previous steps
+                $trackingStep->status = 'COMPLETED';
+                $trackingStep->transportType->status = 'ACTIVE';
+
+            } elseif ($index == $step) {
+                // Current step
+                $trackingStep->status = $status; // IN_TRANSIT, COMPLETED, or PENDING
+                if($status == 'PENDING'){
+                    $trackingStep->transportType->status = 'INACTIVE';
+                }else{
+                    $trackingStep->transportType->status = 'ACTIVE';
+                }
+            } else {
+                // Following steps
+                $trackingStep->status = 'PENDING';
+                $trackingStep->transportType->status = 'INACTIVE';
+            }
+
+            // Save each step's status
+            $trackingStep->save();
+        }
+
+        return response()->json(['success' => ['Order status updated successfully.']]);
+    }
+
+    public function sendOrderStatusEmail($id, $type)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json(['error' => 'Order not found.'], 404);
+        }
+
+        $client = Client::find($order->client_id);
+
+        if (!$client) {
+            return response()->json(['error' => 'Client not found.'], 404);
+        }
+
+
+        // Send the email using the OrderStatusMailable
+        Mail::to($client->email)->send(new OrderStatusMailable($order, $type));
+
+        return response()->json(['success' => ['Email with status send successfully.']]);
     }
 }

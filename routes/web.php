@@ -58,6 +58,8 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
         Route::post('/store', [OrderController::class, 'store'])->name('order.store');
         Route::put('/update/{id}', [OrderController::class, 'update'])->name('order.update');
         Route::delete('/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+        // New route for sending the order status email
+        Route::post('/update-status/{id}', [OrderController::class, 'updateOrder'])->name('order.update.status');
     });
 
     Route::prefix('/transport_type')->group(function(){

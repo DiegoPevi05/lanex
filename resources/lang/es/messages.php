@@ -1398,5 +1398,54 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 ],
             ],
         ],
+    ],
+    'mail' => [
+        'modal' => [
+            'header' => 'Actualizar estado del pedido',
+            'subheader' => 'Se notificará al usuario el estado actual de su pedido',
+            'send_status' => 'Actualizar pedido',
+            'email_notification' => '¿Enviar notificación por correo electrónico?'
+        ],
+        'common' => [
+            'order_name' => 'Pedido',
+            'step_confirmed_label' => 'Confirmado',
+            'step_shipping_label' => 'Envío',
+            'step_delivered_label' => 'Entregado',
+            'track_btn' => 'Rastrear tu Pedido',
+            'order_details_header' => 'Detalles del pedido',
+            'shipping_address' => 'Dirección de Envío',
+            'billing_address' => 'Dirección de Facturación',
+            'questions_header' => '¿Tienes alguna pregunta?',
+            'questions_subheader' => "No dudes en contactarnos si tienes algún problema con tu pedido.",
+            'email_us' => 'Envíanos un correo electrónico',
+            'contact_us' => 'Contáctanos',
+            'footer_header' => 'Gracias por confiar en nuestro servicio',
+            'footer_description' => 'En Lanex, nos dedicamos a ofrecer soluciones logísticas personalizadas y eficientes diseñadas para satisfacer las necesidades únicas de nuestros clientes. Confíe en nosotros para impulsar su negocio.',
+            'footer_rights_reserved' => 'Todos los derechos reservados.',
+            'characteristics' => 'Características',
+            'packages' => 'Paquetes',
+            'details' => 'Detalles',
+            'weight' => 'Peso',
+            'length' => 'Longitud',
+            'volume' => 'Volumen',
+            'unit' => 'Unidad'
+        ],
+        'status' => [
+            'header' => '¡Tu pedido está en camino!',
+            'subheader' => "¡Buenas noticias! Tu pedido está listo para salir. Lo estamos empacando con cuidado y estará en camino a tu dirección en poco tiempo.",
+            'confirmation_subject' => 'Pedido Confirmado',
+
+            'shipping_header' => '¡Tu pedido ha sido enviado!',
+            'shipping_subheader' => "¡Actualización emocionante! Tu pedido ha salido de nuestras instalaciones y está en camino. Rastrealo y prepárate para su llegada.",
+            'shipping_subject' => 'El pedido se encuentra en camino',
+
+            'cancellation_header' => 'Pedido Cancelado',
+            'cancellation_subheader' => "Lamentamos informarte que tu pedido ha sido cancelado. Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.",
+            'cancellation_subject' => 'Pedido Cancelado',
+
+            'default_header' => 'Actualización de Pedido',
+            'default_subheader' => "Aquí tienes una actualización sobre tu pedido. Si tienes alguna pregunta, no dudes en contactarnos para obtener más información.",
+            'default_subject' => 'Estado del Pedido'
+        ],
     ]
 ];

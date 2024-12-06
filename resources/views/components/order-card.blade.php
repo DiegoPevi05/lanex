@@ -27,7 +27,6 @@ $currentTransportType = $transportType->type;
             <span onClick='showDeleteModal("{{$order->getHelperMessages()['delete_header']}}","{{$order->getHelperMessages()['delete_content']}}")' class="h-8 w-8 bg-white border-2 border-gray-light rounded-xl flex items-center justify-center text-secondary-dark p-1 hover:bg-primary hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </span>
-
         </div>
     </div>
     <div class="w-full h-auto flex flex-col justify-start items-start border-b-2 border-gray-light px-4 py-4">
@@ -110,7 +109,7 @@ $currentTransportType = $transportType->type;
             </div>
             <div class="col-span-1 flex flex-col justify-start items-start">
                 <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.order.form.fields.client_id') }}:</p>
-                <p>{{$order->client_id}}</p>
+                <p>{{$order->client_name}}</p>
             </div>
             <div class="col-span-2 flex flex-col justify-start items-start">
                 <x-order-track-step :order="$order"/>

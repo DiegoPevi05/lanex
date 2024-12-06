@@ -1387,5 +1387,54 @@ It is important for every company involved in international trade to be trained 
                 ],
             ],
         ],
+    ],
+    'mail' => [
+        'modal' => [
+            'header' => 'Update Order Status',
+            'subheader' => 'The user will be notified of the current status of their order',
+            'send_status' => 'Update Order',
+            'email_notification' => 'Send email notification?'
+        ],
+        'common' => [
+            'order_name' => 'Order',
+            'step_confirmed_label' => 'Confirmed',
+            'step_shipping_label' => 'Shipping',
+            'step_delivered_label' => 'Delivered',
+            'track_btn' => 'Track your Order',
+            'order_details_header' => 'Order details header',
+            'shipping_address' => 'Shipping Address',
+            'billing_address' => 'Billing Address',
+            'questions_header' => 'Do you have any questions?',
+            'questions_subheader' => "Don't hesitate if you have any issue with your order contact us",
+            'email_us' => 'Email Us',
+            'contact_us' => 'Contact Us',
+            'footer_header' => 'Thanks for trust in our service',
+            'footer_description' => 'At Lanex, we are dedicated to providing personalized and efficient logistics solutions designed to meet the unique needs of our clients. Trust us to drive your business forward.',
+            'footer_rights_reserved' => 'All Rights Reserved.',
+            'characteristics' => 'Characteristics',
+            'packages' => 'Packages',
+            'details' => 'Details',
+            'weight' => 'Weight',
+            'length' => 'Lenght',
+            'volume' => 'Volume',
+            'unit' => 'Unit'
+        ],
+        'status' => [
+            'confirmation_header' => 'Your Order is on the Way!',
+            'confirmation_subheader' => "Great News! Your order is all set to hit the road. We're packing it up with care, and it will be on its way to your address in no time!",
+            'confirmation_subject' => 'Order Confirmed',
+
+            'shipping_header' => 'Your Order Has Been Shipped!',
+            'shipping_subheader' => "Exciting Update! Your order has left our facility and is on its way to you. Track your shipment and get ready for its arrival.",
+            'shipping_subject' => 'Order is Shipping now',
+
+            'cancellation_header' => 'Order Cancelled',
+            'cancellation_subheader' => "We're sorry to inform you that your order has been cancelled. If you have any questions or need assistance, please don't hesitate to reach out to us.",
+            'cancellation_subject' => 'Order Cancellation',
+
+            'default_header' => 'Order Update',
+            'default_subheader' => "Here’s an update regarding your order. If you have any questions, feel free to contact us for more information.",
+            'default_subject' => 'Order Status'
+        ],
     ]
 ];
