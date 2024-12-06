@@ -332,19 +332,19 @@
                                     <tr>
                                         <td class="card {{$current_step == 'confirmed' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <img src="{{ env('APP_URL') . 'storage/public/images/mail/check.png' }}" width="100%" height="100%" alt="Check Icon" />
+                                                <img src="{{ env('APP_URL') . '/storage/public/images/mail/check.png' }}" width="100%" height="100%" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_confirmed_label)}}</strong>
                                         </td>
                                         <td class="card {{$current_step == 'shipping' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <img src="{{ env('APP_URL') . 'storage/public/images/mail/truck.png' }}" width="100%" height="100%" alt="Check Icon" />
+                                                <img src="{{ env('APP_URL') . '/storage/public/images/mail/truck.png' }}" width="100%" height="100%" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_shipping_label)}}</strong>
                                         </td>
                                         <td class="card {{$current_step == 'delivered' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <img src="{{ env('APP_URL') . 'storage/public/images/mail/package-check.png' }}" width="100%" height="100%" alt="Check Icon" />
+                                                <img src="{{ env('APP_URL') . '/storage/public/images/mail/package-check.png' }}" width="100%" height="100%" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_delivered_label)}}</strong>
                                         </td>
@@ -372,7 +372,7 @@
                                             <td class="table-cell-icon">
                                                 <div class="icon-container">
                                                     <div class="icon-svg">
-                                                        <img src="{{ env('APP_URL') . 'storage/public/images/mail/package.png' }}" width="100%" height="100%" alt="Package Icon" />
+                                                        <img src="{{ env('APP_URL') . '/storage/public/images/mail/package.png' }}" width="100%" height="100%" alt="Package Icon" />
                                                     </div>
                                                 </div>
                                             </td>
@@ -452,7 +452,7 @@
                                                 <td style="text-align: center;">
                                                     <div class="contact-icon-wrapper">
                                                         <div class="contact-icon">
-                                                            <img src="{{ env('APP_URL') . 'storage/public/images/mail/mail.png' }}" width="100%" height="100%" alt="Mail Icon" />
+                                                            <img src="{{ env('APP_URL') . '/storage/public/images/mail/mail.png' }}" width="100%" height="100%" alt="Mail Icon" />
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
                                                                 <rect width="20" height="16" x="2" y="4" rx="2"/>
                                                                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
@@ -478,7 +478,7 @@
                                                 <td style="text-align: center;">
                                                     <div class="contact-icon-wrapper">
                                                         <div class="contact-icon">
-                                                            <img src="{{ env('APP_URL') . 'storage/public/images/mail/phone.png' }}" width="100%" height="100%" alt="Mail Icon" />
+                                                            <img src="{{ env('APP_URL') . '/storage/public/images/mail/phone.png' }}" width="100%" height="100%" alt="Mail Icon" />
                                                         </div>
                                                     </div>
                                                 </td>
@@ -500,13 +500,13 @@
                         <td class="footer">
                             <div style="text-align:center; width:100%;">
                                 <a href="{{$instagram_link}}" target="_blank" class="media-icon">
-                                    <img src="{{ env('APP_URL') . 'storage/public/images/mail/instagram.png' }}" width="100%" height="100%" alt="Instagram Icon" />
+                                    <img src="{{ env('APP_URL') . '/storage/public/images/mail/instagram.png' }}" width="100%" height="100%" alt="Instagram Icon" />
                                 </a>
                                 <a href="{{$facebook_link}}" target="_blank" class="media-icon">
-                                    <img src="{{ env('APP_URL') . 'storage/public/images/mail/facebook.png' }}" width="100%" height="100%" alt="Facebook Icon" />
+                                    <img src="{{ env('APP_URL') . '/storage/public/images/mail/facebook.png' }}" width="100%" height="100%" alt="Facebook Icon" />
                                 </a>
                                 <a href="{{$linkedin_link}}" target="_blank" class="media-icon">
-                                    <img src="{{ env('APP_URL') . 'storage/public/images/mail/linkedin.png' }}" width="100%" height="100%" alt="Linkedin Icon" />
+                                    <img src="{{ env('APP_URL') . '/storage/public/images/mail/linkedin.png' }}" width="100%" height="100%" alt="Linkedin Icon" />
                                 </a>
                             </div>
                             <p>
