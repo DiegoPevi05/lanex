@@ -118,6 +118,11 @@
             margin-bottom: 10px;
         }
 
+        .card-icon img {
+            height: 48px;
+            width: 48px;
+        }
+
         /* Media query for screens smaller than 640px */
         @media (max-width: 640px) {
             .card {
@@ -126,6 +131,11 @@
 
             .card-icon {
                 font-size: 12px;
+            }
+
+            .card-icon img {
+                height: 24px;
+                width: 24px;
             }
         }
 
@@ -332,19 +342,19 @@
                                     <tr>
                                         <td class="card {{$current_step == 'confirmed' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <img src="{{ env('APP_URL') . '/storage/images/mail/check.png' }}" width="100%" height="100%" alt="Check Icon" />
+                                                <img src="{{ env('APP_URL') . '/storage/images/mail/check.png' }}" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_confirmed_label)}}</strong>
                                         </td>
                                         <td class="card {{$current_step == 'shipping' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <img src="{{ env('APP_URL') . '/storage/images/mail/truck.png' }}" width="100%" height="100%" alt="Check Icon" />
+                                                <img src="{{ env('APP_URL') . '/storage/images/mail/truck.png' }}" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_shipping_label)}}</strong>
                                         </td>
                                         <td class="card {{$current_step == 'delivered' ? 'active' : ''}}">
                                             <div class="card-icon">
-                                                <img src="{{ env('APP_URL') . '/storage/images/mail/package-check.png' }}" width="100%" height="100%" alt="Check Icon" />
+                                                <img src="{{ env('APP_URL') . '/storage/images/mail/package-check.png' }}" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_delivered_label)}}</strong>
                                         </td>
