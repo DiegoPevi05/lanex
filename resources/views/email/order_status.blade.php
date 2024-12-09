@@ -88,9 +88,15 @@
 
         .card-table {
             width: 100%;
+            table-layout: fixed;
+            /* Ensures even width distribution */
             border-spacing: 12px;
-            border-collapse: separate;
-            margin-bottom: 10px;
+            /* Keep spacing between table cells */
+        }
+
+        .card-table td {
+            width: 33.33%;
+            /* Each cell will take up 1/3 of the row */
         }
 
         .card {
@@ -340,19 +346,19 @@
                             <td>
                                 <table class="card-table">
                                     <tr>
-                                        <td class="card {{$current_step == 'confirmed' ? 'active' : ''}}">
+                                        <td class="card {{$current_step >= 0 ? 'active' : ''}}">
                                             <div class="card-icon">
                                                 <img src="{{ env('APP_URL') . '/storage/images/mail/check.png' }}" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_confirmed_label)}}</strong>
                                         </td>
-                                        <td class="card {{$current_step == 'shipping' ? 'active' : ''}}">
+                                        <td class="card {{$current_step >= 1 ? 'active' : ''}}">
                                             <div class="card-icon">
                                                 <img src="{{ env('APP_URL') . '/storage/images/mail/truck.png' }}" alt="Check Icon" />
                                             </div>
                                             <strong>{{__($step_shipping_label)}}</strong>
                                         </td>
-                                        <td class="card {{$current_step == 'delivered' ? 'active' : ''}}">
+                                        <td class="card {{$current_step >= 2 ? 'active' : ''}}">
                                             <div class="card-icon">
                                                 <img src="{{ env('APP_URL') . '/storage/images/mail/package-check.png' }}" alt="Check Icon" />
                                             </div>

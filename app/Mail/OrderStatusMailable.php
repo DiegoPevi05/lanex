@@ -26,6 +26,8 @@ class OrderStatusMailable extends Mailable
     public $facebook_link;
     public $linkedin_link;
 
+    public $current_step;
+
     /**
      * Create a new message instance.
      *
@@ -61,7 +63,7 @@ class OrderStatusMailable extends Mailable
                         'subheader_mail' => trans($this->subheader_mail),
                         'order_name' => trans('messages.mail.common.order_name'), // Translate here
                         'order_number' => $this->order->order_number,
-                        'current_step' => 'confirmed',
+                        'current_step' => $this->current_step,
                         'step_confirmed_label' => trans('messages.mail.common.step_confirmed_label'),
                         'step_shipping_label' => trans('messages.mail.common.step_shipping_label'),
                         'step_delivered_label' => trans('messages.mail.common.step_delivered_label'),
@@ -90,26 +92,31 @@ class OrderStatusMailable extends Mailable
                 $this->header_mail = trans('messages.mail.status.confirmation_header');
                 $this->subheader_mail = trans('messages.mail.status.confirmation_subheader');
                 $this->subject = trans('messages.mail.status.confirmation_subject');
+                $this->current_step = 0;
                 break;
             case 'shipping':
                 $this->header_mail = trans('messages.mail.status.shipping_header');
                 $this->subheader_mail = trans('messages.mail.status.shipping_subheader');
                 $this->subject = trans('messages.mail.status.shipping_subject');
+                $this->current_step = 1;
                 break;
             case 'delivered':
                 $this->header_mail = trans('messages.mail.status.delivered_header');
                 $this->subheader_mail = trans('messages.mail.status.delivered_subheader');
                 $this->subject = trans('messages.mail.status.delivered_subject');
+                $this->current_step = 2;
                 break;
             case 'cancellation':
                 $this->header_mail = trans('messages.mail.status.cancellation_header');
                 $this->subheader_mail = trans('messages.mail.status.cancellation_subheader');
                 $this->subject = trans('messages.mail.status.cancellation_subject');
+                $this->current_step = 0;
                 break;
             default:
                 $this->header_mail = trans('messages.mail.status.default_header');
                 $this->subheader_mail = trans('messages.mail.status.default_subheader');
                 $this->subject = trans('messages.mail.status.default_subject');
+                $this->current_step = 1;
                 break;
         }
     }

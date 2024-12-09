@@ -4,203 +4,104 @@
 
 @section('content-client')
     <section id="tracking_section" class="w-full h-auto text-body pt-[80px] pt:mt-[140px] max-xl:mt-12">
-        <div class="w-full h-full px-4 sm:px-24 xl:px-48 py-12 sm:py-24 xl:py-36 flex flex-col xl:flex-row justify-start items-end gap-y-6 sm:gap-x-12 xl:gap-x-24">
-            <div class="w-full xl:w-2/3 h-full flex flex-col flex-start items-start gap-y-6">
+        <div class="w-full h-full px-4 sm:px-24 xl:px-48 pt-12 pb-12 sm:pt-24 xl:pt-36 flex flex-col xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24">
+            <div id="container-content-order-tracked" class="w-full h-full flex flex-col flex-start items-start gap-y-6">
                 <h2 class="font-bold text-primary">{{ __('messages.track.hero.title') }}</h2>
-                <form id="search_track_order" onsubmit="#" class="w-full h-auto flex flex-row justify-center items-start gap-x-4">
+                <form id="search_track_order" class="w-full h-auto flex flex-row justify-center items-start gap-x-4">
                     <input id="track_order" name="order" type="text"  class="w-full h-auto px-4 py-3 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark focus:border-2 focus:border-primary focus:outline-none font-bold" placeholder="{{ __('messages.track.hero.input_placeholder') }}" />
                     <button type="submit" class="bg-primary-dark px-12 py-3 h-full text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
                         <span>{{ __('messages.track.hero.input_button') }}</span>
                     </button>
                 </form>
-                <div class="w-full h-full border-2 border-gray-light rounded-xl animation-element slide-in-up">
-                    <div class="w-full h-auto flex flex-row justify-between items-center border-b-2 border-gray-light px-4 py-2">
-                        <div class="w-auto h-auto flex flex-row">
-                            <span class="font-bold">
-                                {{ __('messages.track.order.brand_label') }}:
-                            </span>
-                            <span class="fontb-bold text-secondary-dark">
-                                Zeus
-                            </span>
-                        </div>
-                        <div class="w-auto flex flex-row">
-                            <label class="font-bold text-secondary-dark">
-                                ID: 12341231231
-                            </label>
-                        </div>
+                <div id="default-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4">
+                    <img src="{{ asset('storage/'. '/images/web/map.svg') }}" alt="default_track_image" class="h-auto w-[40%]"/>
+                    <p>Ingresa el numero de tu pedido para rastrearlo</p>
+                </div>
+                <div id="not-found-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4 hidden">
+                    <img src="{{ asset('storage/'. '/images/web/404.svg') }}" alt="order_track_not_found" class="h-auto w-[40%]"/>
+                    <p>El pedido no se ha encotrado</p>
+                    <p>Si tienes algun problema  <a href="#" target="_blank" class="text-primary hover:underline">Contactanos</a></p>
+                </div>
+                <div id="loader-order-tracked" class="w-full h-auto flex items-center justify-center animation-element slide-in-up py-12 hidden">
+                    <span class="h-12 w-12 text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    </span>
+                </div>
+                <div id="content-order-tracked" class="w-full h-auto grid grid-cols-1 sm:grid-cols-2 animation-element slide-in-up hidden">
+                    <div class="col-span-1 flex flex-col items-start justify-start">
+                        <label>Delivered</label>
+                        <h2>Monday</h2>
+                        <h5>11/18/24 at 11:44 AM</h5>
+                        <p>Signed for by: O CASTILLA</p>
+                        <span class="w-full h-4"></span>
+                        <label>Delivery Status</label>
+                        <h5>Delivered</h5>
                     </div>
-                    <div class="w-full h-auto flex flex-col justify-start items-start border-b-2 border-gray-light px-4 py-4">
-                        <div class="w-full flex flex-row">
-                            <div class="w-1/2 h-full flex flex-col justify-start items-start">
-                                <p class="text-secondary-dark">
-                                {{ __('messages.track.order.shipment') }}:
-                                </p>
-                            </div>
-                            <div class="w-1/2 h-full flex flex-col justify-start items-end">
-                                <span class="w-auto h-auto flex flex-row gap-x-4">
-                                    <x-bi-airplane-fill class="text-primary h-6 w-6"/>
-                                    <p class="font-bold text-secondary-dark">
-                                        {{ __('messages.track.order.air_ship') }}:
-                                    </p>
+                    <div class="col-span-1 flex flex-col items-end justify-start">
+                        <label>Tracking Id</label>
+                        <p id="tracking_id">417412570940</p>
+                        <div id="tracking_steps" class="relative w-4 h-full flex flex-col justify-start items-end py-4">
+                            <span class="relative flex flex-col items-end justify-start w-[200px]">
+                                <span class="absolute h-full left-0 w-3 bg-primary rounded-t-full"></span>
+                                <span class="absolute h-2 left-0 left-0.5 top-1/2 -translate-y-1/2 w-2 bg-white rounded-full"></span>
+                                <p class="font-bold pt-4">From</p>
+                                <label>LAWRENCE, MI US</label>
+                                <p class="pb-4">11/8/24 6:34 AM</p>
+                            </span>
+                            <span class="relative flex flex-col items-end justify-start w-[200px]">
+                                <span class="absolute h-full left-0 w-[12px] bg-primary"></span>
+                                <span class="absolute h-16 w-16 left-0 -left-8 translate-x-2 top-1/2 -translate-y-1/2  bg-primary rounded-full flex items-center justify-center text-white p-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check rounded-full border-2 border-white p-2"><path d="M20 6 9 17l-5-5"/></svg>
+
                                 </span>
-                            </div>
-                        </div>
-                        <div class="w-full flex flex-row mt-2 h-16">
-                            <div class="grid grid-cols-2 grid-rows-span w-1/2 lg:w-1/4 relative ">
-                                <div class="col-span-1 flex justify-center items-center">
-                                    <p>{{ __('messages.track.order.origin') }}</p>
-                                </div>
-                                <div class="col-span-1 text-secondary-dark flex justify-center items-center">
-                                    <p>Corea</p>
-                                </div>
-                                <div class="col-span-1 flex justify-center items-center">
-                                    <p>{{ __('messages.track.order.destiny') }}</p>
-                                </div>
-                                <div class="col-span-1 text-secondary-dark flex justify-center items-center">
-                                    <p>Hong Kong</p>
-                                </div>
-                                <div class="absolute w-[2px] h-[80%] bg-primary left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
-                                    <div class="absolute w-[10px] h-[10px] bg-primary rounded-xl top-0 -translate-x-1/2"></div>
-                                    <div class="absolute w-[10px] h-[10px] bg-primary rounded-xl bottom-0 -translate-x-1/2"></div>
-                                </div>
-                            </div>
-                            <div class="w-2/4 lg:w-3/4 h-full flex flex-col justify-start items-end gap-y-4">
-                                <p class="text-secondary-dark">{{ __('messages.track.order.destiny_city') }}</p>
-                                <span class="bg-primary rounded-xl w-auto px-4"><p class="text-white">New York</p></span>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full h-auto flex flex-col justify-start items-center px-4 py-4">
-                        <label class="font-bold text-primary w-auto">{{ __('messages.track.order.order_details') }}</label>
-                        <div class="w-full h-auto grid grid-cols-2 px-4 gap-6 mt-6">
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-bi-airplane-fill class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.number_flight') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                        12312312312312
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-mdi-package-variant-closed class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            Packing List
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                        12312312312312
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-bi-calendar class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.departure_date') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                            12 Aug 2024 12:00:00 GMT-5
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-bi-calendar-check class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.arrival_date') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                            12 Aug 2024 12:00:00 GMT-5
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-heroicon-s-home class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.arrival_address') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                            San Miguel , Lima , Peru
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-bi-building class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.supplier_identifier') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                        1231231231231312
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-bi-building class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.client_identifier') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                        1231231231231312
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-span-1 h-auto flex flex-col ">
-                                <div class="flex flex-col w-full h-auto">
-                                    <div class="flex flex-row w-full h-auto gap-x-2">
-                                        <x-mdi-package-variant-closed class="text-primary h-6 w-6"/>
-                                        <p class="font-bold text-secondary-dark">
-                                            {{ __('messages.track.order.product_identifier') }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-row justify-start items-center border-b-2 border-primary text-secondary-dark py-2">
-                                            12312312312312
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="w-full h-auto px-4 py-12">
-                            <x-step-tracker type="ship" step="3"/>
+                                <p class="font-bold pt-4">ON THE WAY</p>
+                                <label>LIMA PE</label>
+                                <p class="pb-4">11/16/24 1:00 PM</p>
+                            </span>
+                            <span class="relative flex flex-col items-end justify-start w-[200px]">
+                                <span class="absolute h-full left-0 w-3 bg-primary"></span>
+                                <span class="absolute h-2 left-0 left-0.5 top-1/2 -translate-y-1/2 w-2 bg-white rounded-full"></span>
+                                <p class="font-bold py-4">OUT FOR DELIVERY</p>
+                            </span>
+                            <span class="relative flex flex-col items-end justify-start w-[200px]">
+                                <span class="absolute h-full left-0 w-3 bg-primary rounded-b-full"></span>
+                                <span class="absolute h-2 left-0 left-0.5 top-1/2 -translate-y-1/2 w-2 bg-white rounded-full"></span>
+                                <p class="font-bold pt-4">Delivered</p>
+                                <label>LIMA, PE</label>
+                                <p class="pb-4">11/18/24 at 11:44 AM</p>
+                            </span>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="w-full xl:w-1/3 h-[400px] xl:h-[800px] flex flex-col flex-start items-start gap-y-6 animation-element slide-in-up">
+            <div id="content-order-tracked-map" class="w-full xl:w-1/3 h-[400px] xl:h-[800px] flex flex-col flex-start items-start gap-y-6 animation-element slide-in-up hidden">
                 <h3 class="font-bold text-primary-dark">{{ __('messages.track.order.live_tracking') }}</h3>
                 <div id="map" class="w-full h-full rounded-xl bg-primary border-2 border-gray-light">
                 </div>
             </div>
+        </div>
+        <div id="content-order-freights" class="w-full h-full px-4 sm:px-24 xl:px-48 pb-12 sm:pb-24 xl:pb-36 flex flex-col justify-start items-start gap-y-6 sm:gap-y-12 xl:gap-y-24 animation-element slide-in-up hidden">
+            <div class="w-full flex flex-row justify-start items-center gap-x-4">
+                <span class="h-12 w-12 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
+                </span>
+                <h2>Freights</h2>
+            </div>
+            <table class="w-full border-2 border-gray-light">
+                <thead>
+                    <tr class="border-2 border-gray-light">
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Freight ID</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Name</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Description</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Origin</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Characteristics</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Packages</th>
+                    </tr>
+                </thead>
+                <tbody id="freights-container">
+                </tbody>
+            </table>
         </div>
     </section>
     <x-questions title="{{ __('messages.track.questions') }}" :questions="$questions" />
@@ -247,15 +148,49 @@
 
         initMap();
 
+        const track_container = document.getElementById('tracking_section');
+
+        const default_order_content = track_container.querySelector('#default-order-tracked');
+        const not_found_order_content = track_container.querySelector('#not-found-order-tracked');
+        const loader_order_content =  track_container.querySelector('#loader-order-tracked');
+
+        const container_content_order_tracked = track_container.querySelector('#container-content-order-tracked');
+        const content_order_tracked = track_container.querySelector('#content-order-tracked');
+        const content_order_tracked_map = track_container.querySelector('#content-order-tracked-map');
+        const content_order_freights = track_container.querySelector('#content-order-freights');
+
+
+
         document.getElementById('search_track_order').addEventListener('submit', async function(e) {
             e.preventDefault();  // Prevent the default form submission
+            default_order_content.classList.add('hidden')
+            loader_order_content.classList.remove('hidden');
+
+            if (!not_found_order_content.classList.contains('hidden')) {
+                not_found_order_content.classList.add('hidden');
+            }
+
+            if(container_content_order_tracked.classList.contains('xl:w-2/3')){
+                container_content_order_tracked.classList.remove('xl:w-2/3')
+            }
+
+            if (!content_order_tracked.classList.contains('hidden')) {
+                content_order_tracked.classList.add('hidden');
+            }
+            if (!content_order_tracked_map.classList.contains('hidden')) {
+                content_order_tracked_map.classList.add('hidden');
+            }
+            if (!content_order_freights.classList.contains('hidden')) {
+                content_order_freights.classList.add('hidden');
+            }
+
 
             // Get the input value
-            const flightId = document.getElementById('track_order').value;
+            const order_number = document.getElementById('track_order').value;
 
             try {
                 // Make the AJAX request to track the flight
-                const response = await fetch(`/track-flight?flightId=${flightId}`, {
+                const response = await fetch(`/track/order?order_number=${order_number}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -264,20 +199,188 @@
                 });
 
                 if (!response.ok) {
+                    not_found_order_content.classList.remove('hidden');
                     console.log(response)
-                    throw new Error('Failed to track flight');
+                    throw new Error('Failed to track order');
                 }
 
                 // Parse the JSON response
                 const result = await response.json();
+                console.log(result)
 
                 // Log the data to the console
-                console.log(result);
+                addFreights(result.freights)
+                addStepBullet(dataTemplate);
+                content_order_tracked.classList.remove('hidden');
+                content_order_tracked_map.classList.remove('hidden');
+                content_order_freights.classList.remove('hidden');
+                container_content_order_tracked.classList.add('xl:w-2/3')
+
+                //not_found_order_content
 
             } catch (error) {
                 console.error('Error:', error);
+            } finally {
+                loader_order_content.classList.add('hidden');
             }
         });
+
+        function addFreights(freights) {
+            const freightsContainer = document.querySelector('#freights-container');
+
+            // Clear any existing rows before adding new ones
+            freightsContainer.innerHTML = '';
+
+            freights.forEach((freight, index) => {
+                // Create a new row
+                const row = document.createElement('tr');
+                row.classList.add('border-2', 'border-gray-light');
+
+                // Add background color for even indexes
+                if (index % 1 === 0 && index > 0) {
+                    row.classList.add('bg-gray-light');
+                }
+
+                // Create and populate cells
+                const fields = [
+                    freight.freight_id,
+                    freight.name,
+                    freight.description,
+                    freight.origin,
+                    `${freight.weight || 0}${freight.weight_units || ''} - ${freight.dimensions || 0}${freight.dimensions_units || ''} - ${freight.volume || 0}${freight.volume_units || ''}`,
+                    freight.packages
+                ];
+
+                fields.forEach(field => {
+                    const cell = document.createElement('td');
+                    cell.classList.add('border-2', 'border-gray-light', 'text-center', 'py-2');
+                    cell.textContent = field; // Add field content
+                    row.appendChild(cell); // Append cell to row
+                });
+
+                // Append the row to the container
+                freightsContainer.appendChild(row);
+            });
+        }
+
+        const dataTemplate = [
+            {
+                label:"From",
+                location: "LAWRENCE, MI US",
+                datetime: new Date(),
+                active:false
+            },
+            {
+                label:"On the way",
+                location: "LAWRENCE, MI US",
+                datetime: new Date(),
+                active:false
+            },
+            {
+                label:"Out for Delivery",
+                location: "LAWRENCE, MI US",
+                datetime: new Date(),
+                active:true
+            },
+            {
+                label:"Delivered",
+                location: "LIMA, PE",
+                datetime: new Date(),
+                active:false
+            }
+        ]
+
+        function addStepBullet(bullets) {
+            const containerSteps = document.querySelector('#tracking_steps'); // Select the container
+            containerSteps.innerHTML = ''; // Clear previous content
+
+            bullets.forEach((bullet, index) => {
+                // Create the span container
+                const step = document.createElement('span');
+                step.classList.add('relative', 'flex', 'flex-col', 'items-end', 'justify-start', 'w-[250px]');
+
+                // Determine the line span class
+                const lineSpan = document.createElement('span');
+                lineSpan.classList.add('absolute', 'h-full', 'left-0', 'w-3', 'bg-primary');
+                if (index === 0) {
+                    lineSpan.classList.add('rounded-t-full'); // First step
+                } else if (index === bullets.length - 1) {
+                    lineSpan.classList.add('rounded-b-full'); // Last step
+                }
+
+                step.appendChild(lineSpan);
+
+                // Check if the bullet is active or not
+                if (bullet.active) {
+                    // Add the active circle with the checkmark
+                    const activeCircle = document.createElement('span');
+                    activeCircle.classList.add(
+                        'absolute',
+                        'h-16',
+                        'w-16',
+                        'left-0',
+                        '-left-8',
+                        'translate-x-2',
+                        'top-1/2',
+                        '-translate-y-1/2',
+                        'bg-primary',
+                        'rounded-full',
+                        'flex',
+                        'items-center',
+                        'justify-center',
+                        'text-white',
+                        'p-3'
+                    );
+
+                    // Add SVG inside the active circle
+                    activeCircle.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check rounded-full border-2 border-white p-2">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                    `;
+
+                    step.appendChild(activeCircle);
+                } else {
+                    // Add the small inactive circle
+                    const inactiveCircle = document.createElement('span');
+                    inactiveCircle.classList.add(
+                        'absolute',
+                        'h-2',
+                        'left-0',
+                        'left-0.5',
+                        'top-1/2',
+                        '-translate-y-1/2',
+                        'w-2',
+                        'bg-white',
+                        'rounded-full'
+                    );
+
+                    step.appendChild(inactiveCircle);
+                }
+
+                // Add bullet label, location, and date/time
+                const label = document.createElement('p');
+                label.classList.add('font-bold', 'pt-4');
+                label.textContent = bullet.label;
+                step.appendChild(label);
+
+                const location = document.createElement('label');
+                location.textContent = bullet.location;
+                step.appendChild(location);
+
+                const dateTime = document.createElement('p');
+                dateTime.classList.add('pb-4');
+                dateTime.textContent = bullet.datetime.toLocaleString();
+                step.appendChild(dateTime);
+
+                // Append step to container
+                containerSteps.appendChild(step);
+            });
+        }
+
+
+
+
     </script>
 @endsection
 

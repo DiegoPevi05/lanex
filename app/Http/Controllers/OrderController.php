@@ -21,6 +21,64 @@ class OrderController extends AbstractEntityController
         parent::__construct(new Order(), $formService);
     }
 
+    public function searchOrder(Request $request)
+    {
+        $orderNumber = strtolower($request->input('order_number')); // Convert input to lowercase
+
+        // Fetch the order with only the specified fields
+        $order = Order::whereRaw('LOWER(order_number) = ?', [$orderNumber])->first();
+
+        // Check if the order was found
+        if (!$order) {
+            return response()->json(['error' => ['Order not found.']], 404);
+        }
+
+        // Fetch freights related to the order
+        $freights = $order->freights()
+            ->select([
+                'id', // Primary key
+                'freight_id',
+                'name',
+                'description',
+                'origin',
+                'dimensions_units',
+                'dimensions',
+                'weight_units',
+                'weight',
+                'volume_units',
+                'volume',
+                'packages'
+            ])
+            ->get()
+            ->toArray();
+
+        // Fetch tracking steps related to the order
+        $trackingSteps = $order->trackingSteps()
+            ->select(['status', 'sequence', 'country', 'city', 'address', 'transport_type_id','updated_at']) // Include foreign key
+            ->get()
+            ->map(function ($trackingStep) {
+
+                // Specify only the fields you need from the related transportType
+                $transportType = $trackingStep->transportType()->select(['type', 'name', 'icon','status','description','external_reference'])->first(); // Adjust fields as needed
+
+                return array_merge(
+                    $trackingStep->toArray(),
+                    ['transport_type' => $transportType ? $transportType->toArray() : null] // Add transport_type object
+                );
+            })
+            ->toArray();
+
+        // Construct the final response
+        $response = [
+            'order' => $order->only(['order_number', 'status', 'details', 'numero_dam', 'manifest', 'client_name']),
+            'freights' => $freights,
+            'tracking_steps' => $trackingSteps
+        ];
+
+        // Return JSON response
+        return response()->json($response);
+    }
+
     public function index(Request $request)
     {
         $filterKey = $request->input('filterKey');
