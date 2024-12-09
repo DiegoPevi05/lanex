@@ -54,7 +54,7 @@ class OrderController extends AbstractEntityController
 
         // Fetch tracking steps related to the order
         $trackingSteps = $order->trackingSteps()
-            ->select(['status', 'sequence', 'country', 'city', 'address', 'transport_type_id','updated_at']) // Include foreign key
+            ->select(['status', 'sequence', 'country', 'city', 'transport_type_id','updated_at']) // Include foreign key
             ->get()
             ->map(function ($trackingStep) {
 
@@ -70,7 +70,7 @@ class OrderController extends AbstractEntityController
 
         // Construct the final response
         $response = [
-            'order' => $order->only(['order_number', 'status', 'details', 'numero_dam', 'manifest', 'client_name']),
+            'order' => $order->only(['order_number', 'status', 'details', 'numero_dam', 'manifest', 'client_name','updated_at']),
             'freights' => $freights,
             'tracking_steps' => $trackingSteps
         ];
@@ -370,6 +370,8 @@ class OrderController extends AbstractEntityController
             return response()->json(['error' => ['Invalid step index.']], 400);
         }
 
+        $lastStep = count($trackingSteps) - 1;
+
         foreach ($trackingSteps as $index => $trackingStep) {
             if ($index < $step) {
                 // Previous steps
@@ -379,6 +381,13 @@ class OrderController extends AbstractEntityController
             } elseif ($index == $step) {
                 // Current step
                 $trackingStep->status = $status; // IN_TRANSIT, COMPLETED, or PENDING
+
+                if($lastStep == $step && $status == 'COMPLETED'){
+                    $order->status = 'COMPLETED';
+                }else{
+                    $order->status = 'IN_TRANSIT';
+                };
+
                 if($status == 'PENDING'){
                     $trackingStep->transportType->status = 'INACTIVE';
                 }else{
@@ -390,9 +399,12 @@ class OrderController extends AbstractEntityController
                 $trackingStep->transportType->status = 'INACTIVE';
             }
 
+
             // Save each step's status
             $trackingStep->save();
         }
+
+        $order->save();
 
         return response()->json(['success' => ['Order status updated successfully.']]);
     }

@@ -29,47 +29,17 @@
                 </div>
                 <div id="content-order-tracked" class="w-full h-auto grid grid-cols-1 sm:grid-cols-2 animation-element slide-in-up hidden">
                     <div class="col-span-1 flex flex-col items-start justify-start">
-                        <label>Delivered</label>
-                        <h2>Monday</h2>
-                        <h5>11/18/24 at 11:44 AM</h5>
-                        <p>Signed for by: O CASTILLA</p>
+                        <label id="header_track_status">Delivered</label>
+                        <h2 id="header_track_status_day">Monday</h2>
+                        <h5 id="header_track_status_eta">11/18/24 at 11:44 AM</h5>
                         <span class="w-full h-4"></span>
-                        <label>Delivery Status</label>
-                        <h5>Delivered</h5>
+                        <label id="sub_header_track_status">Delivery Status</label>
+                        <h5 id="track_status">Delivered</h5>
                     </div>
                     <div class="col-span-1 flex flex-col items-end justify-start">
                         <label>Tracking Id</label>
-                        <p id="tracking_id">417412570940</p>
+                        <p id="tracking_id"></p>
                         <div id="tracking_steps" class="relative w-4 h-full flex flex-col justify-start items-end py-4">
-                            <span class="relative flex flex-col items-end justify-start w-[200px]">
-                                <span class="absolute h-full left-0 w-3 bg-primary rounded-t-full"></span>
-                                <span class="absolute h-2 left-0 left-0.5 top-1/2 -translate-y-1/2 w-2 bg-white rounded-full"></span>
-                                <p class="font-bold pt-4">From</p>
-                                <label>LAWRENCE, MI US</label>
-                                <p class="pb-4">11/8/24 6:34 AM</p>
-                            </span>
-                            <span class="relative flex flex-col items-end justify-start w-[200px]">
-                                <span class="absolute h-full left-0 w-[12px] bg-primary"></span>
-                                <span class="absolute h-16 w-16 left-0 -left-8 translate-x-2 top-1/2 -translate-y-1/2  bg-primary rounded-full flex items-center justify-center text-white p-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check rounded-full border-2 border-white p-2"><path d="M20 6 9 17l-5-5"/></svg>
-
-                                </span>
-                                <p class="font-bold pt-4">ON THE WAY</p>
-                                <label>LIMA PE</label>
-                                <p class="pb-4">11/16/24 1:00 PM</p>
-                            </span>
-                            <span class="relative flex flex-col items-end justify-start w-[200px]">
-                                <span class="absolute h-full left-0 w-3 bg-primary"></span>
-                                <span class="absolute h-2 left-0 left-0.5 top-1/2 -translate-y-1/2 w-2 bg-white rounded-full"></span>
-                                <p class="font-bold py-4">OUT FOR DELIVERY</p>
-                            </span>
-                            <span class="relative flex flex-col items-end justify-start w-[200px]">
-                                <span class="absolute h-full left-0 w-3 bg-primary rounded-b-full"></span>
-                                <span class="absolute h-2 left-0 left-0.5 top-1/2 -translate-y-1/2 w-2 bg-white rounded-full"></span>
-                                <p class="font-bold pt-4">Delivered</p>
-                                <label>LIMA, PE</label>
-                                <p class="pb-4">11/18/24 at 11:44 AM</p>
-                            </span>
                         </div>
                     </div>
                 </div>
@@ -81,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div id="content-order-freights" class="w-full h-full px-4 sm:px-24 xl:px-48 pb-12 sm:pb-24 xl:pb-36 flex flex-col justify-start items-start gap-y-6 sm:gap-y-12 xl:gap-y-24 animation-element slide-in-up hidden">
+        <div id="content-order-freights" class="w-full h-full px-4 sm:px-24 xl:px-48 pb-6 sm:pb-12 xl:pb-18 flex flex-col justify-start items-start gap-y-6 sm:gap-y-12 xl:gap-y-24 animation-element slide-in-up hidden">
             <div class="w-full flex flex-row justify-start items-center gap-x-4">
                 <span class="h-12 w-12 text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
@@ -93,13 +63,35 @@
                     <tr class="border-2 border-gray-light">
                         <th class="border-2 border-gray-light text-center py-1 bg-secondary">Freight ID</th>
                         <th class="border-2 border-gray-light text-center py-1 bg-secondary">Name</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Description</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary max-sm:hidden">Description</th>
                         <th class="border-2 border-gray-light text-center py-1 bg-secondary">Origin</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Characteristics</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary max-sm:hidden">Characteristics</th>
                         <th class="border-2 border-gray-light text-center py-1 bg-secondary">Packages</th>
                     </tr>
                 </thead>
                 <tbody id="freights-container">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="content-order-tracking-steps" class="w-full h-full px-4 sm:px-24 xl:px-48 pb-12 sm:pb-24 xl:pb-36 flex flex-col justify-start items-start gap-y-6 sm:gap-y-12 xl:gap-y-24 animation-element slide-in-up hidden">
+            <div class="w-full flex flex-row justify-start items-center gap-x-4">
+                <span class="h-12 w-12 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                </span>
+                <h2>Tracking of Order</h2>
+            </div>
+            <table class="w-full border-2 border-gray-light">
+                <thead>
+                    <tr class="border-2 border-gray-light">
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary max-sm:hidden">Icon</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Name</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Country</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">City</th>
+                        <th class="border-2 border-gray-light text-center py-1 bg-secondary">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tracking-steps-container">
                 </tbody>
             </table>
         </div>
@@ -158,6 +150,8 @@
         const content_order_tracked = track_container.querySelector('#content-order-tracked');
         const content_order_tracked_map = track_container.querySelector('#content-order-tracked-map');
         const content_order_freights = track_container.querySelector('#content-order-freights');
+        const content_order_tracking_steps = track_container.querySelector('#content-order-tracking-steps');
+
 
 
 
@@ -182,6 +176,10 @@
             }
             if (!content_order_freights.classList.contains('hidden')) {
                 content_order_freights.classList.add('hidden');
+            }
+
+            if (!content_order_tracking_steps.classList.contains('hidden')) {
+                content_order_tracking_steps.classList.add('hidden');
             }
 
 
@@ -209,11 +207,13 @@
                 console.log(result)
 
                 // Log the data to the console
+                addOrderData(result.order,result.tracking_steps);
                 addFreights(result.freights)
-                addStepBullet(dataTemplate);
+                addStepBullet(serializeOrderBulletData(result.order,result.tracking_steps));
                 content_order_tracked.classList.remove('hidden');
                 content_order_tracked_map.classList.remove('hidden');
                 content_order_freights.classList.remove('hidden');
+                content_order_tracking_steps.classList.remove('hidden');
                 container_content_order_tracked.classList.add('xl:w-2/3')
 
                 //not_found_order_content
@@ -224,6 +224,44 @@
                 loader_order_content.classList.add('hidden');
             }
         });
+
+        function addOrderData(order,tracking_steps){
+
+
+
+            const tracking_id_p_tag = track_container.querySelector('#tracking_id');
+            tracking_id_p_tag.innerHTML = order.order_number;
+
+            const container_info = track_container.querySelector('#content-order-tracked');
+            const tracking_header_track_status  = container_info.querySelector('#header_track_status');
+            const tracking_subheader_track_status  = container_info.querySelector('#sub_header_track_status');
+            const tracking_track_status = container_info.querySelector('#track_status');
+
+            if(order.status == 'PENDING'){
+                tracking_header_track_status.innerHTML = 'Confirmation';
+                tracking_subheader_track_status.innerHTML = 'Confirmation Status';
+                tracking_track_status.innerHTML = 'Confirmed';
+            }else if(order.status == 'IN_TRANSIT'){
+                tracking_header_track_status.innerHTML = 'Shipping';
+                tracking_subheader_track_status.innerHTML = 'Shipping Status';
+                tracking_track_status.innerHTML = 'Shipping';
+            }else{
+                tracking_header_track_status.innerHTML = 'Delivered';
+                tracking_subheader_track_status.innerHTML = 'Delivered Status';
+                tracking_track_status.innerHTML = 'Delivered';
+            }
+
+            const tracking_header_track_day  = container_info.querySelector('#header_track_status_day');
+
+            const tracking_header_track_eta  = container_info.querySelector('#header_track_status_eta');
+
+            let eta = new Date(order.updated_at);
+            let dayName = eta.toLocaleDateString('en-US', { weekday: 'long' });
+
+            tracking_header_track_day.innerHTML = dayName;
+            tracking_header_track_eta.innerHTML = eta.toLocaleString();
+
+        }
 
         function addFreights(freights) {
             const freightsContainer = document.querySelector('#freights-container');
@@ -251,9 +289,12 @@
                     freight.packages
                 ];
 
-                fields.forEach(field => {
+                fields.forEach((field,index) => {
                     const cell = document.createElement('td');
                     cell.classList.add('border-2', 'border-gray-light', 'text-center', 'py-2');
+                    if(index == 2 || index == 4 ){
+                        cell.classList.add('max-sm:hidden');
+                    }
                     cell.textContent = field; // Add field content
                     row.appendChild(cell); // Append cell to row
                 });
@@ -263,32 +304,57 @@
             });
         }
 
-        const dataTemplate = [
-            {
-                label:"From",
-                location: "LAWRENCE, MI US",
-                datetime: new Date(),
-                active:false
-            },
-            {
-                label:"On the way",
-                location: "LAWRENCE, MI US",
-                datetime: new Date(),
-                active:false
-            },
-            {
-                label:"Out for Delivery",
-                location: "LAWRENCE, MI US",
-                datetime: new Date(),
-                active:true
-            },
-            {
-                label:"Delivered",
-                location: "LIMA, PE",
-                datetime: new Date(),
-                active:false
+
+        function serializeOrderBulletData(order,tracking_steps){
+            let serializedBullets = [];
+
+            if(tracking_steps &&  tracking_steps.length > 2 ){
+
+                const firstTrackingStep = tracking_steps.filter((item) => item.sequence == 0)[0];
+
+
+                serializedBullets.push({
+                    label:"From",
+                    location:`${firstTrackingStep.city}, ${firstTrackingStep.country}`,
+                    datetime: new Date(firstTrackingStep.updated_at),
+                    active: firstTrackingStep.status == 'IN_TRANSIT' ? true : false
+                });
+
+                const currentInTransit = tracking_steps.filter((item) => item.status == 'IN_TRANSIT')[0];
+
+                if(currentInTransit.sequence != firstTrackingStep.sequence ){
+                    serializedBullets.push({
+                        label:"On the way",
+                        location:`${currentInTransit.city}, ${currentInTransit.country}`,
+                        datetime: new Date(currentInTransit.updated_at),
+                        active: currentInTransit.status == 'IN_TRANSIT' ? true : false
+                    });
+                }
+
+                const lastTrackingStep = tracking_steps[tracking_steps.length -1];
+
+                serializedBullets.push({
+                    label:"Out for delivery",
+                    location: null,
+                    datetime: null,
+                    active: lastTrackingStep.status == 'IN_TRANSIT' ? true : false
+                });
+
+
+                serializedBullets.push({
+                    label:"From",
+                    location:`${lastTrackingStep.city}, ${lastTrackingStep.country}`,
+                    datetime: new Date(lastTrackingStep.updated_at),
+                    active: lastTrackingStep.status == 'COMPLETED' ? true : false
+                });
+
             }
-        ]
+
+
+
+            return serializedBullets;
+
+        }
 
         function addStepBullet(bullets) {
             const containerSteps = document.querySelector('#tracking_steps'); // Select the container
@@ -318,7 +384,6 @@
                         'absolute',
                         'h-16',
                         'w-16',
-                        'left-0',
                         '-left-8',
                         'translate-x-2',
                         'top-1/2',
@@ -364,14 +429,19 @@
                 label.textContent = bullet.label;
                 step.appendChild(label);
 
-                const location = document.createElement('label');
-                location.textContent = bullet.location;
-                step.appendChild(location);
+                if(bullet.location){
+                    const location = document.createElement('label');
+                    location.textContent = bullet.location;
+                    step.appendChild(location);
+                }
 
-                const dateTime = document.createElement('p');
-                dateTime.classList.add('pb-4');
-                dateTime.textContent = bullet.datetime.toLocaleString();
-                step.appendChild(dateTime);
+                if(bullet.datetime){
+                    const dateTime = document.createElement('p');
+                    dateTime.classList.add('pb-4');
+                    dateTime.textContent = bullet.datetime.toLocaleString();
+                    step.appendChild(dateTime);
+                }
+
 
                 // Append step to container
                 containerSteps.appendChild(step);
