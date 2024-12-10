@@ -25,6 +25,10 @@ $lastIndex = count($order->trackingSteps) - 1;
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
             </span>
 
+            <span onClick='showDeleteModal("{{$order->getHelperMessages()['cancel_header']}}","{{$order->getHelperMessages()['cancel_content']}}")' class="h-8 w-8 bg-white border-2 border-gray-light rounded-xl flex items-center justify-center text-secondary-dark p-1 hover:bg-primary hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ban"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
+            </span>
+
             <span onClick='showDeleteModal("{{$order->getHelperMessages()['delete_header']}}","{{$order->getHelperMessages()['delete_content']}}")' class="h-8 w-8 bg-white border-2 border-gray-light rounded-xl flex items-center justify-center text-secondary-dark p-1 hover:bg-primary hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
             </span>
@@ -55,13 +59,13 @@ $lastIndex = count($order->trackingSteps) - 1;
         <div class="w-full flex flex-row mt-2 h-auto">
             <div class="grid grid-cols-2 grid-rows-span w-1/2 relative">
                 <div class="col-span-1 flex justify-center items-center">
-                    <p>{{ __('messages.track.order.origin') }}</p>
+                    <p>{{ __('messages.track.order.from') }}</p>
                 </div>
                 <div class="col-span-1 text-secondary-dark flex justify-center items-center text-center px-4">
                     <p class="text-sm">{{ $order->getCurrentTrackStep()->country }}</p>
                 </div>
                 <div class="col-span-1 flex justify-center items-center">
-                    <p>{{ __('messages.track.order.destiny') }}</p>
+                    <p>{{ __('messages.track.order.to') }}</p>
                 </div>
                 <div class="col-span-1 text-secondary-dark flex justify-center items-center text-center px-4">
                     <p class="text-sm">{{$order->getLastTrackStep()->country}}</p>

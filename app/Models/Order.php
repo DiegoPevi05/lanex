@@ -170,6 +170,8 @@ class Order extends Model
     public static function getHelperMessages()
     {
         return [
+            'cancel_header' => __('messages.dashboard.order.form.modal.delete_header'),
+            'cancel_content' => __('messages.dashboard.order.form.modal.delete_content'),
             'delete_header' => __('messages.dashboard.order.form.modal.delete_header'),
             'delete_content' => __('messages.dashboard.order.form.modal.delete_content'),
         ];

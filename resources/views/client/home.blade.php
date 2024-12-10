@@ -62,7 +62,7 @@
                                             <input id="tracking_id_input" placeholder="Tracking ID" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
                                             <button id="tracking_id_btn" class=" duration-300 active:scale-95 rounded-xl transition h-full uppercase font-bold inline-flex gap-x-4 justify-center items-center  border-2  px-8 py-2  bg-primary hover:bg-primary-dark text-white border-primary hover:border-white">{{ __('messages.common.search') }}</button>
                                         </div>
-                                        <p class="text-[12px]">{{ __('messages.home.hero.input_helper_text') }} <a href="{{route('contact')}}"
+                                        <p class="text-[12px]">{{ __('messages.home.hero.input_helper_text') }} <a href="https://wa.link/s7w6z3" target="_blank"
                                                 aria-label="{{ __('messages.aria_labels.default') }}"
                                                 title="{{ __('messages.titles.default') }}"
                                                 class="text-primary underline cursor-pointer">{{ __('messages.home.hero.input_helper_help') }}</a></p>
@@ -239,7 +239,7 @@
 
             // Redirect to the track route with the tracking_id as a query parameter
             const routeUrl = "{{ route('track') }}";
-            window.location.href = `${routeUrl}?tracking_id=${encodeURIComponent(trackingIdInput)}`;
+            window.location.href = `${routeUrl}?order=${encodeURIComponent(trackingIdInput)}`;
         });
     });
 </script>

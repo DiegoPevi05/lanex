@@ -52,7 +52,6 @@ class OrderStatusMailable extends Mailable
      */
     public function build()
     {
-
         return $this->view('email.order_status')
                     ->subject(trans($this->subject))
                     ->with([
@@ -67,7 +66,7 @@ class OrderStatusMailable extends Mailable
                         'step_confirmed_label' => trans('messages.mail.common.step_confirmed_label'),
                         'step_shipping_label' => trans('messages.mail.common.step_shipping_label'),
                         'step_delivered_label' => trans('messages.mail.common.step_delivered_label'),
-                        'track_link' => '#',
+                        'track_link' => url('/track') . '?order=' . $this->order->order_number,
                         'track_btn' => trans('messages.mail.common.track_btn'),
                         'order_details_header' => trans('messages.mail.common.order_details_header'),
                         'shipping_address' => trans('messages.mail.common.shipping_address'),
