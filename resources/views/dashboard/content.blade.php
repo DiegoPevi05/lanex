@@ -205,7 +205,7 @@
                     contentForm.classList.remove('hidden');
 
                     if(typeEntity == "order"){
-                        loadOrderFunction();
+                        loadOrderFunction(idEntity);
                     }
 
                      // Check for errors and populate error messages
@@ -501,26 +501,48 @@
 
         }
 
-        function attachIconImageUpdate() {
-            const iconSelect = document.getElementById('icon-tracking-step');
-            const iconImage = document.getElementById('icon-tracking-step-image');
+        function attachIconImageUpdates(OrderId) {
+            // Select all transport icon dropdowns
+            const iconSelects = document.querySelectorAll('[id^="transports["][id$="icon]"]');
 
-            if (iconSelect && iconImage) {
-                // Set the initial image based on the selected option
-                iconImage.src = iconSelect.value ? '/storage'+iconSelect.value : '/storage/images/svgs/ambulance.svg';
+            const order = OrdersData.find((item) => item.id == Number(OrderId) )
 
-                // Remove any existing event listeners to avoid duplicates
-                iconSelect.removeEventListener('change', updateIconImage);
+            iconSelects.forEach((iconSelect) => {
+                const index = iconSelect.id.match(/\[([^\]]+)\]/)?.[1]; // Extract the index from the ID
+                if (index) {
 
-                // Add a new event listener to update the image
-                iconSelect.addEventListener('change', updateIconImage);
-            }
+                    const iconImage = document.getElementById(`icon-tracking-step-image-${index}`);
+
+                    if (iconImage) {
+                        attachIconImageUpdate(iconSelect, iconImage);
+                    }
+
+                    iconSelect.value = order.tracking_steps[index].transport_type.icon;
+                    iconImage.src = `/storage${order.tracking_steps[index].transport_type.icon}`;
+                }
+            });
         }
 
-        function updateIconImage() {
-            const iconSelect = document.getElementById('icon-tracking-step');
-            const iconImage = document.getElementById('icon-tracking-step-image');
+        function attachIconImageUpdate(iconSelect, iconImage){
 
+                // Set the initial image based on the selected option
+                iconImage.src = iconSelect.value
+                    ? `/storage${iconSelect.value}`
+                    : '/storage/images/svgs/ambulance.svg';
+
+                // Remove existing event listeners to avoid duplicates
+                iconSelect.removeEventListener('change', updateIconImage(iconSelect,iconImage));
+
+                // Add a new event listener to update the image dynamically
+                iconSelect.addEventListener('change', function () {
+                    iconImage.src = this.value
+                        ? `/storage${this.value}`
+                        : '/storage/images/svgs/ambulance.svg';
+                });
+        }
+
+
+        function updateIconImage(iconSelect,iconImage) {
             // Update the image source to the selected option or default to ambulance
             const selectedIcon = iconSelect.value;
             iconImage.src = selectedIcon ? '/storage'+selectedIcon : '/storage/images/svgs/ambulance.svg';
@@ -614,60 +636,446 @@
         let transportsContainer = null;
         let addTransportButton = null;
         // Function to add a new Transport Card
-        function addTransportCard() {
+        function addTransportCard(data) {
             const index = transportsContainer.children.length;
-
-            const container_fields = document.getElementById("container_new_tracking_step");
-
-            //extract fields
-
-            const country_field = document.getElementById("country-tracking-step").value;
-            const city_field = document.getElementById("city-tracking-step").value;
-            const address_field = document.getElementById("address-tracking-step").value;
-            const icon_field = document.getElementById("icon-tracking-step").value;
-            const type_field = document.getElementById("type-tracking-step").value;
-            const status_field = document.getElementById("status-tracking-step").value;
-            const name_field = document.getElementById("name-tracking-step").value;
-            const external_reference_field  = document.getElementById("external-reference-tracking-step").value;
-            const description_field  = document.getElementById("description-tracking-step").value;
-
 
             // Create a new freight card div
             const transportCard = document.createElement("div");
-            transportCard.classList.add("step-track", "w-full", "h-auto", "flex", "flex-row", "items-center", "justify-between", "px-4", "py-2", "border-2", "border-gray-200", "rounded-xl");
-            transportCard.innerHTML = `
-                <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
-                    <p class="step-track-correlative text-sm font-bold text-body">${index + 1}</p>
-                    <img id="step-track-icon" onClick="updateTransportActiveState(${index})" src="/storage/${icon_field}" class="step-track-icon h-12 w-12 shadow-md p-2 border-gray-light border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95"/>
-                    <label for="steps-track" class="block text-sm font-bold text-secondary-dark capitalize">${name_field}</label>
-                </div>
+            transportCard.classList.add("step-track", "w-full", "h-auto", "flex","flex-col", "items-start", "justify-start", "px-4", "py-2", "border-2", "border-gray-200", "rounded-xl");
 
-                <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
-                    <span class="text-gray-400 h-6 w-6 cursor-pointer hover:text-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
-                    </span>
-                    <button id="delete_transport_btn_${index}" type="button" class="h-8 w-8 bg-primary hover:bg-white text-white hover:text-primary duration-300 rounded-full p-1 border-2 border-primary active:scale-95">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                    </button>
-                </div>
+            const transportHeaderCard = document.createElement('div');
+            transportHeaderCard.classList.add('w-full','h-auto','flex','flex-row','items-center','justify-between','z-[100]');
+
+            // Wrapper left Header
+            const WrapperLeftHeader = document.createElement('div');
+            WrapperLeftHeader.classList.add('w-auto', 'h-full', 'flex', 'flex-row', 'justify-start', 'items-center', 'gap-x-2');
+            transportHeaderCard.appendChild(WrapperLeftHeader);
+
+            // Create elements for the first section
+            const stepTrackCorrelative = document.createElement('p');
+            stepTrackCorrelative.classList.add('step-track-correlative', 'text-sm', 'font-bold', 'text-body');
+            stepTrackCorrelative.textContent = index + 1;
+
+            const stepTrackIcon = document.createElement('img');
+            stepTrackIcon.id = `step-track-icon-${index}`;
+            stepTrackIcon.src = `{{ asset('storage/' . 'images/svgs/ambulance.svg') }}`;
+
+            if(data){
+                if(data.name){
+                    stepTrackIcon.src = '/storage'+data.icon;
+                }
+            }
 
 
-                <input type="text" id="transports[${index}][country]" name="transports[${index}][country]" class="hidden" value="${country_field}">
-                <input type="text" id="transports[${index}][city]" name="transports[${index}][city]" class="hidden" value="${city_field}">
-                <input type="text" id="transports[${index}][address]" name="transports[${index}][address]" class="hidden" value="${address_field}">
-                <input type="text" id="transports[${index}][name]" name="transports[${index}][name]" class="hidden" value="${name_field}">
-                <input type="text" id="transports[${index}][type]" name="transports[${index}][type]" class="hidden" value="${type_field}">
-                <input type="text" id="transports[${index}][status]" name="transports[${index}][status]" class="hidden" value="${status_field}">
-                <input type="text" id="transports[${index}][external_reference]" name="transports[${index}][external_reference]" class="hidden" value="${external_reference_field}">
-                <input type="text" id="transports[${index}][description]" name="transports[${index}][description]" class="hidden" value="${description_field}">
-                <input type="text" id="transports[${index}][icon]" name="transports[${index}][icon]" class="hidden" value="${icon_field}">
-            `;
+            stepTrackIcon.classList.add('step-track-icon', 'h-12', 'w-12', 'shadow-md', 'p-2', 'border-4', 'text-primary', 'rounded-full', 'duration-300', 'hover:border-primary', 'cursor-pointer', 'active:scale-95', 'border-gray-light');
+            stepTrackIcon.setAttribute('onClick', `updateTransportActiveState(${index})`);
 
-            // Append the new freight card to the container
+            const stepTrackLabel = document.createElement('label');
+            stepTrackLabel.id = `step-track-label-${index}`;
+            stepTrackLabel.classList.add('block', 'text-sm', 'font-bold', 'text-secondary-dark', 'capitalize');
+
+            if(data){
+                if(data.name){
+                    stepTrackLabel.textContent = data.name;
+                }
+            }
+
+            // Append elements to WrapperLeftHeader
+            WrapperLeftHeader.appendChild(stepTrackCorrelative);
+            WrapperLeftHeader.appendChild(stepTrackIcon);
+            WrapperLeftHeader.appendChild(stepTrackLabel);
+
+            // Create the second section
+            const WrapperRightHeader = document.createElement('div');
+            WrapperRightHeader.classList.add('w-auto', 'h-full', 'flex', 'flex-row', 'justify-start', 'items-center', 'gap-x-2');
+
+            // Toggle down button
+            const toggleDownButton = document.createElement('span');
+            toggleDownButton.id = `toogle_down_wrap_content_transport_btn_${index}`;
+            toggleDownButton.classList.add('h-8', 'w-8', 'p-1', 'cursor-pointer', 'duration-300', 'text-white', 'rounded-full', 'bg-primary', 'hover:bg-primary-dark', 'active:scale-95');
+            toggleDownButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>`;
+
+            // Toggle up button
+            const toggleUpButton = document.createElement('span');
+            toggleUpButton.id = `toogle_up_wrap_content_transport_btn_${index}`;
+            toggleUpButton.classList.add('h-8', 'w-8', 'p-1', 'cursor-pointer', 'duration-300', 'text-white', 'rounded-full', 'bg-primary', 'hover:bg-primary-dark', 'active:scale-95', 'hidden');
+            toggleUpButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>`;
+
+
+
+            // Align justify icon
+            const alignJustifyIcon = document.createElement('span');
+            alignJustifyIcon.classList.add('text-gray-400', 'h-6', 'w-6', 'cursor-pointer', 'hover:text-primary');
+            alignJustifyIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>`;
+
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.id = `delete_transport_btn_${index}`;
+            deleteButton.type = 'button';
+            deleteButton.classList.add('h-8', 'w-8', 'bg-primary', 'hover:bg-white', 'text-white', 'hover:text-primary', 'duration-300', 'rounded-full', 'p-1', 'border-2', 'border-primary', 'active:scale-95');
+            deleteButton.setAttribute('onclick', "this.closest('.step-track').remove(); updateTransportIndices()");
+            deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+            deleteButton.addEventListener("click", () => deleteTransportCard(transportCard));
+
+            // Append elements to WrapperSecondSection
+            WrapperRightHeader.appendChild(toggleDownButton);
+            WrapperRightHeader.appendChild(toggleUpButton);
+            WrapperRightHeader.appendChild(alignJustifyIcon);
+            WrapperRightHeader.appendChild(deleteButton);
+
+            // Append both sections to transportHeaderCard
+            transportHeaderCard.appendChild(WrapperLeftHeader);
+            transportHeaderCard.appendChild(WrapperRightHeader);
+
+            transportCard.appendChild(transportHeaderCard);
+
+
+            const transportBodyCard = document.createElement('div');
+            transportBodyCard.classList.add(`transports-wrapper-content-${index}`,'w-full','h-[0]','hidden','opacity-0','grid','grid-cols-2','text-body','gap-y-2','border-2','border-gray-light','rounded-xl','gap-4','transition-all','duration-300');
+
+
+
+            const headerLabel = document.createElement('label');
+
+            headerLabel.htmlFor = "icon-tracking-step";
+            headerLabel.classList.add('block','col-span-2','text-sm','font-bold','text-secondary-dark','capitalize');
+            headerLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.icon') }}"
+
+            transportBodyCard.appendChild(headerLabel);
+
+            //Country Field
+            const CountrySpan = document.createElement('div');
+            CountrySpan.classList.add('col-span-1');
+
+            const CountryLabel = document.createElement('label');
+            CountryLabel.htmlFor = `transports[${index}][country]`;
+            CountryLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            CountryLabel.textContent = "{{ __('messages.dashboard.tracking_step.form.fields.country') }}"
+
+            const CountrySelect = document.createElement('select');
+            CountrySelect.id = `transports[${index}][country]`;
+            CountrySelect.name =  `transports[${index}][country]`;
+            CountrySelect.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+
+
+
+
+            const CountrySelectDefaultOption = document.createElement('option');
+            CountrySelectDefaultOption.textContent = "{{ __('messages.dashboard.tracking_step.form.placeholders.country') }}"
+
+            CountrySelect.appendChild(CountrySelectDefaultOption);
+
+            CountrySpan.appendChild(CountryLabel);
+            CountrySpan.appendChild(CountrySelect);
+
+            transportBodyCard.appendChild(CountrySpan);
+
+            //City Field
+
+            const CitySpan = document.createElement('div');
+            CitySpan.classList.add('col-span-1');
+
+            const CityLabel = document.createElement('label');
+            CityLabel.htmlFor = `transports[${index}][city]`;
+            CityLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            CityLabel.textContent = "{{ __('messages.dashboard.tracking_step.form.fields.city') }}"
+
+            const CitySelect = document.createElement('select');
+            CitySelect.id = `transports[${index}][city]`;
+            CitySelect.name =  `transports[${index}][city]`;
+            CitySelect.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+
+            const CitySelectDefaultOption = document.createElement('option');
+            CitySelectDefaultOption.textContent = "{{ __('messages.dashboard.tracking_step.form.placeholders.city') }}"
+
+            CitySelect.appendChild(CitySelectDefaultOption);
+
+            CitySpan.appendChild(CityLabel);
+            CitySpan.appendChild(CitySelect);
+
+            transportBodyCard.appendChild(CitySpan);
+
+
+            //Address Field
+
+            const AddressSpan = document.createElement('div');
+            AddressSpan.classList.add('col-span-2');
+
+            const AddressLabel = document.createElement('label');
+            AddressLabel.htmlFor = `transports[${index}][address]`;
+            AddressLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            AddressLabel.textContent = "{{ __('messages.dashboard.tracking_step.form.fields.address') }}"
+
+            const AddressInput = document.createElement('input');
+            AddressInput.id = `transports[${index}][address]`;
+            AddressInput.name =  `transports[${index}][address]`;
+            AddressInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            AddressInput.placeholder = "{{ __('messages.dashboard.tracking_step.form.placeholders.address') }}";
+
+            if(data && data.address){
+                AddressInput.value = data.address;
+            }
+
+            AddressSpan.appendChild(AddressLabel);
+            AddressSpan.appendChild(AddressInput);
+
+            transportBodyCard.appendChild(AddressSpan);
+
+            //Icon Field
+
+            const IconSpan = document.createElement('div');
+            IconSpan.classList.add('col-span-2', 'flex', 'flex-row','gap-x-4');
+
+            const IconSelect = document.createElement('select');
+            IconSelect.id = `transports[${index}][icon]`;
+            IconSelect.name =  `transports[${index}][icon]`;
+            IconSelect.classList.add('text-sm','mt-2','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            IconSelect.setAttribute('onchange', `AddHandlerUpdateTrackIcon(this, ${index})`);
+
+            const IconImagePreview = document.createElement('img');
+            IconImagePreview.id = `icon-tracking-step-image-${index}`;
+            IconImagePreview.src = "/storage/images/svgs/ambulance.svg";
+            IconImagePreview.classList.add('h-12','w-12','shadow-md','rounded-xl','p-2','border-2','border-primary','text-primary');
+
+
+
+
+            IconSpan.appendChild(IconSelect);
+            IconSpan.appendChild(IconImagePreview);
+
+            transportBodyCard.appendChild(IconSpan);
+
+            //Type Field
+
+            const TypeSpan = document.createElement('div');
+            TypeSpan.classList.add('col-span-1');
+
+            const TypeLabel = document.createElement('label');
+            TypeLabel.htmlFor = `transports[${index}][type]`;
+            TypeLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            TypeLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.type') }}"
+
+            const TypeSelect = document.createElement('select');
+            TypeSelect.id = `transports[${index}][type]`;
+            TypeSelect.name =  `transports[${index}][type]`;
+            TypeSelect.classList.add('text-sm','mt-2','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body','capitalize');
+
+            const TypeSelectDefaultOption = document.createElement('option');
+            TypeSelectDefaultOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.SELECT_TRANSPORT_TYPE') }}"
+            TypeSelect.appendChild(TypeSelectDefaultOption);
+
+            const TypeSelectLandOption = document.createElement('option');
+            TypeSelectLandOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.LAND') }}"
+            TypeSelectLandOption.value = "LAND";
+            TypeSelect.appendChild(TypeSelectLandOption);
+
+            const TypeSelectAirOption = document.createElement('option');
+            TypeSelectAirOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.AIR') }}"
+            TypeSelectAirOption.value = "AIR";
+            TypeSelect.appendChild(TypeSelectAirOption);
+
+            const TypeSelectShipOption = document.createElement('option');
+            TypeSelectShipOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.SHIP') }}"
+            TypeSelectShipOption.value = "SHIP";
+            TypeSelect.appendChild(TypeSelectShipOption);
+
+            const TypeSelectCustomOption = document.createElement('option');
+            TypeSelectCustomOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.CUSTOM') }}"
+            TypeSelectCustomOption.value = "CUSTOM";
+            TypeSelect.appendChild(TypeSelectCustomOption);
+
+
+            TypeSpan.appendChild(TypeLabel);
+            TypeSpan.appendChild(TypeSelect);
+
+            transportBodyCard.appendChild(TypeSpan);
+
+            //Status Field
+
+            const StatusSpan = document.createElement('div');
+            StatusSpan.classList.add('col-span-1');
+
+            const StatusLabel = document.createElement('label');
+            StatusLabel.htmlFor = `transports[${index}][status]`;
+            StatusLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            StatusLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.status') }}"
+
+            const StatusSelect = document.createElement('select');
+            StatusSelect.id = `transports[${index}][status]`;
+            StatusSelect.name =  `transports[${index}][status]`;
+            StatusSelect.classList.add('text-sm','mt-2','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body','capitalize');
+
+            const StatusSelectDefaultOption = document.createElement('option');
+            StatusSelectDefaultOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.SELECT_TRANSPORT_TYPE') }}"
+            StatusSelect.appendChild(StatusSelectDefaultOption);
+
+            const StatusSelectInactiveOption = document.createElement('option');
+            StatusSelectInactiveOption.textContent = "{{ __('messages.common.INACTIVE') }}"
+            StatusSelectInactiveOption.value = "INACTIVE";
+            StatusSelect.appendChild(StatusSelectInactiveOption);
+
+            const StatusSelectActiveOption = document.createElement('option');
+            StatusSelectActiveOption.textContent = "{{ __('messages.common.ACTIVE') }}"
+            StatusSelectActiveOption.value = "ACTIVE";
+            StatusSelect.appendChild(StatusSelectActiveOption);
+
+
+            StatusSpan.appendChild(StatusLabel);
+            StatusSpan.appendChild(StatusSelect);
+
+            transportBodyCard.appendChild(StatusSpan);
+
+            //Name Field
+
+            const NameSpan = document.createElement('div');
+            NameSpan.classList.add('col-span-1');
+
+            const NameLabel = document.createElement('label');
+            NameLabel.htmlFor = `transports[${index}][name]`;
+            NameLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            NameLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.name') }}"
+
+            const NameInput = document.createElement('input');
+            NameInput.id = `transports[${index}][name]`;
+            NameInput.name =  `transports[${index}][name]`;
+            NameInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            NameInput.placeholder = "{{ __('messages.dashboard.transport_type.form.placeholders.name') }}";
+
+            if(data && data.name){
+                NameInput.value = data.name;
+            }
+
+            NameSpan.appendChild(NameLabel);
+            NameSpan.appendChild(NameInput);
+
+            transportBodyCard.appendChild(NameSpan);
+
+
+            //External Reference Field
+
+            const ExternalReferenceSpan = document.createElement('div');
+            ExternalReferenceSpan.classList.add('col-span-1');
+
+            const ExternalReferenceLabel = document.createElement('label');
+            ExternalReferenceLabel.htmlFor = `transports[${index}][external_reference]`;
+            ExternalReferenceLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            ExternalReferenceLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.external_reference') }} ({{ __('messages.common.optional') }}):"
+
+            const ExternalReferenceInput = document.createElement('input');
+            ExternalReferenceInput.id = `transports[${index}][external_reference]`;
+            ExternalReferenceInput.name =  `transports[${index}][external_reference]`;
+            ExternalReferenceInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            ExternalReferenceInput.placeholder = "{{ __('messages.dashboard.transport_type.form.placeholders.external_reference') }}";
+
+            if(data && data.extref){
+                ExternalReferenceInput.value = data.extref;
+            }
+
+            ExternalReferenceSpan.appendChild(ExternalReferenceLabel);
+            ExternalReferenceSpan.appendChild(ExternalReferenceInput);
+
+            transportBodyCard.appendChild(ExternalReferenceSpan);
+
+            //Description Reference Field
+
+            const DescriptionSpan = document.createElement('div');
+            DescriptionSpan.classList.add('col-span-2');
+
+            const DescriptionLabel = document.createElement('label');
+            DescriptionLabel.htmlFor = `transports[${index}][description]`;
+            DescriptionLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            DescriptionLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.description') }}"
+
+            const DescriptionInput = document.createElement('textarea');
+            DescriptionInput.id = `transports[${index}][description]`;
+            DescriptionInput.name =  `transports[${index}][description]`;
+            DescriptionInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            DescriptionInput.placeholder = "{{ __('messages.dashboard.transport_type.form.placeholders.description') }}";
+
+            if(data && data.description){
+                DescriptionInput.textContent = data.description;
+            }
+
+            DescriptionSpan.appendChild(DescriptionLabel);
+            DescriptionSpan.appendChild(DescriptionInput);
+
+            transportBodyCard.appendChild(DescriptionSpan);
+
+
+            //Append the new body Transport to the Card
+            transportCard.appendChild(transportBodyCard);
+
+            // Append the new Transport card to the container
             transportsContainer.appendChild(transportCard);
 
-            const deleteButton = transportCard.querySelector(`#delete_transport_btn_${index}`);
-            deleteButton.addEventListener("click", () => deleteTransportCard(transportCard));
+
+            //Adding Event to the element Created to open and close the content
+            toggleTransportContent(`toogle_down_wrap_content_transport_btn_${index}`, `toogle_up_wrap_content_transport_btn_${index}`, `transports-wrapper-content-${index}`);
+
+            // Add an onchange event listener to the input
+            NameInput.addEventListener('input', function () {
+                AddHandlerUpdateTrackName(NameInput, index);
+            });
+
+            attachIconImageUpdate(IconSelect, IconImagePreview);
+
+
+            attachCountriesOptions(CountrySelect);
+
+            // Add event listener to load cities based on selected country
+            CountrySelect.addEventListener('change', function(event) {
+
+                CountrySelect.value = event.target.value;
+
+                if (CitySelect) {
+                    loadCities(event.target.value, CitySelect);
+                }
+
+            });
+
+            if(data && data.country){
+
+                CountrySelect.value = data.country;
+
+                if (CitySelect) {
+
+                    loadCities(data.country, CitySelect);
+
+                    CitySelect.value = data.city;
+                }
+
+            }
+
+            if(data && data.type){
+                TypeSelect.value = data.type;
+            }
+
+            if(data && data.status){
+                StatusSelect.value = data.status;
+            }
+
+            const defaultIconOption = document.createElement('option');
+            defaultIconOption.textContent = "{{ __('messages.dashboard.web.service.form.placeholders.icon') }}"
+            defaultIconOption.setAttribute('selected',true);
+            defaultIconOption.setAttribute('disabled',true);
+
+            IconSelect.appendChild(defaultIconOption); // Appends the <option> to the <select> element
+
+            for (const item of IconsArray) {
+                const newOption = document.createElement('option');
+                newOption.value = item.value; // Assigns the "value" property from the transformed array
+                newOption.textContent = item.content; // Sets the "content" property as the displayed text
+                IconSelect.appendChild(newOption); // Appends the <option> to the <select> element
+            }
+
+            if(data && data.icon){
+                IconSelect.value = data.icon;
+
+                IconImagePreview.src = "/storage"+data.icon;
+            }
+
+
         }
 
         // Function to delete a Transport Card
@@ -680,8 +1088,8 @@
             const transportCards = document.querySelectorAll('.step-track');
 
             transportCards.forEach((card, index) => {
-                const icon = card.querySelector('.step-track-icon');
-                const statusInput = card.querySelector(`input[id^="transports[${index}]"][name*="[status]"]`);
+                const icon = card.querySelector(`img[id="step-track-icon-${index}"]`);
+                const statusInput = card.querySelector(`select[id^="transports[${index}]"][name*="[status]"]`);
 
                 if (index <= clickedIndex) {
                     // Set status to ACTIVE for current and previous steps
@@ -705,22 +1113,43 @@
         function updateTransportIndices() {
             const transportCards = transportsContainer.children;
             Array.from(transportCards).forEach((card, index) => {
-                card.querySelectorAll("input, select").forEach(element => {
-                  element.id = element.id.replace(/\[\d+\]/, `[${index}]`);
-                  element.name = element.name.replace(/\[\d+\]/, `[${index}]`);
+                card.querySelectorAll("input, select, label, textarea").forEach(element => {
+                    if (element.tagName.toLowerCase() === 'label') {
+                        element.htmlFor = element.htmlFor.replace(/\[\d+\]/, `[${index}]`);
+                    } else {
+                      element.id = element.id.replace(/\[\d+\]/, `[${index}]`);
+                      element.name = element.name.replace(/\[\d+\]/, `[${index}]`);
+                    }
                 });
 
                 card.querySelector("p.step-track-correlative").innerText = `${index + 1}:`;
 
                 // Update the onClick attribute of the step-track-icon
-                const icon = card.querySelector(".step-track-icon");
+                const icon = card.querySelector('img[id^="step-track-icon-"]');
+                icon.id = `step-track-icon-${index}`;
                 icon.addEventListener("click", function(){
                     updateTransportActiveState(index);
                 });
 
+                const title = card.querySelector('label[id^="step-track-label-"]');
+                title.id = `step-track-label-${index}`;
+
+
+
+                const containerContent = card.querySelector(`div[class^="transports-wrapper-content-"]`);
+                containerContent.id = `transports-wrapper-content-${index}`;
+
                 // Update the ID of the delete button
                 const deleteButton = card.querySelector('button[id^="delete_transport_btn_"]');
                 deleteButton.id = `delete_transport_btn_${index}`;
+
+                const  toggleButtonUp = card.querySelector('span[id^="toogle_up_wrap_content_transport_btn_"]');
+                toggleButtonUp.id = `toogle_up_wrap_content_transport_btn_${index}`;
+
+                const toggleButtonDown = card.querySelector('span[id^="toogle_down_wrap_content_transport_btn_"]');
+
+                toggleButtonDown.id = `toogle_down_wrap_content_transport_btn_${index}`;
+
             });
 
         }
@@ -824,58 +1253,393 @@
         }
 
         let countriesInfo = null;
-        // Function to fetch and populate the country dropdown
-        async function fetchCountries() {
-          try {
-            const response = await fetch('https://countriesnow.space/api/v0.1/countries'); // Fetch data from API
-            const countries = await response.json(); // Parse the JSON response
+        let countryNames = null;
 
-            // Extract country names and sort them alphabetically
-            countriesInfo = countries.data;
-            const countryNames = countries.data
-             .map(country => country.country)
-             .sort((a, b) => a.localeCompare(b));
+        async function fetchAndPopulateCountries(OrderId) {
+            try {
+                // Fetch country data only once
+                const response = await fetch('https://countriesnow.space/api/v0.1/countries');
+                const countries = await response.json();
 
-            const selectInput = document.getElementById('country-tracking-step')
+                // Extract country names and sort them alphabetically
+                countriesInfo = countries.data;
+                countryNames = countries.data
+                    .map(country => country.country)
+                    .sort((a, b) => a.localeCompare(b));
 
-            for (const country of countryNames) {
-              const option = document.createElement('option');
-              option.value = country;
-              option.textContent = country; // Set the text of the option
-              selectInput.appendChild(option); // Append the option to the select element
+                // Select all transport country dropdowns
+                const countrySelects = document.querySelectorAll('[id^="transports["][id$="country]"]');
+
+                const order = OrdersData.find((item) => item.id == Number(OrderId) )
+
+                countrySelects.forEach(selectInput => {
+
+                    const index = selectInput.id.match(/\[([^\]]+)\]/)?.[1]; // Extract the index from the ID
+
+                    attachCountriesOptions(selectInput);
+
+                    if (index) {
+
+                        selectInput.value = order.tracking_steps[index].country;
+
+                        const citySelect = document.querySelector(`[id="transports[${index}][city]"]`);
+
+                        // Add event listener to load cities based on selected country
+                        selectInput.addEventListener('change', function(event) {
+
+                            selectInput.value = event.target.value;
+
+                            if (citySelect) {
+                                loadCities(event.target.value, citySelect);
+                            }
+
+                        });
+
+                        if(order.tracking_steps[index].country){
+
+                            loadCities(order.tracking_steps[index].country, citySelect);
+
+                        }
+
+
+                        citySelect.value = order.tracking_steps[index].city;
+                    }
+
+                });
+            } catch (error) {
+                console.error('Error fetching country data:', error);
             }
-
-          } catch (error) {
-            console.error('Error fetching country data:', error);
-          }
         }
 
-        function loadCities(country){
-            if(countriesInfo != null){
+        async function attachCountriesOptions(selectCountryInput){
+            if(countryNames != null){
+                // Clear existing options except the placeholder
+                selectCountryInput.innerHTML = '<option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}</option>';
 
-            const cityNames = countriesInfo
-              .find(info => info.country === country)?.cities
-              ?.sort((a, b) => a.localeCompare(b)) || [];
-
-                const selectInput = document.getElementById('city-tracking-step')
-
-                const cityOptions = selectInput.querySelectorAll('.city'); // Select all options with the class "city"
-                cityOptions.forEach(option => option.remove()); // Remove each option
-
-                for (const city of cityNames) {
-                  const option = document.createElement('option');
-                  option.classList.add('city');
-                  option.value = city;
-                  option.textContent = city; // Set the text of the option
-                  selectInput.appendChild(option); // Append the option to the select element
+                // Append country names to each select input
+                for (const country of countryNames) {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    selectCountryInput.appendChild(option);
                 }
-
             }
         }
 
 
+        async function loadCities(country, citySelect) {
+            try {
+                if (countriesInfo != null) {
+                    // Fetch city names for the selected country
+                    const cityNames = countriesInfo
+                        .find(info => info.country === country)?.cities
+                        ?.sort((a, b) => a.localeCompare(b)) || [];
 
-        function loadOrderFunction(){
+                    // Clear existing city options
+                    citySelect.innerHTML = '<option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>';
+
+                    for (const city of cityNames) {
+                        const option = document.createElement('option');
+                        option.classList.add('city');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading cities:', error);
+            }
+        }
+
+        function toggleTransportContent(downButtonId, upButtonId, containerClass) {
+            const downButton = document.getElementById(downButtonId);
+            const upButton = document.getElementById(upButtonId);
+            const container = document.querySelector(`.${containerClass}`);
+
+            if (!downButton || !upButton || !container) {
+                console.error("One or more elements are missing. Ensure correct IDs and class are passed.");
+                return;
+            }
+
+            function toggleButtons() {
+                if (downButton.classList.contains("hidden")) {
+                    downButton.classList.remove("hidden");
+                    upButton.classList.add("hidden");
+                } else {
+                    downButton.classList.add("hidden");
+                    upButton.classList.remove("hidden");
+                }
+            }
+
+            function toggleContainerHeight(button) {
+                if (button === downButton) {
+                    container.classList.add("h-auto");
+                    container.classList.add("p-4");
+                    container.classList.add("my-4");
+                    container.classList.remove("hidden");
+                    container.classList.remove("h-[0]");
+                    container.classList.remove("opacity-0");
+                } else if (button === upButton) {
+                    container.classList.remove("h-auto");
+                    container.classList.remove("my-4");
+                    container.classList.remove("p-4");
+                    container.classList.add("hidden");
+                    container.classList.add("h-[0]");
+                    container.classList.add("opacity-0");
+                }
+            }
+
+            downButton.addEventListener("click", () => {
+                toggleButtons();
+                toggleContainerHeight(downButton);
+            });
+
+            upButton.addEventListener("click", () => {
+                toggleButtons();
+                toggleContainerHeight(upButton);
+            });
+        }
+
+        function initializeWrapperScroller() {
+            const containers = document.querySelectorAll("[class*='transports-wrapper-content-']");
+            containers.forEach((container) => {
+                // Extract the dynamic index from the container's class
+                const containerClasses = Array.from(container.classList);
+                const dynamicClass = containerClasses.find((cls) => cls.startsWith("transports-wrapper-content-"));
+                if (!dynamicClass) return;
+
+                const index = dynamicClass.split("-").pop(); // Extract the index
+                const downButtonId = `toogle_down_wrap_content_transport_btn_${index}`;
+                const upButtonId = `toogle_up_wrap_content_transport_btn_${index}`;
+
+                toggleTransportContent(downButtonId, upButtonId, dynamicClass);
+            });
+        }
+
+        function AddHandlerUpdateTrackIcon(selectElement,index){
+            // Get the selected value (icon URL)
+            const selectedIcon = selectElement.value;
+
+            // Find the corresponding image element using the index
+            const imgElement = document.getElementById(`step-track-icon-${index}`);
+
+            // Update the image source if the image element exists
+            if (imgElement) {
+                imgElement.src = `/storage/${selectedIcon}`; // Update this path as needed
+            }
+        }
+
+        function AddHandlerUpdateTrackName(inputElement, index){
+            // Get the new value of the input field
+            const newValue = inputElement.value;
+
+            // Find the corresponding label using the index
+            const label = document.getElementById(`step-track-label-${index}`);
+
+            // Update the label's text content
+            if (label) {
+                label.textContent = newValue;
+            }
+        }
+
+        function initializeTransportInputs() {
+            // Select all input fields with a name pattern matching "transports[INDEX][name]"
+            const inputs = document.querySelectorAll('input[name^="transports["][name$="[name]"]');
+
+            // Loop through each input and add an onchange event listener
+            inputs.forEach(input => {
+                // Extract the index from the input's name attribute using a regex
+                const match = input.name.match(/transports\[(\d+)\]\[name\]/);
+                if (match) {
+                    const index = match[1]; // The extracted index from the name attribute
+
+                    // Add an onchange event listener to the input
+                    input.addEventListener('input', function () {
+                        AddHandlerUpdateTrackName(input, index);
+                    });
+                }
+            });
+        }
+
+        let OrdersData = [];
+        let IconsData = [];
+
+        @if($EntityType == "order")
+            OrdersData = {!! json_encode($pagination->items()) !!};
+            IconsData = {!!  json_encode($icons) !!};
+        @endif
+
+        let IconsArray = Object.entries(IconsData).map(([key, value]) => ({
+            value: value,
+            content: key
+        }));
+
+
+        const DefaultTransportOptions = {
+            ship:[
+                {
+                    name:"Proveedor",
+                    icon:"/images/svgs/warehouse.svg",
+                    country:"China",
+                    city:"Shanghai",
+                    address:"Shangai City",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Proveedor"
+                },
+                {
+                    name:"Puerto Origen",
+                    icon:"/images/svgs/ship.svg",
+                    country:"China",
+                    city:"Shanghai",
+                    address:"Shangai City",
+                    type:"SHIP",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Puerto Origen"
+                },
+                {
+                    name:"Puerto Destino",
+                    icon:"/images/svgs/anchor.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Callao",
+                    type:"SHIP",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Puerto Destino"
+                },
+                {
+                    name:"Aduanas Peru",
+                    icon:"/images/svgs/truck.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Callao",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Aduanas Peru"
+                },
+                {
+                    name:"Destino Cliente",
+                    icon:"/images/svgs/house.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Callao",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Destino Cliente"
+                }
+            ],
+            air:[
+                {
+                    name:"Proveedor",
+                    icon:"/images/svgs/warehouse.svg",
+                    country:"China",
+                    city:"Shanghai",
+                    address:"Shangai City",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Proveedor"
+                },
+                {
+                    name:"Aeropuerto Origen",
+                    icon:"/images/svgs/plane-takeoff.svg",
+                    country:"China",
+                    city:"Shanghai",
+                    address:"Shangai City",
+                    type:"AIR",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Puerto Origen"
+                },
+                {
+                    name:"Aeropuerto Destino",
+                    icon:"/images/svgs/plane-landing.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Aeropuerto Internacional Jorge Chavez",
+                    type:"AIR",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Aeropuerto Destino - Aeropuerto Internacional Jorge Chavez"
+                },
+                {
+                    name:"Aduanas Peru",
+                    icon:"/images/svgs/truck.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Callao",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Aduanas Peru"
+                },
+                {
+                    name:"Destino Cliente",
+                    icon:"/images/svgs/house.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Callao",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Destino Cliente"
+                }
+            ],
+            land:[
+                {
+                    name:"Proveedor",
+                    icon:"/images/svgs/warehouse.svg",
+                    country:"Lima",
+                    city:"Arequipa",
+                    address:"Arequipa",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Proveedor"
+                },
+                {
+                    name:"Destino Cliente",
+                    icon:"/images/svgs/house.svg",
+                    country:"Peru",
+                    city:"Lima",
+                    address:"Callao",
+                    type:"LAND",
+                    status:"INACTIVE",
+                    extref:"",
+                    description:"Destino Cliente"
+                }
+            ]
+        }
+
+        function generateDefaultTransportOptions(type) {
+            let selectedOptions;
+
+            switch (type) {
+                case "ship":
+                    selectedOptions = DefaultTransportOptions.ship;
+                    break;
+
+                case "air":
+                    selectedOptions = DefaultTransportOptions.air;
+                    break;
+
+                default:
+                    selectedOptions = DefaultTransportOptions.land;
+                    break;
+            }
+
+            for(let option of selectedOptions){
+                addTransportCard(option);
+            }
+        }
+
+
+        function loadOrderFunction(OrderId){
             freightsContainer = document.getElementById("freights-items");
             addFreightButton = document.getElementById("add_fregiht_btn");
             // Add event listener for the add button
@@ -907,8 +1671,26 @@
                 }
             });
 
+            const generateDefaultAirTransport = document.getElementById('default_air_transport_btn');
+
+            generateDefaultAirTransport.addEventListener("click", function(){
+                generateDefaultTransportOptions("air");
+            });
+
+            const generateDefaultShipTransport = document.getElementById('default_ship_transport_btn');
+
+            generateDefaultShipTransport.addEventListener("click", function(){
+                generateDefaultTransportOptions("ship");
+            });
+
+            const generateDefaultLandTransport = document.getElementById('default_land_transport_btn');
+
+            generateDefaultLandTransport.addEventListener("click", function(){
+                generateDefaultTransportOptions("land");
+            });
+
             //Attach Image update for the selected Icon for the tracking step
-            attachIconImageUpdate();
+            attachIconImageUpdates(OrderId);
 
             // Initialize drag and drop for .step-tracks and .step-track
             initializeDragAndDrop(".step-tracks", "step-track");
@@ -916,12 +1698,13 @@
             //attach the Seach method
             searchClientsForOrders();
 
-            fetchCountries();
+            //fetch and Populate Countries Select
+            fetchAndPopulateCountries(OrderId);
 
-            const selectInput = document.getElementById('country-tracking-step');
-            selectInput.addEventListener('change', function(event) {
-              loadCities(event.target.value); // Pass the selected country value to loadCities
-            });
+            //addHandlerUpdateTitle
+            initializeTransportInputs();
+
+            initializeWrapperScroller();
 
         }
 

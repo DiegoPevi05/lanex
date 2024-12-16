@@ -198,92 +198,26 @@
             <div class="p-none">
                 <div class="w-full h-auto flex flex-row justify-between py-none">
                     <label for="transports" class="block text-lg font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.tracking_step.name').'s' }}</label>
-                    <button id="add_transport_btn" type="button" class="text-sm bg-primary hover:bg-primary-dark duration-300 p-2 rounded-lg transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
+                    <button id="add_transport_btn" type="button" class="text-sm bg-primary hover:bg-primary-dark duration-300 p-2 rounded-full transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
                         {{__('messages.dashboard.tracking_step.add_entity')}}
                     </button>
                 </div>
 
-            </div>
+                <label for="defaults" class="block text-sm font-bold text-secondary-dark capitalize mt-2">Flujos Pre-Definidos</label>
+                <div class="w-full h-auto flex flex-row justify-start gap-x-2 py-none pt-4 pb-2">
+                    <button id="default_air_transport_btn" type="button" class="w-auto text-sm inline-flex justify-center items-center gap-x-2 bg-primary hover:bg-primary-dark duration-300 p-2 rounded-full transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plane"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+                        {{ __("messages.dashboard.transport_type.form.fields.AIR") }}
+                    </button>
 
-            <div id="container_new_tracking_step" class="w-full h-auto grid grid-cols-2 text-body gap-y-2 border-2 border-gray-light rounded-xl p-4 gap-4 my-4">
-                <label for="icon-tracking-step" class="block col-span-2 text-sm font-bold text-secondary-dark capitalize">
-                    {{ __("messages.dashboard.transport_type.form.fields.icon") }}
-                </label>
-
-                <!-- Country Field -->
-                <div class="col-span-1">
-                    <label for="country-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.country") }}</label>
-                    <select id="country-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}}>
-                        <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}</option>
-                    </select>
-                </div>
-
-                <!-- City Field -->
-                <div class="col-span-1">
-                    <label for="city-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.city") }}</label>
-                    <select id="city-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}}>
-                        <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>
-                    </select>
-                </div>
-
-                <!-- Address Field -->
-                <div class="col-span-2">
-                    <label for="address-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.address") }}</label>
-                    <input type="text" id="address-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.address") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                </div>
-
-                <div class="col-span-2 flex flex-row gap-x-4">
-                    <select id="icon-tracking-step" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }}>
-                        <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
-
-                        @foreach($icons as $filename => $content)
-                            <option value="{{ $content }}" {{ old('icon', $service->icon ?? '') === $content ? 'selected' : '' }}>
-                                {{ $filename }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <img id="icon-tracking-step-image" src="/storage/images/svgs/ambulance.svg" class="h-12 w-12 shadow-md rounded-xl p-2 border-2 border-primary text-primary"/>
-                </div>
-
-                <!-- Type Field -->
-                <div class="col-span-1">
-                    <label for="type-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.type") }}</label>
-                    <select id="type-tracking-step" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.type") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                        <option value="">{{ __("messages.dashboard.transport_type.form.fields.SELECT_TRANSPORT_TYPE") }}</option>
-
-                        <option value="LAND">{{ __("messages.dashboard.transport_type.form.fields.LAND") }}</option>
-                        <option value="AIR">{{ __("messages.dashboard.transport_type.form.fields.AIR") }}</option>
-                        <option value="SHIP">{{ __("messages.dashboard.transport_type.form.fields.SHIP") }}</option>
-
-                        <option value="CUSTOM">{{ __("messages.dashboard.transport_type.form.fields.CUSTOM") }}</option>
-                    </select>
-                </div>
-
-                <!-- Name Field -->
-                <div class="col-span-1">
-                    <label for="status-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.status") }}</label>
-                    <select id="status-tracking-step" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                        <option value="INACTIVE">{{ __("messages.common.INACTIVE") }}</option>
-                        <option value="ACTIVE">{{ __("messages.common.ACTIVE") }}</option>
-                    </select>
-                </div>
-
-                <!-- Name Field -->
-                <div class="col-span-1">
-                    <label for="name-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.name") }}</label>
-                    <input type="text" id="name-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.name") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                </div>
-
-                <!-- EXt Reference Field -->
-                <div class="col-span-1">
-                    <label for="external-reference-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }} ({{ __('messages.common.optional') }}):</label>
-                    <input type="text" id="external-reference-tracking-step" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                </div>
-
-                <!-- Description Text Field -->
-                <div class="col-span-2">
-                    <label for="description-tracking-step" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.transport_type.form.fields.description') }}</label>
-                    <textarea id="description-tracking-step" rows="4" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.description") }}" {{$formRequest === "view" ? "disabled" : ""}}></textarea>
+                    <button id="default_ship_transport_btn" type="button" class="text-sm inline-flex justify-center items-center gap-x-2 bg-primary hover:bg-primary-dark duration-300 p-2 rounded-full transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ship"><path d="M12 10.189V14"/><path d="M12 2v3"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76"/><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+                        {{ __("messages.dashboard.transport_type.form.fields.SHIP") }}
+                    </button>
+                    <button id="default_land_transport_btn" type="button" class="text-sm inline-flex justify-center items-center gap-x-2 bg-primary hover:bg-primary-dark duration-300 p-2 rounded-full transition-all text-white border-2 border-primary hover:border-primary-dark active:scale-95 capitalize disabled:bg-gray-300 disabled:text-gray-200 disabled:cursor-pointer-none" {{ $formRequest === "view" ? "disabled" : "" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                        {{ __("messages.dashboard.transport_type.form.fields.LAND") }}
+                    </button>
                 </div>
 
             </div>
@@ -295,33 +229,116 @@
                     @if($order)
 
                         @foreach ($order->trackingSteps as $index => $trackingStep)
-                        <div class="step-track w-full h-auto flex flex-row items-center justify-between px-4 py-2 border-2 border-gray-200 rounded-xl">
-                            <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
-                                <p class="step-track-correlative text-sm font-bold text-body">{{$index}}</p>
-                                <img id="step-track-icon" onClick="updateTransportActiveState({{$index}})" src="{{ asset('storage/' . $trackingStep->transportType->icon) }}" class="step-track-icon h-12 w-12 shadow-md p-2 border-gray-light border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95"/>
-                                <label for="steps-track" class="block text-sm font-bold text-secondary-dark capitalize">{{$trackingStep->transportType->name}}</label>
+                        <div class="step-track w-full h-auto flex flex-col items-start justify-start px-4 py-2 border-2 border-gray-200 rounded-xl">
+                            <div class="w-full h-auto flex flex-row items-center justify-between z-[100]">
+                                <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
+                                    <p class="step-track-correlative text-sm font-bold text-body">{{$index}}</p>
+                                    <img id="step-track-icon-{{$index}}" onClick="updateTransportActiveState({{$index}})" src="{{ asset('storage/' . $trackingStep->transportType->icon) }}" class="step-track-icon h-12 w-12 shadow-md p-2  border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95 {{ $trackingStep->status == 'COMPLETED' || $trackingStep->status == 'IN_TRANSIT' ? 'border-primary' : 'border-gray-light' }}" />
+                                    <label id="step-track-label-{{$index}}" class="block text-sm font-bold text-secondary-dark capitalize">{{$trackingStep->transportType->name}}</label>
+                                </div>
+
+                                <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
+
+                                    <span id="toogle_down_wrap_content_transport_btn_{{$index}}" class="h-8 w-8 p-1 cursor-pointer duration-300 text-white rounded-full bg-primary hover:bg-primary-dark active:scale-95">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                                    </span>
+
+                                    <span id="toogle_up_wrap_content_transport_btn_{{$index}}" class="h-8 w-8 p-1 cursor-pointer duration-300 text-white rounded-full bg-primary hover:bg-primary-dark active:scale-95 hidden">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+                                    </span>
+
+                                    <span class="text-gray-400 h-6 w-6 cursor-pointer hover:text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
+                                    </span>
+                                    <button id="delete_transport_btn_{{$index}}" onclick="this.closest('.step-track').remove(); updateTransportIndices()" type="button" class="h-8 w-8 bg-primary hover:bg-white text-white hover:text-primary duration-300 rounded-full p-1 border-2 border-primary active:scale-95">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
-                                <span class="text-gray-400 h-6 w-6 cursor-pointer hover:text-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify"><path d="M3 12h18"/><path d="M3 18h18"/><path d="M3 6h18"/></svg>
-                                </span>
-                                <button id="delete_transport_btn_{{$index}}" onclick="this.closest('.step-track').remove(); updateTransportIndices()" type="button" class="h-8 w-8 bg-primary hover:bg-white text-white hover:text-primary duration-300 rounded-full p-1 border-2 border-primary active:scale-95">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                                </button>
+                            <div class="transports-wrapper-content-{{$index}} w-full h-[0] hidden opacity-0 grid grid-cols-2 text-body gap-y-2 border-2 border-gray-light rounded-xl gap-4 transition-all duration-300">
+
+                                <label for="icon-tracking-step" class="block col-span-2 text-sm font-bold text-secondary-dark capitalize">
+                                    {{ __("messages.dashboard.transport_type.form.fields.icon") }}
+                                </label>
+
+                                <!-- Country Field -->
+                                <div class="col-span-1">
+                                    <label for="transports[{{$index}}][country]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.country") }}</label>
+                                    <select id="transports[{{$index}}][country]" name="transports[{{$index}}][country]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->country ?? ''}}">
+                                        <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}</option>
+                                    </select>
+                                </div>
+
+                                <!-- City Field -->
+                                <div class="col-span-1">
+                                    <label for="transports[{{$index}}][city]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.city") }}</label>
+                                    <select id="transports[{{$index}}][city]" name="transports[{{$index}}][city]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->city ?? ''}}">
+                                        <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Address Field -->
+                                <div class="col-span-2">
+                                    <label for="transports[{{$index}}][address]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.address") }}</label>
+                                    <input type="text" id="transports[{{$index}}][address]" name="transports[{{$index}}][address]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.address") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->address ?? ''}}">
+                                </div>
+
+                                <div class="col-span-2 flex flex-row gap-x-4">
+                                    <select id="transports[{{$index}}][icon]" name="transports[{{$index}}][icon]" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }} value="{{$trackingStep->transportType->icon ?? ''}}" onchange="AddHandlerUpdateTrackIcon(this, {{$index}})">
+                                        <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
+
+                                        @foreach($icons as $filename => $content)
+                                            <option value="{{ $content }}" {{ old('icon', $service->icon ?? '') === $content ? 'selected' : '' }}>
+                                                {{ $filename }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <img id="icon-tracking-step-image-{{$index}}" src="/storage/images/svgs/ambulance.svg" class="h-12 w-12 shadow-md rounded-xl p-2 border-2 border-primary text-primary"/>
+                                </div>
+
+                                <!-- Type Field -->
+                                <div class="col-span-1">
+                                    <label for="transports[{{$index}}][type]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.type") }}</label>
+                                    <select id="transports[{{$index}}][type]" name="transports[{{$index}}][type]" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.type") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                        <option value="">{{ __("messages.dashboard.transport_type.form.fields.SELECT_TRANSPORT_TYPE") }}</option>
+
+                                        <option value="LAND" {{ $trackingStep->transportType->type == 'LAND' ? 'selected' : '' }}>{{ __("messages.dashboard.transport_type.form.fields.LAND") }}</option>
+                                        <option value="AIR" {{ $trackingStep->transportType->type == 'AIR' ? 'selected' : '' }}>{{ __("messages.dashboard.transport_type.form.fields.AIR") }}</option>
+                                        <option value="SHIP" {{ $trackingStep->transportType->type == 'SHIP' ? 'selected' : '' }}>{{ __("messages.dashboard.transport_type.form.fields.SHIP") }}</option>
+
+                                        <option value="CUSTOM" {{ $trackingStep->transportType->type == 'CUSTOM' ? 'selected' : '' }}>{{ __("messages.dashboard.transport_type.form.fields.CUSTOM") }}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Status Field -->
+                                <div class="col-span-1">
+                                    <label for="transports[{{$index}}][status]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.status") }}</label>
+                                    <select id="transports[{{$index}}][status]" name="transports[{{$index}}][status]" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                        <option value="INACTIVE" {{$trackingStep->transportType->status == 'INACTIVE' ? 'selected' : ''}}>{{ __("messages.common.INACTIVE") }}</option>
+                                        <option value="ACTIVE" {{$trackingStep->transportType->status == 'ACTIVE' ? 'selected' : ''}}>{{ __("messages.common.ACTIVE") }}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Name Field -->
+                                <div class="col-span-1">
+                                    <label for="transports[{{$index}}][name]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.name") }}</label>
+                                    <input type="text" id="transports[{{$index}}][name]" name="transports[{{$index}}][name]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.name") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->transportType->name ?? ''}}">
+                                </div>
+
+                                <!-- EXt Reference Field -->
+                                <div class="col-span-1">
+                                    <label for="transports[{{$index}}][external_reference]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }} ({{ __('messages.common.optional') }}):</label>
+                                    <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->transportType->external_reference ?? ''}}">
+                                </div>
+
+                                <!-- Description Text Field -->
+                                <div class="col-span-2">
+                                    <label for="transports[{{$index}}][description]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.transport_type.form.fields.description') }}</label>
+                                    <textarea id="transports[{{$index}}][description]" name="transports[{{$index}}][description]" rows="4" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.description") }}" {{$formRequest === "view" ? "disabled" : ""}}>{{$trackingStep->transportType->description ?? ''}}</textarea>
+                                </div>
                             </div>
-
-                            <input type="text" id="transports[{{$index}}][country]" name="transports[{{$index}}][country]" class="hidden" value="{{$trackingStep->country}}">
-                            <input type="text" id="transports[{{$index}}][city]" name="transports[{{$index}}][city]" class="hidden" value="{{$trackingStep->city}}">
-                            <input type="text" id="transports[{{$index}}][address]" name="transports[{{$index}}][address]" class="hidden" value="{{$trackingStep->address}}">
-
                             <input type="text" id="transports[{{$index}}][id]" name="transports[{{$index}}][id]" class="hidden" value="{{$trackingStep->transportType->id}}">
-                            <input type="text" id="transports[{{$index}}][name]" name="transports[{{$index}}][name]" class="hidden" value="{{$trackingStep->transportType->name}}">
-                            <input type="text" id="transports[{{$index}}][type]" name="transports[{{$index}}][type]" class="hidden" value="{{$trackingStep->transportType->type}}">
-                            <input type="text" id="transports[{{$index}}][status]" name="transports[{{$index}}][status]" class="hidden" value="{{$trackingStep->transportType->status}}">
-                            <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="hidden" value="{{$trackingStep->transportType->external_reference}}">
-                            <input type="text" id="transports[{{$index}}][description]" name="transports[{{$index}}][description]" class="hidden" value="{{$trackingStep->transportType->description}}">
-                            <input type="text" id="transports[{{$index}}][icon]" name="transports[{{$index}}][icon]" class="hidden" value="{{$trackingStep->transportType->icon}}">
                         </div>
                         @endforeach
                     @endif

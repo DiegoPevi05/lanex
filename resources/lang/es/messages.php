@@ -1221,6 +1221,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 'success' => [
                     'create' => 'Orden creada con éxito',
                     'update' => 'Orden actualizada con éxito',
+                    'cancel' => 'Order cancelada con éxito',
                     'delete' => 'Orden eliminada con éxito'
                 ],
                 'error' => [
@@ -1228,8 +1229,12 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'validation_failed' => "Hubo errores en el envío del formulario."
                 ],
                 'modal' => [
-                    'delete_header' => "¿Está seguro de que deseas cancelar esta orden?",
-                    'delete_content' => "Una vez cancelada la orden solo la podras ver en la pagina de historial."
+                    'cancel_header' => "¿Está seguro de que deseas cancelar esta orden?",
+                    'cancel_content' => "Una vez cancelada la orden solo la podras ver en la pagina de historial.",
+                    'cancel_btn_label' => 'Cancelar Pedido',
+                    'delete_header' => "¿Está seguro de que deseas eliminar esta orden?",
+                    'delete_content' => "Una vez eliminada la orden solo la podras no podras recuperar la informacion despues.",
+                    'delete_btn_label' => 'Borrar Pedido'
                 ]
             ]
         ],
@@ -1442,8 +1447,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
     'mail' => [
         'modal' => [
             'header' => 'Actualizar estado del pedido',
-            'subheader' => 'Se notificará al usuario el estado actual de su pedido',
+            'header_complete' => 'Actualizar la orden a completada',
+            'subheader' => 'Se notificará al usuario el estado actual de su pedido, si activa al opción de notificación abajo',
             'send_status' => 'Actualizar pedido',
+            'complete_status' => 'Completar Pedido',
             'email_notification' => '¿Enviar notificación por correo electrónico?'
         ],
         'common' => [

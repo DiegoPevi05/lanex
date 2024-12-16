@@ -190,7 +190,7 @@
 
         function handleSupplierSearch(){
             if(searchSupplierInput.value && searchSupplierInput.value.length != 0){
-                fetchSuppliers(1,nameInput.value);
+                fetchSuppliers(1,searchSupplierInput.value);
                 scrollToSuppliersSections();
             }else{
                 fetchSuppliers(1);

@@ -3,7 +3,7 @@
         <span id="status_modal" class="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-red-500">✖</span>
 
         <span class="text-primary h-20 w-20">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin-reverse-slow w-full h-full"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
         </span>
 
         <label id="title_modal" class="title_modal font-bold text-xl text-primary mb-4 text-center">
@@ -13,15 +13,18 @@
             {{ __('messages.mail.modal.subheader') }}
         </p>
         <div class="w-full flex flex-row justify-center items-start gap-x-4">
-            <p class="text-sm font-bold text-secondary-dark capitalize">{{ __('messages.mail.modal.email_notification') }}</p>
-            <input type="checkbox" id="email-notification" name="email-notification" class="text-sm mt-1 block w-auto p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body">
+            <p class="text-md text-body font-bold">{{ __('messages.mail.modal.email_notification') }}</p>
+            <div class="checkbox-wrapper-3">
+              <input type="checkbox" id="email-notification" />
+              <label for="email-notification" class="toggle"><span></span></label>
+            </div>
         </div>
         <div class="h-auto w-auto gap-x-4 flex justify-between">
             <button id="cancel_status_btn" onclick="closeOrderStatusModal()"  class="w-auto h-full py-2 px-6 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2 text-lg">
                 {{__('messages.common.cancel')}}
             </button>
             <button id="send_status_btn" class="w-auto h-full py-2 px-6 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2 text-lg">
-                {{ __('messages.mail.modal.send_status') }}
+                <p id="send_status_btn_label"> {{ __('messages.mail.modal.send_status') }}</p>
                 <span id="loader_status_spinner" class="w-6 h-6 hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
                 </span>
@@ -35,11 +38,17 @@
     let updateNewIndexOrder = null;
     let updateNewStatusOrder = null;
     let updateOrderId = null;
-    function showOrderStatusModal(order_id,newIndex,newStatus) {
+
+    function showOrderStatusModal(order_id,newIndex,newStatus,TitleLabel, BtnLabel) {
         updateNewIndexOrder = newIndex;
         updateNewStatusOrder = newStatus;
         updateOrderId = order_id;
         const modal = document.getElementById("modal_status_component");
+        const title = modal.querySelector('#title_modal');
+        const label = modal.querySelector('#send_status_btn_label')
+
+        title.innerHTML = TitleLabel ? TitleLabel : "{{ __('messages.mail.modal.header') }}";
+        label.innerHTML = BtnLabel ? BtnLabel : "{{ __('messages.mail.modal.send_status') }}";
 
         // Show the modal
         modal.classList.remove("pointer-events-none", "fade-out");

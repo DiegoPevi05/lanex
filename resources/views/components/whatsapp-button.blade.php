@@ -1,4 +1,4 @@
-<div class="fixed bottom-5 right-5 bg-primary rounded-full shadow-lg hover:bg-primary-dark transition-colors z-[40] active:scale-95 hover:cursor-pointer h-16 w-16 duration-300">
+<div class="fixed bottom-5 right-5 bg-[#25D366] rounded-full shadow-lg hover:bg-primary-dark transition-colors z-[40] active:scale-95 hover:cursor-pointer h-16 w-16 duration-300">
     <a href="https://wa.link/s7w6z3" target="_blank"
                                        aria-label="{{ __('messages.aria_labels.whatsapp') }}"
                                        title="{{ __('messages.titles.whatsapp') }}" class="h-full w-full flex justify-center items-center p-3">

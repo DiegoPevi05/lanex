@@ -68,7 +68,8 @@ class Order extends Model
         return [
             'store' => 'order.store',
             'update' => 'order.update',
-            'destroy' => 'order.destroy'
+            'destroy' => 'order.destroy',
+            'cancel' => 'order.cancel'
         ];
     }
 
@@ -151,6 +152,7 @@ class Order extends Model
         $messages = [
             'create' => 'messages.dashboard.order.form.success.create',
             'update' => 'messages.dashboard.order.form.success.update',
+            'cancel' => 'messages.dashboard.order.form.success.cancel',
             'delete' => 'messages.dashboard.order.form.success.delete',
         ];
         return isset($messages[$action]) ? __($messages[$action]) : '';
@@ -170,10 +172,12 @@ class Order extends Model
     public static function getHelperMessages()
     {
         return [
-            'cancel_header' => __('messages.dashboard.order.form.modal.delete_header'),
-            'cancel_content' => __('messages.dashboard.order.form.modal.delete_content'),
+            'cancel_header' => __('messages.dashboard.order.form.modal.cancel_header'),
+            'cancel_content' => __('messages.dashboard.order.form.modal.cancel_content'),
+            'cancel_btn_label' => __('messages.dashboard.order.form.modal.cancel_btn_label'),
             'delete_header' => __('messages.dashboard.order.form.modal.delete_header'),
             'delete_content' => __('messages.dashboard.order.form.modal.delete_content'),
+            'delete_btn_label' => __('messages.dashboard.order.form.modal.delete_btn_label'),
         ];
     }
 

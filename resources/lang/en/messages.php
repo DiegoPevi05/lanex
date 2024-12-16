@@ -1210,6 +1210,7 @@ It is important for every company involved in international trade to be trained 
                 'success' => [
                     'create' => 'Order created successfully',
                     'update' => 'Order updated successfully',
+                    'cancel' => 'Order cancelled successfully',
                     'delete' => 'Order deleted successfully'
                 ],
                 'error' => [
@@ -1217,8 +1218,13 @@ It is important for every company involved in international trade to be trained 
                     'validation_failed' => "There were errors in the form submission."
                 ],
                 'modal' => [
-                    'delete_header' => "Are you sure you want to cancel this order?",
-                    'delete_content' => "Once the order is canceled you could view it in the history page"
+                    'cancel_header' => "Are you sure you want to cancel this order?",
+                    'cancel_content' => "Once the order is canceled you could view it in the history page",
+                    'cancel_btn_label' => 'Cancel Order',
+                    'delete_header' => "Are you sure you want to delete this order?",
+                    'delete_content' => "Once the order is deleted you will not be able to recover the information",
+                    'delete_btn_label' => 'Delete Order'
+
                 ]
             ]
         ],
@@ -1431,8 +1437,10 @@ It is important for every company involved in international trade to be trained 
     'mail' => [
         'modal' => [
             'header' => 'Update Order Status',
-            'subheader' => 'The user will be notified of the current status of their order',
+            'header_complete' => 'Update the Order to Complete Status',
+            'subheader' => 'The user will be notified of the current status of their order if you enable notification email below',
             'send_status' => 'Update Order',
+            'complete_status' => 'Complete Order',
             'email_notification' => 'Send email notification?'
         ],
         'common' => [

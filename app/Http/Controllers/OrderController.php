@@ -10,6 +10,7 @@ use App\Models\TransportType;
 use App\Models\TrackingStep;
 use Illuminate\Http\Request;
 use App\Services\FormService;
+use App\Services\IconService;
 use App\Mail\OrderStatusMailable;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
@@ -103,6 +104,7 @@ class OrderController extends AbstractEntityController
             'currentFilter' => $filterKey,
             'filters' => $filterableFields,
             'EntityType' => $this->model::getType(),
+            'icons' => IconService::getAllSvgIcons()
         ]);
     }
 
@@ -307,21 +309,48 @@ class OrderController extends AbstractEntityController
         return $lastActiveIndex;
     }
 
-    public function destroy($id)
+    public function cancel(Request $request, $id)
     {
         $entity = $this->model->find($id);
 
         if (!$entity) {
-            return redirect()->route($this->model::getRedirectRoutes("destroy"))
+            return redirect()->route($this->model::getRedirectRoutes("cancel"))
                 ->with('error', $this->model::getErrorMessage('not_found'));
+        }
+
+        $emailNotification = $request->input('email-notification', false); // Default to false if not provided
+
+        if ($emailNotification) {
+
+            $type = 'cancellation';
+
+            $this->sendOrderStatusEmail($entity, $type);
         }
 
         // Set 'canceled' to true instead of deleting the entity
         $entity->canceled = true;
         $entity->save();  // Save the updated entity
 
-        return redirect()->route($this->model::getRedirectRoutes("destroy"))
+        return redirect()->route($this->model::getRedirectRoutes("cancel"))
             ->with('success', $this->model::getSuccessMessage('cancel'));
+    }
+
+    public function destroy($id)
+    {
+        // Find the entity by ID
+        $entity = $this->model->find($id);
+
+        // Check if the entity exists
+        if (!$entity) {
+            return redirect()->route($this->model::getRedirectRoutes("destroy"))
+                ->with('error', $this->model::getErrorMessage('not_found'));
+        }
+
+        // Delete the entity
+        $entity->delete();
+
+        return redirect()->route($this->model::getRedirectRoutes("destroy"))
+            ->with('success', $this->model::getSuccessMessage('destroy'));
     }
 
     public function updateOrder(Request $request, $id)
@@ -330,7 +359,7 @@ class OrderController extends AbstractEntityController
         $order = Order::find($id);
 
         if (!$order) {
-            return response()->json(['error' => ['Order not found.']], 404);
+            return response()->json(['error' => [$this->model::getErrorMessage('not_found')]], 404);
         }
         // Extract step, status, and email_notification from the request
         $step = $request->input('step');
@@ -415,7 +444,7 @@ class OrderController extends AbstractEntityController
         $client = Client::find($order->client_id);
 
         if (!$client) {
-            return response()->json(['error' => 'Client not found.'], 404);
+            return response()->json(['error' => [$this->model::getErrorMessage('not_found')]], 404);
         }
 
         // Send the email using the OrderStatusMailable

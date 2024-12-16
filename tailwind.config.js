@@ -25,7 +25,17 @@ module.exports = {
               DEFAULT: '#5C6C7B',  // Default text color set to body
             },
         },
-      },
+        animation: {
+            'spin-slow': 'spin 3s linear infinite',
+            'spin-reverse-slow': 'spin-reverse 3s linear infinite',
+        },
+        keyframes: {
+            'spin-reverse': {
+              from: { transform: 'rotate(0deg)' },
+              to: { transform: 'rotate(-360deg)' },
+            },
+        },
+    },
   },
   plugins: [
     function ({ addUtilities }) {

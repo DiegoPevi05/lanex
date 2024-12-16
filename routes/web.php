@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\SupplierController;
 use App\Http\Controllers\TransportTypeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HistoryController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -63,8 +64,13 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
         Route::post('/store', [OrderController::class, 'store'])->name('order.store');
         Route::put('/update/{id}', [OrderController::class, 'update'])->name('order.update');
         Route::delete('/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+        Route::delete('/cancel/{id}', [OrderController::class, 'cancel'])->name('order.cancel');
         // New route for sending the order status email
         Route::post('/update-status/{id}', [OrderController::class, 'updateOrder'])->name('order.update.status');
+    });
+
+    Route::prefix('/history')->group(function(){
+        Route::get('/', [HistoryController::class, 'index'])->name('dashboard_history');
     });
 
     Route::prefix('/transport_type')->group(function(){

@@ -9,14 +9,12 @@ use Illuminate\View\Component;
 class DeleteModal extends Component
 {
     public $id;
-    public $deleteRoute;
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $deleteRoute)
+    public function __construct($id)
     {
         $this->id = $id;
-        $this->deleteRoute = $deleteRoute;
     }
 
     /**

@@ -1,4 +1,4 @@
-<div class="w-full h-12 flex flex-row justify-center items-center gap-x-5 sm:gap-x-8 mb-6">
+<div class="w-full h-12 flex flex-row justify-center items-center gap-x-5 sm:gap-x-8 my-6">
     @foreach ($order->trackingSteps as $index => $step)
         <!-- The before element pseudo-class -->
         <div onClick="showOrderStatusModal({{$order->id}},{{$index}},'IN_TRANSIT')" class="relative h-10 sm:w-16 h-10 sm:h-16 p-none m-none group hover:cursor-pointer">
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="absolute top-full left-1/2 -translate-x-1/2 w-auto mt-2">
-                <p class="text-[10px] sm:text-xs text-nowrap">{{$step->transportType->name}}</p>
+                <p class="text-[10px] sm:text-xs text-wrap text-center">{{$step->transportType->name}}</p>
             </div>
         </div>
     @endforeach
