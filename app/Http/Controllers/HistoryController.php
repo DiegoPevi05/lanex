@@ -2,42 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Web\AbstractEntityController;
 use App\Models\Order;
-use App\Services\FormService;
 use Illuminate\Http\Request;
 
-class HistoryController extends AbstractEntityController
+class HistoryController extends Controller
 {
-    public function __construct(FormService $formService)
+    public function __construct()
     {
-        parent::__construct(new Order(), $formService);
+
     }
 
     public function index(Request $request)
     {
-        $filterKey = $request->input('filterKey');
-        $filterValue = $request->input('filterValue');
         $perPage = 5;
-        $query = $this->model->query();
+        $query = Order::query();  // Add the "::" to correctly reference the model
+        $query->where('canceled', true);
+        $query->orWhere('status', 'COMPLETED');
+        $orders = $query->paginate($perPage);
 
-        // Filter for orders where canceled is false
-        $query->where('canceled', true)->orWhere('status', 'COMPLETED');
-
-        $filterableFields = $this->model->filterFields();
-        $filterableValues = array_column($filterableFields, 'value');
-
-        if ($filterKey && in_array($filterKey, $filterableValues)) {
-            $query->where($filterKey, 'like', "%{$filterValue}%");
-        }
-
-        $entities = $query->paginate($perPage);
-
-        return view($this->model::getRedirectRoutes("index"), [
-            'pagination' => $entities,
-            'currentFilter' => $filterKey,
-            'filters' => $filterableFields,
-            'EntityType' => "history",
+        return view('dashboard.history', [
+            'pagination' => $orders,
         ]);
     }
 }

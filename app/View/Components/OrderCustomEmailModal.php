@@ -6,18 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class OrderCard extends Component
+class OrderCustomEmailModal extends Component
 {
-
-    public $order;
-    public $type;
     /**
      * Create a new component instance.
      */
-    public function __construct($data, $type = "default")
+    public function __construct()
     {
-        $this->order = $data;
-        $this->type = $type;
+        //
     }
 
     /**
@@ -25,6 +21,6 @@ class OrderCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.order-card');
+        return view('components.order-custom-email-modal');
     }
 }

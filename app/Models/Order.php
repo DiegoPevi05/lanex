@@ -241,21 +241,21 @@ class Order extends Model
     public function getCurrentTrackStep()
     {
         // Step 1: Try to find the "IN TRANSIT" tracking step
-        $inTransitStep = $this->trackingSteps()->where('status', 'IN TRANSIT')->first();
+        $inTransitStep = $this->trackingSteps->where('status', 'IN_TRANSIT')->first();
 
         // Step 2: If no "IN TRANSIT" step found, get the last "COMPLETED" step by highest sequence
         if (!$inTransitStep) {
-            $inTransitStep = $this->trackingSteps()
+            $inTransitStep = $this->trackingSteps
                 ->where('status', 'COMPLETED')
-                ->orderByDesc('sequence')
+                ->sortByDesc('sequence')
                 ->first();
         }
 
         // Step 3: If no "COMPLETED" step found, get the first "PENDING" step by lowest sequence
         if (!$inTransitStep) {
-            $inTransitStep = $this->trackingSteps()
+            $inTransitStep = $this->trackingSteps
                 ->where('status', 'PENDING')
-                ->orderByDesc('sequence')
+                ->sortBy('sequence')
                 ->first();
         }
 

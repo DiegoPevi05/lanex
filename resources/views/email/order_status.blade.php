@@ -339,7 +339,7 @@
                         </td>
                     </tr>
 
-                    @if($type != 'cancellation')
+                    @if($withDetails)
 
                         <!-- Order Status Cards -->
                         <tr>
@@ -478,7 +478,7 @@
                                                 </td>
                                                 <td>
                                                     <p><strong>{{__($email_us)}}</strong></p>
-                                                    <p>support@lanex.com</p>
+                                                    <p>operaciones@lanex.com</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -494,13 +494,13 @@
                                                 <td style="text-align: center;">
                                                     <div class="contact-icon-wrapper">
                                                         <div class="contact-icon">
-                                                            <img src="{{ env('APP_URL') . '/storage/images/mail/phone.png' }}" width="100%" height="100%" alt="Mail Icon" />
+                                                            <img src="{{ env('APP_URL') . '/storage/images/mail/phone.png' }}" width="100%" height="100%" alt="Phone Icon" />
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <p><strong>{{__($contact_us)}}</strong></p>
-                                                    <p>support@lanex.com</p>
+                                                    <p>+51 992-764-991 </p>
                                                 </td>
                                             </tr>
                                         </table>

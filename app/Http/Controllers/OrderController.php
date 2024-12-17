@@ -84,11 +84,12 @@ class OrderController extends AbstractEntityController
     {
         $filterKey = $request->input('filterKey');
         $filterValue = $request->input('filterValue');
-        $perPage = 5;
+        $perPage = 3;
         $query = $this->model->query();
 
         // Filter for orders where canceled is false
         $query->where('canceled', false);
+        $query->whereNotIn('status',['COMPLETED']);
 
         $filterableFields = $this->model->filterFields();
         $filterableValues = array_column($filterableFields, 'value');
@@ -355,19 +356,33 @@ class OrderController extends AbstractEntityController
 
     public function updateOrder(Request $request, $id)
     {
-
         $order = Order::find($id);
 
         if (!$order) {
-            return response()->json(['error' => [$this->model::getErrorMessage('not_found')]], 404);
+            return back()->with('error', $this->model::getErrorMessage('not_found'));
         }
+
+
         // Extract step, status, and email_notification from the request
         $step = $request->input('step');
         $status = $request->input('status','default');
-        $emailNotification = $request->input('email_notification', false); // Default to false if not provided
+        $emailNotification = $request->input('email-notification', false); // Default to false if not provided
+
+        // Custom validation messages for the file upload
+        $customMessages = [
+            'pdf-archive.mimes' => __('messages.mail.modal.pdf_validation_mime'),
+            'pdf-archive.max' => __('messages.mail.modal.pdf_validation_max'),
+        ];
+
+        // Validate the file only if it's uploaded
+        $request->validate([
+            'pdf-archive' => 'nullable|file|mimes:pdf|max:2048', // Example validation
+        ], $customMessages);
+
+        // Get the uploaded file (if any)
+        $file = $request->file('pdf-archive');
 
         // Call the method to update the order's tracking steps status
-
         $this->updateStatusOrder($order, $step, $status);
         // Send the email only if email_notification is true
         if ($emailNotification) {
@@ -383,10 +398,78 @@ class OrderController extends AbstractEntityController
                 $type = 'delivered';
             }
 
-            $this->sendOrderStatusEmail($order, $type);
+            // If file exists, pass the file to the email method, else send email without file
+            if ($file) {
+                $this->sendOrderStatusEmail($order, $type, $file);
+            } else {
+                $this->sendOrderStatusEmail($order, $type);
+            }
+
         }
 
-        return response()->json(['success' => ['Order status updated successfully. Email sent if requested.']]);
+        return back()->with('success', $this->model::getSuccessMessage('update'));
+    }
+
+    public function emailOrder(Request $request, $id){
+
+        $order = Order::find($id);
+
+        if (!$order) {
+            return back()->with('error', $this->model::getErrorMessage('not_found'));
+        }
+
+        // Custom validation messages
+        $customMessages = [
+            'pdf-archive.mimes' => __('messages.mail.modal.pdf_validation_mime'),
+            'pdf-archive.max' => __('messages.mail.modal.pdf_validation_max'),
+            'email_subject.required' => __('messages.mail.modal.subject_required'),
+            'email_subject.max' => __('messages.mail.modal.subject_max'),
+            'email_title.required' => __('messages.mail.modal.title_required'),
+            'email_title.max' => __('messages.mail.modal.title_max'),
+            'email_content.required' => __('messages.mail.modal.content_required'),
+            'email_content.string' => __('messages.mail.modal.content_string'),
+            'email_content.max' => __('messages.mail.modal.content_max'),
+        ];
+
+        // Validation rules
+        $request->validate([
+            'email_subject' => 'required|string|max:255', // Subject is required, must be a string, and max length is 255
+            'email_title' => 'required|string|max:255',  // Title is required, must be a string, and max length is 255
+            'email_content' => 'required|string|max:2000', // Content is required, must be a string, and max length is 2000
+            'pdf-archive' => 'nullable|file|mimes:pdf|max:2048', // File upload validation for PDF
+        ], $customMessages);
+
+        $include_order_content = $request->input('email_order_details', false); // Default to false if not provided
+
+        $withDetails = $request->input('email_order_details',false);
+        $subject = $request->input('email_subject');
+        $title = $request->input('email_title');
+        $content = $request->input('email_content');
+
+        // Create the mailable instance
+        $email = new OrderStatusMailable($order, 'custom' ,'es',$subject, $title, $content , $withDetails );
+
+        // Get the uploaded file (if any)
+        $file = $request->file('pdf-archive');
+        // Attach the file if provided
+        if ($file) {
+            $email->attach($file->getRealPath(), [
+                'as' => $file->getClientOriginalName(),
+                'mime' => $file->getMimeType(),
+            ]);
+        }
+
+        $client = Client::find($order->client_id);
+
+        if (!$client) {
+            return response()->json(['error' => [$this->model::getErrorMessage('not_found')]], 404);
+        }
+
+        // Send the email
+        Mail::to($client->email)->send($email);
+
+        return back()->with('success', $this->model::getSuccessMessage('update'));
+
     }
 
     public function updateStatusOrder(Order $order, $step, $status)
@@ -438,7 +521,7 @@ class OrderController extends AbstractEntityController
         return response()->json(['success' => ['Order status updated successfully.']]);
     }
 
-    public function sendOrderStatusEmail(Order $order, $type)
+    public function sendOrderStatusEmail(Order $order, $type, $file = null)
     {
 
         $client = Client::find($order->client_id);
@@ -447,8 +530,19 @@ class OrderController extends AbstractEntityController
             return response()->json(['error' => [$this->model::getErrorMessage('not_found')]], 404);
         }
 
-        // Send the email using the OrderStatusMailable
-        Mail::to($client->email)->send(new OrderStatusMailable($order, $type));
+        // Create the mailable instance
+        $email = new OrderStatusMailable($order, $type,'es',null,null,null, true);
+
+        // Attach the file if provided
+        if ($file) {
+            $email->attach($file->getRealPath(), [
+                'as' => $file->getClientOriginalName(),
+                'mime' => $file->getMimeType(),
+            ]);
+        }
+
+        // Send the email
+        Mail::to($client->email)->send($email);
 
         return response()->json(['success' => ['Email with status send successfully.']]);
     }

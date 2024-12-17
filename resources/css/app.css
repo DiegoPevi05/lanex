@@ -583,69 +583,141 @@ caption{
 }
 
 
-.checkbox-wrapper-3 input[type="checkbox"] {
-visibility: hidden;
-display: none;
+.checkbox-wrapper-2 .ikxBAC {
+appearance: none;
+background-color: #dfe1e4;
+border-radius: 72px;
+border-style: none;
+flex-shrink: 0;
+height: 20px;
+margin: 0;
+position: relative;
+width: 30px;
 }
 
-.checkbox-wrapper-3 .toggle {
-position: relative;
-display: block;
-width: 40px;
-height: 20px;
-cursor: pointer;
--webkit-tap-highlight-color: transparent;
-transform: translate3d(0, 0, 0);
-}
-.checkbox-wrapper-3 .toggle:before {
+.checkbox-wrapper-2 .ikxBAC::before {
+bottom: -6px;
 content: "";
-position: relative;
-top: 3px;
-left: 3px;
-width: 34px;
-height: 14px;
-display: block;
-background: #9A9999;
-border-radius: 8px;
-transition: background 0.2s ease;
-}
-.checkbox-wrapper-3 .toggle span {
+left: -6px;
 position: absolute;
-top: 0;
-left: 0;
-width: 20px;
-height: 20px;
-display: block;
-background: white;
-border-radius: 10px;
-box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
-transition: all 0.2s ease;
+right: -6px;
+top: -6px;
 }
-.checkbox-wrapper-3 .toggle span:before {
-content: "";
-position: absolute;
-display: block;
-margin: -18px;
-width: 56px;
-height: 56px;
-background: rgba(79, 46, 220, 0.5);
+
+.checkbox-wrapper-2 .ikxBAC,
+.checkbox-wrapper-2 .ikxBAC::after {
+transition: all 100ms ease-out;
+}
+
+.checkbox-wrapper-2 .ikxBAC::after {
+background-color: #fff;
 border-radius: 50%;
-transform: scale(0);
-opacity: 1;
-pointer-events: none;
+content: "";
+height: 14px;
+left: 3px;
+position: absolute;
+top: 3px;
+width: 14px;
 }
 
-.checkbox-wrapper-3 #email-notification:checked + .toggle:before {
-background: #B891D6;
+.checkbox-wrapper-2 input[type=checkbox] {
+cursor: default;
 }
-.checkbox-wrapper-3 #email-notification:checked + .toggle span {
-background: #A55AD9;
-transform: translateX(20px);
-transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
-box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+
+.checkbox-wrapper-2 .ikxBAC:hover {
+background-color: #c9cbcd;
+transition-duration: 0s;
 }
-.checkbox-wrapper-3 #email-notification:checked + .toggle span:before {
-transform: scale(1);
-opacity: 0;
-transition: all 0.4s ease;
+
+.checkbox-wrapper-2 .ikxBAC:checked {
+background-color: var(--primary-color);
+}
+
+.checkbox-wrapper-2 .ikxBAC:checked::after {
+background-color: #fff;
+left: 13px;
+}
+
+.checkbox-wrapper-2 :focus:not(.focus-visible) {
+outline: 0;
+}
+
+.checkbox-wrapper-2 .ikxBAC:checked:hover {
+background-color: var(--primary-color-dark);
+}
+
+
+.upload-file-input {
+  outline: none;
+  padding: 4px;
+  margin: -4px;
+}
+
+.upload-file-input:focus-within::file-selector-button,
+.upload-file-input:focus::file-selector-button {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.upload-file-input::before {
+  top: 16px;
+}
+
+.upload-file-input::after {
+  top: 14px;
+}
+
+/* ------- From Step 2 ------- */
+
+.upload-file-input {
+  position: relative;
+}
+
+.upload-file-input::file-selector-button {
+  width: 150px;
+  color: transparent;
+}
+
+/* Faked label styles and icon */
+.upload-file-input::before {
+  position: absolute;
+  pointer-events: none;
+  /*   top: 11px; */
+  left: 40px;
+  color: var(--primary-color);
+  content: "Subir Archivo";
+}
+
+.upload-file-input::after {
+  position: absolute;
+  pointer-events: none;
+  /*   top: 10px; */
+  left: 16px;
+  height: 20px;
+  width: 20px;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23A55AD9'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+}
+
+/* ------- From Step 1 ------- */
+
+.upload-file-input::file-selector-button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 40px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right: 16px;
+  transition: background-color 200ms;
+}
+
+.upload-file-input::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* file upload button active state */
+.upload-file-input::file-selector-button:active {
+  background-color: #e5e7eb;
 }

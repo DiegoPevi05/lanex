@@ -28,6 +28,9 @@ class OrderStatusMailable extends Mailable
 
     public $current_step;
 
+    //Custom Email Fields
+    public $withDetails;
+
     /**
      * Create a new message instance.
      *
@@ -35,14 +38,14 @@ class OrderStatusMailable extends Mailable
      * @param string $type
      * @param string $language
      */
-    public function __construct(Order $order, string $type = 'confirmation', $language = 'es')
+    public function __construct(Order $order, string $type = 'confirmation', $language = 'es',$subject, $title, $content, $withDetails)
     {
         // Set the application's locale to the passed language
         App::setLocale($language);
 
         $this->order = $order;
         $this->type = $type;
-        $this->setMailPlaceholders($type);
+        $this->setMailPlaceholders($type,$subject, $title, $content, $withDetails);
     }
 
     /**
@@ -56,6 +59,7 @@ class OrderStatusMailable extends Mailable
                     ->subject(trans($this->subject))
                     ->with([
                         'type' => $this->type,
+                        'withDetails' => $this->withDetails,
                         'order' => $this->order,
                         'link_home' => 'https://www.lanexsac.com',
                         'header_mail' => trans($this->header_mail),
@@ -84,7 +88,7 @@ class OrderStatusMailable extends Mailable
                     ]);
     }
 
-    protected function setMailPlaceholders(string $type)
+    protected function setMailPlaceholders(string $type,$subject, $title, $content, $withDetails)
     {
         switch ($type) {
             case 'confirmation':
@@ -92,30 +96,42 @@ class OrderStatusMailable extends Mailable
                 $this->subheader_mail = trans('messages.mail.status.confirmation_subheader');
                 $this->subject = trans('messages.mail.status.confirmation_subject');
                 $this->current_step = 0;
+                $this->withDetails = true;
                 break;
             case 'shipping':
                 $this->header_mail = trans('messages.mail.status.shipping_header');
                 $this->subheader_mail = trans('messages.mail.status.shipping_subheader');
                 $this->subject = trans('messages.mail.status.shipping_subject');
                 $this->current_step = 1;
+                $this->withDetails = true;
                 break;
             case 'delivered':
                 $this->header_mail = trans('messages.mail.status.delivered_header');
                 $this->subheader_mail = trans('messages.mail.status.delivered_subheader');
                 $this->subject = trans('messages.mail.status.delivered_subject');
                 $this->current_step = 2;
+                $this->withDetails = true;
                 break;
             case 'cancellation':
                 $this->header_mail = trans('messages.mail.status.cancellation_header');
                 $this->subheader_mail = trans('messages.mail.status.cancellation_subheader');
                 $this->subject = trans('messages.mail.status.cancellation_subject');
                 $this->current_step = 0;
+                $this->withDetails = false;
+                break;
+            case 'custom':
+                $this->header_mail = $title;
+                $this->subheader_mail = $content;
+                $this->subject = $subject;
+                $this->current_step = 0;
+                $this->withDetails = $withDetails;
                 break;
             default:
                 $this->header_mail = trans('messages.mail.status.default_header');
                 $this->subheader_mail = trans('messages.mail.status.default_subheader');
                 $this->subject = trans('messages.mail.status.default_subject');
                 $this->current_step = 1;
+                $this->withDetails = true;
                 break;
         }
     }

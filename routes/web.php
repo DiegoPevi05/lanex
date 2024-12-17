@@ -67,6 +67,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
         Route::delete('/cancel/{id}', [OrderController::class, 'cancel'])->name('order.cancel');
         // New route for sending the order status email
         Route::post('/update-status/{id}', [OrderController::class, 'updateOrder'])->name('order.update.status');
+        Route::post('/email-order/{id}', [OrderController::class, 'emailOrder'])->name('order.email');
     });
 
     Route::prefix('/history')->group(function(){

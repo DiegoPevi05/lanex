@@ -14,9 +14,18 @@ class DashboardController extends Controller
     {
     }
 
-    public function home()
+    public function home(Request $request)
     {
-        return view('dashboard.dashboard');
+
+        $perPage = 2;
+        $query = Order::query();  // Add the "::" to correctly reference the model
+        $query->where('canceled', false);
+        $query->whereIn('status', ['IN_TRANSIT','PENDING']);
+        $orders = $query->paginate($perPage);
+
+        return view('dashboard.dashboard', [
+            'pagination' => $orders,
+        ]);
     }
 
     public function getOrders(Request $request)
@@ -54,20 +63,17 @@ class DashboardController extends Controller
             // Retrieve orders within the date range
             $orders = Order::whereBetween('created_at', [$startDate, $endDate])->get();
 
+
             // Process the orders and group by the desired criteria
             $response = [];
+            $chunkStart = $startDate->copy();
 
-            for ($date = $startDate->copy(); $date->lte($endDate); $date->add($chunkSize, $interval)) {
+            while ($chunkStart->lte($endDate)) {
+                $chunkEnd = $chunkStart->copy()->add($chunkSize, $interval)->subSecond();
 
-                $chunkStart = $date->copy();
-
-                if ($interval == 'days') {
-                    // For weekly intervals, subtract one second to get the exact end time
-                    $chunkEnd = $date->copy()->add($chunkSize, $interval)->subSecond();
-
-                } else {
-                    // For daily intervals, use end of the day
-                    $chunkEnd = $date->copy()->add($chunkSize, $interval)->endOfDay();
+                // Ensure chunkEnd does not exceed endDate
+                if ($chunkEnd->gt($endDate)) {
+                    $chunkEnd = $endDate->copy();
                 }
 
                 $chunkOrders = $orders->filter(function ($order) use ($chunkStart, $chunkEnd) {
@@ -82,7 +88,13 @@ class DashboardController extends Controller
                     'completed' => $chunkOrders->where('status', 'COMPLETED')->count(),
                     'cancelled' => $chunkOrders->where('canceled', true)->count(),
                 ];
+
+                // Move to the next chunk
+                $chunkStart = $chunkEnd->copy()->addSecond();
             }
+
+
+
 
             // Return the JSON response
             return response()->json($response);
@@ -129,18 +141,14 @@ class DashboardController extends Controller
 
             // Process the orders and group by the desired criteria
             $response = [];
+            $chunkStart = $startDate->copy();
 
-            for ($date = $startDate->copy(); $date->lte($endDate); $date->add($chunkSize, $interval)) {
+            while ($chunkStart->lte($endDate)) {
+                $chunkEnd = $chunkStart->copy()->add($chunkSize, $interval)->subSecond();
 
-                $chunkStart = $date->copy();
-
-                if ($interval == 'days') {
-                    // For weekly intervals, subtract one second to get the exact end time
-                    $chunkEnd = $date->copy()->add($chunkSize, $interval)->subSecond();
-
-                } else {
-                    // For daily intervals, use end of the day
-                    $chunkEnd = $date->copy()->add($chunkSize, $interval)->endOfDay();
+                // Ensure chunkEnd does not exceed endDate
+                if ($chunkEnd->gt($endDate)) {
+                    $chunkEnd = $endDate->copy();
                 }
 
                 $chunkOrders = $orders->filter(function ($order) use ($chunkStart, $chunkEnd) {
@@ -155,10 +163,14 @@ class DashboardController extends Controller
                     'completed' => $chunkOrders->where('status', 'COMPLETED')->sum('net_amount'),
                     'cancelled' => $chunkOrders->where('canceled', true)->sum('net_amount'),
                 ];
+
+                // Move to the next chunk
+                $chunkStart = $chunkEnd->copy()->addSecond();
             }
 
             // Return the JSON response
             return response()->json($response);
+
         } catch (\Exception $e) {
             // Log the error message
             Log::error('An error occurred: ' . $e->getMessage(), ['exception' => $e]);

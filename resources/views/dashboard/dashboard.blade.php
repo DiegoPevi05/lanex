@@ -15,27 +15,30 @@
                     </div>
                 </div>
 
-                <div id="order-cards-container" class="w-full h-full flex flex-col justify-start items-start overflow-y-scroll">
+                <div id="order-cards-container" class="w-full h-full flex flex-col justify-start items-start overflow-y-scroll gap-y-4">
 
+                    @foreach ($pagination->items() as $paginate)
+                        <x-order-card :data="$paginate" type="dashboard"/>
+                    @endforeach
                 </div>
 
                 <div class="w-full h-auto flex flex-row justify-between mt-auto">
                     <div class="w-auto flex flex-row gap-x-1">
-                        <button id="first-card" class="{{1 == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center   duration-300 cursor-pointer  p-1">
+                        <a href="{{route('dashboard_home',['page' => 1 ] )}}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center   duration-300 cursor-pointer  p-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
-                        </button>
+                        </a>
 
-                        <button id="preview-card" class="{{1 == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
+                        <a href="{{ route('dashboard_home', ['page' =>$pagination->currentPage() - 1]) }}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m15 18-6-6 6-6"/></svg>
-                        </button>
+                        </a>
                     </div>
 
                     <div class="w-auto flex flex-row gap-x-1">
-                        <a id="next-card" class="{{1 == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
+                        <a href="{{ route('dashboard_home', ['page' =>$pagination->currentPage() + 1]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="m9 18 6-6-6-6"/></svg>
                         </a>
 
-                        <a id="last-card" class="{{1 == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
+                        <a href="{{ route('dashboard_home', ['page' =>$pagination->lastPage()]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
                         </a>
                     </div>
@@ -132,6 +135,8 @@
         </div>
 
     </section>
+    <x-order-status-modal/>
+    <x-order-custom-email-modal/>
 @endsection
 
 @push('scripts')
@@ -178,6 +183,7 @@
 
                 // Parse the JSON response
                 const data = await response.json();
+
                 const currentLanguage = "{{ app()->getLocale() }}" === 'en' ? 'en-US' : 'es-ES';
 
                 if(data.length > 0){
@@ -426,5 +432,42 @@
         });
 
         getOrdersAmountStatistics('weekly');
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            @if (session('success'))
+                showToast(["{{ session('success') }}"]);
+            @endif
+
+            @if (session('error'))
+                showToast(["{{ session('error') }}"]);
+            @endif
+
+            const modal = document.getElementById("modal_status_component");
+
+            if (modal) {
+                const emailNotification = modal.querySelector("#email-notification");
+                const titlePdfArchive = modal.querySelector('#file_title_modal');
+                const pdfArchive = modal.querySelector('#pdf-archive');
+
+                if (emailNotification) {
+                    emailNotification.addEventListener('change', function () {
+                        if (emailNotification.checked) {
+                            titlePdfArchive.classList.remove('hidden');
+                            pdfArchive.classList.remove('hidden');
+                            pdfArchive.disabled = false;
+                        } else {
+                            titlePdfArchive.classList.add('hidden');
+                            pdfArchive.classList.add('hidden');
+                            pdfArchive.disabled = true;
+                        }
+                        // Clear the file input value
+                        if (pdfArchive) {
+                            pdfArchive.value = '';
+                        }
+                    });
+                }
+            }
+        });
     </script>
 @endpush

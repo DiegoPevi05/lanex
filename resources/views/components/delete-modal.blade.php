@@ -12,15 +12,15 @@
 
         <label id="title_modal" class="title_modal font-bold text-xl text-primary mb-4 text-center"></label>
         <p id="content_modal" class="content_modal text-gray-700 text-md text-center"></p>
-        <div class="w-full flex flex-row justify-center items-start gap-x-4">
+        <div id="email_notification_section" class="w-full flex flex-row justify-center items-start gap-x-4">
             <p class="text-md text-body font-bold">{{ __('messages.mail.modal.email_notification') }}</p>
-            <div class="checkbox-wrapper-3">
-              <input type="checkbox" id="email-notification" name="email-notification" />
-              <label for="email-notification" class="toggle"><span></span></label>
+            <div class="checkbox-wrapper-2">
+              <input type="checkbox" class="sc-gJwTLC ikxBAC" id="email-notification" name="email-notification">
             </div>
         </div>
+
         <div class="h-auto w-auto gap-x-4 flex justify-between">
-            <button onclick="closeDeleteModal()"  class="w-auto h-full py-2 px-6 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2 text-lg">
+            <button onclick="closeDeleteModal()" type="button"  class="w-auto h-full py-2 px-6 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2 text-lg">
                 {{__('messages.common.cancel')}}
             </button>
             <button id="send_delete_btn_label" type="submit" class="w-auto h-full py-2 px-6 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2 text-lg">
@@ -32,11 +32,22 @@
 
 @push('scripts')
 <script>
-    function showDeleteModal(title, content, urlAction, BtnLabel) {
+    function showDeleteModal(title, content, urlAction, BtnLabel, type) {
         const modal = document.getElementById(`modal_delete_component_{{$id}}`);
         const titleElement = modal.querySelector("#title_modal");
         const contentElement = modal.querySelector("#content_modal");
         const form = modal.querySelector('#delete-modal-form');
+        const emailNotificationSection = modal.querySelector('#email_notification_section');
+
+        if(type=="delete"){
+            if(!emailNotificationSection.classList.contains('hidden')){
+                emailNotificationSection.classList.add('hidden');
+            }
+        }else{
+            if(emailNotificationSection.classList.contains('hidden')){
+                emailNotificationSection.classList.remove('hidden');
+            }
+        }
 
         const BtnInput = modal.querySelector('#send_delete_btn_label')
 

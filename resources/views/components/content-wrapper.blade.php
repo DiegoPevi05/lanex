@@ -1,5 +1,5 @@
-<div id="order_detail_{{$id}}" class="w-full h-auto px-4 py-2">
-    <div class="w-full flex flex-row justify-between items-center">
+<div id="order_detail_{{$id}}" class="w-full h-auto px-4 py-2 ">
+    <div class="w-full flex flex-row justify-between items-center max-sm:pb-2">
         <label class="font-bold text-primary w-auto">{{ __('messages.track.order.order_details') }}</label>
         <button id="toggleButton_{{$id}}" class="bg-primary-dark hover:bg-secondary-dark text-white rounded-xl p-2 px-4 duration-300 active:scale-95 transition-all inline-flex gap-x-2 items-center">Ver Detalles
             <svg id="iconOpen_{{$id}}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>

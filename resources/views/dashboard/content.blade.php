@@ -91,6 +91,7 @@
         </div>
     </section>
     <x-order-status-modal/>
+    <x-order-custom-email-modal/>
 @endsection
 
 @push('scripts')
@@ -488,7 +489,7 @@
 
             // Toggle the height and opacity classes
             wrapperContainer.classList.toggle("h-[0px]");
-            wrapperContainer.classList.toggle("h-[400px]");
+            wrapperContainer.classList.toggle("h-[600px]");
             wrapperContainer.classList.toggle("sm:h-[600px]");
 
             // Toggle opacity for the wrapper text
@@ -1707,6 +1708,35 @@
             initializeWrapperScroller();
 
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById("modal_status_component");
+
+            if (modal) {
+                const emailNotification = modal.querySelector("#email-notification");
+                const titlePdfArchive = modal.querySelector('#file_title_modal');
+                const pdfArchive = modal.querySelector('#pdf-archive');
+
+                if (emailNotification) {
+                    emailNotification.addEventListener('change', function () {
+                        if (emailNotification.checked) {
+                            titlePdfArchive.classList.remove('hidden');
+                            pdfArchive.classList.remove('hidden');
+                            pdfArchive.disabled = false;
+                        } else {
+                            titlePdfArchive.classList.add('hidden');
+                            pdfArchive.classList.add('hidden');
+                            pdfArchive.disabled = true;
+                        }
+                        // Clear the file input value
+                        if (pdfArchive) {
+                            pdfArchive.value = '';
+                        }
+                    });
+                }
+            }
+        });
+
 
 
     </script>
