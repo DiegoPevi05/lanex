@@ -108,6 +108,7 @@
         let currentLongitude = -77.042793;
         let typeTransport = 'airplaine';
         let map;
+        let beachFlagMarkerView = null;
 
         async function initMap() {
           // The location of Uluru
@@ -133,12 +134,12 @@
             mapId: "DEMO_MAP_ID",
           });
 
-        const beachFlagMarkerView = new AdvancedMarkerElement({
-          map,
-          position: position,
-          content: iconTransport,
-          title: "A marker using a custom PNG Image",
-        });
+            beachFlagMarkerView = new AdvancedMarkerElement({
+              map,
+              position: position,
+              content: iconTransport,
+              title: "A marker using a custom PNG Image",
+            });
         }
 
         initMap();
@@ -198,15 +199,20 @@
 
                 if (!response.ok) {
                     not_found_order_content.classList.remove('hidden');
-                    console.log(response)
                     throw new Error('Failed to track order');
                 }
 
                 // Parse the JSON response
                 const result = await response.json();
+                console.log(result);
 
                 currentLatitude = result.order.current_lat;
                 currentLongitude = result.order.current_lng;
+
+                // Update the map and marker positions
+                const newPosition = { lat: currentLatitude, lng: currentLongitude };
+                beachFlagMarkerView.position = newPosition;
+                map.setCenter(newPosition);
 
                 // Log the data to the console
                 addOrderData(result.order,result.tracking_steps);

@@ -307,9 +307,9 @@ class OrderController extends AbstractEntityController
 
         // Create the order using validated data
         $orderData = $this->model::getFillableFields($validator->validated(), $request);
+
+
         $entity = $this->model->create($orderData);
-
-
 
         // Extract the validated freight data
         $freightData = $validator->validated()['freight'];
@@ -325,6 +325,7 @@ class OrderController extends AbstractEntityController
         // Extract the validated Trasnport/TrackingStep data
         $transportsData = $validator->validated()['transports'];
 
+        $currentStatus  = 'PENDING';
         //Loop thoough each transport item and associate it with the created  order
         foreach ($transportsData as $index => $transportItem) {
             // Create the Freight model (assuming you have a Freight model)
@@ -338,6 +339,10 @@ class OrderController extends AbstractEntityController
             ];
 
             $transportType = TransportType::create($transportTypeData);
+
+            if($transportItem['status'] == 'IN_TRANSIT' || $transportItem['status'] == 'COMPLETED'){
+                $currentStatus = $transportItem['status'];
+            };
 
             // Create the TrackingStep associated with the transport type
             $trackingStepData = [
@@ -358,6 +363,10 @@ class OrderController extends AbstractEntityController
             TrackingStep::create($trackingStepData);
 
         }
+
+        $entity->status = $currentStatus;
+
+        $entity->save();
 
         $emailNotification = $request->input('email-notification', false); // Default to false if not provided
 
@@ -420,7 +429,7 @@ class OrderController extends AbstractEntityController
         // === Handle Transport and TrackingStep Data ===
         $transportsData = $validator->validated()['transports'];
 
-
+        $currentStatus  = 'PENDING';
 
         $existingTransportIds = [];
 
@@ -464,6 +473,10 @@ class OrderController extends AbstractEntityController
 
             $transportId = $transportType->id ?? $transportItem['id'];
 
+            if($transportItem['status'] == 'IN_TRANSIT' || $transportItem['status'] == 'COMPLETED'){
+                $currentStatus = $transportItem['status'];
+            };
+
             $trackingStepData = [
                 'status' => $transportItem['status'] ?? 'PENDING',
                 'sequence' => $index,
@@ -493,6 +506,10 @@ class OrderController extends AbstractEntityController
         // Delete Transport Types without any related TrackingSteps
         $transportsToDelete = TransportType::whereDoesntHave('trackingSteps')->pluck('id')->toArray();
         TransportType::whereIn('id', $transportsToDelete)->delete();
+
+        $entity->status = $currentStatus;
+
+        $entity->save();
 
         return redirect()->route($this->model::getRedirectRoutes("update"))
             ->with('success', $this->model::getSuccessMessage('update'));

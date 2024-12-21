@@ -17,8 +17,43 @@
 
                     <div class="w-auto h-auto
                         flex flex-col xl:flex-row justify-start xl:justify-end max-xl:gap-y-4 xl:gap-x-4 items-start xl:items-center mt-12">
-                        <x-button url="#" size="lg" variant="secondary" text="Envio Maritimo" rightIcon="ri-ship-fill" />
-                        <x-button url="#" size="lg" variant="secondary" text="Envio Aereo" rightIcon="bi-airplane-fill" />
+
+                        @if(!empty($services) && isset($services[0]))
+                            <a href="{{ route('service', $services[0]['id']) }}"
+                                aria-label="{{__('messages.aria_labels.default')}}"
+                                title="{{__('messages.titles.default')}}"
+                                class="inline-flex gap-x-4 justify-center items-center  border-2 px-12 sm:px-24 py-2 lg:py-3 sm:py-4 bg-white text-primary border-white hover:border-primary hover:bg-primary hover:text-white
+                                duration-300 active:scale-95 rounded-xl transition">
+                                <h5 >{{$services[0]['name']}}</h5>
+                                <!-- Render right icon using Blade UI Kit -->
+
+                                <?php
+                                    $svgContent = file_get_contents(storage_path('app/public/' . $services[0]['icon'] ));
+                                ?>
+                                <span class="ml-2 w-6 sm:w-8 h-6 sm:h-8">
+                                    {!! $svgContent !!}
+                                </span>
+                            </a>
+                        @endif
+
+                        @if(!empty($services) && isset($services[1]))
+
+                            <a href="{{ route('service', $services[1]['id']) }}"
+                                aria-label="{{__('messages.aria_labels.default')}}"
+                                title="{{__('messages.titles.default')}}"
+                                class="inline-flex gap-x-4 justify-center items-center  border-2 px-12 sm:px-24 py-2 lg:py-3 sm:py-4 bg-white text-primary border-white hover:border-primary hover:bg-primary hover:text-white
+                                duration-300 active:scale-95 rounded-xl transition">
+                                <h5 >{{$services[1]['name']}}</h5>
+                                <!-- Render right icon using Blade UI Kit -->
+
+                                <?php
+                                    $svgContent2 = file_get_contents(storage_path('app/public/' . $services[1]['icon'] ));
+                                ?>
+                                <span class="ml-2 w-6 sm:w-8 h-6 sm:h-8">
+                                    {!! $svgContent2 !!}
+                                </span>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

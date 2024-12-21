@@ -59,7 +59,8 @@ class WebController extends Controller
 
     public function about()
     {
-        return view('client.about');
+        $services = WebService::all();
+        return view('client.about', ['services' => $services]);
     }
 
     public function services()

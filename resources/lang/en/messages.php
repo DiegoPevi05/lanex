@@ -176,30 +176,30 @@ It is important for every company involved in international trade to be trained 
     ],
     'about' => [
         'hero' => [
-            'header' => 'WE ARE THE BEST LOGISTICS COMPANY',
-            'title' => 'Optimize your shipments with our cargo services',
-            'description' => 'Simplify your shipping process and make it more efficient with our cargo services. From start to finish, we will handle everything to ensure your cargo arrives safely.',
+            'header' => 'WE ARE AN INTERNATIONAL LOGISTICS OPERATOR',
+            'title' => 'Optimize your business logistics with our foreign trade services (cargo and customs)',
+            'description' => 'Simplify your logistics processes with our foreign trade services. Looking to explore new markets? At LanEx, we provide the best logistics solutions to help grow your business.',
         ],
         'statistics' => [
-            'stats_1_value' => '+120',
-            'stats_1_label' => 'Countries for Export',
-            'stats_2_value' => '+120',
-            'stats_2_label' => 'Countries for Export',
-            'stats_3_value' => '+120',
-            'stats_3_label' => 'Countries for Export'
+            'stats_1_value' => '+100',
+            'stats_1_label' => 'International destinations',
+            'stats_2_value' => '+100',
+            'stats_2_label' => 'International suppliers',
+            'stats_3_value' => '+10',
+            'stats_3_label' => 'Years of international logistics experience'
         ],
         'content' => [
             'header' => 'Who are we?',
-            'title' => 'We are a Logistics Expert Company',
-            'introduction' => 'At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.',
-            'content1' => 'At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.',
-            'content2' => 'At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.'
+            'title' => 'We are an international logistics operator focused on designing tailored logistics',
+            'introduction' => 'At LanEx, we aim to create effective logistics strategies for our clients, adapting to their different business industries. With cutting-edge solutions, our team with over 10 years of experience will provide you with the best options to lead the market.',
+            'content1' => 'Our goal is to offer you personalized advice throughout the entire logistics process, resolving any doubts or queries that may arise along the way.',
+            'content2' => 'At LanEx, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with hassle-free shipping experiences. Our commitment is to be a strategic partner that simplifies your logistics processes, allowing you to focus on growing your business while we take care of the logistics.',
         ],
         'content_link' => [
-            'header' => 'Header',
-            'title' => 'Consult with Experts',
+            'header' => 'Consulting',
+            'title' => 'International Logistics Consulting',
             'button_label' => 'GET A QUOTE',
-            'content' => 'At FastGo, we believe in providing our clients with personalized and efficient logistics solutions that meet their unique needs. With years of experience and a team of experts, we are dedicated to empowering your business with seamless shipping experiences.'
+            'content' => 'At LanEx, we will address all your inquiries promptly. We strive to be present at every stage of the logistics process to answer all your questions and doubts, achieving goals in terms of time and costs.'
         ]
     ],
     'service' => [

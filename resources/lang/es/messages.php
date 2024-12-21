@@ -187,30 +187,30 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
     ],
     'about' => [
         'hero' => [
-            'header' => 'SOMOS LA MEJOR EMPRESA DE LOGÍSTICA',
-            'title' => 'Optimiza tus envíos con nuestros servicios de carga',
-            'description' => 'Simplifica tu proceso de envío y hazlo más eficiente con nuestros servicios de carga. Desde el inicio hasta el final, nos encargaremos de todo para asegurar que tu carga llegue de manera segura.',
+            'header' => 'SOMOS UN OPERADOR LOGISTICO INTERNACIONAL',
+            'title' => 'Optimiza la logística de tu negocio con nuestros servicios en comercio exterior (carga y aduana)',
+            'description' => 'Simplifica tus procesos logísticos con nuestros servicios en comercio exterior. Buscas explorar nuevos mercados, en LanEx te brindamos las mejores soluciones logísticas para hacer crecer tu negocio',
         ],
         'statistics' => [
-            'stats_1_value' => '+120',
-            'stats_1_label' => 'Países de Exportación',
-            'stats_2_value' => '+120',
-            'stats_2_label' => 'Países de Exportación',
-            'stats_3_value' => '+120',
-            'stats_3_label' => 'Países de Exportación'
+            'stats_1_value' => '+100',
+            'stats_1_label' => 'Destinos internacionales',
+            'stats_2_value' => '+100',
+            'stats_2_label' => 'Proveedores internacionales',
+            'stats_3_value' => '+10',
+            'stats_3_label' => 'Años de logística internacional'
         ],
         'content' => [
             'header' => '¿Quiénes somos?',
-            'title' => 'Somos Expertos en Logística',
-            'introduction' => 'En FastGo, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas. Con años de experiencia y un equipo de expertos, nos dedicamos a empoderar tu negocio con experiencias de envío sin complicaciones.',
-            'content1' => 'En FastGo, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas. Con años de experiencia y un equipo de expertos, nos dedicamos a empoderar tu negocio con experiencias de envío sin complicaciones.',
-            'content2' => 'En FastGo, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas. Con años de experiencia y un equipo de expertos, nos dedicamos a empoderar tu negocio con experiencias de envío sin complicaciones.'
+            'title' => 'Somos un operador logístico internacional que busca diseñar la logística a su medida',
+            'introduction' => 'En LanEx buscamos diseñar estratégicas logísticas efectivas para nuestros clientes, adaptándonos a los diferentes giros de negocios de los mismos. Con soluciones a la vanguardia, nuestro equipo con mas de 10 años de experiencia te brindarán las mejores opciones para liderar el mercado.',
+            'content1' => 'Nuestro objetivo es brindarte una asesoría personalizada en todo el proceso logístico, esto para resolver dudas y consultas que puedan presentarse a través de todo el proceso.',
+            'content2' => 'En LanEx, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas. Con años de experiencia y un equipo de expertos, nos dedicamos a empoderar tu negocio con experiencias de envío sin complicaciones. Nuestro compromiso es ser un socio estratégico que simplifique tus procesos logísticos, permitiéndote centrarte en hacer crecer tu negocio mientras nos encargamos de la logística.',
         ],
         'content_link' => [
             'header' => 'Asesoramiento',
-            'title' => 'Consulta con Expertos',
+            'title' => 'Asesoría en Logística Internacional',
             'button_label' => 'OBTENER COTIZACIÓN',
-            'content' => 'En FastGo, creemos en brindar a nuestros clientes soluciones logísticas personalizadas y eficientes que satisfagan sus necesidades únicas. Con años de experiencia y un equipo de expertos, nos dedicamos a empoderar tu negocio con experiencias de envío sin complicaciones.'
+            'content' => 'En LanEx, resolveremos todas tus consultas de forma oportuna. Buscamos estar en todas las fases del proceso logístico para responder todas tus inquietudes y dudas; logrando así los objetivos en tiempos y costos.'
         ]
     ],
     'service' => [
