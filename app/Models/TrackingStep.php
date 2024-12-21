@@ -18,6 +18,10 @@ class TrackingStep extends Model
         'country',
         'city',
         'address',
+        'eta',
+        'lat',
+        'lng',
+        'duration',
         'order_id',
         'transport_type_id',
     ];
@@ -35,6 +39,10 @@ class TrackingStep extends Model
             'country' => $validatedFields['country'] ?? null,
             'city' => $validatedFields['city'] ?? null,
             'address' => $validatedFields['address'] ?? null,
+            'eta' => $validatedFields['eta'] ?? null,
+            'lat' => $validatedFields['lat'] ?? null,
+            'lng' => $validatedFields['lng'] ?? null,
+            'duration' => $validatedFields['duration'] ?? 0,
             'order_id' => $validatedFields['order_id'] ?? null,
             'transport_type_id' => $validatedFields['transport_type_id'] ?? null,
         ];
@@ -71,6 +79,8 @@ class TrackingStep extends Model
             'address' => 'nullable|string|max:255',
             'order_id' => 'required|exists:orders,id',
             'transport_type_id' => 'required|exists:transport_types,id',
+            'eta' => 'nullable|date',
+            'duration' => 'nullable|integer|min:0',
         ];
     }
 
@@ -99,7 +109,11 @@ class TrackingStep extends Model
             'order_id.exists' => __('messages.dashboard.tracking_step.form.validations.order_id_exists'),
 
             'transport_type_id.required' => __('messages.dashboard.tracking_step.form.validations.transport_type_id_required'),
+
             'transport_type_id.exists' => __('messages.dashboard.tracking_step.form.validations.transport_type_id_exists'),
+            'eta.date' => __('messages.dashboard.tracking_step.form.validations.eta_date'),
+            'duration.integer' => __('messages.dashboard.tracking_step.form.validations.duration_integer'),
+            'duration.min' => __('messages.dashboard.tracking_step.form.validations.duration_min'),
         ];
     }
 

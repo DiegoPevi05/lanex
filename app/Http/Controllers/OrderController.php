@@ -14,6 +14,7 @@ use App\Services\IconService;
 use App\Mail\OrderStatusMailable;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends AbstractEntityController
 {
@@ -55,23 +56,75 @@ class OrderController extends AbstractEntityController
 
         // Fetch tracking steps related to the order
         $trackingSteps = $order->trackingSteps()
-            ->select(['status', 'sequence', 'country', 'city', 'transport_type_id','updated_at']) // Include foreign key
+            ->select(['status', 'sequence', 'country', 'city','eta','lat','lng','duration', 'transport_type_id','updated_at','created_at']) // Include foreign key
             ->get()
-            ->map(function ($trackingStep) {
+            ->map(function ($trackingStep,$index) use (&$previousEta) {
+
+                // Initialize eta_calculated as a new DateTime object
+                $etaCalculated = null;
+
+                // If this is the first step, initialize eta_calculated
+                if ($index === 0) {
+                    if ($trackingStep->eta) {
+
+                        $currentEta = new \DateTime($trackingStep->eta);
+                        // If the current ETA is greater than the previous ETA, use it
+                        if ($currentEta > $previousEta) {
+                            $etaCalculated = $currentEta;
+                        } else {
+                            // Otherwise, increment the previous ETA by one day
+                            $etaCalculated = clone $previousEta;
+                            $etaCalculated->modify("+1 day");
+                        }
+
+                    } elseif ($trackingStep->duration > 0) {
+                        $etaCalculated = new \DateTime($trackingStep->created_at); // Use the current date
+                        $etaCalculated->modify("+{$trackingStep->duration} days"); // Add the duration in days
+                    }else{
+                        $etaCalculated = new \DateTime($trackingStep->created_at);
+                    }
+                } else {
+                    if ($trackingStep->eta) {
+                        $currentEta = new \DateTime($trackingStep->eta);
+                        // If the current ETA is greater than the previous ETA, use it
+                        if ($currentEta > $previousEta) {
+                            $etaCalculated = $currentEta;
+                        } else {
+                            // Otherwise, increment the previous ETA by one day
+                            $etaCalculated = clone $previousEta;
+                            $etaCalculated->modify("+1 day");
+                        }
+                    } elseif ($trackingStep->duration > 0) {
+                        $etaCalculated = clone $previousEta; // Start from the previous ETA
+                        $etaCalculated->modify("+{$trackingStep->duration} days"); // Add the duration to the previous ETA
+                    } else {
+                        $etaCalculated = clone $previousEta; // Start from the previous ETA
+                        $etaCalculated->modify("+1 day"); // Add one day if no duration
+                    }
+                }
+
+                // Store the current eta_calculated for the next iteration
+                $previousEta = $etaCalculated;
 
                 // Specify only the fields you need from the related transportType
                 $transportType = $trackingStep->transportType()->select(['type', 'name', 'icon','status','description','external_reference'])->first(); // Adjust fields as needed
 
                 return array_merge(
                     $trackingStep->toArray(),
-                    ['transport_type' => $transportType ? $transportType->toArray() : null] // Add transport_type object
+                    ['transport_type' => $transportType ? $transportType->toArray() : null], // Add transport_type object
+                    ['eta_calculated' => $etaCalculated ? $etaCalculated->format('Y-m-d H:i:s') : null] // Add eta_calculated to response
                 );
             })
             ->toArray();
+        // Calculate the current position based on percentage of advance
+        $currentPosition = $this->calculateCurrentPosition($trackingSteps);
 
         // Construct the final response
         $response = [
-            'order' => $order->only(['order_number', 'status', 'details', 'numero_dam', 'manifest', 'client_name','updated_at']),
+            'order' => array_merge(
+                $order->only(['order_number', 'status', 'details', 'numero_dam', 'manifest', 'client_name', 'updated_at']),
+                ['current_lat' => $currentPosition['lat'], 'current_lng' => $currentPosition['lng']]
+            ),
             'freights' => $freights,
             'tracking_steps' => $trackingSteps
         ];
@@ -100,18 +153,147 @@ class OrderController extends AbstractEntityController
 
         $entities = $query->paginate($perPage);
 
+        // Load countries data from JSON file
+        $countries = [];
+        $countriesPath = storage_path('app/public/data/countries.json');
+        if (file_exists($countriesPath)) {
+            $countries = json_decode(file_get_contents($countriesPath), true);
+        };
+
         return view($this->model::getRedirectRoutes("index"), [
             'pagination' => $entities,
             'currentFilter' => $filterKey,
             'filters' => $filterableFields,
             'EntityType' => $this->model::getType(),
-            'icons' => IconService::getAllSvgIcons()
+            'icons' => IconService::getAllSvgIcons(),
+            'countries' => $countries
         ]);
+    }
+
+    public function SearchCityByCountry(Request $request)
+    {
+        $countryCode = $request->query('country'); // Get the country code from the request
+
+        $indexPath = storage_path('app/public/data/cities_index.json'); // Path to the cities index file
+        $citiesPath = storage_path('app/public/data/cities.json'); // Path to the cities.json file
+
+        if (!file_exists($indexPath) || !file_exists($citiesPath)) {
+            return response()->json(['error' => 'Required files not found'], 404); // Handle missing files
+        }
+
+        // Load the index file
+        $indexData = json_decode(file_get_contents($indexPath), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return response()->json(['error' => 'Invalid index file format'], 500);
+        }
+
+        // Find the entry for the specified country code
+        $countryEntry = collect($indexData)->firstWhere('country', $countryCode);
+
+        if (!$countryEntry) {
+            return response()->json(['message' => 'No cities found for the specified country'], 404);
+        }
+
+        // Extract start line and count
+        $startLine = $countryEntry['start_line'];
+        $count = $countryEntry['count'];
+
+        $linesToRead = $count * 8; // Each city spans 8 lines
+        $endLine = $startLine + $linesToRead;
+
+        $file = fopen($citiesPath, 'r');
+        if ($file === false) {
+            return response()->json(['error' => 'Unable to read cities file'], 500);
+        }
+
+        $cities = [];
+        $currentCityLines = [];
+        $lineNumber = 0;
+
+        // Read only the necessary lines
+        while (($line = fgets($file)) !== false) {
+            $lineNumber++;
+
+            // Skip lines outside the target range
+            if ($lineNumber < $startLine) {
+                continue;
+            }
+            if ($lineNumber >= $endLine) {
+                break;
+            }
+
+            $line = trim($line);
+
+            // Accumulate lines for each city
+            $currentCityLines[] = $line;
+
+            if (count($currentCityLines) === 7) {
+                // Combine lines into a single city object
+                $cityData = $this->combineCityData($currentCityLines);
+                $cities[] = $cityData;
+
+                // Reset for the next city
+                $currentCityLines = [];
+            }
+        }
+
+        fclose($file);
+
+        if (empty($cities)) {
+            return response()->json(['message' => 'No cities found for the specified country'], 404);
+        }
+
+        // Return the filtered cities as a JSON response
+        return response()->json($cities);
+    }
+
+    private function combineCityData($cityData)
+    {
+        // Clean the city data by removing unwanted characters (e.g., escape quotes and commas)
+        $city = [
+            'name' => isset($cityData[1]) ? $this->cleanData($cityData[1]) : '',
+            'lat' => isset($cityData[2]) ? $this->cleanData($cityData[2]) : '',
+            'lng' => isset($cityData[3]) ? $this->cleanData($cityData[3]) : '',
+            'country' => isset($cityData[5]) ? $this->cleanData($cityData[5]) : '',
+        ];
+        // Ensure numeric values are properly formatted (lat, lng as floats)
+        $city['lat'] = is_numeric($city['lat']) ? (float)$city['lat'] : null;
+        $city['lng'] = is_numeric($city['lng']) ? (float)$city['lng'] : null;
+
+        return $city;
+    }
+
+    private function cleanData($value)
+    {
+        // Step 1: Split the value by ":"
+        $parts = explode(':', $value);
+
+        // Step 2: Extract the part after the colon
+        if (isset($parts[1])) {
+            // Step 3: Remove the leading quote (if it exists) and trailing ","
+            $cleanedValue = trim($parts[1]);
+            // Remove the leading quote if it exists
+            if (substr($cleanedValue, 0, 1) === '"') {
+                $cleanedValue = substr($cleanedValue, 1);
+            }
+            // Remove the trailing ","
+            if (substr($cleanedValue, -2) === '",') {
+                $cleanedValue = substr($cleanedValue, 0, -2);
+            }
+
+            if (substr($cleanedValue, -1) === ',') {
+                $cleanedValue = substr($cleanedValue, 0, -1);
+            }
+            // Step 4: Remove the backslash if it exists
+            return stripslashes($cleanedValue);
+        }
+
+        return ''; // Return empty string if the value is not formatted as expected
     }
 
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), $this->model::getValidationRules(), $this->model::getValidationMessages());
 
         //validate Order Data
@@ -143,36 +325,31 @@ class OrderController extends AbstractEntityController
         // Extract the validated Trasnport/TrackingStep data
         $transportsData = $validator->validated()['transports'];
 
-        // Find the last index of the item where the 'status' is 'ACTIVE'
-        $statusIndex = array_reduce(
-            array_keys($transportsData),
-            fn($carry, $index) => $transportsData[$index]['status'] === 'ACTIVE' ? $index : $carry,
-            false
-        );
-
-        // If no 'ACTIVE' status is found, set the index to 0
-        $statusIndex = $statusIndex !== false ? $statusIndex : 0;
-
         //Loop thoough each transport item and associate it with the created  order
         foreach ($transportsData as $index => $transportItem) {
-            $filledData = TransportType::getFillableFields($transportItem,$request);
             // Create the Freight model (assuming you have a Freight model)
-            $transportType = TransportType::create($filledData);
+            $transportTypeData = [
+                'type' => $transportItem['type'] ?? null,
+                'name' => $transportItem['name'] ?? null,
+                'icon' => $transportItem['icon'] ?? null,
+                'status' => 'ACTIVE',
+                'description' => $transportItem['description'] ?? null,
+                'external_reference' => $transportItem['external_reference'] ?? null,
+            ];
 
-            // Determine the status for the tracking step
-            $status = match (true) {
-                $index < $statusIndex => 'COMPLETED',     // Before the current status
-                $index === $statusIndex => 'IN TRANSIT',  // Current status
-                default => 'PENDING',                     // After the current status
-            };
+            $transportType = TransportType::create($transportTypeData);
 
             // Create the TrackingStep associated with the transport type
             $trackingStepData = [
-                'status' => $status,
+                'status' => $transportItem['status'] ?? 'PENDING',
                 'sequence' => $index,
                 'country' => $transportItem['country'] ?? null,
                 'city' => $transportItem['city'] ?? null,
                 'address' => $transportItem['address'] ?? null,
+                'eta' => $transportItem['eta'] ?? null,
+                'lat' => $transportItem['lat'] ?? null,
+                'lng' => $transportItem['lng'] ?? null,
+                'duration' => $transportItem['duration'] ?? 0,
                 'order_id' => $entity->id,  // The order ID
                 'transport_type_id' => $transportType->id, // The created transport type ID
             ];
@@ -180,6 +357,15 @@ class OrderController extends AbstractEntityController
             // Assuming you have a TrackingStep model
             TrackingStep::create($trackingStepData);
 
+        }
+
+        $emailNotification = $request->input('email-notification', false); // Default to false if not provided
+
+        if ($emailNotification) {
+
+            $type = 'confirmation';
+
+            $this->sendOrderStatusEmail($entity, $type);
         }
 
         return redirect()->route($this->model::getRedirectRoutes("store"))->with('success', $this->model::getSuccessMessage('create'));
@@ -234,42 +420,60 @@ class OrderController extends AbstractEntityController
         // === Handle Transport and TrackingStep Data ===
         $transportsData = $validator->validated()['transports'];
 
+
+
         $existingTransportIds = [];
 
         // Update or Create Transports and TrackingSteps
         foreach ($transportsData as $index => $transportItem) {
 
 
+
+
             // Update or Create TransportType
             if (isset($transportItem['id'])) {
                 $transportType = TransportType::find($transportItem['id']);
                 if ($transportType) {
-                    $filledData = TransportType::getFillableFields($transportItem, $request, $transportType);
-                    $transportType->update($filledData);
+                    // Create the Freight model (assuming you have a Freight model)
+                    $transportTypeData = [
+                        'type' => $transportItem['type'] ?? null,
+                        'name' => $transportItem['name'] ?? null,
+                        'icon' => $transportItem['icon'] ?? null,
+                        'status' => 'ACTIVE',
+                        'description' => $transportItem['description'] ?? null,
+                        'external_reference' => $transportItem['external_reference'] ?? null,
+                    ];
+
+                    $transportType->update($transportTypeData);
                     $existingTransportIds[] = $transportItem['id']; // Keep track of existing transports
                 }
             } else {
-                $filledData = TransportType::getFillableFields($transportItem, $request);
-                $filledData['order_id'] = $entity->id;
-                $transportType = TransportType::create($filledData);
+                // Create the Freight model (assuming you have a Freight model)
+                $transportTypeData = [
+                    'type' => $transportItem['type'] ?? null,
+                    'name' => $transportItem['name'] ?? null,
+                    'icon' => $transportItem['icon'] ?? null,
+                    'status' => 'ACTIVE',
+                    'description' => $transportItem['description'] ?? null,
+                    'external_reference' => $transportItem['external_reference'] ?? null,
+                ];
+                $transportTypeData['order_id'] = $entity->id;
+                $transportType = TransportType::create($transportTypeData);
                 $existingTransportIds[] = $transportType->id; // New transport ID
             }
 
             $transportId = $transportType->id ?? $transportItem['id'];
 
-            // Determine TrackingStep Status
-            $status = match (true) {
-                $index < $this->getLastStatusIndex($transportsData) => 'COMPLETED',
-                $index === $this->getLastStatusIndex($transportsData) => 'IN TRANSIT',
-                default => 'PENDING',
-            };
-
             $trackingStepData = [
-                'status' => $status,
+                'status' => $transportItem['status'] ?? 'PENDING',
                 'sequence' => $index,
                 'country' => $transportItem['country'] ?? null,
                 'city' => $transportItem['city'] ?? null,
                 'address' => $transportItem['address'] ?? null,
+                'eta' => $transportItem['eta'] ?? null,
+                'lat' => $transportItem['lat'] ?? null,
+                'lng' => $transportItem['lng'] ?? null,
+                'duration' => $transportItem['duration'] ?? 0,
                 'order_id' => $entity->id,
                 'transport_type_id' => $transportId,
             ];
@@ -334,6 +538,29 @@ class OrderController extends AbstractEntityController
 
         return redirect()->route($this->model::getRedirectRoutes("cancel"))
             ->with('success', $this->model::getSuccessMessage('cancel'));
+    }
+
+    public function restore(Request $request, $id)
+    {
+        $entity = $this->model->find($id);
+
+        if (!$entity) {
+            return redirect()->route($this->model::getRedirectRoutes("cancel"))
+                ->with('error', $this->model::getErrorMessage('not_found'));
+        }
+
+        // Set 'canceled' to true instead of deleting the entity
+        if($entity->canceled == true){
+            $entity->canceled = false;
+        }
+
+        if($entity->status == 'COMPLETED'){
+            $entity->status = 'PENDING';
+        }
+
+        $entity->save();  // Save the updated entity
+
+        return back()->with('success', $this->model::getSuccessMessage('restore'));
     }
 
     public function destroy($id)
@@ -407,7 +634,7 @@ class OrderController extends AbstractEntityController
 
         }
 
-        return back()->with('success', $this->model::getSuccessMessage('update'));
+        return back()->with('success', $this->model::getSuccessMessage('update_status'));
     }
 
     public function emailOrder(Request $request, $id){
@@ -468,7 +695,7 @@ class OrderController extends AbstractEntityController
         // Send the email
         Mail::to($client->email)->send($email);
 
-        return back()->with('success', $this->model::getSuccessMessage('update'));
+        return back()->with('success', $this->model::getSuccessMessage('email_sended'));
 
     }
 
@@ -545,5 +772,50 @@ class OrderController extends AbstractEntityController
         Mail::to($client->email)->send($email);
 
         return response()->json(['success' => ['Email with status send successfully.']]);
+    }
+
+
+    // Static function to calculate the time difference in minutes
+    public static function calculateTimeDifferenceInMinutes($start, $end)
+    {
+        $start = new \DateTime($start);
+        $end = new \DateTime($end);
+        return ($end->getTimestamp() - $start->getTimestamp()) / 60;
+    }
+
+    // Calculate current position based on percentage of advance
+    private function calculateCurrentPosition($trackingSteps)
+    {
+        $now = new \DateTime();
+        $previousStep = null;
+
+        foreach ($trackingSteps as $trackingStep) {
+            if ($trackingStep['status'] === 'IN_TRANSIT') {
+                // If this is the first IN_TRANSIT step, return its lat and lng directly
+                if (!$previousStep) {
+                    return ['lat' => $trackingStep['lat'], 'lng' => $trackingStep['lng']];
+                }
+
+                $etaStart = $previousStep['eta_calculated'];
+                $etaEnd = $trackingStep['eta_calculated'];
+
+                if ($now > new \DateTime($etaEnd)) {
+                    return ['lat' => $trackingStep['lat'], 'lng' => $trackingStep['lng']];
+                }
+
+                $totalMinutes = self::calculateTimeDifferenceInMinutes($etaStart, $etaEnd);
+                $elapsedMinutes = self::calculateTimeDifferenceInMinutes($etaStart, $now->format('Y-m-d H:i:s'));
+                $percentage = min(max($elapsedMinutes / $totalMinutes, 0), 1);
+
+                $currentLat = $previousStep['lat'] + ($trackingStep['lat'] - $previousStep['lat']) * $percentage;
+                $currentLng = $previousStep['lng'] + ($trackingStep['lng'] - $previousStep['lng']) * $percentage;
+
+                return ['lat' => $currentLat, 'lng' => $currentLng];
+            }
+
+            $previousStep = $trackingStep;
+        }
+
+        return ['lat' => null, 'lng' => null];
     }
 }

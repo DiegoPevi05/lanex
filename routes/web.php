@@ -68,6 +68,8 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
         // New route for sending the order status email
         Route::post('/update-status/{id}', [OrderController::class, 'updateOrder'])->name('order.update.status');
         Route::post('/email-order/{id}', [OrderController::class, 'emailOrder'])->name('order.email');
+        Route::post('/restore/{id}', [OrderController::class, 'restore'])->name('order.restore');
+        Route::get('/search-cities', [OrderController::class, 'SearchCityByCountry'])->name('search.city');
     });
 
     Route::prefix('/history')->group(function(){

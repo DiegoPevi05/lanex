@@ -104,12 +104,14 @@
     <!-- Move script here -->
     <script>
         // Initialize and add the map
+        let currentLatitude = -12.046374;
+        let currentLongitude = -77.042793;
         let typeTransport = 'airplaine';
         let map;
 
         async function initMap() {
           // The location of Uluru
-        const position = { lat: -12.046374, lng: -77.042793 };
+        const position = { lat: currentLatitude, lng: currentLongitude };
         // A marker with a with a URL pointing to a PNG.
         const iconTransport = document.createElement("img");
 
@@ -202,7 +204,9 @@
 
                 // Parse the JSON response
                 const result = await response.json();
-                console.log(result)
+
+                currentLatitude = result.order.current_lat;
+                currentLongitude = result.order.current_lng;
 
                 // Log the data to the console
                 addOrderData(result.order,result.tracking_steps);
@@ -263,7 +267,9 @@
 
             const tracking_header_track_eta  = container_info.querySelector('#header_track_status_eta');
 
-            let eta = new Date(order.updated_at);
+            const currentInTransit = tracking_steps.find((item) => item.status == 'IN_TRANSIT');
+
+            let eta = currentInTransit ? new Date( currentInTransit.eta_calculated ) : new Date();
 
             const currentLanguage = "{{ app()->getLocale() }}" === 'en' ? 'en-US' : 'es-ES';
             let dayName = eta.toLocaleDateString(currentLanguage, { weekday: 'long' });
@@ -320,12 +326,15 @@
             // Clear any existing rows before adding new ones
             trackingStepsContainer.innerHTML = '';
 
+            //let previous_eta = new Date();
+
             tracking_steps.forEach((step, index) => {
                 // Create a new row
                 const row = document.createElement('tr');
                 row.classList.add('border-2', 'border-gray-light');
 
-                const eta = new Date (step.updated_at)
+                const eta = new Date( step.eta_calculated );
+
 
                 let spanSvgContainer = document.createElement('span');
                 spanSvgContainer.classList.add('mx-auto','h-5','w-5','sm:h-8','sm:w-8','text-gray-light','flex','items-center','justify-center');
@@ -369,6 +378,7 @@
 
 
         function serializeOrderBulletData(order,tracking_steps){
+
             let serializedBullets = [];
 
             if(tracking_steps &&  tracking_steps.length > 2 ){
@@ -379,18 +389,18 @@
                 serializedBullets.push({
                     label:"{{ __('messages.track.order.from') }}",
                     location:`${firstTrackingStep.city}, ${firstTrackingStep.country}`,
-                    datetime: new Date(firstTrackingStep.updated_at),
+                    datetime: new Date(firstTrackingStep.eta_calculated),
                     active: firstTrackingStep.status == 'IN_TRANSIT' ? true : false
                 });
 
-                const currentInTransit = tracking_steps.filter((item) => item.status == 'IN_TRANSIT');
+                const currentInTransit = tracking_steps.find((item) => item.status == 'IN_TRANSIT');
 
-                if(currentInTransit != null && currentInTransit.length > 0){
+                if(currentInTransit != null){
                     if(currentInTransit.sequence != firstTrackingStep.sequence ){
                         serializedBullets.push({
                             label:"{{ __('messages.track.order.on_the_way') }}",
                             location:`${currentInTransit.city}, ${currentInTransit.country}`,
-                            datetime: new Date(currentInTransit.updated_at),
+                            datetime: new Date(currentInTransit.eta_calculated),
                             active: currentInTransit.status == 'IN_TRANSIT' ? true : false
                         });
                     }
@@ -409,7 +419,7 @@
                 serializedBullets.push({
                     label:"{{ __('messages.track.order.to') }}",
                     location:`${lastTrackingStep.city}, ${lastTrackingStep.country}`,
-                    datetime: new Date(lastTrackingStep.updated_at),
+                    datetime: new Date(lastTrackingStep.eta_calculated),
                     active: lastTrackingStep.status == 'COMPLETED' ? true : false
                 });
 

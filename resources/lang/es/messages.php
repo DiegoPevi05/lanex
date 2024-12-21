@@ -490,7 +490,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'greeting' => 'Hola',
             'welcome' => 'Bienvenido',
             'home' => 'tablero',
-            'history' => 'history',
+            'history' => 'historial',
             'orders' => 'pedidos',
             'clients' => 'clientes',
             'transports' => 'transportes',
@@ -1075,6 +1075,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'country'=> 'pais',
                     'city'=> 'ciudad',
                     'address'=> 'dirección',
+                    'eta' => 'eta (tiempo estimado de llegada)',
+                    'duration' => 'duracion en dias',
                     'order_id'=> 'ID de pedido',
                     'transport_type_id'=> 'ID de tipo de transporte'
                 ],
@@ -1084,6 +1086,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'country'=> 'Ingrese pais',
                     'city'=> 'Ingrese ciudad',
                     'address'=> 'Ingrese dirección',
+                    'eta' => 'Ingresa el tiempo estimado de llegada',
+                    'duration' => 'Ingresa la duracion en dias',
                     'order_id' => 'Ingrese el ID del pedido',
                     'transport_type_id' => 'Ingrese el ID del tipo de transporte'
                 ],
@@ -1115,7 +1119,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'order_id_exists'=> 'El ID de pedido seleccionado es inválido.',
 
                     'transport_type_id_required'=> 'El campo ID de tipo de transporte es obligatorio.',
-                    'transport_type_id_exists'=> 'El ID de tipo de transporte seleccionado es inválido.'
+                    'transport_type_id_exists'=> 'El ID de tipo de transporte seleccionado es inválido.',
+                    'eta_date' => 'La fecha y hora estimada de llegada (ETA) debe ser válida.',
+                    'duration_integer' => 'La duración debe ser un número entero.',
+                    'duration_min' => 'La duración debe ser al menos 0.',
                 ],
                 'success'=> [
                     'create'=> 'Paso de seguimiento creado con éxito.',
@@ -1152,6 +1159,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'update' => 'actualizar orden'
                 ],
                 'fields' => [
+                    'mail' => "Deseas enviar email de confirmación?",
                     'content' => 'detalles de la orden',
                     'order_number' => 'número de orden',
                     'status' => 'estado',
@@ -1222,7 +1230,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'create' => 'Orden creada con éxito',
                     'update' => 'Orden actualizada con éxito',
                     'cancel' => 'Order cancelada con éxito',
-                    'delete' => 'Orden eliminada con éxito'
+                    'delete' => 'Orden eliminada con éxito',
+                    'restore' => 'Tu orden fue restaurado con éxito',
+                    'update_status' => 'Tu orden fue actualizado con éxito',
+                    'email_sended' => 'Tu mensaje fue enviado con la información proporcionada',
                 ],
                 'error' => [
                     'not_found' => "Orden no encontrada.",
@@ -1236,6 +1247,14 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'delete_content' => "Una vez eliminada la orden solo la podras no podras recuperar la informacion despues.",
                     'delete_btn_label' => 'Borrar Pedido'
                 ]
+            ]
+        ],
+        'history' => [
+            'name' => 'historial',
+            'modal' => [
+                'header' => 'Restaurar Pedido',
+                'subheader' => 'Si restauras el pedido, podrás verlo en la sección de pedidos y editar su contenido',
+                'btn_label' => 'Restaurar Pedido'
             ]
         ],
         'client' => [

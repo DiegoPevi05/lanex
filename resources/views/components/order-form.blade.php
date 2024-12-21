@@ -233,7 +233,7 @@
                             <div class="w-full h-auto flex flex-row items-center justify-between z-[100]">
                                 <div class="w-auto h-full flex flex-row justify-start items-center gap-x-2">
                                     <p class="step-track-correlative text-sm font-bold text-body">{{$index}}</p>
-                                    <img id="step-track-icon-{{$index}}" onClick="updateTransportActiveState({{$index}})" src="{{ asset('storage/' . $trackingStep->transportType->icon) }}" class="step-track-icon h-12 w-12 shadow-md p-2  border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95 {{ $trackingStep->status == 'COMPLETED' || $trackingStep->status == 'IN_TRANSIT' ? 'border-primary' : 'border-gray-light' }}" />
+                                    <img id="step-track-icon-{{$index}}" onClick="updateTransportActiveState({{$index}})" src="{{ asset('storage/' . $trackingStep->transportType->icon) }}" class="step-track-icon h-12 w-12 shadow-md p-2  border-4 text-primary rounded-full duration-300 hover:border-primary cursor-pointer active:scale-95 {{ $trackingStep->status == 'IN_TRANSIT'? 'border-primary-dark' : ($trackingStep->status == 'COMPLETED' ? 'border-primary' : 'border-gray-light') }}" />
                                     <label id="step-track-label-{{$index}}" class="block text-sm font-bold text-secondary-dark capitalize">{{$trackingStep->transportType->name}}</label>
                                 </div>
 
@@ -276,6 +276,8 @@
                                     <select id="transports[{{$index}}][city]" name="transports[{{$index}}][city]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->city ?? ''}}">
                                         <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>
                                     </select>
+                                    <input id="transports[{{$index}}][lat]" name="transports[{{$index}}][lat]" class="hidden"/>
+                                    <input id="transports[{{$index}}][lng]" name="transports[{{$index}}][lng]" class="hidden"/>
                                 </div>
 
                                 <!-- Address Field -->
@@ -314,9 +316,10 @@
                                 <!-- Status Field -->
                                 <div class="col-span-1">
                                     <label for="transports[{{$index}}][status]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.status") }}</label>
-                                    <select id="transports[{{$index}}][status]" name="transports[{{$index}}][status]" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-                                        <option value="INACTIVE" {{$trackingStep->transportType->status == 'INACTIVE' ? 'selected' : ''}}>{{ __("messages.common.INACTIVE") }}</option>
-                                        <option value="ACTIVE" {{$trackingStep->transportType->status == 'ACTIVE' ? 'selected' : ''}}>{{ __("messages.common.ACTIVE") }}</option>
+                                    <select id="transports[{{$index}}][status]" name="transports[{{$index}}][status]" onChange="updateTransportActiveState({{$index}}, this.value)"  class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body capitalize" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.status") }}" {{$formRequest === "view" ? "disabled" : ""}}>
+                                        <option value="PENDING" {{$trackingStep->status == 'PENDING' ? 'selected' : ''}}>{{ __("messages.dashboard.order.form.fields.PENDING") }}</option>
+                                        <option value="IN_TRANSIT" {{$trackingStep->status == 'IN_TRANSIT' ? 'selected' : ''}}>{{ __("messages.dashboard.order.form.fields.IN_TRANSIT") }}</option>
+                                        <option value="COMPLETED" {{$trackingStep->status == 'COMPLETED' ? 'selected' : ''}}>{{ __("messages.dashboard.order.form.fields.COMPLETED") }}</option>
                                     </select>
                                 </div>
 
@@ -330,6 +333,17 @@
                                 <div class="col-span-1">
                                     <label for="transports[{{$index}}][external_reference]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }} ({{ __('messages.common.optional') }}):</label>
                                     <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->transportType->external_reference ?? ''}}">
+                                </div>
+
+                                <!-- Eta Field -->
+                                <div class="col-span-2">
+                                    <label for="transports[{{$index}}][eta]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.eta") }} ({{ __('messages.common.optional') }}):</label>
+                                    <input type="datetime-local" id="transports[{{$index}}][eta]" name="transports[{{$index}}][eta]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.eta") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->eta ?? ''}}">
+                                </div>
+
+                                <div class="col-span-2">
+                                    <label for="transports[{{$index}}][duration]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.tracking_step.form.fields.duration") }}:</label>
+                                    <input type="number" step="1" id="transports[{{$index}}][duration]" name="transports[{{$index}}][duration]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.tracking_step.form.placeholders.duration") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->duration ?? 0}}">
                                 </div>
 
                                 <!-- Description Text Field -->
@@ -346,6 +360,14 @@
 
         </x-wrapper-scroll>
 
+        @if($formRequest == "create")
+        <div class="w-full flex flex-row justify-between items-start gap-x-4 my-2">
+            <p class="text-md text-body font-bold">{{ __('messages.dashboard.order.form.fields.mail') }}</p>
+            <div class="checkbox-wrapper-2">
+              <input type="checkbox" class="sc-gJwTLC ikxBAC" id="email-notification" name="email-notification">
+            </div>
+        </div>
+        @endif
 
         <!-- Submit Button -->
         <div class="flex {{ $formRequest == "view" ? 'justify-end' : 'justify-between' }} ">

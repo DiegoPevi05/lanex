@@ -192,9 +192,17 @@ class DashboardController extends Controller
         return view('dashboard.history');
     }
 
-    public function billing()
+    public function billing(Request $request)
     {
-        return view('dashboard.billing');
+        $perPage = 5;
+        $query = Order::query();  // Add the "::" to correctly reference the model
+        $query->where('canceled', false);
+        $query->Where('status', 'COMPLETED');
+        $orders = $query->paginate($perPage);
+
+        return view('dashboard.billing', [
+            'pagination' => $orders,
+        ]);
     }
 
     public function web(Request $request)

@@ -2,8 +2,8 @@
     @foreach ($order->trackingSteps as $index => $step)
         <!-- The before element pseudo-class -->
         <div onClick="showOrderStatusModal({{$order->id}},{{$index}},'IN_TRANSIT','{{ __('messages.mail.modal.header') }}','{{ __('messages.mail.modal.send_status') }}','{{route('order.update.status',$order->id)}}','update')" class="relative h-10 sm:w-16 h-10 sm:h-16 p-none m-none group hover:cursor-pointer">
-            <div class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-1 sm:h-2 group-hover:bg-primary duration-300 {{ $step->status == 'IN_TRANSIT' || $step->status == 'COMPLETED' ? 'bg-primary': 'bg-gray-light'  }} group-hover:z-[15] z-[10] {{ $loop->first || $loop->last ? 'rounded-xl' : '' }} "></div>
-            <div class="w-full h-full rounded-full duration-300 group-hover:bg-primary {{ $step->status == 'IN_TRANSIT' || $step->status == 'COMPLETED' ? 'bg-primary' : 'bg-gray-light' }} flex justify-center items-center p-[2px] sm:p-2 z-[20]">
+            <div class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-20 sm:w-32 h-1 sm:h-2 group-hover:bg-primary-dark duration-300 {{ $step->status == 'IN_TRANSIT' ? 'bg-primary-dark' : ($step->status == 'COMPLETED' ? 'bg-primary': 'bg-gray-light')  }} group-hover:z-[15] z-[10] {{ $loop->first || $loop->last ? 'rounded-xl' : '' }} "></div>
+            <div class="w-full h-full rounded-full duration-300 group-hover:bg-primary-dark {{ $step->status == 'IN_TRANSIT' ?  'bg-primary-dark' : ($step->status == 'COMPLETED' ? 'bg-primary' : 'bg-gray-light')  }} flex justify-center items-center p-[2px] sm:p-2 z-[20]">
 
 
                 <!-- The icon component -->
@@ -13,7 +13,7 @@
                     // Assuming $icon contains the file name or path within `storage`
                     $svgContent = file_get_contents(storage_path('app/public/' . $step->transportType->icon));
                     ?>
-                    <div class="w-full h-full group-hover:text-primary {{ $step->status == 'IN_TRANSIT' || $step->status == 'COMPLETED' ? 'text-primary' : 'text-body' }}">
+                    <div class="w-full h-full group-hover:text-primary-dark {{ $step->status == 'IN_TRANSIT' ? 'text-primary-dark' : ($step->status == 'COMPLETED' ? 'text-primary' : 'text-body')  }}">
                         {!! $svgContent !!}
                     </div>
                 </div>

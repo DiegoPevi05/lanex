@@ -1064,6 +1064,8 @@ It is important for every company involved in international trade to be trained 
                     'country'=> 'country',
                     'city'=> 'city',
                     'address'=> 'address',
+                    'eta' => 'eta (estimated time of arrival)',
+                    'duration' => 'duration in days',
                     'order_id'=> 'order ID',
                     'transport_type_id'=> 'transport type ID'
                 ],
@@ -1073,6 +1075,8 @@ It is important for every company involved in international trade to be trained 
                     'country'=> 'Enter country',
                     'city'=> 'Enter city',
                     'address'=> 'Enter address',
+                    'eta' => 'Enter the Eta (Estimated time of arrival)',
+                    'duration' => 'Enter the duration in days',
                     'order_id' => 'Enter order ID',
                     'transport_type_id' => 'Enter transport type ID'
                 ],
@@ -1104,7 +1108,11 @@ It is important for every company involved in international trade to be trained 
                     'order_id_exists'=> 'The selected order ID is invalid.',
 
                     'transport_type_id_required'=> 'The transport type ID field is required.',
-                    'transport_type_id_exists'=> 'The selected transport type ID is invalid.'
+                    'transport_type_id_exists'=> 'The selected transport type ID is invalid.',
+                    'eta_date' => 'The ETA must be a valid date and time.',
+                    'duration_integer' => 'The duration must be an integer.',
+                    'duration_min' => 'The duration must be at least 0.',
+
                 ],
                 'success'=> [
                     'create'=> 'Tracking Step created successfully.',
@@ -1141,6 +1149,7 @@ It is important for every company involved in international trade to be trained 
                     'update' => 'update order'
                 ],
                 'fields' => [
+                    'mail' => "You desire to send email confirmation?",
                     'content' => 'order content',
                     'order_number' => 'order number',
                     'status' => 'status',
@@ -1211,7 +1220,10 @@ It is important for every company involved in international trade to be trained 
                     'create' => 'Order created successfully',
                     'update' => 'Order updated successfully',
                     'cancel' => 'Order cancelled successfully',
-                    'delete' => 'Order deleted successfully'
+                    'delete' => 'Order deleted successfully',
+                    'restore' => 'Your order was restore successfully',
+                    'update_status' => 'Your order was updated successfully',
+                    'email_sended' => 'Your message was send with the information provided',
                 ],
                 'error' => [
                     'not_found' => "Order not found.",
@@ -1224,8 +1236,15 @@ It is important for every company involved in international trade to be trained 
                     'delete_header' => "Are you sure you want to delete this order?",
                     'delete_content' => "Once the order is deleted you will not be able to recover the information",
                     'delete_btn_label' => 'Delete Order'
-
                 ]
+            ]
+        ],
+        'history' => [
+            'name' => 'history',
+            'modal' => [
+                'header' => 'Restore Order',
+                'subheader' => 'If you restore the order, you could see it in the orders sections and edit their content',
+                'btn_label' => 'Restore Order'
             ]
         ],
         'client' => [

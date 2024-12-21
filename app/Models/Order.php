@@ -154,6 +154,10 @@ class Order extends Model
             'update' => 'messages.dashboard.order.form.success.update',
             'cancel' => 'messages.dashboard.order.form.success.cancel',
             'delete' => 'messages.dashboard.order.form.success.delete',
+            'restore' => 'messages.dashboard.order.form.success.restore',
+            'update_status' => 'messages.dashboard.order.form.success.update_status',
+            'email_sended' => 'messages.dashboard.order.form.success.email_sended'
+
         ];
         return isset($messages[$action]) ? __($messages[$action]) : '';
     }

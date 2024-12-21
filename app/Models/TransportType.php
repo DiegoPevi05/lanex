@@ -79,13 +79,17 @@ class TransportType extends Model
             'transports.*.country' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
             'transports.*.city' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
             'transports.*.address' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
+            'transports.*.eta'      => 'nullable|date',
+            'transports.*.duration' => 'nullable|integer|min:0',
             'transports.*.type' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
             'transports.*.icon' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
             'transports.*.name' => $isUpdate ? 'sometimes|string|max:255' : 'required|string|max:255',
             'transports.*.description' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
 
             'transports.*.external_reference' => 'nullable|string|max:255',
-            'transports.*.status' => $isUpdate ? 'sometimes|required|string|max:255|in:ACTIVE,INACTIVE' : 'required|string|max:255|in:ACTIVE,INACTIVE',
+            'transports.*.status' => $isUpdate ? 'sometimes|required|string|max:255|in:PENDING,COMPLETED,IN_TRANSIT' : 'required|string|max:255|in:PENDING,COMPLETED,IN_TRANSIT',
+            'transports.*.lat' => 'nullable|numeric|between:-90,90',
+            'transports.*.lng' => 'nullable|numeric|between:-180,180',
         ];
     }
 
@@ -132,6 +136,10 @@ class TransportType extends Model
             'transports.*.status.string' => __('messages.dashboard.transport_type.form.validations.status_string'),
             'transports.*.status.max' => __('messages.dashboard.transport_type.form.validations.status_max'),
             'transports.*.status.in' => __('messages.dashboard.transport_type.form.validations.status_in'),
+
+            'transports.*.eta.date' => __('messages.dashboard.tracking_step.form.validations.eta_date'),
+            'transports.*.duration.integer' => __('messages.dashboard.tracking_step.form.validations.duration_integer'),
+            'transports.*.duration.min' => __('messages.dashboard.tracking_step.form.validations.duration_min'),
 
         ];
     }

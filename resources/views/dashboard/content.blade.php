@@ -637,7 +637,7 @@
         let transportsContainer = null;
         let addTransportButton = null;
         // Function to add a new Transport Card
-        function addTransportCard(data) {
+        async function addTransportCard(data) {
             const index = transportsContainer.children.length;
 
             // Create a new freight card div
@@ -790,16 +790,41 @@
             const CitySelectDefaultOption = document.createElement('option');
             CitySelectDefaultOption.textContent = "{{ __('messages.dashboard.tracking_step.form.placeholders.city') }}"
 
+
+
             CitySelect.appendChild(CitySelectDefaultOption);
 
             CitySpan.appendChild(CityLabel);
             CitySpan.appendChild(CitySelect);
 
+
+            const LattitudeInput = document.createElement('input');
+            LattitudeInput.id = `transports[${index}][lat]`;
+            LattitudeInput.name = `transports[${index}][lat]`;
+            LattitudeInput.classList.add('hidden');
+            CitySpan.appendChild(LattitudeInput);
+
+            const LongitudeInput = document.createElement('input');
+            LongitudeInput.id = `transports[${index}][lng]`;
+            LongitudeInput.name = `transports[${index}][lng]`;
+            LongitudeInput.classList.add('hidden');
+            CitySpan.appendChild(LongitudeInput);
+
+            AddEventSelectCity(CitySelect,LattitudeInput, LongitudeInput);
+
+            if(data && data.lat && data.lng){
+                LattitudeInput.value = data.lat;
+                LongitudeInput.value = data.lng;
+            }
+
+
             transportBodyCard.appendChild(CitySpan);
 
 
-            //Address Field
 
+
+
+            //Address Field
             const AddressSpan = document.createElement('div');
             AddressSpan.classList.add('col-span-2');
 
@@ -911,15 +936,26 @@
             StatusSelectDefaultOption.textContent = "{{ __('messages.dashboard.transport_type.form.fields.SELECT_TRANSPORT_TYPE') }}"
             StatusSelect.appendChild(StatusSelectDefaultOption);
 
-            const StatusSelectInactiveOption = document.createElement('option');
-            StatusSelectInactiveOption.textContent = "{{ __('messages.common.INACTIVE') }}"
-            StatusSelectInactiveOption.value = "INACTIVE";
-            StatusSelect.appendChild(StatusSelectInactiveOption);
+            const StatusSelectPendingOption = document.createElement('option');
+            StatusSelectPendingOption.textContent = "{{ __('messages.dashboard.order.form.fields.PENDING') }}"
+            StatusSelectPendingOption.value = "PENDING";
+            StatusSelect.appendChild(StatusSelectPendingOption);
 
-            const StatusSelectActiveOption = document.createElement('option');
-            StatusSelectActiveOption.textContent = "{{ __('messages.common.ACTIVE') }}"
-            StatusSelectActiveOption.value = "ACTIVE";
-            StatusSelect.appendChild(StatusSelectActiveOption);
+            const StatusSelectInTransitOption = document.createElement('option');
+            StatusSelectInTransitOption.textContent = "{{ __('messages.dashboard.order.form.fields.IN_TRANSIT') }}"
+            StatusSelectInTransitOption.value = "IN_TRANSIT";
+            StatusSelect.appendChild(StatusSelectInTransitOption);
+
+            const StatusSelectCompletedOption = document.createElement('option');
+            StatusSelectCompletedOption.textContent = "{{ __('messages.dashboard.order.form.fields.COMPLETED') }}"
+
+            StatusSelectCompletedOption.value = "COMPLETED";
+            StatusSelect.appendChild(StatusSelectCompletedOption);
+
+
+
+
+
 
 
             StatusSpan.appendChild(StatusLabel);
@@ -978,6 +1014,50 @@
 
             transportBodyCard.appendChild(ExternalReferenceSpan);
 
+            //ETA Field
+            const EtaSpan = document.createElement('div');
+            EtaSpan.classList.add('col-span-2');
+
+            const EtaLabel = document.createElement('label');
+            EtaLabel.htmlFor = `transports[${index}][eta]`;
+            EtaLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            EtaLabel.textContent = "{{ __('messages.dashboard.tracking_step.form.fields.eta') }}"
+
+            const EtaInput = document.createElement('input');
+            EtaInput.id = `transports[${index}][eta]`;
+            EtaInput.type = "datetime-local";
+            EtaInput.name =  `transports[${index}][eta]`;
+            EtaInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            EtaInput.placeholder = "{{ __('messages.dashboard.tracking_step.form.placeholders.eta') }}";
+
+            EtaSpan.appendChild(EtaLabel);
+            EtaSpan.appendChild(EtaInput);
+
+            transportBodyCard.appendChild(EtaSpan);
+
+            //Duration Field
+
+            const DurationSpan = document.createElement('div');
+            DurationSpan.classList.add('col-span-2');
+
+            const DurationLabel = document.createElement('label');
+            DurationLabel.htmlFor = `transports[${index}][duration]`;
+            DurationLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
+            DurationLabel.textContent = "{{ __('messages.dashboard.tracking_step.form.fields.duration') }}"
+
+            const DurationInput = document.createElement('input');
+            DurationInput.id = `transports[${index}][duration]`;
+            DurationInput.type = "number";
+            DurationInput.step = 1;
+            DurationInput.name =  `transports[${index}][duration]`;
+            DurationInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            DurationInput.placeholder = "{{ __('messages.dashboard.tracking_step.form.placeholders.duration') }}";
+
+            DurationSpan.appendChild(DurationLabel);
+            DurationSpan.appendChild(DurationInput);
+
+            transportBodyCard.appendChild(DurationSpan);
+
             //Description Reference Field
 
             const DescriptionSpan = document.createElement('div');
@@ -1030,7 +1110,7 @@
                 CountrySelect.value = event.target.value;
 
                 if (CitySelect) {
-                    loadCities(event.target.value, CitySelect);
+                    loadCities(event.target.value,CountrySelect, CitySelect);
                 }
 
             });
@@ -1041,7 +1121,7 @@
 
                 if (CitySelect) {
 
-                    loadCities(data.country, CitySelect);
+                    await loadCities(data.country,CountrySelect, CitySelect);
 
                     CitySelect.value = data.city;
                 }
@@ -1076,7 +1156,13 @@
                 IconImagePreview.src = "/storage"+data.icon;
             }
 
+            if(data && data.duration){
+                DurationInput.value = data.duration;
+            };
 
+            StatusSelect.onchange = (event) => {
+                updateTransportActiveState(index, event.target.value);
+            };
         }
 
         // Function to delete a Transport Card
@@ -1085,26 +1171,46 @@
             updateTransportIndices();
         }
 
-        function updateTransportActiveState(clickedIndex) {
+        function updateTransportActiveState(clickedIndex,status) {
             const transportCards = document.querySelectorAll('.step-track');
 
             transportCards.forEach((card, index) => {
                 const icon = card.querySelector(`img[id="step-track-icon-${index}"]`);
                 const statusInput = card.querySelector(`select[id^="transports[${index}]"][name*="[status]"]`);
 
-                if (index <= clickedIndex) {
+                icon.classList.remove('border-gray-light');
+                icon.classList.remove('border-primary');
+                icon.classList.remove('border-primary-dark');
+
+                if (index < clickedIndex) {
                     // Set status to ACTIVE for current and previous steps
-                    statusInput.value = 'ACTIVE';
+                    statusInput.value = 'COMPLETED';
 
                     // Add border-primary class to the icon
                     icon.classList.add('border-primary');
-                    icon.classList.remove('border-gray-light');
-                } else {
+
+                }else if(index == clickedIndex) {
+
+                    if(status){
+                        // Set status to ACTIVE for current and previous steps
+                        statusInput.value = status;
+                        if(status == 'PENDING'){
+                            icon.classList.add('border-gray-light');
+                        }else if(status == 'IN_TRANSIT'){
+                            icon.classList.add('border-primary-dark');
+                        }else{
+                            icon.classList.add('border-primary');
+                        }
+                    }else{
+                        statusInput.value = 'IN_TRANSIT';
+                        icon.classList.add('border-primary-dark');
+                    }
+
+                }else {
                     // Set status to INACTIVE for the remaining steps
-                    statusInput.value = 'INACTIVE';
+                    statusInput.value = 'PENDING';
 
                     // Remove border-primary class from the icon
-                    icon.classList.remove('border-primary');
                     icon.classList.add('border-gray-light');
                 }
             });
@@ -1253,31 +1359,21 @@
             });
         }
 
-        let countriesInfo = null;
-        let countryNames = null;
+        let CountriesData = [];
+        let CitiesData = [];
 
         async function fetchAndPopulateCountries(OrderId) {
             try {
-                // Fetch country data only once
-                const response = await fetch('https://countriesnow.space/api/v0.1/countries');
-                const countries = await response.json();
-
-                // Extract country names and sort them alphabetically
-                countriesInfo = countries.data;
-                countryNames = countries.data
-                    .map(country => country.country)
-                    .sort((a, b) => a.localeCompare(b));
-
                 // Select all transport country dropdowns
                 const countrySelects = document.querySelectorAll('[id^="transports["][id$="country]"]');
 
                 const order = OrdersData.find((item) => item.id == Number(OrderId) )
 
-                countrySelects.forEach(selectInput => {
+                countrySelects.forEach(async (selectInput) => {
 
                     const index = selectInput.id.match(/\[([^\]]+)\]/)?.[1]; // Extract the index from the ID
 
-                    attachCountriesOptions(selectInput);
+                    await attachCountriesOptions(selectInput);
 
                     if (index) {
 
@@ -1291,19 +1387,25 @@
                             selectInput.value = event.target.value;
 
                             if (citySelect) {
-                                loadCities(event.target.value, citySelect);
+                                loadCities(event.target.value,selectInput, citySelect);
                             }
 
                         });
 
+
                         if(order.tracking_steps[index].country){
 
-                            loadCities(order.tracking_steps[index].country, citySelect);
+                            await loadCities(order.tracking_steps[index].country,selectInput,citySelect);
 
                         }
 
 
+                        const LattitudeInput = document.querySelector(`[id="transports[${index}][lat]"]`);
+                        const LongitudeInput = document.querySelector(`[id="transports[${index}][lng]"]`);
+
                         citySelect.value = order.tracking_steps[index].city;
+                        LattitudeInput.value = order.tracking_steps[index].lat;
+                        LongitudeInput.value = order.tracking_steps[index].lng;
                     }
 
                 });
@@ -1313,42 +1415,89 @@
         }
 
         async function attachCountriesOptions(selectCountryInput){
-            if(countryNames != null){
+
+            if(CountriesData.length > 0){
                 // Clear existing options except the placeholder
                 selectCountryInput.innerHTML = '<option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.country") }}</option>';
 
                 // Append country names to each select input
-                for (const country of countryNames) {
+                for (const country of CountriesData) {
                     const option = document.createElement('option');
-                    option.value = country;
-                    option.textContent = country;
+                    option.value = country.name;
+                    option.textContent = country.name;
+                    option.setAttribute('data-code', country.code);
                     selectCountryInput.appendChild(option);
                 }
             }
         }
 
 
-        async function loadCities(country, citySelect) {
+        async function loadCities(country,countrySelect, citySelect) {
             try {
-                if (countriesInfo != null) {
-                    // Fetch city names for the selected country
-                    const cityNames = countriesInfo
-                        .find(info => info.country === country)?.cities
-                        ?.sort((a, b) => a.localeCompare(b)) || [];
+                // Find the option in the countrySelect that matches the country parameter
+                for (let i = 0; i < countrySelect.options.length; i++) {
+                    const option = countrySelect.options[i];
+
+                    // Assuming 'country' is the country code, and the value attribute of each option is the country code
+                    if (option.value === country) {
+                        countrySelect.selectedIndex = i; // Select the matching option
+                        break;
+                    }
+                }
+
+                // Get the selected country option
+                const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+
+                // Get the data-code attribute from the selected option
+                const countryCode = selectedOption.getAttribute('data-code');
+
+
+
+                // Fetch cities from the server
+                const response = await fetch(`/dashboard/order/search-cities?country=${encodeURIComponent(countryCode)}`);
+
+
+                if (!response.ok) {
+                    throw new Error(`Error fetching cities: ${response.statusText}`);
+                }
+
+                // Parse the JSON response
+                CitiesData = await response.json();
+
+                if (CitiesData.length > 0 ) {
 
                     // Clear existing city options
                     citySelect.innerHTML = '<option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>';
 
-                    for (const city of cityNames) {
+                    for (const city of CitiesData) {
                         const option = document.createElement('option');
                         option.classList.add('city');
-                        option.value = city;
-                        option.textContent = city;
+                        option.value = city.name;
+                        option.textContent = city.name;
+                        option.setAttribute('data-lat', city.lat);
+                        option.setAttribute('data-lng', city.lng);
                         citySelect.appendChild(option);
                     }
                 }
             } catch (error) {
                 console.error('Error loading cities:', error);
+            }
+        }
+
+        async function AddEventSelectCity(citySelect,latitudeInput,longitudeInput) {
+            const index = citySelect.id.match(/\[([^\]]+)\]/)?.[1]; // Extract the index from the ID
+
+            if (index) {
+                citySelect.addEventListener('change', function(event) {
+                    const selectedCityOption = citySelect.options[citySelect.selectedIndex];
+
+                    // Ensure the selected city option exists
+                    if (selectedCityOption && latitudeInput && longitudeInput) {
+                        // Update the latitude and longitude based on the selected city
+                        latitudeInput.value = selectedCityOption.getAttribute('data-lat') || '';
+                        longitudeInput.value = selectedCityOption.getAttribute('data-lng') || '';
+                    }
+                });
             }
         }
 
@@ -1465,10 +1614,13 @@
         let OrdersData = [];
         let IconsData = [];
 
+
         @if($EntityType == "order")
             OrdersData = {!! json_encode($pagination->items()) !!};
+            CountriesData = {!! json_encode($countries) !!};
             IconsData = {!!  json_encode($icons) !!};
         @endif
+
 
         let IconsArray = Object.entries(IconsData).map(([key, value]) => ({
             value: value,
@@ -1482,55 +1634,75 @@
                     name:"Proveedor",
                     icon:"/images/svgs/warehouse.svg",
                     country:"China",
+                    country_code:"CN",
                     city:"Shanghai",
-                    address:"Shangai City",
+                    lat: 31.2286,
+                    lng: 121.4747,
+                    address:"Direccion del Proveedor",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 1,
                     description:"Proveedor"
                 },
                 {
                     name:"Puerto Origen",
                     icon:"/images/svgs/ship.svg",
                     country:"China",
+                    country_code:"CN",
                     city:"Shanghai",
-                    address:"Shangai City",
+                    lat: 31.2286,
+                    lng: 121.4747,
+                    address:"Direccion del puerto",
                     type:"SHIP",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 2,
                     description:"Puerto Origen"
                 },
                 {
                     name:"Puerto Destino",
                     icon:"/images/svgs/anchor.svg",
                     country:"Peru",
-                    city:"Lima",
-                    address:"Callao",
+                    country_code:"PE",
+                    city:"Callao",
+                    lat: -12.0522,
+                    lng: -77.1392,
+                    address:"Direccion del Puerto del Callao",
                     type:"SHIP",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 30,
                     description:"Puerto Destino"
                 },
                 {
                     name:"Aduanas Peru",
                     icon:"/images/svgs/truck.svg",
                     country:"Peru",
-                    city:"Lima",
-                    address:"Callao",
+                    country_code:"PE",
+                    city:"Callao",
+                    lat: -12.0522,
+                    lng: -77.1392,
+                    address:"Direccion de Aduanas",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 1,
                     description:"Aduanas Peru"
                 },
                 {
                     name:"Destino Cliente",
                     icon:"/images/svgs/house.svg",
                     country:"Peru",
+                    country_code:"PE",
                     city:"Lima",
-                    address:"Callao",
+                    lat: -12.06,
+                    lng: -77.0375,
+                    address:"Direccion del cliente",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 5,
                     description:"Destino Cliente"
                 }
             ],
@@ -1539,55 +1711,75 @@
                     name:"Proveedor",
                     icon:"/images/svgs/warehouse.svg",
                     country:"China",
+                    country_code:"CN",
                     city:"Shanghai",
-                    address:"Shangai City",
+                    lat: 31.2286,
+                    lng: 121.4747,
+                    address:"Direccion del Proveedor",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 1,
                     description:"Proveedor"
                 },
                 {
                     name:"Aeropuerto Origen",
                     icon:"/images/svgs/plane-takeoff.svg",
                     country:"China",
+                    country_code:"CN",
                     city:"Shanghai",
-                    address:"Shangai City",
+                    lat: 31.2286,
+                    lng: 121.4747,
+                    address:"Direccion del Aeropuerto Origen",
                     type:"AIR",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 2,
                     description:"Puerto Origen"
                 },
                 {
                     name:"Aeropuerto Destino",
                     icon:"/images/svgs/plane-landing.svg",
                     country:"Peru",
-                    city:"Lima",
+                    country_code:"PE",
+                    city:"Callao",
+                    lat: -12.0522,
+                    lng: -77.1392,
                     address:"Aeropuerto Internacional Jorge Chavez",
                     type:"AIR",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 30,
                     description:"Aeropuerto Destino - Aeropuerto Internacional Jorge Chavez"
                 },
                 {
                     name:"Aduanas Peru",
                     icon:"/images/svgs/truck.svg",
                     country:"Peru",
-                    city:"Lima",
-                    address:"Callao",
+                    country_code:"PE",
+                    city:"Callao",
+                    lat: -12.0522,
+                    lng: -77.1392,
+                    address:"Aduanas - Aeropuerto Internacional Jorge Chavez",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 1,
                     description:"Aduanas Peru"
                 },
                 {
                     name:"Destino Cliente",
                     icon:"/images/svgs/house.svg",
                     country:"Peru",
+                    country_code:"PE",
                     city:"Lima",
-                    address:"Callao",
+                    lat: -12.06,
+                    lng: -77.0375,
+                    address:"Direccion del Cliente",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 5,
                     description:"Destino Cliente"
                 }
             ],
@@ -1595,12 +1787,16 @@
                 {
                     name:"Proveedor",
                     icon:"/images/svgs/warehouse.svg",
-                    country:"Lima",
+                    country:"Peru",
                     city:"Arequipa",
-                    address:"Arequipa",
+                    country_code:"PE",
+                    address:"Direccion del Proveedor",
+                    lat: -16.4,
+                    lng: -71.5333,
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 1,
                     description:"Proveedor"
                 },
                 {
@@ -1608,10 +1804,14 @@
                     icon:"/images/svgs/house.svg",
                     country:"Peru",
                     city:"Lima",
-                    address:"Callao",
+                    country_code:"PE",
+                    lat: -12.06,
+                    lng: -77.0375,
+                    address:"Direccion del Cliente",
                     type:"LAND",
-                    status:"INACTIVE",
+                    status:"PENDING",
                     extref:"",
+                    duration: 7,
                     description:"Destino Cliente"
                 }
             ]

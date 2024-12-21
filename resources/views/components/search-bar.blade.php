@@ -1,5 +1,5 @@
 <div id="{{$id}}" class="w-full h-auto flex flex-col sm:flex-row gap-y-2 sm:gap-x-4">
-    <div class="w-full p-none m-none flex flex-row gap-x-2">
+    <div class="w-full p-none m-none flex flex-col max-sm:gap-y-2 sm:flex-row gap-x-2">
         <div class="w-full">
             <input name="search-input-value" class="capitalize w-full h-full border-gray-light border-2 focus:outline-none p-2 rounded-xl placeholder:text-gray-300 font-bold text-body" placeholder="{{__($placeholderInput)}}" />
         </div>
