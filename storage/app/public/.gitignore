@@ -1,6 +1,7 @@
 *
 
 # Allow specific folders and their contents
+!data/
 !data/*
 !images/
 !images/svgs/

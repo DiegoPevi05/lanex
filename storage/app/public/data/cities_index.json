@@ -1,0 +1,1207 @@
+[
+    {
+        "country": "AD",
+        "start_line": 2,
+        "count": 7
+    },
+    {
+        "country": "AE",
+        "start_line": 51,
+        "count": 12
+    },
+    {
+        "country": "AF",
+        "start_line": 135,
+        "count": 70
+    },
+    {
+        "country": "AG",
+        "start_line": 625,
+        "count": 1
+    },
+    {
+        "country": "AI",
+        "start_line": 632,
+        "count": 1
+    },
+    {
+        "country": "AL",
+        "start_line": 639,
+        "count": 38
+    },
+    {
+        "country": "AM",
+        "start_line": 905,
+        "count": 36
+    },
+    {
+        "country": "AO",
+        "start_line": 1157,
+        "count": 142
+    },
+    {
+        "country": "AR",
+        "start_line": 2151,
+        "count": 495
+    },
+    {
+        "country": "AS",
+        "start_line": 5616,
+        "count": 1
+    },
+    {
+        "country": "AT",
+        "start_line": 5623,
+        "count": 103
+    },
+    {
+        "country": "AU",
+        "start_line": 6344,
+        "count": 274
+    },
+    {
+        "country": "AW",
+        "start_line": 8262,
+        "count": 2
+    },
+    {
+        "country": "AZ",
+        "start_line": 8276,
+        "count": 124
+    },
+    {
+        "country": "BA",
+        "start_line": 9144,
+        "count": 74
+    },
+    {
+        "country": "BB",
+        "start_line": 9662,
+        "count": 1
+    },
+    {
+        "country": "BD",
+        "start_line": 9669,
+        "count": 104
+    },
+    {
+        "country": "BE",
+        "start_line": 10397,
+        "count": 397
+    },
+    {
+        "country": "BF",
+        "start_line": 13176,
+        "count": 77
+    },
+    {
+        "country": "BG",
+        "start_line": 13715,
+        "count": 93
+    },
+    {
+        "country": "BH",
+        "start_line": 14366,
+        "count": 10
+    },
+    {
+        "country": "BI",
+        "start_line": 14436,
+        "count": 20
+    },
+    {
+        "country": "BJ",
+        "start_line": 14576,
+        "count": 207
+    },
+    {
+        "country": "BL",
+        "start_line": 16025,
+        "count": 1
+    },
+    {
+        "country": "BM",
+        "start_line": 16032,
+        "count": 1
+    },
+    {
+        "country": "BN",
+        "start_line": 16039,
+        "count": 6
+    },
+    {
+        "country": "BO",
+        "start_line": 16081,
+        "count": 103
+    },
+    {
+        "country": "BQ",
+        "start_line": 16802,
+        "count": 3
+    },
+    {
+        "country": "BR",
+        "start_line": 16823,
+        "count": 2937
+    },
+    {
+        "country": "BS",
+        "start_line": 37382,
+        "count": 4
+    },
+    {
+        "country": "BT",
+        "start_line": 37410,
+        "count": 22
+    },
+    {
+        "country": "BW",
+        "start_line": 37564,
+        "count": 37
+    },
+    {
+        "country": "BY",
+        "start_line": 37823,
+        "count": 93
+    },
+    {
+        "country": "BZ",
+        "start_line": 38474,
+        "count": 8
+    },
+    {
+        "country": "CA",
+        "start_line": 38530,
+        "count": 485
+    },
+    {
+        "country": "CD",
+        "start_line": 41925,
+        "count": 124
+    },
+    {
+        "country": "CF",
+        "start_line": 42793,
+        "count": 38
+    },
+    {
+        "country": "CG",
+        "start_line": 43059,
+        "count": 30
+    },
+    {
+        "country": "CH",
+        "start_line": 43269,
+        "count": 200
+    },
+    {
+        "country": "CI",
+        "start_line": 44669,
+        "count": 67
+    },
+    {
+        "country": "CK",
+        "start_line": 45138,
+        "count": 1
+    },
+    {
+        "country": "CL",
+        "start_line": 45145,
+        "count": 253
+    },
+    {
+        "country": "CM",
+        "start_line": 46916,
+        "count": 87
+    },
+    {
+        "country": "CN",
+        "start_line": 47525,
+        "count": 1663
+    },
+    {
+        "country": "CO",
+        "start_line": 59166,
+        "count": 725
+    },
+    {
+        "country": "CR",
+        "start_line": 64241,
+        "count": 104
+    },
+    {
+        "country": "CU",
+        "start_line": 64969,
+        "count": 165
+    },
+    {
+        "country": "CV",
+        "start_line": 66124,
+        "count": 23
+    },
+    {
+        "country": "CW",
+        "start_line": 66285,
+        "count": 1
+    },
+    {
+        "country": "CX",
+        "start_line": 66292,
+        "count": 1
+    },
+    {
+        "country": "CY",
+        "start_line": 66299,
+        "count": 14
+    },
+    {
+        "country": "CZ",
+        "start_line": 66397,
+        "count": 158
+    },
+    {
+        "country": "DE",
+        "start_line": 67503,
+        "count": 1747
+    },
+    {
+        "country": "DJ",
+        "start_line": 79732,
+        "count": 7
+    },
+    {
+        "country": "DK",
+        "start_line": 79781,
+        "count": 77
+    },
+    {
+        "country": "DM",
+        "start_line": 80320,
+        "count": 1
+    },
+    {
+        "country": "DO",
+        "start_line": 80327,
+        "count": 146
+    },
+    {
+        "country": "DZ",
+        "start_line": 81349,
+        "count": 545
+    },
+    {
+        "country": "EC",
+        "start_line": 85164,
+        "count": 109
+    },
+    {
+        "country": "EE",
+        "start_line": 85927,
+        "count": 20
+    },
+    {
+        "country": "EG",
+        "start_line": 86067,
+        "count": 181
+    },
+    {
+        "country": "ER",
+        "start_line": 87334,
+        "count": 16
+    },
+    {
+        "country": "ES",
+        "start_line": 87446,
+        "count": 765
+    },
+    {
+        "country": "ET",
+        "start_line": 92801,
+        "count": 145
+    },
+    {
+        "country": "FI",
+        "start_line": 93816,
+        "count": 135
+    },
+    {
+        "country": "FJ",
+        "start_line": 94761,
+        "count": 9
+    },
+    {
+        "country": "FK",
+        "start_line": 94824,
+        "count": 1
+    },
+    {
+        "country": "FM",
+        "start_line": 94831,
+        "count": 5
+    },
+    {
+        "country": "FO",
+        "start_line": 94866,
+        "count": 29
+    },
+    {
+        "country": "FR",
+        "start_line": 95069,
+        "count": 1152
+    },
+    {
+        "country": "GA",
+        "start_line": 103133,
+        "count": 21
+    },
+    {
+        "country": "GB",
+        "start_line": 103280,
+        "count": 1331
+    },
+    {
+        "country": "GD",
+        "start_line": 112597,
+        "count": 2
+    },
+    {
+        "country": "GE",
+        "start_line": 112611,
+        "count": 25
+    },
+    {
+        "country": "GF",
+        "start_line": 112786,
+        "count": 7
+    },
+    {
+        "country": "GG",
+        "start_line": 112835,
+        "count": 2
+    },
+    {
+        "country": "GH",
+        "start_line": 112849,
+        "count": 86
+    },
+    {
+        "country": "GI",
+        "start_line": 113451,
+        "count": 1
+    },
+    {
+        "country": "GL",
+        "start_line": 113458,
+        "count": 22
+    },
+    {
+        "country": "GM",
+        "start_line": 113612,
+        "count": 19
+    },
+    {
+        "country": "GN",
+        "start_line": 113745,
+        "count": 32
+    },
+    {
+        "country": "GP",
+        "start_line": 113969,
+        "count": 2
+    },
+    {
+        "country": "GQ",
+        "start_line": 113983,
+        "count": 16
+    },
+    {
+        "country": "GR",
+        "start_line": 114095,
+        "count": 189
+    },
+    {
+        "country": "GS",
+        "start_line": 115418,
+        "count": 2
+    },
+    {
+        "country": "GT",
+        "start_line": 115432,
+        "count": 299
+    },
+    {
+        "country": "GU",
+        "start_line": 117525,
+        "count": 2
+    },
+    {
+        "country": "GW",
+        "start_line": 117539,
+        "count": 14
+    },
+    {
+        "country": "GY",
+        "start_line": 117637,
+        "count": 12
+    },
+    {
+        "country": "HK",
+        "start_line": 117721,
+        "count": 23
+    },
+    {
+        "country": "HN",
+        "start_line": 117882,
+        "count": 65
+    },
+    {
+        "country": "HR",
+        "start_line": 118337,
+        "count": 75
+    },
+    {
+        "country": "HT",
+        "start_line": 118862,
+        "count": 124
+    },
+    {
+        "country": "HU",
+        "start_line": 119730,
+        "count": 159
+    },
+    {
+        "country": "ID",
+        "start_line": 120843,
+        "count": 290
+    },
+    {
+        "country": "IE",
+        "start_line": 122873,
+        "count": 75
+    },
+    {
+        "country": "IL",
+        "start_line": 123398,
+        "count": 77
+    },
+    {
+        "country": "IM",
+        "start_line": 123937,
+        "count": 2
+    },
+    {
+        "country": "IN",
+        "start_line": 123951,
+        "count": 7031
+    },
+    {
+        "country": "IQ",
+        "start_line": 173168,
+        "count": 105
+    },
+    {
+        "country": "IR",
+        "start_line": 173903,
+        "count": 491
+    },
+    {
+        "country": "IS",
+        "start_line": 177340,
+        "count": 12
+    },
+    {
+        "country": "IT",
+        "start_line": 177424,
+        "count": 1355
+    },
+    {
+        "country": "JE",
+        "start_line": 186909,
+        "count": 1
+    },
+    {
+        "country": "JM",
+        "start_line": 186916,
+        "count": 21
+    },
+    {
+        "country": "JO",
+        "start_line": 187063,
+        "count": 33
+    },
+    {
+        "country": "JP",
+        "start_line": 187294,
+        "count": 1337
+    },
+    {
+        "country": "KE",
+        "start_line": 196653,
+        "count": 88
+    },
+    {
+        "country": "KG",
+        "start_line": 197269,
+        "count": 94
+    },
+    {
+        "country": "KH",
+        "start_line": 197927,
+        "count": 32
+    },
+    {
+        "country": "KI",
+        "start_line": 198151,
+        "count": 2
+    },
+    {
+        "country": "KM",
+        "start_line": 198165,
+        "count": 9
+    },
+    {
+        "country": "KN",
+        "start_line": 198228,
+        "count": 1
+    },
+    {
+        "country": "KP",
+        "start_line": 198235,
+        "count": 38
+    },
+    {
+        "country": "KR",
+        "start_line": 198501,
+        "count": 104
+    },
+    {
+        "country": "KW",
+        "start_line": 199229,
+        "count": 5
+    },
+    {
+        "country": "KY",
+        "start_line": 199264,
+        "count": 1
+    },
+    {
+        "country": "KZ",
+        "start_line": 199271,
+        "count": 144
+    },
+    {
+        "country": "LA",
+        "start_line": 200279,
+        "count": 22
+    },
+    {
+        "country": "LB",
+        "start_line": 200433,
+        "count": 50
+    },
+    {
+        "country": "LC",
+        "start_line": 200783,
+        "count": 5
+    },
+    {
+        "country": "LI",
+        "start_line": 200818,
+        "count": 11
+    },
+    {
+        "country": "LK",
+        "start_line": 200895,
+        "count": 60
+    },
+    {
+        "country": "LR",
+        "start_line": 201315,
+        "count": 22
+    },
+    {
+        "country": "LS",
+        "start_line": 201469,
+        "count": 27
+    },
+    {
+        "country": "LT",
+        "start_line": 201658,
+        "count": 61
+    },
+    {
+        "country": "LU",
+        "start_line": 202085,
+        "count": 14
+    },
+    {
+        "country": "LV",
+        "start_line": 202183,
+        "count": 39
+    },
+    {
+        "country": "LY",
+        "start_line": 202456,
+        "count": 59
+    },
+    {
+        "country": "MA",
+        "start_line": 202869,
+        "count": 587
+    },
+    {
+        "country": "MC",
+        "start_line": 206978,
+        "count": 1
+    },
+    {
+        "country": "MD",
+        "start_line": 206985,
+        "count": 58
+    },
+    {
+        "country": "ME",
+        "start_line": 207391,
+        "count": 25
+    },
+    {
+        "country": "MF",
+        "start_line": 207566,
+        "count": 1
+    },
+    {
+        "country": "MG",
+        "start_line": 207573,
+        "count": 833
+    },
+    {
+        "country": "MH",
+        "start_line": 213404,
+        "count": 1
+    },
+    {
+        "country": "MK",
+        "start_line": 213411,
+        "count": 71
+    },
+    {
+        "country": "ML",
+        "start_line": 213908,
+        "count": 291
+    },
+    {
+        "country": "MM",
+        "start_line": 215945,
+        "count": 126
+    },
+    {
+        "country": "MN",
+        "start_line": 216827,
+        "count": 29
+    },
+    {
+        "country": "MO",
+        "start_line": 217030,
+        "count": 1
+    },
+    {
+        "country": "MP",
+        "start_line": 217037,
+        "count": 1
+    },
+    {
+        "country": "MQ",
+        "start_line": 217044,
+        "count": 1
+    },
+    {
+        "country": "MR",
+        "start_line": 217051,
+        "count": 24
+    },
+    {
+        "country": "MS",
+        "start_line": 217219,
+        "count": 2
+    },
+    {
+        "country": "MT",
+        "start_line": 217233,
+        "count": 68
+    },
+    {
+        "country": "MU",
+        "start_line": 217709,
+        "count": 16
+    },
+    {
+        "country": "MV",
+        "start_line": 217821,
+        "count": 21
+    },
+    {
+        "country": "MW",
+        "start_line": 217968,
+        "count": 33
+    },
+    {
+        "country": "MX",
+        "start_line": 218199,
+        "count": 983
+    },
+    {
+        "country": "MY",
+        "start_line": 225080,
+        "count": 70
+    },
+    {
+        "country": "MZ",
+        "start_line": 225570,
+        "count": 54
+    },
+    {
+        "country": "NA",
+        "start_line": 225948,
+        "count": 33
+    },
+    {
+        "country": "NC",
+        "start_line": 226179,
+        "count": 6
+    },
+    {
+        "country": "NE",
+        "start_line": 226221,
+        "count": 30
+    },
+    {
+        "country": "NF",
+        "start_line": 226431,
+        "count": 1
+    },
+    {
+        "country": "NG",
+        "start_line": 226438,
+        "count": 132
+    },
+    {
+        "country": "NI",
+        "start_line": 227362,
+        "count": 119
+    },
+    {
+        "country": "NL",
+        "start_line": 228195,
+        "count": 361
+    },
+    {
+        "country": "NO",
+        "start_line": 230722,
+        "count": 124
+    },
+    {
+        "country": "NP",
+        "start_line": 231590,
+        "count": 72
+    },
+    {
+        "country": "NR",
+        "start_line": 232094,
+        "count": 1
+    },
+    {
+        "country": "NU",
+        "start_line": 232101,
+        "count": 1
+    },
+    {
+        "country": "NZ",
+        "start_line": 232108,
+        "count": 58
+    },
+    {
+        "country": "OM",
+        "start_line": 232514,
+        "count": 31
+    },
+    {
+        "country": "PA",
+        "start_line": 232731,
+        "count": 37
+    },
+    {
+        "country": "PE",
+        "start_line": 232990,
+        "count": 141
+    },
+    {
+        "country": "PF",
+        "start_line": 233977,
+        "count": 1
+    },
+    {
+        "country": "PG",
+        "start_line": 233984,
+        "count": 30
+    },
+    {
+        "country": "PH",
+        "start_line": 234194,
+        "count": 1584
+    },
+    {
+        "country": "PK",
+        "start_line": 245282,
+        "count": 260
+    },
+    {
+        "country": "PL",
+        "start_line": 247102,
+        "count": 465
+    },
+    {
+        "country": "PM",
+        "start_line": 250357,
+        "count": 1
+    },
+    {
+        "country": "PN",
+        "start_line": 250364,
+        "count": 1
+    },
+    {
+        "country": "PR",
+        "start_line": 250371,
+        "count": 37
+    },
+    {
+        "country": "PT",
+        "start_line": 250630,
+        "count": 288
+    },
+    {
+        "country": "PW",
+        "start_line": 252646,
+        "count": 3
+    },
+    {
+        "country": "PY",
+        "start_line": 252667,
+        "count": 90
+    },
+    {
+        "country": "QA",
+        "start_line": 253297,
+        "count": 13
+    },
+    {
+        "country": "RE",
+        "start_line": 253388,
+        "count": 2
+    },
+    {
+        "country": "RO",
+        "start_line": 253402,
+        "count": 226
+    },
+    {
+        "country": "RS",
+        "start_line": 254984,
+        "count": 167
+    },
+    {
+        "country": "RU",
+        "start_line": 256153,
+        "count": 1217
+    },
+    {
+        "country": "RW",
+        "start_line": 264672,
+        "count": 28
+    },
+    {
+        "country": "SA",
+        "start_line": 264868,
+        "count": 72
+    },
+    {
+        "country": "SB",
+        "start_line": 265372,
+        "count": 9
+    },
+    {
+        "country": "SC",
+        "start_line": 265435,
+        "count": 1
+    },
+    {
+        "country": "SD",
+        "start_line": 265442,
+        "count": 45
+    },
+    {
+        "country": "SE",
+        "start_line": 265757,
+        "count": 150
+    },
+    {
+        "country": "SG",
+        "start_line": 266807,
+        "count": 1
+    },
+    {
+        "country": "SH",
+        "start_line": 266814,
+        "count": 3
+    },
+    {
+        "country": "SI",
+        "start_line": 266835,
+        "count": 209
+    },
+    {
+        "country": "SK",
+        "start_line": 268298,
+        "count": 83
+    },
+    {
+        "country": "SL",
+        "start_line": 268879,
+        "count": 28
+    },
+    {
+        "country": "SM",
+        "start_line": 269075,
+        "count": 9
+    },
+    {
+        "country": "SN",
+        "start_line": 269138,
+        "count": 57
+    },
+    {
+        "country": "SO",
+        "start_line": 269537,
+        "count": 73
+    },
+    {
+        "country": "SR",
+        "start_line": 270048,
+        "count": 14
+    },
+    {
+        "country": "SS",
+        "start_line": 270146,
+        "count": 27
+    },
+    {
+        "country": "ST",
+        "start_line": 270335,
+        "count": 7
+    },
+    {
+        "country": "SV",
+        "start_line": 270384,
+        "count": 148
+    },
+    {
+        "country": "SX",
+        "start_line": 271420,
+        "count": 1
+    },
+    {
+        "country": "SY",
+        "start_line": 271427,
+        "count": 170
+    },
+    {
+        "country": "SZ",
+        "start_line": 272617,
+        "count": 8
+    },
+    {
+        "country": "TC",
+        "start_line": 272673,
+        "count": 1
+    },
+    {
+        "country": "TD",
+        "start_line": 272680,
+        "count": 45
+    },
+    {
+        "country": "TG",
+        "start_line": 272995,
+        "count": 20
+    },
+    {
+        "country": "TH",
+        "start_line": 273135,
+        "count": 389
+    },
+    {
+        "country": "TJ",
+        "start_line": 275858,
+        "count": 112
+    },
+    {
+        "country": "TL",
+        "start_line": 276642,
+        "count": 13
+    },
+    {
+        "country": "TM",
+        "start_line": 276733,
+        "count": 31
+    },
+    {
+        "country": "TN",
+        "start_line": 276950,
+        "count": 145
+    },
+    {
+        "country": "TO",
+        "start_line": 277965,
+        "count": 2
+    },
+    {
+        "country": "TR",
+        "start_line": 277979,
+        "count": 801
+    },
+    {
+        "country": "TT",
+        "start_line": 283586,
+        "count": 27
+    },
+    {
+        "country": "TV",
+        "start_line": 283775,
+        "count": 1
+    },
+    {
+        "country": "TW",
+        "start_line": 283782,
+        "count": 160
+    },
+    {
+        "country": "TZ",
+        "start_line": 284902,
+        "count": 92
+    },
+    {
+        "country": "UA",
+        "start_line": 285546,
+        "count": 469
+    },
+    {
+        "country": "UG",
+        "start_line": 288829,
+        "count": 182
+    },
+    {
+        "country": "US",
+        "start_line": 290103,
+        "count": 5324
+    },
+    {
+        "country": "UY",
+        "start_line": 327371,
+        "count": 56
+    },
+    {
+        "country": "UZ",
+        "start_line": 327763,
+        "count": 186
+    },
+    {
+        "country": "VA",
+        "start_line": 329065,
+        "count": 1
+    },
+    {
+        "country": "VC",
+        "start_line": 329072,
+        "count": 2
+    },
+    {
+        "country": "VE",
+        "start_line": 329086,
+        "count": 155
+    },
+    {
+        "country": "VG",
+        "start_line": 330171,
+        "count": 1
+    },
+    {
+        "country": "VI",
+        "start_line": 330178,
+        "count": 1
+    },
+    {
+        "country": "VN",
+        "start_line": 330185,
+        "count": 183
+    },
+    {
+        "country": "VU",
+        "start_line": 331466,
+        "count": 6
+    },
+    {
+        "country": "WF",
+        "start_line": 331508,
+        "count": 2
+    },
+    {
+        "country": "WS",
+        "start_line": 331522,
+        "count": 12
+    },
+    {
+        "country": "XG",
+        "start_line": 331606,
+        "count": 9
+    },
+    {
+        "country": "XK",
+        "start_line": 331669,
+        "count": 41
+    },
+    {
+        "country": "XR",
+        "start_line": 331956,
+        "count": 1
+    },
+    {
+        "country": "XW",
+        "start_line": 331963,
+        "count": 18
+    },
+    {
+        "country": "YE",
+        "start_line": 332089,
+        "count": 47
+    },
+    {
+        "country": "YT",
+        "start_line": 332418,
+        "count": 9
+    },
+    {
+        "country": "ZA",
+        "start_line": 332481,
+        "count": 291
+    },
+    {
+        "country": "ZM",
+        "start_line": 334518,
+        "count": 41
+    },
+    {
+        "country": "ZW",
+        "start_line": 334805,
+        "count": 39
+    }
+]
