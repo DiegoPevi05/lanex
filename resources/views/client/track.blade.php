@@ -221,14 +221,15 @@
                 // Parse the JSON response
                 const result = await response.json();
 
-                currentLatitude = result.order.current_lat;
-                currentLongitude = result.order.current_lng;
+                if(result.order && result.order.current_lat && result.order.current_lng){
+                    currentLatitude = result.order.current_lat;
+                    currentLongitude = result.order.current_lng;
 
-                // Update the map and marker positions
-                const newPosition = { lat: currentLatitude, lng: currentLongitude };
-                beachFlagMarkerView.position = newPosition;
-                map.setCenter(newPosition);
-
+                    // Update the map and marker positions
+                    const newPosition = { lat: currentLatitude, lng: currentLongitude };
+                    beachFlagMarkerView.position = newPosition;
+                    map.setCenter(newPosition);
+                }
                 // Log the data to the console
                 addOrderData(result.order,result.tracking_steps);
                 addFreights(result.freights);

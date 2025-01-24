@@ -1399,7 +1399,6 @@
 
                         }
 
-
                         const LattitudeInput = document.querySelector(`[id="transports[${index}][lat]"]`);
                         const LongitudeInput = document.querySelector(`[id="transports[${index}][lng]"]`);
 
@@ -1463,6 +1462,7 @@
 
                 // Parse the JSON response
                 CitiesData = await response.json();
+
 
                 if (CitiesData.length > 0 ) {
 

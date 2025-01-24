@@ -54,6 +54,9 @@ class OrderController extends AbstractEntityController
             ->get()
             ->toArray();
 
+        // Log the steps as an array
+        //Log::info('tracking_steps', ['order_steps' => $order->trackingSteps->toArray()]);
+
         // Fetch tracking steps related to the order
         $trackingSteps = $order->trackingSteps()
             ->select(['status', 'sequence', 'country', 'city','eta','lat','lng','duration', 'transport_type_id','updated_at','created_at']) // Include foreign key
