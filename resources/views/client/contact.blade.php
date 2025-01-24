@@ -50,7 +50,7 @@
         </div>
     </div>
     </section>
-    <x-questions title="{{ __('messages.contact.questions') }}" :questions="$questions" />
+    <x-questions title="{{ __('messages.contact.questions.title') }}" :questions="$questions" />
 @endsection
 
  <script>

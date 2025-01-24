@@ -244,6 +244,11 @@ class OrderController extends AbstractEntityController
             return response()->json(['message' => 'No cities found for the specified country'], 404);
         }
 
+        // Sort the cities alphabetically by name
+        usort($cities, function ($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
+
         // Return the filtered cities as a JSON response
         return response()->json($cities);
     }

@@ -18,9 +18,14 @@
                     <p>{{__('messages.track.messages.input_order_number')}}</p>
                 </div>
                 <div id="not-found-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4 hidden">
-                    <img src="{{ asset('storage/'. '/images/web/404.svg') }}" alt="order_track_not_found" class="h-auto w-[40%]"/>
+                    <img src="{{ asset('storage/'. '/images/web/not_found.svg') }}" alt="order_track_not_found" class="h-auto w-[40%]"/>
                     <p>{{__('messages.track.messages.order_number_not_found')}}</p>
                     <p>{{__('messages.track.messages.order_number_not_found_helper')}}  <a href="https://wa.link/s7w6z3" target="_blank" class="text-primary hover:underline" aria-label="{{__('messages.track.messages.contact_us')}}" title="{{__('messages.track.messages.contact_us')}}">{{__('messages.track.messages.contact_us')}}</a></p>
+                </div>
+                <div id="error-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4 hidden">
+                    <img src="{{ asset('storage/'. '/images/web/404.svg') }}" alt="order_track_not_found" class="h-auto w-[40%]"/>
+                    <p>{{__('messages.track.messages.order_number_error')}}</p>
+                    <p>{{__('messages.track.messages.order_number_error_helper')}}  <a href="https://wa.link/s7w6z3" target="_blank" class="text-primary hover:underline" aria-label="{{__('messages.track.messages.contact_us')}}" title="{{__('messages.track.messages.contact_us')}}">{{__('messages.track.messages.contact_us')}}</a></p>
                 </div>
                 <div id="loader-order-tracked" class="w-full h-auto flex items-center justify-center animation-element slide-in-up py-12 hidden">
                     <span class="h-12 w-12 text-primary">
@@ -97,7 +102,7 @@
             </table>
         </div>
     </section>
-    <x-questions title="{{ __('messages.track.questions') }}" :questions="$questions" />
+    <x-questions title="{{ __('messages.track.questions.title') }}" :questions="$questions" />
 
     <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
         ({key: "{{ env('GOOGLE_MAPS_API_KEY') }}", v: "weekly"});</script>
@@ -148,6 +153,7 @@
 
         const default_order_content = track_container.querySelector('#default-order-tracked');
         const not_found_order_content = track_container.querySelector('#not-found-order-tracked');
+        const error_order_content = track_container.querySelector('#error-order-tracked');
         const loader_order_content =  track_container.querySelector('#loader-order-tracked');
 
         const container_content_order_tracked = track_container.querySelector('#container-content-order-tracked');
@@ -160,10 +166,15 @@
         async function TrackOrderNumber (order_number){
 
             default_order_content.classList.add('hidden')
+
             loader_order_content.classList.remove('hidden');
 
             if (!not_found_order_content.classList.contains('hidden')) {
                 not_found_order_content.classList.add('hidden');
+            }
+
+            if(!error_order_content.classList.contains('hidden')){
+                error_order_content.classList.add('hidden');
             }
 
             if(container_content_order_tracked.classList.contains('xl:w-2/3')){
@@ -198,13 +209,17 @@
                 });
 
                 if (!response.ok) {
-                    not_found_order_content.classList.remove('hidden');
-                    throw new Error('Failed to track order');
+                    if(response.status === 404){
+                        not_found_order_content.classList.remove('hidden');
+                        return;
+                    }else{
+                        error_order_content.classList.remove('hidden');
+                        return;
+                    }
                 }
 
                 // Parse the JSON response
                 const result = await response.json();
-                console.log(result);
 
                 currentLatitude = result.order.current_lat;
                 currentLongitude = result.order.current_lng;
@@ -229,6 +244,8 @@
 
             } catch (error) {
                 console.error('Error:', error);
+                error_order_content.classList.remove('hidden');
+                throw new Error('Failed to track order');
             } finally {
                 loader_order_content.classList.add('hidden');
             }

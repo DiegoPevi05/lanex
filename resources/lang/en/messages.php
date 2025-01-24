@@ -202,6 +202,24 @@ It is important for every company involved in international trade to be trained 
             'content' => 'At LanEx, we will address all your inquiries promptly. We strive to be present at every stage of the logistics process to answer all your questions and doubts, achieving goals in terms of time and costs.'
         ]
     ],
+    'services' => [
+        'header' => 'WE ARE THE BEST LOGISTICS COMPANY',
+        'title' => 'Optimize Your Shipments with Our Cargo Services',
+        'subheader' => 'Simplify your shipping process and make it more efficient with our cargo services. From start to finish, we take care of everything to ensure your cargo arrives safely.',
+        'content' => [
+            'header' => 'Global Level',
+            'title' => 'SHIPPING AT ANY TIME',
+            'introduction' => 'We are experts in the handling and transportation of goods both nationally and internationally. We offer a wide range of services, including land, sea, and air transport. Our highly trained team coordinates every stage of the process, from collecting the cargo to its final delivery, ensuring the safety and punctuality of your shipments.',
+            'content1' => 'Each mode of transportation has its own advantages and is tailored to different needs. We will advise you on choosing the option that best suits your requirements and budget.',
+            'content2' => 'Land transportation is ideal for short distances and quick deliveries within the same country. Sea transportation is the most cost-effective option for large volumes and long distances, while air transportation is the fastest solution for urgent and high-value shipments.'
+        ],
+        'link_section' => [
+            'header' => 'Reliability and Trust Are the Cornerstones of Our Service',
+            'title' => 'We Understand That Your Products Are Valuable and Require Careful Handling',
+            'button' => 'Get a Quote Now',
+            'content' => 'For this reason, we have implemented quality controls and real-time tracking systems that allow you to monitor the status of your shipments at all times. These measures ensure the safety and integrity of your products, from origin to destination. Additionally, we have a highly trained customer service team that is always ready to answer your questions and provide the support you need.'
+        ]
+    ],
     'service' => [
         'brands' => [
             'title' => 'COMPANIES WE WORK WITH',
@@ -253,7 +271,27 @@ It is important for every company involved in international trade to be trained 
                 'contact_form_button' => 'Send',
             ],
         ],
-        'questions' => 'Frequently Asked Questions',
+        'questions' => [
+            'title' => 'Frequently Asked Questions',
+            'questions' => [
+                'question_1' => [
+                    'question' => 'What types of services do you offer?',
+                    'answer' => 'We offer a wide range of services, including storage, transportation (land, air, sea), distribution, inventory management, and customs. We tailor our services to meet the specific needs of each client.'
+                ],
+                'question_2' => [
+                    'question' => 'Which are the main countries of import?',
+                    'answer' => 'We import from more than 20 countries, but the main ones are the USA, Spain, China, and Chile.'
+                ],
+                'question_3' => [
+                    'question' => 'How can I track my shipment?',
+                    'answer' => 'You can track your shipment in real-time through our online platform. We will provide you with a tracking number so you can check the status of your shipment at any time.'
+                ],
+                'question_4' => [
+                    'question' => 'How do you calculate your rates?',
+                    'answer' => 'Our rates are calculated based on several factors, such as the weight and volume of the cargo, the distance to be covered, the type of service, and any additional services you request. We can provide you with a personalized quote without obligation.'
+                ],
+            ],
+        ],
         'mail' => [
             'subject' => 'New Contact Form Submission',
             'company_required' => 'The company field is required.',
@@ -305,13 +343,13 @@ It is important for every company involved in international trade to be trained 
             'out_for_delivery' => 'out for delivery',
             'to' => 'to',
             'freight' => [
-                'freights' => 'freights',
+                'freights' => 'transport documents',
                 'name' => 'name',
                 'description' => 'description',
                 'origin' => 'origin',
                 'characteristics' => 'characteristics',
                 'packages' => 'packages',
-                'freight_id' => 'freight ID'
+                'freight_id' => 'transport document ID'
             ],
             'tracking' => [
                 'tracking_of_order' => 'Tracking of Order',
@@ -327,6 +365,8 @@ It is important for every company involved in international trade to be trained 
             'input_order_number' => 'Input your order number to track it',
             'order_number_not_found' => 'Your order was not found',
             'order_number_not_found_helper' => 'If you have any issue',
+            'order_number_error' => 'There was an error trying to fetch your order try again',
+            'order_number_error_helper' => 'If you have any issue',
             'contact_us' => 'Contact us'
         ],
         'shipment_steps' => [
@@ -348,7 +388,27 @@ It is important for every company involved in international trade to be trained 
         'tracker' => [
             'no_steps' => 'No steps provided'
         ],
-        'questions' => 'Frequently Asked Questions',
+        'questions' => [
+            'title' => 'Frequently Asked Questions',
+            'questions' => [
+                'question_1' => [
+                    'question' => 'Where can I find my order code?',
+                    'answer' => 'Once your order has been confirmed, you will receive an email with a unique tracking number. This number will allow you to track your order online through our platform.'
+                ],
+                'question_2' => [
+                    'question' => "What if I can't find my order?",
+                    'answer' => 'If you are unable to find your order using the tracking number, we recommend contacting our customer service team. We will help you locate your order and resolve any issues that may arise.'
+                ],
+                'question_3' => [
+                    'question' => "What happens if the delivery date has passed and I still haven't received my order?",
+                    'answer' => 'If your order has not been delivered by the estimated date, please notify us immediately. We will investigate the cause of the delay and keep you informed about the status of your delivery.'
+                ],
+                'question_4' => [
+                    'question' => 'What if the email I provided was incorrect?',
+                    'answer' => 'If you provided an incorrect email address, you may not have received your order confirmation or tracking number. We recommend contacting our customer service team as soon as possible so we can update your information.'
+                ],
+            ],
+        ],
     ],
     'quote' => [
         'hero' => [
@@ -397,6 +457,27 @@ It is important for every company involved in international trade to be trained 
                 'message_max' => 'The message may not be greater than 1000 characters.',
             ]
         ],
+        'questions' => [
+            'title' => 'Frequently Asked Questions',
+            'questions' => [
+                'question_1' => [
+                    'question' => 'How long will it take to receive a quote?',
+                    'answer' => 'The time it takes to receive a quote can vary depending on the complexity of your request. However, we strive to provide you with a quote as quickly as possible, usually within 24 to 48 business hours after your request.'
+                ],
+                'question_2' => [
+                    'question' => 'Can I change the dates?',
+                    'answer' => 'Yes, absolutely. We understand that plans can change. You can request modifications to the delivery dates or any other details of the quote once you have received it.'
+                ],
+                'question_3' => [
+                    'question' => 'What happens if I need an additional service?',
+                    'answer' => 'No problem. You can request any additional services you need after receiving the quote. We will provide you with an updated quote that reflects the additional costs.'
+                ],
+                'question_4' => [
+                    'question' => 'Can I personally contact the operator?',
+                    'answer' => 'Yes, you can contact the operator directly. Our customer service team will provide you with the necessary contact information so you can communicate with them personally and resolve any questions you may have.'
+                ],
+            ],
+        ],
         'mail' => [
             'subject' => 'New Quote Form Submission',
             'subject_anonymous' => 'Thanks for Contact Us',
@@ -419,7 +500,6 @@ It is important for every company involved in international trade to be trained 
             'intro_admin_11' => 'Email',
             'intro_admin_12' => 'Message',
         ],
-        'questions' => 'Frequently asked questions',
         'success' => 'Your message has been sent successfully!',
         'error' => 'There was an issue sending your message. Please try again.',
     ],
@@ -1331,18 +1411,18 @@ It is important for every company involved in international trade to be trained 
             ]
         ],
         'freight' => [
-            'name' => 'freight',
-            'plural' => 'freights',
-            'new_entity' => 'new freight',
-            'add_entity' => 'add freight',
-            'delete_entity' => 'delete freight',
-            'empty_content' => 'no freights to show',
-            'header' => "freights",
-            'indications' => "select an option to create, update or delete freights",
-            'input_placeholder_search' => "search freight",
+            'name' => 'transport document',
+            'plural' => 'transport documents',
+            'new_entity' => 'new transport document',
+            'add_entity' => 'add transport document',
+            'delete_entity' => 'delete transport document',
+            'empty_content' => 'no transport documents to show',
+            'header' => "transport documents",
+            'indications' => "select an option to create, update or delete transport documents",
+            'input_placeholder_search' => "search transport document",
             'button_label_search' => "search",
             'card' => [
-                'header' => 'freight',
+                'header' => 'transport document',
                 'name' => 'name',
                 'updated' => 'updated',
                 'actions' => 'actions',
@@ -1357,12 +1437,12 @@ It is important for every company involved in international trade to be trained 
             ],
             'form' => [
                 'headers' => [
-                    'view' => 'view freight',
-                    'create' => 'create freight',
-                    'update' => 'update freight',
+                    'view' => 'view transport document',
+                    'create' => 'create transport document',
+                    'update' => 'update transport document',
                 ],
                 'fields' => [
-                    'freight_id' => 'freight ID',
+                    'freight_id' => 'transport document ID',
                     'name' => 'name',
                     'description' => 'description',
                     'origin' => 'origin',
@@ -1376,7 +1456,7 @@ It is important for every company involved in international trade to be trained 
                     'incoterms' => 'incoterms',
                 ],
                 'placeholders' => [
-                    'freight_id' => 'Enter Freight ID',
+                    'freight_id' => 'Enter Transport Document ID',
                     'name' => 'Enter Name',
                     'description' => 'Enter Description',
                     'origin' => 'Enter Origin',
@@ -1391,13 +1471,13 @@ It is important for every company involved in international trade to be trained 
                 ],
                 'buttons' => [
                     'cancel' => 'cancel',
-                    'create' => 'create freight',
-                    'update' => 'update freight',
+                    'create' => 'create transport document',
+                    'update' => 'update transport document',
                 ],
                 'validations' => [
-                    'freight_id_required' => 'The freight ID field is required.',
-                    'freight_id_string' => 'The freight ID must be a valid string.',
-                    'freight_id_max' => 'The freight ID may not be greater than 255 characters.',
+                    'freight_id_required' => 'The transport document ID field is required.',
+                    'freight_id_string' => 'The transport document ID must be a valid string.',
+                    'freight_id_max' => 'The transport document ID may not be greater than 255 characters.',
 
                     'name_required' => 'The name field is required.',
                     'name_string' => 'The name must be a valid string.',
@@ -1438,16 +1518,16 @@ It is important for every company involved in international trade to be trained 
                     'packages_integer' => 'The packages must be a valid integer.',
                 ],
                 'success' => [
-                    'create' => 'Freight created successfully',
-                    'update' => 'Freight updated successfully',
-                    'delete' => 'Freight deleted successfully',
+                    'create' => 'Transport Document created successfully',
+                    'update' => 'Transport Document updated successfully',
+                    'delete' => 'Transport Document deleted successfully',
                 ],
                 'error' => [
-                    'not_found' => 'Freight not found.',
+                    'not_found' => 'Transport Document not found.',
                     'validation_failed' => 'There were errors in the form submission.',
                 ],
                 'modal' => [
-                    'delete_header' => 'Are you sure you want to delete this Freight?',
+                    'delete_header' => 'Are you sure you want to delete this transport document?',
                     'delete_content' => 'You won’t be able to restore this information once deleted.',
                 ],
             ],

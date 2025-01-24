@@ -203,23 +203,23 @@ class WebController extends Controller
         $questions = [
             [
                 'id' => 1,
-                'question' => 'What is the return policy?',
-                'answer' => 'You can return any item within 30 days of purchase.',
+                'question' => __('messages.contact.questions.questions.question_1.question'),
+                'answer' => __('messages.contact.questions.questions.question_1.answer'),
             ],
             [
                 'id' => 2,
-                'question' => 'How do I track my order?',
-                'answer' => 'You will receive a tracking number via email once your order has shipped.',
+                'question' => __('messages.contact.questions.questions.question_2.question'),
+                'answer' => __('messages.contact.questions.questions.question_2.answer'),
             ],
             [
                 'id' => 3,
-                'question' => 'Do you offer international shipping?',
-                'answer' => 'Yes, we ship to many countries worldwide. Check our shipping page for details.',
+                'question' => __('messages.contact.questions.questions.question_3.question'),
+                'answer' => __('messages.contact.questions.questions.question_3.answer'),
             ],
             [
                 'id' => 4,
-                'question' => 'How can I contact customer support?',
-                'answer' => 'You can reach customer support via the contact form on our website or by calling our hotline.',
+                'question' => __('messages.contact.questions.questions.question_4.question'),
+                'answer' => __('messages.contact.questions.questions.question_4.answer'),
             ],
         ];
 
@@ -311,23 +311,23 @@ class WebController extends Controller
         $questions = [
             [
                 'id' => 1,
-                'question' => 'What is the return policy?',
-                'answer' => 'You can return any item within 30 days of purchase.',
+                'question' => __('messages.quote.questions.questions.question_1.question'),
+                'answer' => __('messages.quote.questions.questions.question_1.answer'),
             ],
             [
                 'id' => 2,
-                'question' => 'How do I track my order?',
-                'answer' => 'You will receive a tracking number via email once your order has shipped.',
+                'question' => __('messages.quote.questions.questions.question_2.question'),
+                'answer' => __('messages.quote.questions.questions.question_2.answer'),
             ],
             [
                 'id' => 3,
-                'question' => 'Do you offer international shipping?',
-                'answer' => 'Yes, we ship to many countries worldwide. Check our shipping page for details.',
+                'question' => __('messages.quote.questions.questions.question_3.question'),
+                'answer' => __('messages.quote.questions.questions.question_3.answer'),
             ],
             [
                 'id' => 4,
-                'question' => 'How can I contact customer support?',
-                'answer' => 'You can reach customer support via the contact form on our website or by calling our hotline.',
+                'question' => __('messages.quote.questions.questions.question_4.question'),
+                'answer' => __('messages.quote.questions.questions.question_4.answer'),
             ],
         ];
 
@@ -435,23 +435,23 @@ class WebController extends Controller
         $questions = [
             [
                 'id' => 1,
-                'question' => 'What is the return policy?',
-                'answer' => 'You can return any item within 30 days of purchase.',
+                'question' => __('messages.track.questions.questions.question_1.question'),
+                'answer' => __('messages.track.questions.questions.question_1.answer'),
             ],
             [
                 'id' => 2,
-                'question' => 'How do I track my order?',
-                'answer' => 'You will receive a tracking number via email once your order has shipped.',
+                'question' => __('messages.track.questions.questions.question_2.question'),
+                'answer' => __('messages.track.questions.questions.question_2.answer'),
             ],
             [
                 'id' => 3,
-                'question' => 'Do you offer international shipping?',
-                'answer' => 'Yes, we ship to many countries worldwide. Check our shipping page for details.',
+                'question' => __('messages.track.questions.questions.question_3.question'),
+                'answer' => __('messages.track.questions.questions.question_3.answer'),
             ],
             [
                 'id' => 4,
-                'question' => 'How can I contact customer support?',
-                'answer' => 'You can reach customer support via the contact form on our website or by calling our hotline.',
+                'question' => __('messages.track.questions.questions.question_4.question'),
+                'answer' => __('messages.track.questions.questions.question_4.answer'),
             ],
         ];
 

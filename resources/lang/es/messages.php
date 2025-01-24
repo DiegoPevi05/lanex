@@ -213,6 +213,25 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'content' => 'En LanEx, resolveremos todas tus consultas de forma oportuna. Buscamos estar en todas las fases del proceso logístico para responder todas tus inquietudes y dudas; logrando así los objetivos en tiempos y costos.'
         ]
     ],
+    'services' => [
+        'header' => 'SOMOS LA MEJOR COMPAÑIA DE LOGISTICA',
+        'title' => 'Optimice sus envíos con nuestros servicios de carga',
+        'subheader' => 'Simplifica tu proceso de envío y hazlo más eficiente con nuestros servicios de carga. De principio a fin, nos encargaremos de todo para garantizar que su carga llegue de manera segura.',
+        'content' => [
+            'header' => 'Nivel Mundial',
+            'title' => 'ENVÍOS EN TODO MOMENTO',
+            'introduction' => 'Somos expertos en el manejo y transporte de mercancías a nivel nacional e internacional. Ofrecemos una amplia gama de servicios que incluyen el transporte terrestre, marítimo y aéreo. Nuestro equipo altamente capacitado se encarga de coordinar cada etapa del proceso, desde la recolección de la carga hasta su entrega final, garantizando la seguridad y puntualidad de tus envíos.',
+            'content1' => 'Cada modalidad de transporte tiene sus propias ventajas y se adapta a diferentes necesidades. Nosotros te asesoraremos para elegir la opción que mejor se adapte a tus requerimientos y presupuesto.',
+           'content2' => 'El transporte terrestre es ideal para distancias cortas y entregas rápidas dentro de un mismo país. El transporte marítimo es la opción más económica para grandes volúmenes y distancias largas, mientras que el transporte aéreo es la solución más rápida para envíos urgentes y de alto valor.'
+        ],
+        'link_section' => [
+            'header' => 'La fiabilidad y la confianza son pilares fundamentales de nuestro servicio',
+            'title' => 'Entendemos que tus productos son valiosos y requieren un manejo cuidadoso',
+            'button' => 'Cotiza Ahora',
+            'content' => 'Por ello, hemos implementado controles de calidad y sistemas de seguimiento en tiempo real que te permiten conocer en todo momento el estado de tus envíos que nos permiten garantizar la seguridad y la integridad de tus productos, desde el origen hasta el destino. Además, contamos con un equipo de atención al cliente altamente capacitado que está siempre dispuesto a resolver tus dudas y brindarte el soporte que necesitas.'
+        ]
+
+    ],
     'service' => [
         'brands' => [
             'title' => 'EMPRESAS CON LAS QUE TRABAJAMOS',
@@ -264,7 +283,27 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 'contact_form_button' => 'Enviar',
             ],
         ],
-        'questions' => 'Preguntas Frecuentes',
+        'questions' => [
+            'title' => 'Preguntas Frecuentes',
+            'questions' => [
+                'question_1' => [
+                    'question' => '	¿Qué tipo de servicios ofrecen?',
+                    'answer' => 'Ofrecemos una amplia gama de servicios, incluyendo almacenamiento, transporte (terrestre, aéreo, marítimo), distribución, gestión de inventarios y aduanas. Adaptamos nuestros servicios a las necesidades específicas de cada cliente.'
+                ],
+                'question_2' => [
+                    'question' => '¿Cuáles son los principales países de importación?',
+                    'answer' => 'Nosotros importamos con más de 20 países, pero los principales son: USA, ESPAÑA, CHINA Y CHILE'
+                ],
+                'question_3' => [
+                    'question' => '¿Cómo puedo realizar un seguimiento de mi envío?',
+                    'answer' => 'Puedes realizar un seguimiento de tu envío en tiempo real a través de nuestra plataforma en línea. Te proporcionaremos un número de seguimiento para que puedas consultar el estado de tu envío en cualquier momento.'
+                ],
+                'question_4' => [
+                    'question' => '¿Cómo calculan sus tarifas?',
+                    'answer' => 'Nuestras tarifas se calculan en función de varios factores, como el peso y volumen de la carga, la distancia a recorrer, el tipo de servicio y cualquier servicio adicional que solicites. Podemos ofrecerte un presupuesto personalizado sin compromiso'
+                ],
+            ],
+        ],
         'mail' => [
             'subject' => 'Nueva solicitud de contacto',
             'company_required' => 'El campo de la empresa es obligatorio.',
@@ -316,7 +355,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'out_for_delivery' => 'Listo para entrega',
             'to' => 'Destino',
             'freight' => [
-                'freights' => 'cargas',
+                'freights' => 'documentos de transporte',
                 'name' => 'nombre',
                 'description' => 'descripción',
                 'origin' => 'origen',
@@ -338,6 +377,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'input_order_number' => 'Introduce tu número de pedido para rastrearlo',
             'order_number_not_found' => 'Tu pedido no fue encontrado',
             'order_number_not_found_helper' => 'Si tienes algún problema',
+            'order_number_error' => 'Ocurrio un problema al intentar buscar tu pedido intenta despues',
+            'order_number_error_helper' => 'Si tienes algún problema ',
             'contact_us' => 'Contáctanos'
         ],
         'shipment_steps' => [
@@ -359,7 +400,27 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         'tracker' => [
             'no_steps' => 'No se proporcionaron pasos'
         ],
-        'questions' => 'Preguntas Frecuentes',
+        'questions' => [
+            'title' => 'Preguntas Frecuentes',
+            'questions' => [
+                'question_1' => [
+                    'question' => '¿Dónde encuentro el código de mi pedido?',
+                    'answer' => 'Una vez que tu pedido haya sido confirmado, recibirás un correo electrónico con un número de seguimiento único. Este número te permitirá rastrear tu pedido en línea a través de nuestra plataforma.'
+                ],
+                'question_2' => [
+                    'question' => '¿Qué pasa si no encuentro mi pedido?',
+                    'answer' => 'Si no puedes encontrar tu pedido utilizando el número de seguimiento, te recomendamos que te pongas en contacto con nuestro servicio de atención al cliente. Te ayudaremos a localizar tu pedido y resolver cualquier problema que pueda surgir.'
+                ],
+                'question_3' => [
+                    'question' => '¿Qué pasa si ya paso la fecha de entrega y todavía no me llega mi pedido?',
+                    'answer' => 'Si tu pedido no ha sido entregado en la fecha estimada, te pedimos que nos informes de inmediato. Investigaremos las razones del retraso y te mantendremos informado sobre el progreso de tu entrega.'
+                ],
+                'question_4' => [
+                    'question' => '¿Qué pasa si el correo que brinde no era el correcto?',
+                    'answer' => 'Si proporcionaste un correo electrónico incorrecto, es posible que no hayas recibido la confirmación de tu pedido ni el número de seguimiento. Te recomendamos que te pongas en contacto con nuestro servicio de atención al cliente lo antes posible para que podamos actualizar tus datos.'
+                ],
+            ],
+        ],
     ],
     'quote' => [
         'hero' => [
@@ -408,6 +469,27 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 'message_max' => 'El mensaje no puede tener más de 1000 caracteres.',
             ]
         ],
+        'questions' => [
+            'title' => 'Preguntas Frecuentes',
+            'questions' => [
+                'question_1' => [
+                    'question' => '	¿Cuánto tiempo demorara en llegar una cotización?',
+                    'answer' => 'El tiempo que toma recibir una cotización puede variar dependiendo de la complejidad de tu solicitud. Sin embargo, nos esforzamos por proporcionarte una cotización lo más pronto posible, usualmente dentro de las 24 a 48 horas hábiles siguientes a tu solicitud.'
+                ],
+                'question_2' => [
+                    'question' => '¿Puedo cambiar las fechas?',
+                    'answer' => 'Sí, por supuesto. Entendemos que los planes pueden cambiar. Puedes solicitar modificaciones en las fechas de entrega o cualquier otro detalle de la cotización una vez que la hayas recibido.'
+                ],
+                'question_3' => [
+                    'question' => '¿Qué pasa si necesito algún servicio adicional?',
+                    'answer' => 'No hay problema. Puedes solicitar cualquier servicio adicional que necesites una vez que hayas recibido la cotización. Te proporcionaremos un presupuesto actualizado que refleje los costos adicionales.'
+                ],
+                'question_4' => [
+                    'question' => '¿Puedo contactarme personalmente con el operador?',
+                    'answer' => 'Sí, puedes contactarte directamente con el operador. Nuestro equipo de atención al cliente te proporcionará los datos de contacto necesarios para que puedas comunicarte con él de forma personalizada y resolver cualquier duda.'
+                ],
+            ],
+        ],
         'mail' => [
             'subject' => 'Nueva Solicitud de Cotización',
             'subject_anonymous' => 'Gracias por Contactarnos',
@@ -430,7 +512,6 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'intro_admin_11' => 'Correo Electrónico',
             'intro_admin_12' => 'Mensaje',
         ],
-        'questions' => 'Preguntas Frecuentes',
         'success' => '¡Tu mensaje ha sido enviado exitosamente!',
         'error' => 'Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.',
     ],
@@ -1341,18 +1422,18 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             ]
         ],
         'freight' => [
-            'name' => 'flete',
-            'plural' => 'fletes',
-            'new_entity' => 'nuevo flete',
-            'add_entity' => 'agregar flete',
-            'delete_entity' => 'borrar flete',
-            'empty_content' => 'no hay fletes para mostrar',
-            'header' => "fletes",
-            'indications' => "seleccione una opción para crear, actualizar o eliminar fletes",
-            'input_placeholder_search' => "buscar flete",
+            'name' => 'documento de transporte',
+            'plural' => 'documentos de transportes',
+            'new_entity' => 'nuevo',
+            'add_entity' => 'agregar',
+            'delete_entity' => 'borrar',
+            'empty_content' => 'no hay documentos de transporte para mostrar',
+            'header' => "documentos de transporte",
+            'indications' => "seleccione una opción para crear, actualizar o eliminar documentos de transporte",
+            'input_placeholder_search' => "buscar documento de transporte",
             'button_label_search' => "buscar",
             'card' => [
-                'header' => 'flete',
+                'header' => 'documento de transporte',
                 'name' => 'nombre',
                 'updated' => 'actualizado',
                 'actions' => 'acciones',
@@ -1367,12 +1448,12 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             ],
             'form' => [
                 'headers' => [
-                    'view' => 'ver flete',
-                    'create' => 'crear flete',
-                    'update' => 'actualizar flete',
+                    'view' => 'ver documento de transporte',
+                    'create' => 'crear documento de transporte',
+                    'update' => 'actualizar documento de transporte',
                 ],
                 'fields' => [
-                    'freight_id' => 'ID de flete',
+                    'freight_id' => 'ID de documento de transporte',
                     'name' => 'nombre',
                     'description' => 'descripción',
                     'origin' => 'origen',
@@ -1386,7 +1467,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'incoterms' => 'incoterms',
                 ],
                 'placeholders' => [
-                    'freight_id' => 'Ingrese ID de Flete',
+                    'freight_id' => 'Ingrese ID del documento de transporte',
                     'name' => 'Ingrese Nombre',
                     'description' => 'Ingrese Descripción',
                     'origin' => 'Ingrese Origen',
@@ -1401,13 +1482,13 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 ],
                 'buttons' => [
                     'cancel' => 'cancelar',
-                    'create' => 'crear flete',
-                    'update' => 'actualizar flete',
+                    'create' => 'crear documento de transporte',
+                    'update' => 'actualizar documento de transporte',
                 ],
                 'validations' => [
-                    'freight_id_required' => 'El campo ID de flete es obligatorio.',
-                    'freight_id_string' => 'El ID de flete debe ser una cadena válida.',
-                    'freight_id_max' => 'El ID de flete no debe exceder los 255 caracteres.',
+                    'freight_id_required' => 'El campo ID de documento de transporte es obligatorio.',
+                    'freight_id_string' => 'El ID de documento de transporte debe ser una cadena válida.',
+                    'freight_id_max' => 'El ID de documento de transporte no debe exceder los 255 caracteres.',
 
                     'name_required' => 'El campo nombre es obligatorio.',
                     'name_string' => 'El nombre debe ser una cadena válida.',
@@ -1448,16 +1529,16 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'packages_integer' => 'Los paquetes deben ser un entero válido.',
                 ],
                 'success' => [
-                    'create' => 'Flete creado con éxito',
-                    'update' => 'Flete actualizado con éxito',
-                    'delete' => 'Flete eliminado con éxito',
+                    'create' => 'Documento de transporte creado con éxito',
+                    'update' => 'Documento de transporte actualizado con éxito',
+                    'delete' => 'Documento de transporte eliminado con éxito',
                 ],
                 'error' => [
-                    'not_found' => 'Flete no encontrado.',
+                    'not_found' => 'Documento de transporte no encontrado.',
                     'validation_failed' => 'Hubo errores en el envío del formulario.',
                 ],
                 'modal' => [
-                    'delete_header' => '¿Está seguro de que desea eliminar este flete?',
+                    'delete_header' => '¿Está seguro de que desea eliminar este documento de transporte?',
                     'delete_content' => 'No podrá restaurar esta información una vez eliminada.',
                 ],
             ],

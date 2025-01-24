@@ -156,7 +156,7 @@
         </div>
     </div>
     </section>
-    <x-questions title="{{__('messages.quote.questions')}}" :questions="$questions" />
+    <x-questions title="{{__('messages.quote.questions.title')}}" :questions="$questions" />
 @endsection
 
  <script>
