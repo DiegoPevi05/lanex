@@ -37,6 +37,13 @@
                     </span>
                     <p class="font-bold text-primary group-hover:text-white capitalize">{{ __('messages.dashboard.web.card.products') }}</p>
                 </a>
+                <a id="web-content-option-blogs" href={{ route('dashboard_web_blog') }} class="w-full h-auto bg-white rounded-xl border-2 border-gray-light flex flex-row justify-start items-center p-4 duration-300 transition-all hover:bg-primary group cursor-pointer active:scale-95 gap-x-2">
+
+                    <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1 group-hover:text-white active:scale-95 transiton-all duration-300  cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-album"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><polyline points="11 3 11 11 14 8 17 11 17 3"/></svg>
+                    </span>
+                    <p class="font-bold text-primary group-hover:text-white capitalize">{{ __('messages.dashboard.web.card.blogs') }}</p>
+                </a>
             </div>
         </div>
     </section>

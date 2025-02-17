@@ -600,6 +600,145 @@ It is important for every company involved in international trade to be trained 
                 'date_content' => 'updated at',
                 'actions' => 'actions',
             ],
+            'blog' => [
+                'new_entity' => 'new blog',
+                'header' => "blogs",
+                'indications' => "select an option create, update or delete blogs",
+                'input_placeholder_search' => "search blog",
+                'button_label_search' => "search",
+                'dropdown' => [
+                    'title' => 'title',
+                    'author' => 'author',
+                    'category' => 'category',
+                    'status' => 'status'
+                ],
+                'form' => [
+                    'headers' => [
+                        'view' => 'view blog',
+                        'create' => 'create blog',
+                        'update' => 'update blog'
+                    ],
+                    'fields' => [
+                        'title' => 'title',
+                        'slug' => 'slug',
+                        'excerpt' => 'excerpt',
+                        'content' => 'content',
+                        'meta_description' => 'meta description',
+                        'meta_keywords' => 'meta keywords',
+                        'featured_image' => 'featured image',
+                        'thumbnail_image' => 'thumbnail image',
+                        'author' => 'author',
+                        'category' => 'category',
+                        'status' => 'status',
+                        'is_featured' => 'featured post',
+                        'reading_time' => 'reading time (minutes)',
+                        'published_at' => 'publication date',
+                        'seo_title' => 'seo title',
+                        'header_type' => 'header type',
+                        'sub_header' => 'sub header',
+                        'tags' => 'tags'
+                    ],
+                    'placeholders' => [
+                        'title' => 'enter blog title',
+                        'slug' => 'enter url-friendly slug',
+                        'excerpt' => 'enter brief summary',
+                        'content' => 'enter blog content',
+                        'meta_description' => 'enter meta description',
+                        'meta_keywords' => 'enter meta keywords',
+                        'author' => 'enter author name',
+                        'category' => 'enter blog category',
+                        'reading_time' => 'estimated reading time',
+                        'seo_title' => 'enter seo optimized title',
+                        'sub_header' => 'enter secondary headline',
+                        'tags' => 'enter tags'
+                    ],
+                    'status' => [
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'archived' => 'Archived'
+                    ],
+                    'header_types' => [
+                        'normal' => 'Normal',
+                        'video' => 'Video',
+                        'slideshow' => 'Slideshow'
+                    ],
+                    'buttons' => [
+                        'cancel' => 'cancel',
+                        'create' => 'create blog',
+                        'update' => 'update blog'
+                    ],
+                    'validations' => [
+                        'title_required' => 'The title field is required.',
+                        'title_string' => 'The title must be a valid string.',
+                        'title_max' => 'The title may not be greater than 255 characters.',
+                        
+                        'slug_required' => 'The slug field is required.',
+                        'slug_string' => 'The slug must be a valid string.',
+                        'slug_max' => 'The slug may not be greater than 255 characters.',
+                        'slug_unique' => 'This slug has already been taken.',
+                        
+                        'excerpt_string' => 'The excerpt must be a valid string.',
+                        'excerpt_max' => 'The excerpt may not be greater than 500 characters.',
+                        
+                        'content_required' => 'The content field is required.',
+                        'content_string' => 'The content must be a valid string.',
+                        
+                        'meta_description_string' => 'The meta description must be a valid string.',
+                        'meta_description_max' => 'The meta description may not be greater than 255 characters.',
+                        
+                        'meta_keywords_string' => 'The meta keywords must be a valid string.',
+                        'meta_keywords_max' => 'The meta keywords may not be greater than 255 characters.',
+                        
+                        'featured_image_image' => 'The featured image must be an image.',
+                        'featured_image_mimes' => 'The featured image must be a file of type: jpeg, png, jpg, gif, webp.',
+                        'featured_image_max' => 'The featured image may not be greater than 2MB.',
+                        
+                        'thumbnail_image_image' => 'The thumbnail image must be an image.',
+                        'thumbnail_image_mimes' => 'The thumbnail image must be a file of type: jpeg, png, jpg, gif, webp.',
+                        'thumbnail_image_max' => 'The thumbnail image may not be greater than 2MB.',
+                        
+                        'author_required' => 'The author field is required.',
+                        'author_string' => 'The author must be a valid string.',
+                        'author_max' => 'The author may not be greater than 255 characters.',
+                        
+                        'category_required' => 'The category field is required.',
+                        'category_string' => 'The category must be a valid string.',
+                        'category_max' => 'The category may not be greater than 100 characters.',
+                        
+                        'status_required' => 'The status field is required.',
+                        'status_in' => 'The selected status is invalid.',
+                        
+                        'reading_time_integer' => 'The reading time must be a number.',
+                        'reading_time_min' => 'The reading time must be at least 1 minute.',
+                        
+                        'published_at_date' => 'The publication date must be a valid date.',
+                        
+                        'seo_title_string' => 'The SEO title must be a valid string.',
+                        'seo_title_max' => 'The SEO title may not be greater than 255 characters.',
+                        
+                        'header_type_required' => 'The header type field is required.',
+                        'header_type_in' => 'The selected header type is invalid.',
+                        
+                        'sub_header_string' => 'The sub header must be a valid string.',
+                        'sub_header_max' => 'The sub header may not be greater than 255 characters.',
+                        
+                        'tags_array' => 'The tags must be an array.'
+                    ],
+                    'success' => [
+                        'create' => 'Blog Created Successfully',
+                        'update' => 'Blog Updated Successfully',
+                        'delete' => 'Blog Deleted Successfully'
+                    ],
+                    'error' => [
+                        'not_found' => "Blog not found.",
+                        'validation_failed' => "There were errors in the form submission."
+                    ],
+                    'modal' => [
+                        'delete_header' => "Are you sure you want to delete this Blog?",
+                        'delete_content' => "You won't be able to restore once the information is deleted"
+                    ]
+                ]
+            ],
             'review' => [
                 'new_entity' => 'new review',
                 'header' => "reviews",

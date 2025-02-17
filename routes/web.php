@@ -14,6 +14,7 @@ use App\Http\Controllers\TransportTypeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\Web\BlogController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -87,6 +88,14 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
 
     Route::prefix('/web')->group(function(){
         Route::get('/', [DashboardController::class, 'web'])->name('dashboard_web');
+
+        Route::prefix('/blog')->group(function () {
+            Route::get('/', [BlogController::class, 'index'])->name('dashboard_web_blog');
+            Route::post('/form', [BlogController::class, 'renderForm'])->name('blogs.form');
+            Route::post('/store', [BlogController::class, 'store'])->name('blogs.store');
+            Route::put('/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
+            Route::delete('/destroy/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+        });
         Route::prefix('/review')->group(function () {
             Route::get('/', [ReviewController::class, 'index'])->name('dashboard_web_review');
             Route::post('/form', [ReviewController::class, 'renderForm'])->name('reviews.form');

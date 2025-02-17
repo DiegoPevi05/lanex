@@ -5,6 +5,7 @@ use App\View\Components\WebReviewForm;
 use App\View\Components\WebServiceForm;
 use App\View\Components\WebProductForm;
 use App\View\Components\WebSupplierForm;
+use App\View\Components\WebBlogForm;
 use App\View\Components\TransportTypeForm;
 use App\View\Components\ClientForm;
 use App\View\Components\OrderForm;
@@ -20,6 +21,9 @@ class FormService
         if($typeEntity == "review"){
             // Create the form component instance
             $formComponent = new WebReviewForm($formRequest, $entity);
+        }elseif($typeEntity == "blog"){
+            // Create the form component instance
+            $formComponent = new WebBlogForm($formRequest, $entity);
 
         }elseif($typeEntity == "service"){
 

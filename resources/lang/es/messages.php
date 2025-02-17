@@ -612,6 +612,145 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 'date_content' => 'actualizado en',
                 'actions' => 'acciones',
             ],
+            'blog' => [
+                'new_entity' => 'nuevo blog',
+                'header' => "blogs",
+                'indications' => "seleccione una opción para crear, actualizar o eliminar blogs",
+                'input_placeholder_search' => "buscar blog",
+                'button_label_search' => "buscar",
+                'dropdown' => [
+                    'title' => 'título',
+                    'author' => 'autor',
+                    'category' => 'categoría',
+                    'status' => 'estado'
+                ],
+                'form' => [
+                    'headers' => [
+                        'view' => 'ver blog',
+                        'create' => 'crear blog',
+                        'update' => 'actualizar blog'
+                    ],
+                    'fields' => [
+                        'title' => 'título',
+                        'slug' => 'slug',
+                        'excerpt' => 'extracto',
+                        'content' => 'contenido',
+                        'meta_description' => 'meta descripción',
+                        'meta_keywords' => 'meta palabras clave',
+                        'featured_image' => 'imagen destacada',
+                        'thumbnail_image' => 'imagen miniatura',
+                        'author' => 'autor',
+                        'category' => 'categoría',
+                        'status' => 'estado',
+                        'is_featured' => 'destacado',
+                        'reading_time' => 'tiempo de lectura (minutos)',
+                        'published_at' => 'fecha de publicación',
+                        'seo_title' => 'título seo',
+                        'header_type' => 'tipo de encabezado',
+                        'sub_header' => 'subtítulo',
+                        'tags' => 'etiquetas'
+                    ],
+                    'placeholders' => [
+                        'title' => 'ingrese el título del blog',
+                        'slug' => 'ingrese url amigable',
+                        'excerpt' => 'ingrese un breve resumen',
+                        'content' => 'ingrese el contenido del blog',
+                        'meta_description' => 'ingrese la meta descripción',
+                        'meta_keywords' => 'ingrese las meta palabras clave',
+                        'author' => 'ingrese el nombre del autor',
+                        'category' => 'ingrese la categoría del blog',
+                        'reading_time' => 'tiempo estimado de lectura',
+                        'seo_title' => 'ingrese título optimizado para SEO',
+                        'sub_header' => 'ingrese el subtítulo',
+                        'tags' => 'ingrese las etiquetas'
+                    ],
+                    'status' => [
+                        'draft' => 'Borrador',
+                        'published' => 'Publicado',
+                        'archived' => 'Archivado'
+                    ],
+                    'header_types' => [
+                        'normal' => 'Normal',
+                        'video' => 'Video',
+                        'slideshow' => 'Presentación'
+                    ],
+                    'buttons' => [
+                        'cancel' => 'cancelar',
+                        'create' => 'crear blog',
+                        'update' => 'actualizar blog'
+                    ],
+                    'validations' => [
+                        'title_required' => 'El campo título es obligatorio.',
+                        'title_string' => 'El título debe ser un texto válido.',
+                        'title_max' => 'El título no puede tener más de 255 caracteres.',
+                        
+                        'slug_required' => 'El campo slug es obligatorio.',
+                        'slug_string' => 'El slug debe ser un texto válido.',
+                        'slug_max' => 'El slug no puede tener más de 255 caracteres.',
+                        'slug_unique' => 'Este slug ya está en uso.',
+                        
+                        'excerpt_string' => 'El extracto debe ser un texto válido.',
+                        'excerpt_max' => 'El extracto no puede tener más de 500 caracteres.',
+                        
+                        'content_required' => 'El campo contenido es obligatorio.',
+                        'content_string' => 'El contenido debe ser un texto válido.',
+                        
+                        'meta_description_string' => 'La meta descripción debe ser un texto válido.',
+                        'meta_description_max' => 'La meta descripción no puede tener más de 255 caracteres.',
+                        
+                        'meta_keywords_string' => 'Las meta palabras clave deben ser un texto válido.',
+                        'meta_keywords_max' => 'Las meta palabras clave no pueden tener más de 255 caracteres.',
+                        
+                        'featured_image_image' => 'La imagen destacada debe ser una imagen.',
+                        'featured_image_mimes' => 'La imagen destacada debe ser de tipo: jpeg, png, jpg, gif, webp.',
+                        'featured_image_max' => 'La imagen destacada no puede ser mayor a 2MB.',
+                        
+                        'thumbnail_image_image' => 'La imagen miniatura debe ser una imagen.',
+                        'thumbnail_image_mimes' => 'La imagen miniatura debe ser de tipo: jpeg, png, jpg, gif, webp.',
+                        'thumbnail_image_max' => 'La imagen miniatura no puede ser mayor a 2MB.',
+                        
+                        'author_required' => 'El campo autor es obligatorio.',
+                        'author_string' => 'El autor debe ser un texto válido.',
+                        'author_max' => 'El autor no puede tener más de 255 caracteres.',
+                        
+                        'category_required' => 'El campo categoría es obligatorio.',
+                        'category_string' => 'La categoría debe ser un texto válido.',
+                        'category_max' => 'La categoría no puede tener más de 100 caracteres.',
+                        
+                        'status_required' => 'El campo estado es obligatorio.',
+                        'status_in' => 'El estado seleccionado no es válido.',
+                        
+                        'reading_time_integer' => 'El tiempo de lectura debe ser un número.',
+                        'reading_time_min' => 'El tiempo de lectura debe ser de al menos 1 minuto.',
+                        
+                        'published_at_date' => 'La fecha de publicación debe ser una fecha válida.',
+                        
+                        'seo_title_string' => 'El título SEO debe ser un texto válido.',
+                        'seo_title_max' => 'El título SEO no puede tener más de 255 caracteres.',
+                        
+                        'header_type_required' => 'El tipo de encabezado es obligatorio.',
+                        'header_type_in' => 'El tipo de encabezado seleccionado no es válido.',
+                        
+                        'sub_header_string' => 'El subtítulo debe ser un texto válido.',
+                        'sub_header_max' => 'El subtítulo no puede tener más de 255 caracteres.',
+                        
+                        'tags_array' => 'Las etiquetas deben ser una lista.'
+                    ],
+                    'success' => [
+                        'create' => 'Blog Creado Exitosamente',
+                        'update' => 'Blog Actualizado Exitosamente',
+                        'delete' => 'Blog Eliminado Exitosamente'
+                    ],
+                    'error' => [
+                        'not_found' => "Blog no encontrado.",
+                        'validation_failed' => "Hubo errores en el envío del formulario."
+                    ],
+                    'modal' => [
+                        'delete_header' => "¿Está seguro de que desea eliminar este Blog?",
+                        'delete_content' => "No podrá recuperar la información una vez eliminada"
+                    ]
+                ]
+            ],
             'review' => [
                 'new_entity' => 'nueva reseña',
                 'header' => "reseñas",

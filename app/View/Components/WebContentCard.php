@@ -10,7 +10,7 @@ use App\Models\WebService;
 use App\Models\WebProduct;
 use App\Models\WebSupplier;
 use Illuminate\Support\Str;
-
+use App\Models\WebBlog;
 class WebContentCard extends Component
 {
     /**
@@ -65,6 +65,15 @@ class WebContentCard extends Component
             $this->deleteRoute = $supplier->getRoutes()['destroy'];
             $this->deleteMessages = $supplier->getHelperMessages();
 
+        }else if($data instanceof WebBlog){
+
+            $blog = $data;
+            $this->id = (string)$blog->id;  // Convert ID to string
+            $this->type = $blog->getType();  // Call on the instance
+            $this->preview = $blog->title;  // Limit preview to 50 characters
+            $this->updated = $blog->updated_at->format('Y-m-d');  // Format the date
+            $this->deleteRoute = $blog->getRoutes()['destroy'];
+            $this->deleteMessages = $blog->getHelperMessages();
         }
     }
 
