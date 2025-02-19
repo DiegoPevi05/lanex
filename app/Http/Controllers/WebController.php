@@ -8,6 +8,7 @@ use App\Models\WebService;
 use App\Models\WebSupplier;
 use App\Models\WebReview;
 use App\Models\WebProduct;
+use App\Models\WebBlog;
 use App\Notifications\CustomEmailNotification;
 use App\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Log;
@@ -51,10 +52,21 @@ class WebController extends Controller
 
         $reviews = WebReview::all();
 
+        $blogs = WebBlog::orderBy('created_at', 'desc')->limit(5)->get();
+
+        //dd($blogs);
+
         // Find the service by ID or throw a 404 error if not found
         $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
 
-        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'reviews' => $reviews]);
+        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'blogs' => $blogs]);
+    }
+
+    public function blog($id)
+    {
+        $blog = WebBlog::findOrFail($id);
+
+        return view('client.blog', ['blog' => $blog]);
     }
 
     public function about()

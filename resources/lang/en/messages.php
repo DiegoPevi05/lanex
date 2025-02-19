@@ -119,6 +119,15 @@ return [
             'header' => 'Testimonials',
             'title' => 'Our Clients Speak for Us',
         ],
+        'blogs' => [
+            'title' => 'Our Latest News',
+            'subtitle' => 'Discover the latest news and insights from our team',
+            'author' => 'Author',
+            'published_at' => 'Published at',
+            'reading_time' => 'Reading time',
+            'minutes' => 'minutes',
+            'tags' => 'Tags',
+        ],
 'questions' => [
     'title' => 'Frequently Asked Questions',
     'questions' => [
