@@ -148,9 +148,9 @@
                     blogDiv.classList.add('col-span-3', 'sm:col-span-2', 'xl:col-span-1', 'min-h-[400px]','bg-white', 'border-2', 'border-gray-200', 'shadow-md', 'rounded-lg', 'flex', 'flex-col', 'items-start', 'justify-start', 'cursor-pointer', 'group');
 
                     blogDiv.innerHTML = `
-                        <a href="/blogs/${blog.id}" class="w-full h-auto">
+                        <a href="/blog/${blog.id}" class="w-full h-auto">
                             <div class="w-full h-[150px] overflow-hidden">
-                                <img src="/storages/${blog.thumbnail_image}" alt="icon" class="w-full h-auto object-cover transition-all duration-300 opacity-50 group-hover:opacity-100 group-hover:scale-105" />
+                                <img src="/storage/${blog.thumbnail_image}" alt="icon" class="w-full h-auto object-cover transition-all duration-300 opacity-50 group-hover:opacity-100 group-hover:scale-105" />
                             </div>
                         </a>
                         <div class="w-full h-full flex flex-col items-start justify-start p-2">

@@ -88,15 +88,15 @@ return [
     ],
     'blogs' => [
         'hero' => [
-            'header' => 'Our Latest News',
+            'header' => 'Our Latest News and Insights',
             'title' => 'Discover the latest news and insights from our team',
-            'input_placeholder' => 'Blog Content',
+            'input_placeholder' => 'Search by blog content',
             'input_button' => 'Search',
         ],
         'blogs_section' => [
-            'header' => 'Our Latest News',
-            'title' => 'Discover the latest news and insights from our team',
-            'empty_content' => 'Currently no Blogs to show'
+            'header' => 'Be in touch with the latest news',
+            'title' => 'Check out any information about our services and products',
+            'empty_content' => 'Currently no Blogs to show' 
         ]
     ],
     'home' => [

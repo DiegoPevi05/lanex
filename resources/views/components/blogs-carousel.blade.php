@@ -4,7 +4,7 @@
                 <h2 class="font-bold text-primary text-center text-2xl">
                     {{__('messages.home.blogs.title')}}
                 </h2>
-                <h1 class="text-primary-dark font-bold text-center text-5xl">
+                <h1 class="text-primary-dark font-bold text-center text-xl sm:text-5xl">
                     {{__('messages.home.blogs.subtitle')}}
                 </h1>
                 <div class="carousel-project-images">

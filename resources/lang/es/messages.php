@@ -85,6 +85,19 @@ return [
         'navigation' => 'Navegación',
         'projects_send' => 'Servicios'
     ],
+    'blogs' => [
+        'hero' => [
+            'header' => 'Nuestras Últimas Noticias y Insights',
+            'title' => 'Descubre las últimas noticias y insights de nuestro equipo',
+            'input_placeholder' => 'Buscar por contenido del blog',
+            'input_button' => 'Buscar',
+        ],
+        'blogs_section' => [
+            'header' => 'Mantente en contacto con las últimas noticias',
+            'title' => 'Revisa cualquier información sobre nuestros servicios y productos',
+            'empty_content' => 'Actualmente no hay blogs para mostrar' 
+        ]
+    ],
     'home' => [
         'hero' => [
             'header' => 'SOMOS TU MEJOR ALIADO EN OPERACIONES LOGISTICAS',
@@ -118,6 +131,15 @@ return [
         'reviews' => [
             'header' => 'Testimonios',
             'title' => 'Nuestros Clientes Hablan por Nosotros',
+        ],
+        'blogs' => [
+            'title' => 'Nuestras Últimas Noticias',
+            'subtitle' => 'Descubre las últimas noticias y insights de nuestro equipo',
+            'author' => 'Autor',
+            'published_at' => 'Publicado el',
+            'reading_time' => 'Tiempo de lectura',
+            'minutes' => 'minutos',
+            'tags' => 'Etiquetas',
         ],
         'questions' => [
             'title' => 'Preguntas Frecuentes',
