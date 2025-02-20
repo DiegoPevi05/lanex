@@ -57,6 +57,10 @@
                     aria-label="{{ __('messages.aria_labels.suppliers') }}"
                     title="{{ __('messages.titles.suppliers') }}"
                     ><label class="font-bold {{ request()->routeIs('suppliers') || request()->routeIs('supplier') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.suppliers') }}</label></a>
+                <a href="{{ route('blogs')  }}"
+                    aria-label="{{ __('messages.aria_labels.blogs') }}"
+                    title="{{ __('messages.titles.blogs') }}"
+                    ><label class="font-bold {{ request()->routeIs('blogs') || request()->routeIs('blog') ? 'text-primary' : '' }} text-nowrap hover:text-primary duration-300 cursor-pointer">{{ __('messages.navbar.blogs') }}</label></a>
                 <a href="{{ route('contact')  }}"
                     aria-label="{{ __('messages.aria_labels.contactus') }}"
                     title="{{ __('messages.titles.contactus') }}"
@@ -107,6 +111,10 @@
                 aria-label="{{ __('messages.aria_labels.suppliers') }}"
                 title="{{ __('messages.titles.suppliers') }}"
                 ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.suppliers') }}</h4></a>
+            <a href="{{ route('blogs')  }}"
+                aria-label="{{ __('messages.aria_labels.blogs') }}"
+                title="{{ __('messages.titles.blogs') }}"
+                ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.blogs') }}</h4></a>
             <a href="{{ route('contact')  }}"
                 aria-label="{{ __('messages.aria_labels.contactus') }}"
                 title="{{ __('messages.titles.contactus') }}"

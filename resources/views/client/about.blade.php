@@ -95,4 +95,5 @@
         href="{{ route('quote') }}"
     />
     <x-services-section />
+    <x-blogs-carousel :blogs="$blogs" />
 @endsection

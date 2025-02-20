@@ -73,6 +73,7 @@ return [
         'aboutus' => 'About Us',
         'services' => 'Services',
         'suppliers' => 'Suppliers',
+        'blogs' => 'Blogs',
         'contact' => 'Contact Us',
     ],
     'footer' => [
@@ -84,6 +85,19 @@ return [
         'developed_by' => 'Developed by',
         'navigation' => 'Navigation',
         'projects_send' => 'Services'
+    ],
+    'blogs' => [
+        'hero' => [
+            'header' => 'Our Latest News',
+            'title' => 'Discover the latest news and insights from our team',
+            'input_placeholder' => 'Blog Content',
+            'input_button' => 'Search',
+        ],
+        'blogs_section' => [
+            'header' => 'Our Latest News',
+            'title' => 'Discover the latest news and insights from our team',
+            'empty_content' => 'Currently no Blogs to show'
+        ]
     ],
     'home' => [
         'hero' => [

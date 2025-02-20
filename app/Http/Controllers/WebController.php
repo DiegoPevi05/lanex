@@ -62,6 +62,37 @@ class WebController extends Controller
         return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'blogs' => $blogs]);
     }
 
+    public function getBlogs(Request $request)
+    {
+        // Get the current page from the query parameters, defaulting to 1
+        $page = $request->query('page_blogs', 1);
+
+        // Get the supplier_name filter from the request
+        $blogContent = $request->query('blog_content', null);
+
+        // Base query for suppliers
+        $query = WebBlog::query();
+
+        // Apply case-insensitive name filter if supplier_name is present
+        if ($blogContent) {
+            $query->whereRaw('LOWER(content) LIKE ?', ['%' . strtolower($blogContent) . '%']);
+        }
+
+        // Paginate suppliers with a limit of 6 items per page
+        $blogs = $query->paginate(6, ['*'], 'page', $page);
+
+        // Append custom query parameters for pagination links
+        $blogs->appends([
+            'page_blogs' => $page,
+            'blog_content' => $blogContent,
+        ]);
+
+        // Return a JSON response with the paginated suppliers
+        return response()->json([
+            'blogs' => $blogs,
+        ]);
+    }
+
     public function blog($id)
     {
         $blog = WebBlog::findOrFail($id);
@@ -69,10 +100,16 @@ class WebController extends Controller
         return view('client.blog', ['blog' => $blog]);
     }
 
+    public function blogs()
+    {
+        return view('client.blogs');
+    }
+
     public function about()
     {
         $services = WebService::all();
-        return view('client.about', ['services' => $services]);
+        $blogs = WebBlog::orderBy('created_at', 'desc')->limit(5)->get();
+        return view('client.about', ['services' => $services, 'blogs' => $blogs]);
     }
 
     public function services()
@@ -80,8 +117,8 @@ class WebController extends Controller
 
         // Find the service by ID or throw a 404 error if not found
         $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
-
-        return view('client.services',['suppliers' => $suppliers]);
+        $blogs = WebBlog::orderBy('created_at', 'desc')->limit(5)->get();
+        return view('client.services',['suppliers' => $suppliers, 'blogs' => $blogs]);
     }
 
     public function service($id)

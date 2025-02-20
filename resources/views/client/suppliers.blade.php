@@ -11,8 +11,8 @@
 
                 <div class="w-full h-auto flex flex-col justify-center items-center gap-y-4 animation-element slide-in-up">
                     <div class="w-full h-auto flex flex-col gap-y-2 justify-center items-start lg:items-center">
-                        <h5 class="font-bold text-left lg:text-center">{{ __('messages.suppliers.hero.header') }}</h5>
-                        <h1 class="font-bold text-left lg:text-center">{{ __('messages.suppliers.hero.title') }}</h1>
+                        <h5 class="font-bold text-left lg:text-center">{{ __('messages.blogs.hero.header') }}</h5>
+                        <h1 class="font-bold text-left lg:text-center">{{ __('messages.blogs.hero.title') }}</h1>
                     </div>
                 </div>
                 <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1 bg-primary-dark sm:bg-white p-3 sm:p-6 rounded-xl animation-element slide-in-up" >
