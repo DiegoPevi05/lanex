@@ -70,16 +70,46 @@
         <!-- Content Field -->
         <div class="mb-4">
             <label for="content" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.content') }}</label>
-            <div class="flex flex-row justify-start gap-x-2">
-                <input type="text" id="previewContent" name="previewContent" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                    value="{{ old('previewContent', $blog->previewContent ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.preview_content') }}" 
-                {{$formRequest === "view" ? "disabled" : ""}}>
-                <button type="button" class="px-4 py-2 bg-primary text-white duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
-                    {{ __('messages.dashboard.web.blog.form.buttons.preview') }}
+            <div class="w-full flex flex-col justify-start gap-x-2">
+                <button id="add-blog-content-button" type="button" class="ml-auto w-fit px-4 py-2 bg-primary text-white duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
+                    {{ __('messages.dashboard.web.blog.form.placeholders.add_content') }}
                 </button>
+                <input type="text" id="previewContentHeader" name="previewContentHeader" class="ml-auto mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
+                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content_preview_header') }}" 
+                    {{$formRequest === "view" ? "disabled" : ""}}>
+                <textarea id="previewContentBody" name="previewContentBody" rows="10" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
+                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content_preview_content') }}" 
+                    {{$formRequest === "view" ? "disabled" : ""}}></textarea>
             </div>
-            <div class="mt-4">
+            <label for="listContent" class="mt-4 block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.placeholders.list_content') }}</label>
+            <div id="blog-content-container" class="mt-4 flex flex-col justify-start gap-y-2">
+                @if($blog && isset($blog->content) && count($blog->content) > 0)
+                    @foreach($blog->content as $index => $content)
+                        <div id="blog-content-item-{{$index}}" class="blog-content-item relative w-full flex flex-col justify-start gap-x-2 border-2 border-gray-light rounded-xl p-4">
+                            <button id="blog-content-item-delete-button-{{$index}}" 
+                                    onclick="deleteBlogContent({{$index}})"
+                                    class="w-8 h-8 top-1 right-1 absolute p-1 bg-primary text-white duration-300 hover:bg-primary-dark rounded-full active:scale-95 capitalize">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text">
+                                    <path d="M18 6 6 18"/>
+                                    <path d="m6 6 12 12"/>
+                                </svg>
+                            </button>
+                            @if($content['header'])
+                            <label class="block text-sm font-bold text-secondary-dark capitalize">
+                                {{ $content['header'] }}
+                                </label>
+                            @endif
+                            @if($content['content'])
+                                <label class="block text-sm font-bold text-secondary-dark capitalize">
+                                    {{ \Illuminate\Support\Str::limit($content['content'], 100, '...') }}
+                                </label>
+                            @endif
+                            
+                            <input type="hidden" name="blogs[{{$index}}][header]" value="{{ $content['header'] }}">
+                            <input type="hidden" name="blogs[{{$index}}][content]" value="{{ $content['content'] }}">
+                        </div>
+                    @endforeach
+                @endif
             </div>
              <span class="text-primary font-bold text-xs error-message" id="error-content"></span>
         </div>

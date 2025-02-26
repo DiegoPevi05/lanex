@@ -211,6 +211,12 @@
                         attachIconImageUpdate();
                     }
 
+                    if(typeEntity == "blog"){
+                        const addBlogContentButton = currentPage.querySelector('#add-blog-content-button');
+                        addBlogContentButton.addEventListener('click', function(e){
+                            addBlogContentFromInput();
+                        });
+                    }
 
                      // Check for errors and populate error messages
                     @if(session('errors'))
@@ -614,6 +620,72 @@
         // Update the image source to the selected option or default to ambulance
         const selectedIcon = iconSelect.value;
         iconImage.src = selectedIcon ? '/storage'+selectedIcon : '/storage/images/svgs/ambulance.svg';
+    }
+
+
+    function addBlogContentFromInput(){
+        const blogContentContainer = document.getElementById('blog-content-container');
+        const blogContentHeaderInput = document.getElementById('previewContentHeader');
+        const blogContentBodyInput = document.getElementById('previewContentBody');
+
+        if(!blogContentHeaderInput.value || !blogContentBodyInput.value){
+            return;
+        }
+
+        createBlogContentItem(blogContentHeaderInput.value, blogContentBodyInput.value);
+    }
+
+    function deleteBlogContent(blogIndex){
+        const blogContentItem = document.getElementById(`blog-content-item-${blogIndex}`);
+        blogContentItem.remove();
+    }
+
+    function createBlogContentItem(title, content){
+        const blogContentContainer = document.getElementById('blog-content-container');
+        const blogIndex = blogContentContainer.querySelectorAll('.blog-content-item').length;
+
+        const blogContentItem = document.createElement('div');
+        blogContentItem.id = `blog-content-item-${blogIndex}`;
+        blogContentItem.classList.add('blog-content-item','relative', 'w-full', 'flex', 'flex-col', 'justify-start', 'gap-x-2', 'border-2', 'border-gray-light', 'rounded-xl', 'p-4');
+
+        const deleteButton = document.createElement('button');
+        deleteButton.id = `blog-content-item-delete-button-${blogIndex}`;
+        deleteButton.classList.add('w-8', 'h-8', 'top-1', 'right-1', 'absolute', 'p-1', 'bg-primary', 'text-white', 'duration-300', 'hover:bg-primary-dark', 'rounded-full', 'active:scale-95', 'capitalize');
+        deleteButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        `;
+
+        deleteButton.onclick = function() {
+            deleteBlogContent(blogIndex);
+        };
+        
+        blogContentItem.appendChild(deleteButton);
+
+        const titleLabel = document.createElement('label');
+        titleLabel.classList.add('block', 'text-sm', 'font-bold', 'text-secondary-dark', 'capitalize');
+        titleLabel.innerText = title;
+        blogContentItem.appendChild(titleLabel);
+
+        const contentLabel = document.createElement('label');
+        contentLabel.classList.add('block', 'text-sm', 'font-bold', 'text-secondary-dark', 'capitalize');
+        contentLabel.innerText = content.substring(0, 100) + '...';
+        blogContentItem.appendChild(contentLabel);
+
+        const inputTitle = document.createElement('input');
+        inputTitle.type = 'hidden';
+        inputTitle.name = `blogs[${blogIndex}][header]`;
+        inputTitle.value = title;
+        blogContentItem.appendChild(inputTitle);
+
+        const inputContent = document.createElement('input');
+        inputContent.type = 'hidden';
+        inputContent.name = `blogs[${blogIndex}][content]`;
+        inputContent.value = content;
+        blogContentItem.appendChild(inputContent);
+        
+        
+
+        blogContentContainer.appendChild(blogContentItem);
     }
 
 
