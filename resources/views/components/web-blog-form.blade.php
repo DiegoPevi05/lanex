@@ -70,10 +70,18 @@
         <!-- Content Field -->
         <div class="mb-4">
             <label for="content" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.content') }}</label>
-            <textarea id="content" name="content" rows="6" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content') }}" 
-                {{$formRequest === "view" ? "disabled" : ""}}>{{ old('content', $blog->content ?? '') }}</textarea>
-            <span class="text-primary font-bold text-xs error-message" id="error-content"></span>
+            <div class="flex flex-row justify-start gap-x-2">
+                <input type="text" id="previewContent" name="previewContent" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
+                    value="{{ old('previewContent', $blog->previewContent ?? '') }}" 
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.preview_content') }}" 
+                {{$formRequest === "view" ? "disabled" : ""}}>
+                <button type="button" class="px-4 py-2 bg-primary text-white duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
+                    {{ __('messages.dashboard.web.blog.form.buttons.preview') }}
+                </button>
+            </div>
+            <div class="mt-4">
+            </div>
+             <span class="text-primary font-bold text-xs error-message" id="error-content"></span>
         </div>
 
         <!-- Author Field -->

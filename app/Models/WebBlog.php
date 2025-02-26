@@ -59,7 +59,7 @@ class WebBlog extends Model
             'title' => $validatedFields['title'] ?? null,
             'slug' => $validatedFields['slug'] ?? null,
             'excerpt' => $validatedFields['excerpt'] ?? null,
-            'content' => $validatedFields['content'] ?? null,
+            'content' => $validatedFields['content'] ?? [],
             'meta_description' => $validatedFields['meta_description'] ?? null,
             'meta_keywords' => $validatedFields['meta_keywords'] ?? null,
             'featured_image' => $processImage('featured_image', $entity ? $entity->featured_image : null),
@@ -83,7 +83,7 @@ class WebBlog extends Model
             'title' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'slug' => $isUpdate ? 'sometimes|required|string|max:255|unique:web_blogs,slug' : 'required|string|max:255|unique:web_blogs,slug',
             'excerpt' => 'nullable|string|max:500',
-            'content' => $isUpdate ? 'sometimes|required|string' : 'required|string',
+            'content' => $isUpdate ? 'sometimes|required|array' : 'required|array',
             'meta_description' => 'nullable|string|max:255',
             'meta_keywords' => 'nullable|string|max:255',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -117,7 +117,7 @@ class WebBlog extends Model
             'excerpt.max' => __('messages.dashboard.web.blog.form.validations.excerpt_max'),
 
             'content.required' => __('messages.dashboard.web.blog.form.validations.content_required'),
-            'content.string' => __('messages.dashboard.web.blog.form.validations.content_string'),
+            'content.array' => __('messages.dashboard.web.blog.form.validations.content_array'),
 
             'meta_description.string' => __('messages.dashboard.web.blog.form.validations.meta_description_string'),
             'meta_description.max' => __('messages.dashboard.web.blog.form.validations.meta_description_max'),
