@@ -168,12 +168,12 @@
                             <p class="text-gray-500">
                                 ${blog.excerpt}
                             </p>
-                            
-                            <span class="w-full flex flex-row flex-wrap items-center justify-between">
-                                ${blog.tags.map(tag => `<p class="text-gray-500">${tag}</p>`).join('')}
+
+                            <span class="mt-auto w-full flex flex-row flex-wrap items-center justify-between">
+                                ${blog.tags.map(tag => `<p class="bg-primary text-white px-2 py-1 rounded-full text-xs">${tag}</p>`).join('')}
                             </span>
                             <p class="text-gray-500 mt-auto">
-                                {{ __('messages.home.blogs.author') }} <strong>${blog.author}</strong> 
+                                {{ __('messages.home.blogs.author') }} <strong>${blog.author}</strong>
                             </p>
                         </div>
                     `;

@@ -19,7 +19,6 @@ class WebProduct extends Model
         'image',
         'stars',
         'description',
-        'EAN'
     ];
 
     public static function getFillableFields($validatedFields, Request $request, WebProduct $entity = null)
@@ -45,7 +44,6 @@ class WebProduct extends Model
             'image' => $processImage('image', $entity ? $entity->image : null),
             'stars' => $validatedFields['stars'] ?? null,
             'description' => $validatedFields['description'] ?? null,
-            'EAN' => $validatedFields['EAN'] ?? null,
         ];
 
         // Sync suppliers if the suppliers field is provided in the request
@@ -94,7 +92,6 @@ class WebProduct extends Model
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'stars' => $isUpdate ? 'sometimes|required|integer|min:1|max:5' : 'required|integer|min:1|max:5',
             'description' => $isUpdate ? 'sometimes|required|string|max:600' : 'required|string|max:600',
-            'EAN' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
         ];
     }
 
@@ -117,10 +114,6 @@ class WebProduct extends Model
             'description.required' => __('messages.dashboard.web.product.form.validations.description_required'),
             'description.string' => __('messages.dashboard.web.product.form.validations.description_string'),
             'description.max' => __('messages.dashboard.web.product.form.validations.description_max'),
-
-            'EAN.required' => __('messages.dashboard.web.product.form.validations.ean_required'),
-            'EAN.string' => __('messages.dashboard.web.product.form.validations.ean_string'),
-            'EAN.max' => __('messages.dashboard.web.product.form.validations.ean_max'),
         ];
     }
 
@@ -203,7 +196,6 @@ class WebProduct extends Model
             'stars' => $this->stars,
             'description' => $this->description,
             'image' => $this->image,
-            'EAN' => $this->EAN,
         ]);
     }
 
@@ -223,7 +215,6 @@ class WebProduct extends Model
             'image' => $data['image'],
             'stars' => $data['stars'],
             'description' => $data['description'],
-            'EAN' => $data['EAN'],
         ]);
     }
 

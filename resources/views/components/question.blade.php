@@ -11,7 +11,7 @@
         </div>
     </div>
     <div id="answerContainer_{{$id}}" class="w-full px-none sm:px-6 xl:px-12 border-b-2 border-gray-light pb-2 sm:py-4 transition-all duration-300 overflow-y-scroll h-[0px] no-scroll-bar">
-        <p id="answer_{{$id}}" class="w-full h-full transition-all duration-300 opacity-0">
+        <p id="answer_{{$id}}" class="w-full h-full transition-all duration-300 opacity-0 text-lg/6">
             {!! $answer !!}
         </p>
     </div>

@@ -15,7 +15,6 @@ class WebBlog extends Model
 
     protected $fillable = [
         'title',
-        'slug',                  // URL-friendly version of the title
         'excerpt',               // Short summary of the content
         'content',               // Main content
         'meta_description',      // SEO meta description
@@ -37,9 +36,15 @@ class WebBlog extends Model
 
     protected $casts = [
         'is_featured' => 'boolean',
-        'tags' => 'array',
         'published_at' => 'datetime',
     ];
+
+    public static function castFields($entity)
+    {
+        $entity->tags = isset($entity->tags) ? json_decode($entity->tags, true) : null;
+        $entity->content = isset($entity->content) ? json_decode($entity->content, true) : null;
+    }
+
 
     public static function getFillableFields($validatedFields, Request $request, WebBlog $entity = null)
     {
@@ -57,9 +62,8 @@ class WebBlog extends Model
 
         return [
             'title' => $validatedFields['title'] ?? null,
-            'slug' => $validatedFields['slug'] ?? null,
             'excerpt' => $validatedFields['excerpt'] ?? null,
-            'content' => $validatedFields['content'] ?? [],
+            'content' =>  isset($validatedFields['content']) ? json_encode($validatedFields['content']) : json_encode([]),
             'meta_description' => $validatedFields['meta_description'] ?? null,
             'meta_keywords' => $validatedFields['meta_keywords'] ?? null,
             'featured_image' => $processImage('featured_image', $entity ? $entity->featured_image : null),
@@ -73,7 +77,7 @@ class WebBlog extends Model
             'seo_title' => $validatedFields['seo_title'] ?? null,
             'header_type' => $validatedFields['header_type'] ?? 'normal',
             'sub_header' => $validatedFields['sub_header'] ?? null,
-            'tags' => $validatedFields['tags'] ?? [],
+            'tags' => isset($validatedFields['tags']) ? json_encode($validatedFields['tags']) : json_encode([]),
         ];
     }
 
@@ -81,7 +85,6 @@ class WebBlog extends Model
     {
         return [
             'title' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'slug' => $isUpdate ? 'sometimes|required|string|max:255|unique:web_blogs,slug' : 'required|string|max:255|unique:web_blogs,slug',
             'excerpt' => 'nullable|string|max:500',
             'content' => $isUpdate ? 'sometimes|required|array' : 'required|array',
             'meta_description' => 'nullable|string|max:255',
@@ -108,11 +111,6 @@ class WebBlog extends Model
             'title.string' => __('messages.dashboard.web.blog.form.validations.title_string'),
             'title.max' => __('messages.dashboard.web.blog.form.validations.title_max'),
 
-            'slug.required' => __('messages.dashboard.web.blog.form.validations.slug_required'),
-            'slug.string' => __('messages.dashboard.web.blog.form.validations.slug_string'),
-            'slug.max' => __('messages.dashboard.web.blog.form.validations.slug_max'),
-            'slug.unique' => __('messages.dashboard.web.blog.form.validations.slug_unique'),
-
             'excerpt.string' => __('messages.dashboard.web.blog.form.validations.excerpt_string'),
             'excerpt.max' => __('messages.dashboard.web.blog.form.validations.excerpt_max'),
 
@@ -121,14 +119,14 @@ class WebBlog extends Model
 
             'meta_description.string' => __('messages.dashboard.web.blog.form.validations.meta_description_string'),
             'meta_description.max' => __('messages.dashboard.web.blog.form.validations.meta_description_max'),
-            
+
             'meta_keywords.string' => __('messages.dashboard.web.blog.form.validations.meta_keywords_string'),
             'meta_keywords.max' => __('messages.dashboard.web.blog.form.validations.meta_keywords_max'),
 
             'featured_image.image' => __('messages.dashboard.web.blog.form.validations.featured_image_image'),
             'featured_image.mimes' => __('messages.dashboard.web.blog.form.validations.featured_image_mimes'),
             'featured_image.max' => __('messages.dashboard.web.blog.form.validations.featured_image_max'),
-            
+
             'thumbnail_image.image' => __('messages.dashboard.web.blog.form.validations.thumbnail_image_image'),
             'thumbnail_image.mimes' => __('messages.dashboard.web.blog.form.validations.thumbnail_image_mimes'),
             'thumbnail_image.max' => __('messages.dashboard.web.blog.form.validations.thumbnail_image_max'),
@@ -165,19 +163,23 @@ class WebBlog extends Model
 
     public static function getSuccessMessage($action)
     {
-        return [
+        $messages =  [
             'store' => __('messages.dashboard.web.blog.form.success.store'),
             'update' => __('messages.dashboard.web.blog.form.success.update'),
             'destroy' => __('messages.dashboard.web.blog.form.success.destroy'),
         ];
+
+        return isset($messages[$action]) ? __($messages[$action]) : '';
     }
 
     public static function getErrorMessage($action)
     {
-        return [
+        $messages =  [
             'not_found' => __('messages.dashboard.web.blog.form.error.not_found'),
             'validation_failed' => __('messages.dashboard.web.blog.form.error.validation_failed'),
         ];
+
+        return isset($messages[$action]) ? __($messages[$action]) : '';
     }
 
     public static function getHelperMessages()
@@ -196,10 +198,6 @@ class WebBlog extends Model
                 'value' => 'title',
             ],
             [
-                'label' => __('messages.dashboard.web.blog.form.fields.slug'),
-                'value' => 'slug',
-            ],
-            [
                 'label' => __('messages.dashboard.web.blog.form.fields.author'),
                 'value' => 'author',
             ],
@@ -211,7 +209,7 @@ class WebBlog extends Model
                 'label' => __('messages.dashboard.web.blog.form.fields.status'),
                 'value' => 'status',
             ],
-            
+
         ];
     }
 
@@ -232,7 +230,7 @@ class WebBlog extends Model
             return "dashboard_web_blog";
         }
         return "dashboard_web_blog";
-    } 
+    }
 
     public static function getType(): string
     {

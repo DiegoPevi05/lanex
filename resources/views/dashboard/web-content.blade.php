@@ -216,12 +216,48 @@
                         addBlogContentButton.addEventListener('click', function(e){
                             addBlogContentFromInput();
                         });
+
+                        const addTagButton = currentPage.querySelector('#add-tag-button');
+                        addTagButton.addEventListener('click', function(e){
+                            addTagFromInput();
+                        });
                     }
+
+                    @if(session()->has('_old_input'))
+                        const oldInputs = @json(session('_old_input'));
+
+                        for (const [field, value] of Object.entries(oldInputs)) {
+
+                            let form = null;
+
+                            if(typeEntity == "service"){
+                                form = document.querySelector('#service-form');
+                            }else if(typeEntity == "supplier"){
+                                form = document.querySelector('#supplier-form');
+                            }else if(typeEntity == "product"){
+                                form = document.querySelector('#product-form');
+                            }else if(typeEntity == "blog"){
+                                form = document.querySelector('#blog-form');
+                            }
+
+                            const inputField = form.querySelector(`[name="${field}"]`);
+                            if (inputField) {
+                                // Handle different input types
+                                if (inputField.type === "checkbox" || inputField.type === "radio") {
+                                    inputField.checked = inputField.value == value;
+                                } else {
+                                    inputField.value = value;
+                                }
+                            }
+                        }
+                        fillCustomFields(typeEntity,oldInputs);
+
+                    @endif
 
                      // Check for errors and populate error messages
                     @if(session('errors'))
                         const errors = @json(session('errors')->toArray());
-                        console.log(errors);
+
                         for (const [field, message] of Object.entries(errors)) {
                             const errorSpan = document.getElementById(`error-${field}`);
                             if (errorSpan) {
@@ -264,6 +300,35 @@
             document.dispatchEvent(event);
         }
 
+
+    function fillCustomFields(typeEntity,oldInputs){
+
+        if(typeEntity == "blog"){
+            const blogContent = oldInputs['content'];
+
+
+            if(blogContent){
+                const blogContentContainer = document.getElementById('blog-content-container');
+                blogContentContainer.innerHTML = '';
+
+                blogContent.forEach((content,index) => {
+                    createBlogContentItem(content.header, content.content);
+                });
+            }
+
+            const tags = oldInputs['tags'];
+
+            if(tags){
+                const tagsContainer = document.getElementById('tags-container');
+                tagsContainer.innerHTML = '';
+
+                tags.forEach((tag,index) => {
+                    createTagItem(tag);
+                });
+            }
+        }
+
+    }
 
 
 
@@ -624,7 +689,6 @@
 
 
     function addBlogContentFromInput(){
-        const blogContentContainer = document.getElementById('blog-content-container');
         const blogContentHeaderInput = document.getElementById('previewContentHeader');
         const blogContentBodyInput = document.getElementById('previewContentBody');
 
@@ -658,7 +722,7 @@
         deleteButton.onclick = function() {
             deleteBlogContent(blogIndex);
         };
-        
+
         blogContentItem.appendChild(deleteButton);
 
         const titleLabel = document.createElement('label');
@@ -673,20 +737,75 @@
 
         const inputTitle = document.createElement('input');
         inputTitle.type = 'hidden';
-        inputTitle.name = `blogs[${blogIndex}][header]`;
+        inputTitle.name = `content[${blogIndex}][header]`;
         inputTitle.value = title;
         blogContentItem.appendChild(inputTitle);
 
         const inputContent = document.createElement('input');
         inputContent.type = 'hidden';
-        inputContent.name = `blogs[${blogIndex}][content]`;
+        inputContent.name = `content[${blogIndex}][content]`;
         inputContent.value = content;
         blogContentItem.appendChild(inputContent);
-        
-        
+
+
 
         blogContentContainer.appendChild(blogContentItem);
     }
+
+
+        function addTagFromInput(){
+            const tagContentInput = document.getElementById('previewTag');
+
+            if(!tagContentInput.value){
+                return;
+            }
+
+            createTagItem(tagContentInput.value);
+        }
+
+        function deleteTag(tagIndex){
+            const tagItem = document.getElementById(`tag-item-${tagIndex}`);
+            tagItem.remove();
+        }
+
+        function createTagItem(tag){
+
+            const tagsContainer = document.getElementById('tags-container');
+            const tagIndex = tagsContainer.querySelectorAll('.tag-item').length;
+
+            const tagItem = document.createElement('span');
+            tagItem.id = `tag-item-${tagIndex}`;
+            tagItem.classList.add('tag-item', 'flex', 'flex-row', 'w-fit', 'h-auto', 'items-center', 'px-3', 'py-1', 'bg-primary', 'text-white', 'rounded-full', 'gap-x-2');
+
+            tagItem.innerHTML = `${tag}`
+
+
+            const deleteButton = document.createElement('button');
+            deleteButton.id = `tag-item-delete-button-${tagIndex}`;
+
+
+            deleteButton.classList.add('w-6', 'h-6', 'p-1', 'bg-primary', 'text-white', 'duration-300', 'hover:bg-primary-dark', 'rounded-full', 'active:scale-95', 'capitalize');
+
+            deleteButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            `;
+
+
+            deleteButton.onclick = function() {
+                deleteTag(tagIndex);
+            };
+
+            tagItem.appendChild(deleteButton);
+
+            const inputTag = document.createElement('input');
+            inputTag.type = 'hidden';
+            inputTag.name = `tags[${tagIndex}]`;
+            inputTag.value = tag;
+            tagItem.appendChild(inputTag);
+
+            tagsContainer.appendChild(tagItem);
+
+        }
 
 
     </script>

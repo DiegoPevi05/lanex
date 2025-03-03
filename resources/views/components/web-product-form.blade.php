@@ -45,13 +45,6 @@
             <span class="text-primary font-bold text-xs error-message" id="error-stars"></span>
         </div>
 
-        <!-- Name Field -->
-        <div class="mb-4 mt-4">
-            <label for="EAN" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.product.form.fields.EAN") }}</label>
-            <input type="text" id="EAN" name="EAN" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" value="{{ old('EAN', $product->EAN ?? '') }}" placeholder="{{ __("messages.dashboard.web.product.form.placeholders.EAN") }}" {{$formRequest === "view" ? "disabled" : ""}}>
-            <span class="text-primary font-bold text-xs error-message" id="error-EAN"></span>
-        </div>
-
         <!-- Suppliers -->
         <div class="mb-4 mt-4">
             <div class="w-full h-auto flex flex-col justify-start">

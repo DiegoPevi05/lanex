@@ -30,10 +30,21 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link h-full w-full"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 </a>
             </span>
-            <p class="text-left text-xl lg:text-center text-gray-500 capitalize">{{ $blog->content }}</p>
-
+            <span class="w-full h-auto flex flex-row flex-wrap justify-start items-start gap-2">
+                @if(isset($blog->tags) && is_array($blog->tags) && count($blog->tags) > 0)
+                    @foreach($blog->tags as $tag)
+                        <span class="text-left text-xs text-center text-white bg-primary rounded-full px-2 py-1">{{ $tag }}</span>
+                    @endforeach
+                @endif
+            </span>
+            @if(isset($blog->content) && is_array($blog->content) && count($blog->content) > 0)
+                @foreach($blog->content as $contentItem)
+                    <p class="text-left text-xl lg:text-center text-gray-500 capitalize">{{ $contentItem['header'] }}</p>
+                    <p class="text-left text-lg lg:text-center text-gray-500">{{ $contentItem['content'] }}</p>
+                @endforeach
+            @endif
             <p class="text-gray-500 mt-auto">
-                {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong> 
+                {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong>
             </p>
         </div>
     </section>

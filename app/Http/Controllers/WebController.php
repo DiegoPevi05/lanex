@@ -50,16 +50,21 @@ class WebController extends Controller
             ],
         ];
 
-        $reviews = WebReview::all();
+        $reviews = WebReview::orderBy('created_at', 'desc')->limit(4)->get();
 
-        $blogs = WebBlog::orderBy('created_at', 'desc')->limit(5)->get();
+        $blogs = WebBlog::where('status', 'published')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
 
-        //dd($blogs);
+        $blogs->each(function ($blog) {
+            WebBlog::castFields($blog);
+        });
 
         // Find the service by ID or throw a 404 error if not found
         $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
 
-        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'blogs' => $blogs]);
+        return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'blogs' => $blogs, 'reviews' => $reviews]);
     }
 
     public function getBlogs(Request $request)
@@ -75,6 +80,7 @@ class WebController extends Controller
 
         // Apply case-insensitive name filter if supplier_name is present
         if ($blogContent) {
+            $query->where('status', 'published');
             $query->whereRaw('LOWER(content) LIKE ?', ['%' . strtolower($blogContent) . '%']);
         }
 
@@ -87,6 +93,10 @@ class WebController extends Controller
             'blog_content' => $blogContent,
         ]);
 
+        $blogs->each(function ($blog) {
+            WebBlog::castFields($blog);
+        });
+
         // Return a JSON response with the paginated suppliers
         return response()->json([
             'blogs' => $blogs,
@@ -96,6 +106,8 @@ class WebController extends Controller
     public function blog($id)
     {
         $blog = WebBlog::findOrFail($id);
+
+        WebBlog::castFields($blog);
 
         return view('client.blog', ['blog' => $blog]);
     }
@@ -108,7 +120,15 @@ class WebController extends Controller
     public function about()
     {
         $services = WebService::all();
-        $blogs = WebBlog::orderBy('created_at', 'desc')->limit(5)->get();
+        $blogs = WebBlog::where('status', 'published')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        $blogs->each(function ($blog) {
+            WebBlog::castFields($blog);
+        });
+
         return view('client.about', ['services' => $services, 'blogs' => $blogs]);
     }
 
@@ -117,7 +137,15 @@ class WebController extends Controller
 
         // Find the service by ID or throw a 404 error if not found
         $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
-        $blogs = WebBlog::orderBy('created_at', 'desc')->limit(5)->get();
+        $blogs = WebBlog::where('status', 'published')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        $blogs->each(function ($blog) {
+            WebBlog::castFields($blog);
+        });
+
         return view('client.services',['suppliers' => $suppliers, 'blogs' => $blogs]);
     }
 
@@ -190,7 +218,6 @@ class WebController extends Controller
         // Fetch the products associated with the supplier
         $productsQuery = $supplier->products();
 
-        // Apply the EAN filter if provided
         if ($productName) {
             $productsQuery->where('name', 'like', '%' . strtolower($productName) . '%');
         }
@@ -219,23 +246,16 @@ class WebController extends Controller
         }
 
         // Get the query parameters for filtering and pagination
-        $productEan = $request->query('product_ean', null);
         $page = $request->query('page_products', 1);
 
         // Fetch the products associated with the supplier using the relationship
         $productsQuery = $supplier->products();
-
-        // Apply the EAN filter if present
-        if ($productEan) {
-            $productsQuery->where('EAN', 'like', '%' . strtolower($productEan) . '%');
-        }
 
         // Paginate the products (6 per page)
         $products = $productsQuery->paginate(3, ['*'], 'page_products', $page);
 
         // Append query parameters for pagination links
         $products->appends([
-            'product_ean' => $productEan,
             'page_products' => $page
         ]);
 

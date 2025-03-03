@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "wa_link" => "https://w.app/vujkiq",
     'meta' => [
         'home' => 'Bienvenido a Express Lane Logistic, tu socio confiable en importación de productos. Simplifica tu logística con nuestras soluciones expertas.',
                 'aboutus' => 'Descubre Express Lane Logistic, líder en importación de productos. Conoce nuestra misión de optimizar tu cadena de suministro.',
@@ -95,7 +96,7 @@ return [
         'blogs_section' => [
             'header' => 'Mantente en contacto con las últimas noticias',
             'title' => 'Revisa cualquier información sobre nuestros servicios y productos',
-            'empty_content' => 'Actualmente no hay blogs para mostrar' 
+            'empty_content' => 'Actualmente no hay blogs para mostrar'
         ]
     ],
     'home' => [
@@ -652,6 +653,11 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                         'create' => 'crear blog',
                         'update' => 'actualizar blog'
                     ],
+                    'header_type' => [
+                        'normal' => 'normal',
+                        'video' => 'video',
+                        'slideshow' => 'presentación de diapositivas'
+                    ],
                     'fields' => [
                         'title' => 'título',
                         'slug' => 'slug',
@@ -660,31 +666,37 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                         'meta_description' => 'meta descripción',
                         'meta_keywords' => 'meta palabras clave',
                         'featured_image' => 'imagen destacada',
-                        'thumbnail_image' => 'imagen miniatura',
+                        'thumbnail_image' => 'imagen en miniatura',
                         'author' => 'autor',
                         'category' => 'categoría',
                         'status' => 'estado',
-                        'is_featured' => 'destacado',
+                        'is_featured' => 'entrada destacada',
                         'reading_time' => 'tiempo de lectura (minutos)',
                         'published_at' => 'fecha de publicación',
-                        'seo_title' => 'título seo',
+                        'seo_title' => 'título SEO',
                         'header_type' => 'tipo de encabezado',
                         'sub_header' => 'subtítulo',
                         'tags' => 'etiquetas'
                     ],
                     'placeholders' => [
                         'title' => 'ingrese el título del blog',
-                        'slug' => 'ingrese url amigable',
+                        'slug' => 'ingrese una URL amigable',
                         'excerpt' => 'ingrese un breve resumen',
                         'content' => 'ingrese el contenido del blog',
+                        'add_content' => 'añadir contenido',
+                        'list_content' => 'lista de contenidos',
+                        'content_preview_header' => 'ingrese el encabezado de la vista previa',
+                        'content_preview_content' => 'ingrese el contenido de la vista previa',
                         'meta_description' => 'ingrese la meta descripción',
                         'meta_keywords' => 'ingrese las meta palabras clave',
                         'author' => 'ingrese el nombre del autor',
                         'category' => 'ingrese la categoría del blog',
                         'reading_time' => 'tiempo estimado de lectura',
-                        'seo_title' => 'ingrese título optimizado para SEO',
+                        'seo_title' => 'ingrese un título optimizado para SEO',
                         'sub_header' => 'ingrese el subtítulo',
-                        'tags' => 'ingrese las etiquetas'
+                        'tags' => 'ingrese etiquetas',
+                        'add_tag' => 'añadir etiqueta',
+                        'tag_preview' => 'vista previa de etiqueta'
                     ],
                     'status' => [
                         'draft' => 'Borrador',
@@ -694,7 +706,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     'header_types' => [
                         'normal' => 'Normal',
                         'video' => 'Video',
-                        'slideshow' => 'Presentación'
+                        'slideshow' => 'Presentación de diapositivas'
                     ],
                     'buttons' => [
                         'cancel' => 'cancelar',
@@ -703,73 +715,73 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                     ],
                     'validations' => [
                         'title_required' => 'El campo título es obligatorio.',
-                        'title_string' => 'El título debe ser un texto válido.',
+                        'title_string' => 'El título debe ser una cadena de texto válida.',
                         'title_max' => 'El título no puede tener más de 255 caracteres.',
-                        
+
                         'slug_required' => 'El campo slug es obligatorio.',
-                        'slug_string' => 'El slug debe ser un texto válido.',
+                        'slug_string' => 'El slug debe ser una cadena de texto válida.',
                         'slug_max' => 'El slug no puede tener más de 255 caracteres.',
-                        'slug_unique' => 'Este slug ya está en uso.',
-                        
-                        'excerpt_string' => 'El extracto debe ser un texto válido.',
+                        'slug_unique' => 'Este slug ya ha sido tomado.',
+
+                        'excerpt_string' => 'El extracto debe ser una cadena de texto válida.',
                         'excerpt_max' => 'El extracto no puede tener más de 500 caracteres.',
-                        
+
                         'content_required' => 'El campo contenido es obligatorio.',
-                        'content_string' => 'El contenido debe ser un texto válido.',
-                        
-                        'meta_description_string' => 'La meta descripción debe ser un texto válido.',
+                        'content_string' => 'El contenido debe ser una cadena de texto válida.',
+
+                        'meta_description_string' => 'La meta descripción debe ser una cadena de texto válida.',
                         'meta_description_max' => 'La meta descripción no puede tener más de 255 caracteres.',
-                        
-                        'meta_keywords_string' => 'Las meta palabras clave deben ser un texto válido.',
+
+                        'meta_keywords_string' => 'Las meta palabras clave deben ser una cadena de texto válida.',
                         'meta_keywords_max' => 'Las meta palabras clave no pueden tener más de 255 caracteres.',
-                        
+
                         'featured_image_image' => 'La imagen destacada debe ser una imagen.',
-                        'featured_image_mimes' => 'La imagen destacada debe ser de tipo: jpeg, png, jpg, gif, webp.',
-                        'featured_image_max' => 'La imagen destacada no puede ser mayor a 2MB.',
-                        
-                        'thumbnail_image_image' => 'La imagen miniatura debe ser una imagen.',
-                        'thumbnail_image_mimes' => 'La imagen miniatura debe ser de tipo: jpeg, png, jpg, gif, webp.',
-                        'thumbnail_image_max' => 'La imagen miniatura no puede ser mayor a 2MB.',
-                        
+                        'featured_image_mimes' => 'La imagen destacada debe ser un archivo de tipo: jpeg, png, jpg, gif, webp.',
+                        'featured_image_max' => 'La imagen destacada no puede ser mayor de 2MB.',
+
+                        'thumbnail_image_image' => 'La imagen en miniatura debe ser una imagen.',
+                        'thumbnail_image_mimes' => 'La imagen en miniatura debe ser un archivo de tipo: jpeg, png, jpg, gif, webp.',
+                        'thumbnail_image_max' => 'La imagen en miniatura no puede ser mayor de 2MB.',
+
                         'author_required' => 'El campo autor es obligatorio.',
-                        'author_string' => 'El autor debe ser un texto válido.',
+                        'author_string' => 'El autor debe ser una cadena de texto válida.',
                         'author_max' => 'El autor no puede tener más de 255 caracteres.',
-                        
+
                         'category_required' => 'El campo categoría es obligatorio.',
-                        'category_string' => 'La categoría debe ser un texto válido.',
+                        'category_string' => 'La categoría debe ser una cadena de texto válida.',
                         'category_max' => 'La categoría no puede tener más de 100 caracteres.',
-                        
+
                         'status_required' => 'El campo estado es obligatorio.',
                         'status_in' => 'El estado seleccionado no es válido.',
-                        
+
                         'reading_time_integer' => 'El tiempo de lectura debe ser un número.',
-                        'reading_time_min' => 'El tiempo de lectura debe ser de al menos 1 minuto.',
-                        
+                        'reading_time_min' => 'El tiempo de lectura debe ser al menos de 1 minuto.',
+
                         'published_at_date' => 'La fecha de publicación debe ser una fecha válida.',
-                        
-                        'seo_title_string' => 'El título SEO debe ser un texto válido.',
+
+                        'seo_title_string' => 'El título SEO debe ser una cadena de texto válida.',
                         'seo_title_max' => 'El título SEO no puede tener más de 255 caracteres.',
-                        
-                        'header_type_required' => 'El tipo de encabezado es obligatorio.',
+
+                        'header_type_required' => 'El campo tipo de encabezado es obligatorio.',
                         'header_type_in' => 'El tipo de encabezado seleccionado no es válido.',
-                        
-                        'sub_header_string' => 'El subtítulo debe ser un texto válido.',
+
+                        'sub_header_string' => 'El subtítulo debe ser una cadena de texto válida.',
                         'sub_header_max' => 'El subtítulo no puede tener más de 255 caracteres.',
-                        
-                        'tags_array' => 'Las etiquetas deben ser una lista.'
+
+                        'tags_array' => 'Las etiquetas deben ser un array.'
                     ],
                     'success' => [
-                        'create' => 'Blog Creado Exitosamente',
-                        'update' => 'Blog Actualizado Exitosamente',
-                        'delete' => 'Blog Eliminado Exitosamente'
+                        'create' => 'Blog creado exitosamente',
+                        'update' => 'Blog actualizado exitosamente',
+                        'delete' => 'Blog eliminado exitosamente'
                     ],
                     'error' => [
                         'not_found' => "Blog no encontrado.",
                         'validation_failed' => "Hubo errores en el envío del formulario."
                     ],
                     'modal' => [
-                        'delete_header' => "¿Está seguro de que desea eliminar este Blog?",
-                        'delete_content' => "No podrá recuperar la información una vez eliminada"
+                        'delete_header' => "¿Está seguro de que desea eliminar este blog?",
+                        'delete_content' => "No podrá restaurarlo una vez que la información sea eliminada."
                     ]
                 ]
             ],
@@ -1206,6 +1218,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 ],
                 'fields' => [
                     'type' => 'tipo',
+                    'providers' => 'proveedores',
                     'name' => 'nombre',
                     'icon' => 'ícono',
                     'status' => 'estado',

@@ -5,7 +5,7 @@
             divide-x divide-dashed
             flex justify-center items-center text-white">
             <label class="px-4">
-                operaciones@lanex.com
+                operaciones@lanexsac.com
             </label>
             <label class="px-4">
                 +51 992-764-991

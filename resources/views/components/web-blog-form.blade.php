@@ -13,28 +13,18 @@
         <!-- Title Field -->
         <div class="mb-4 mt-4">
             <label for="title" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.blog.form.fields.title") }}</label>
-            <input type="text" id="title" name="title" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                value="{{ old('title', $blog->title ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.title') }}" 
+            <input type="text" id="title" name="title" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('title', $blog->title ?? '') }}"
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.title') }}"
                 {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-title"></span>
-        </div>
-
-        <!-- Slug Field -->
-        <div class="mb-4">
-            <label for="slug" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.blog.form.fields.slug") }}</label>
-            <input type="text" id="slug" name="slug" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                value="{{ old('slug', $blog->slug ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.slug') }}" 
-                {{$formRequest === "view" ? "disabled" : ""}}>
-            <span class="text-primary font-bold text-xs error-message" id="error-slug"></span>
         </div>
 
         <!-- Featured Image -->
         <div class="mb-4 mt-4">
             <label for="featured_image" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.blog.form.fields.featured_image") }}</label>
             <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-featured_image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" 
+                <div id="image-viewer-featured_image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center"
                     style="background-image:url({{ $blog ? asset('storage/' . $blog->featured_image) : '' }})">
                 </div>
                 <div class="file-select" id="src-tent-featured_image">
@@ -48,7 +38,7 @@
         <div class="mb-4 mt-4">
             <label for="thumbnail_image" class="block text-sm font-bold text-secondary-dark capitalize mb-4">{{ __("messages.dashboard.web.blog.form.fields.thumbnail_image") }}</label>
             <div class="flex flex-row justify-start gap-x-2">
-                <div id="image-viewer-thumbnail_image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center" 
+                <div id="image-viewer-thumbnail_image" class="h-[150px] w-[150px] border-2 border-gray-light rounded-xl bg-contain bg-no-repeat bg-center"
                     style="background-image:url({{ $blog ? asset('storage/' . $blog->thumbnail_image) : '' }})">
                 </div>
                 <div class="file-select" id="src-tent-thumbnail_image">
@@ -61,8 +51,8 @@
         <!-- Excerpt Field -->
         <div class="mb-4">
             <label for="excerpt" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.excerpt') }}</label>
-            <textarea id="excerpt" name="excerpt" rows="2" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.excerpt') }}" 
+            <textarea id="excerpt" name="excerpt" rows="2" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.excerpt') }}"
                 {{$formRequest === "view" ? "disabled" : ""}}>{{ old('excerpt', $blog->excerpt ?? '') }}</textarea>
             <span class="text-primary font-bold text-xs error-message" id="error-excerpt"></span>
         </div>
@@ -74,19 +64,19 @@
                 <button id="add-blog-content-button" type="button" class="ml-auto w-fit px-4 py-2 bg-primary text-white duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
                     {{ __('messages.dashboard.web.blog.form.placeholders.add_content') }}
                 </button>
-                <input type="text" id="previewContentHeader" name="previewContentHeader" class="ml-auto mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content_preview_header') }}" 
+                <input type="text" id="previewContentHeader" name="previewContentHeader" class="ml-auto mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content_preview_header') }}"
                     {{$formRequest === "view" ? "disabled" : ""}}>
-                <textarea id="previewContentBody" name="previewContentBody" rows="10" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content_preview_content') }}" 
+                <textarea id="previewContentBody" name="previewContentBody" rows="10" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.content_preview_content') }}"
                     {{$formRequest === "view" ? "disabled" : ""}}></textarea>
             </div>
             <label for="listContent" class="mt-4 block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.placeholders.list_content') }}</label>
-            <div id="blog-content-container" class="mt-4 flex flex-col justify-start gap-y-2">
-                @if($blog && isset($blog->content) && count($blog->content) > 0)
+            <div id="blog-content-container" class="my-4 flex flex-col justify-start gap-y-2">
+                @if($blog && isset($blog->content) && is_array($blog->content) && count($blog->content) > 0)
                     @foreach($blog->content as $index => $content)
                         <div id="blog-content-item-{{$index}}" class="blog-content-item relative w-full flex flex-col justify-start gap-x-2 border-2 border-gray-light rounded-xl p-4">
-                            <button id="blog-content-item-delete-button-{{$index}}" 
+                            <button id="blog-content-item-delete-button-{{$index}}"
                                     onclick="deleteBlogContent({{$index}})"
                                     class="w-8 h-8 top-1 right-1 absolute p-1 bg-primary text-white duration-300 hover:bg-primary-dark rounded-full active:scale-95 capitalize">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text">
@@ -104,9 +94,9 @@
                                     {{ \Illuminate\Support\Str::limit($content['content'], 100, '...') }}
                                 </label>
                             @endif
-                            
-                            <input type="hidden" name="blogs[{{$index}}][header]" value="{{ $content['header'] }}">
-                            <input type="hidden" name="blogs[{{$index}}][content]" value="{{ $content['content'] }}">
+
+                            <input type="hidden" name="content[{{$index}}][header]" value="{{ $content['header'] }}">
+                            <input type="hidden" name="content[{{$index}}][content]" value="{{ $content['content'] }}">
                         </div>
                     @endforeach
                 @endif
@@ -117,9 +107,9 @@
         <!-- Author Field -->
         <div class="mb-4">
             <label for="author" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.author') }}</label>
-            <input type="text" id="author" name="author" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                value="{{ old('author', $blog->author ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.author') }}" 
+            <input type="text" id="author" name="author" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('author', $blog->author ?? '') }}"
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.author') }}"
                 {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-author"></span>
         </div>
@@ -127,9 +117,9 @@
         <!-- Category Field -->
         <div class="mb-4">
             <label for="category" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.category') }}</label>
-            <input type="text" id="category" name="category" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                value="{{ old('category', $blog->category ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.category') }}" 
+            <input type="text" id="category" name="category" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('category', $blog->category ?? '') }}"
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.category') }}"
                 {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-category"></span>
         </div>
@@ -148,10 +138,10 @@
         <!-- Reading Time Field -->
         <div class="mb-4">
             <label for="reading_time" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.reading_time') }}</label>
-            <input type="number" id="reading_time" name="reading_time" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                value="{{ old('reading_time', $blog->reading_time ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.reading_time') }}" 
-                min="1" 
+            <input type="number" id="reading_time" name="reading_time" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('reading_time', $blog->reading_time ?? '') }}"
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.reading_time') }}"
+                min="1"
                 {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-reading_time"></span>
         </div>
@@ -170,11 +160,46 @@
         <!-- Sub Header Field -->
         <div class="mb-4">
             <label for="sub_header" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.sub_header') }}</label>
-            <input type="text" id="sub_header" name="sub_header" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" 
-                value="{{ old('sub_header', $blog->sub_header ?? '') }}" 
-                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.sub_header') }}" 
-                {{$formRequest === "view" ? "disabled" : ""}}>  
+            <input type="text" id="sub_header" name="sub_header" class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('sub_header', $blog->sub_header ?? '') }}"
+                placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.sub_header') }}"
+                {{$formRequest === "view" ? "disabled" : ""}}>
             <span class="text-primary font-bold text-xs error-message" id="error-sub_header"></span>
+        </div>
+
+
+        <div class="mb-4">
+            <label for="tags" class="block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.fields.tags') }}</label>
+            <div class="w-full flex flex-row justify-start gap-x-2">
+
+                <input type="text" id="previewTag" name="previewTag" class="ml-auto mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                    placeholder="{{ __('messages.dashboard.web.blog.form.placeholders.tag_preview') }}"
+                    {{$formRequest === "view" ? "disabled" : ""}}>
+
+                <button id="add-tag-button" type="button" class="w-fit px-4 py-2 bg-primary text-white text-nowrap duration-300 hover:bg-primary-dark rounded-md active:scale-95 capitalize">
+                    {{ __('messages.dashboard.web.blog.form.placeholders.add_tag') }}
+                </button>
+            </div>
+            <label for="listContent" class="mt-4 block text-sm font-bold text-secondary-dark capitalize">{{ __('messages.dashboard.web.blog.form.placeholders.tags') }}</label>
+            <div id="tags-container" class="mt-4 flex flex-row flex-wrap gap-x-2 justify-start gap-y-2">
+                    @if($blog && isset($blog->tags) && is_array($blog->tags) && count($blog->tags) > 0)
+                        @foreach($blog->tags as $index => $tag)
+                            <span id="tag-item-{{$index}}" class="tag-item flex flex-row w-fit h-auto items-center px-3 py-1 bg-primary text-white rounded-full gap-x-2">
+                                {{ $tag }}
+                                <button id="tag-item-delete-button-{{$index}}"
+                                        onclick="deleteTag({{$index}})"
+                                        class="w-6 h-6 p-1 bg-primary text-white duration-300 hover:bg-primary-dark rounded-full active:scale-95 capitalize">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text-inherit">
+                                        <path d="M18 6 6 18"/>
+                                        <path d="m6 6 12 12"/>
+                                    </svg>
+                                </button>
+                                <input type="hidden" name="tags[{{$index}}]" value="{{ $tag }}">
+                            </span>
+                        @endforeach
+                    @endif
+            </div>
+            <span class="text-primary font-bold text-xs error-message" id="error-tags"></span>
         </div>
 
         <!-- Submit Buttons -->
@@ -189,4 +214,4 @@
             @endif
         </div>
     </form>
-</div> 
+</div>

@@ -11,6 +11,7 @@ use App\Models\WebProduct;
 use App\Models\WebSupplier;
 use Illuminate\Support\Str;
 use App\Models\WebBlog;
+
 class WebContentCard extends Component
 {
     /**

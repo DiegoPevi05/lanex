@@ -53,10 +53,10 @@
 
             @foreach ($service['webcontent']['keypoints']['points'] as $point)
                 <div class="col-span-1 row-span-1 flex flex-col justify-center items-start animation-element slide-in-right">
-                    <label class="font-bold text-primary">
+                    <label class="font-bold text-primary text-lg/5 sm:text-xl/5 lg:text-2xl/6">
                         {{$point['title']}}
                     </label>
-                    <p>
+                    <p class="text-sm/5 sm:text-md/5 pt-4 lg:text-lg/6 sm:pt-2">
                         {{$point['content']}}
                     </p>
                 </div>

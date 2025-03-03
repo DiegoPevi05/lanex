@@ -120,42 +120,42 @@ class WebService extends Model
     public static function getValidationRules($isUpdate = false)
     {
         return [
-            'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'icon' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'short_description' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
+            'name' => $isUpdate ? 'sometimes|required|string' : 'required|string',
+            'icon' => $isUpdate ? 'sometimes|required|string' : 'required|string',
+            'short_description' => $isUpdate ? 'sometimes|required|string' : 'required|string',
             'webcontent' => $isUpdate ? 'sometimes|required|array' : 'required|array',
             'webcontent.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
-            'webcontent.header' => 'required|string|max:30',
-            'webcontent.title' => 'required|string|max:50',
-            'webcontent.description' => 'required|string|max:200',
+            'webcontent.header' => 'required|string',
+            'webcontent.title' => 'required|string',
+            'webcontent.description' => 'required|string',
 
             // Overview nested fields
-            'webcontent.overview.header' => 'required|string|max:20',
-            'webcontent.overview.title' => 'required|string|max:50',
+            'webcontent.overview.header' => 'required|string',
+            'webcontent.overview.title' => 'required|string',
             'webcontent.overview.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
-            'webcontent.overview.content.header' => 'required|string|max:200',
-            'webcontent.overview.content.introduction' => 'required|string|max:400',
-            'webcontent.overview.content.content' => 'required|string|max:600',
+            'webcontent.overview.content.header' => 'required|string',
+            'webcontent.overview.content.introduction' => 'required|string',
+            'webcontent.overview.content.content' => 'required|string',
 
             // Content link nested fields
-            'webcontent.content_link.header' => 'required|string|max:20',
-            'webcontent.content_link.title' => 'required|string|max:40',
-            'webcontent.content_link.button_label' => 'required|string|max:30',
+            'webcontent.content_link.header' => 'required|string',
+            'webcontent.content_link.title' => 'required|string',
+            'webcontent.content_link.button_label' => 'required|string',
             'webcontent.content_link.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
-            'webcontent.content_link.content' => 'required|string|max:400',
+            'webcontent.content_link.content' => 'required|string',
 
             // Keypoints nested fields
-            'webcontent.keypoints.header' => 'required|string|max:30',
-            'webcontent.keypoints.title' => 'required|string|max:50',
+            'webcontent.keypoints.header' => 'required|string',
+            'webcontent.keypoints.title' => 'required|string',
             'webcontent.keypoints.points' => 'required|array|min:1|max:6',
-            'webcontent.keypoints.points.*.title' => 'required|string|max:30', // Title for each point
-            'webcontent.keypoints.points.*.content' => 'required|string|max:400', // Content for each point
+            'webcontent.keypoints.points.*.title' => 'required|string', // Title for each point
+            'webcontent.keypoints.points.*.content' => 'required|string', // Content for each point
 
             // FAQs nested fields
-            'webcontent.faqs.title' => 'required|string|max:50',
+            'webcontent.faqs.title' => 'required|string',
             'webcontent.faqs.questions' => 'required|array|min:1|max:6',
-            'webcontent.faqs.questions.*.question' => 'required|string|max:100',
-            'webcontent.faqs.questions.*.answer' => 'required|string|max:400',
+            'webcontent.faqs.questions.*.question' => 'required|string',
+            'webcontent.faqs.questions.*.answer' => 'required|string',
         ];
     }
 

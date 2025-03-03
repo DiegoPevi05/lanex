@@ -1,5 +1,5 @@
 <div class="fixed bottom-5 right-5 bg-[#25D366] rounded-full shadow-lg hover:bg-primary-dark transition-colors z-[40] active:scale-95 hover:cursor-pointer h-16 w-16 duration-300">
-    <a href="https://wa.link/s7w6z3" target="_blank"
+    <a href="{{__('messages.wa_link')}}" target="_blank"
                                        aria-label="{{ __('messages.aria_labels.whatsapp') }}"
                                        title="{{ __('messages.titles.whatsapp') }}" class="h-full w-full flex justify-center items-center p-3">
         <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" height="100%" width="100%" viewBox="0 0 308 308">

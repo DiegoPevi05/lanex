@@ -34,6 +34,13 @@ abstract class AbstractEntityController extends Controller
 
         $entities = $query->paginate($perPage);
 
+        // Apply castFields if the method exists in the model
+        if (method_exists($this->model, 'castFields')) {
+            $entities->each(function ($entity) {
+                $this->model::castFields($entity);
+            });
+        }
+
         return view($this->model::getRedirectRoutes("index"), [
             'pagination' => $entities,
             'currentFilter' => $filterKey,
@@ -48,6 +55,10 @@ abstract class AbstractEntityController extends Controller
         $typeEntity = $request->input('typeEntity');
         $idEntity = $request->input('idEntity');
         $entity = $idEntity ? $this->model->find($idEntity) : null;
+
+        if($entity && method_exists($this->model, 'castFields')){
+            $this->model::castFields($entity);
+        };
 
         $formComponent = $this->formService->getFormComponent($formRequest, $typeEntity, $entity);
 

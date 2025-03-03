@@ -17,7 +17,7 @@
             <h1 class="text-primary-dark font-bold animation-element slide-in-up">
                 {{$title}}
             </h1>
-            <p class="animation-element slide-in-up">{{$content}}</p>
+            <p class="animation-element slide-in-up text-md/5 sm:text-lg/6 lg:text-xl/6">{{$content}}</p>
             <div class="h-auto w-full flex justify-center items-center animation-element slide-in-up">
             <x-button text="{{$button}}" url="{{ $href }}" size="lg" extraClasses="uppercase font-bold"/>
             </div>
