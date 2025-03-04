@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
+
 class WebProduct extends Model
 {
 
@@ -17,6 +18,7 @@ class WebProduct extends Model
     protected $fillable = [
         'name',
         'image',
+        'EAN',
         'stars',
         'description',
     ];
@@ -42,6 +44,7 @@ class WebProduct extends Model
         $fillableFields = [
             'name' => $validatedFields['name'] ?? null,
             'image' => $processImage('image', $entity ? $entity->image : null),
+            'EAN' => uniqid(),
             'stars' => $validatedFields['stars'] ?? null,
             'description' => $validatedFields['description'] ?? null,
         ];

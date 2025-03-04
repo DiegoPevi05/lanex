@@ -24,6 +24,7 @@ class WebProductFactory extends Factory
             'name' => $this->faker->text(40),
             'image' => $this->randomImage(),
             'stars' => $this->faker->numberBetween(1, 5),
+            'EAN' => $this->faker->randomNumber(8),
             'description' => $this->faker->text(600),
         ];
     }

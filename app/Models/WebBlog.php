@@ -15,6 +15,7 @@ class WebBlog extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'excerpt',               // Short summary of the content
         'content',               // Main content
         'meta_description',      // SEO meta description
@@ -62,6 +63,7 @@ class WebBlog extends Model
 
         return [
             'title' => $validatedFields['title'] ?? null,
+            'slug' => uniqid(),
             'excerpt' => $validatedFields['excerpt'] ?? null,
             'content' =>  isset($validatedFields['content']) ? json_encode($validatedFields['content']) : json_encode([]),
             'meta_description' => $validatedFields['meta_description'] ?? null,
