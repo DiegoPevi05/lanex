@@ -35,6 +35,7 @@
         content="{{ __('messages.services.link_section.content') }}"
         href="{{ route('quote') }}"
     />
+    <x-calculator-shipping />
     <x-services-section />
     <x-blogs-carousel :blogs="$blogs" />
 @endsection

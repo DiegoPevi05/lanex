@@ -101,6 +101,7 @@ return [
     ],
     'search_shipment' => [
         'title' => 'calcular envío',
+        'helper_text' => 'Ingresa el origen y destino de tu envío para calcular el tiempo de envío, esto es una estimación y puede variar dependiendo del transportista',
         'origin' => 'origen',
         'destiny' => 'destino',
         'calculate' => 'calcular',

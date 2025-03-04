@@ -102,6 +102,7 @@ return [
     ],
     'search_shipment' => [
         'title' => 'calculate shipping',
+        'helper_text' => 'Enter the origin and destination of your shipment to calculate the shipping time, this is an estimate and may vary depending on the carrier',
         'origin' => 'origin',
         'destiny' => 'destiny',
         'calculate' => 'calculate',

@@ -78,6 +78,7 @@
             <h5 class="text-body">{{ __('messages.about.statistics.stats_3_label') }}</h5>
         </div>
     </section>
+    <x-calculator-shipping />
     <x-content-section
         header="{{ __('messages.about.content.header') }}"
         title="{{ __('messages.about.content.title') }}"

@@ -1,13 +1,19 @@
 <section id="calculator-shipping" class="relative w-full h-auto bg-white text-body animation-group z-10 capitalize">
     <div class="relative w-full h-auto padding flex flex-col justify-start items-start">
-        <div class="w-full h-auto flex sm:flex-row flex-col justify-start sm:justify-between items-start sm:items-center gap-y-2">
-            <h2 class="font-bold text-primary-dark animation-element slide-in-up text-3xl sm:text-5xl">
-                {{__('messages.search_shipment.title')}}
-            </h2>
+        <div class="w-full h-auto flex lg:flex-row flex-col justify-start sm:justify-between items-start sm:items-center gap-y-2">
+            <span class="w-full h-auto flex flex-col justify-start items-start gap-y-2">
+                <h2 class="font-bold text-primary-dark animation-element slide-in-up text-3xl sm:text-5xl inline-flex gap-2">
+                    <span class="h-8 sm:h-12 w-8 sm:w-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-earth"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                    </span>
+                    {{__('messages.search_shipment.title')}}
+                </h2>
+                <p class="text-sm sm:text-lg w-full sm:w-[50%] normal-case max-sm:mb-4">{{ __('messages.search_shipment.helper_text') }}</p>
+            </span>
             <img src="{{ asset('storage/' . '/images/web/delivery.svg' ) }}" class="h-24 sm:h-48 w-auto ml-auto"/>
         </div>
-        <div class="w-full h-auto flex flex-col justify-start items-start mt-12 sm:mt-24 animation-element slide-in-up">
-            <div class="w-full h-auto grid grid-col-4 sm:grid-cols-3 gap-2">
+        <div class="w-full h-auto flex flex-col justify-start items-start mt-12 animation-element slide-in-up">
+            <div class="w-full h-auto grid grid-col-4 sm:grid-cols-3 gap-2 border-2 border-gray-light p-4 rounded-lg shadow-md">
                 <span class="relative col-span-2 sm:col-span-1 h-auto bg-white text-center border border-gray-300 rounded-md flex items-center justify-between gap-x-2 flex-row p-4 z-[100]">
                     <span class="inline-flex max-sm:flex-col items-center gap-x-2">
                         <h5>{{__('messages.search_shipment.origin')}}:</h5>
