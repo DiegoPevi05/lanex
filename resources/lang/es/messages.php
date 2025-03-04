@@ -99,6 +99,22 @@ return [
             'empty_content' => 'Actualmente no hay blogs para mostrar'
         ]
     ],
+    'search_shipment' => [
+        'title' => 'calcular envío',
+        'origin' => 'origen',
+        'destiny' => 'destino',
+        'calculate' => 'calcular',
+        'empty_content' => 'no se encontraron horarios específicos para esta selección',
+        'shipping_time' => 'tiempo de envío',
+        'weeks' => 'semanas',
+        'quote' => 'cotizar ahora',
+        'shipping_method' => 'método de envío',
+        'estimated_time' => 'tiempo estimado',
+        'air' => 'aéreo',
+        'sea' => 'marítimo',
+        "air_text" => 'me gustaría cotizar un envío aéreo',
+        "sea_text" => 'me gustaría cotizar un envío marítimo',
+    ],
     'home' => [
         'hero' => [
             'header' => 'SOMOS TU MEJOR ALIADO EN OPERACIONES LOGISTICAS',

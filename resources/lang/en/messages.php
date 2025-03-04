@@ -100,6 +100,22 @@ return [
             'empty_content' => 'Currently no Blogs to show'
         ]
     ],
+    'search_shipment' => [
+        'title' => 'calculate shipping',
+        'origin' => 'origin',
+        'destiny' => 'destiny',
+        'calculate' => 'calculate',
+        'empty_content' => 'no specific times were found for this selection',
+        'shipping_time' => 'shipping time',
+        'weeks' => 'weeks',
+        'quote' => 'quote now',
+        'shipping_method' => 'shipping method',
+        'estimated_time' => 'estimated time',
+        'air' => 'air',
+        'sea' => 'sea',
+        "air_text" => 'i would like to quote an air shipment',
+        "sea_text" => 'i would like to quote a sea shipment',
+    ],
     'home' => [
         'hero' => [
             'header' => 'WE ARE YOUR BEST ALLY IN LOGISTICS OPERATIONS',

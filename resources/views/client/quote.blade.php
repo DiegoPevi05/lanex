@@ -6,7 +6,7 @@
     <section id="quote_hero_section" class="w-full h-auto bg-white text-body pt-[80px] pt:mt-[140px]">
     <div class="relative w-full h-auto px-4 sm:px-24 xl:px-48 py-12 sm:py-24 xl:py-36 flex flex-col-reverse xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
         <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
-            <form action="{{route('quote.submit')}}" method="POST" class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
+            <form id="quote_form" action="{{route('quote.submit')}}" method="POST" class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
                 @csrf
                 <h5>
                     {{__('messages.quote.form.quote_form_title')}}
@@ -146,6 +146,23 @@
         @if(session('error'))
             showToast(["{{session('error')}}"]);
         @endif
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                origin: params.get("origin") || "",
+                destiny: params.get("destiny") || "",
+                content: params.get("content") || ""
+            };
+        }
+
+        const { origin, destiny, content } = getQueryParams();
+
+        const form = document.getElementById("quote_form");
+        // Set the values in the form fields
+        form.querySelector("#quote_form_departure_address").value = origin;
+        form.querySelector("#quote_form_arrival_address").value = destiny;
+        form.querySelector("#quote_form_message").innerHTML = content;
 
     });
 </script>

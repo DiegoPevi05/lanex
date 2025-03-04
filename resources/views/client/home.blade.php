@@ -75,8 +75,9 @@
 
         </div>
     </section>
-    <section id="home_step_guide" class="w-full h-auto sm:h-screen bg-white text-body">
-        <div class="relative w-full h-full padding flex flex-col divide-y divide-primary gap-y-6">
+    <x-calculator-shipping />
+    <section id="home_step_guide" class="w-full h-fit sm:h-screen bg-white text-body">
+        <div class="w-full h-full padding flex flex-col divide-y divide-primary gap-y-6">
             <div class="h-auto sm:h-1/2 w-full flex flex-col-reverse xl:flex-row gap-y-12 sm:gap-x-12 border-primary">
                 <div class="w-full xl:w-1/2 h-full">
                     <div class="w-full h-full bg-secondary py-6 px-4 rounded-lg flex items-center justify-center">
@@ -88,10 +89,10 @@
                     <h5 class="font-bold text-primary">
                         {{ __('messages.home.step.header') }}
                     </h5>
-                    <h2 class="font-bold text-primary-dark">
+                    <h2 class="font-bold text-primary-dark text-2xl sm:text-3xl">
                         {{ __('messages.home.step.title') }}
                     </h2>
-                    <p class="max-xl:mt-4">
+                    <p class="mt-4">
                         {{ __('messages.home.step.content') }}
                     </p>
                 </div>
