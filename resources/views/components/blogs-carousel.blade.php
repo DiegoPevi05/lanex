@@ -30,14 +30,14 @@
                                                     {{ __('messages.home.blogs.reading_time') }} <strong>{{ $blog->reading_time }}</strong> {{ __('messages.home.blogs.minutes') }}
                                                 </p>
                                             </span>
-                                            <h3 class="font-bold text-primary-dark mt-2">
+                                            <h3 class="font-bold text-primary-dark mt-2 text-xs text-left">
                                                 {{ $blog->title }}
                                             </h3>
-                                            <p class="text-gray-500">
-                                                {{ $blog->excerpt }}
+                                            <p class="text-gray-500 text-xs text-justify pt-2">
+                                                {{ \Illuminate\Support\Str::limit($blog->excerpt, 200, '...') }}
                                             </p>
 
-                                            <span class="mt-auto w-full flex flex-row flex-wrap items-center justify-between">
+                                            <span class="mt-auto w-full flex flex-row flex-wrap items-center justify-between gap-1 pt-2">
 
                                                 @if(isset($blog->tags) && is_array($blog->tags) && count($blog->tags) > 0)
                                                     @foreach($blog->tags as $tag)
@@ -47,7 +47,7 @@
                                                     @endforeach
                                                 @endif
                                             </span>
-                                            <p class="text-gray-500 mt-auto">
+                                            <p class="text-gray-500 mt-auto py-4">
                                                 {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong>
                                             </p>
                                         </div>

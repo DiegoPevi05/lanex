@@ -18,16 +18,16 @@
         </div>
     </section>
     <section id="blog-content" class="relative w-full min-h-[100vh] flex flex-col justify-start items-start padding overflow-hidden">
-        <div class="absolute w-[70vh] h-[70vh] top-0 right-0 overflow-hidden">
-            <div class="relative w-full h-full blog-curved-image">
+        <div class="flex lg:absolute w-full max-lg:mb-8 max-lg:rounded-lg  lg:w-[70vh] h-auto lg:h-[70vh] top-0 right-0 overflow-hidden">
+            <div class="relative w-full h-full lg:blog-curved-image">
                 <img src="{{ asset('storage/'. $blog->thumbnail_image)}}" alt="suppliers_hero_image" class="w-full h-full object-center object-cover">
             </div>
         </div>
-        <div class="w-[calc(100%-70vh)] h-full flex flex-col justify-start items-start gap-y-4 animation-element slide-in-up">
+        <div class="w-full lg:w-[calc(100%-70vh)] h-full flex flex-col justify-start items-start gap-y-4 animation-element slide-in-up">
             <span class="w-full flex flex-row justify-start items-center gap-x-4">
-                <h1 class="font-bold text-left lg:text-center text-primary capitalize">{{ $blog->title }}</h1>
-                <a href="{{ route('home') }}" class="text-left text-xl lg:text-center text-white bg-primary rounded-lg p-2 active:scale-95 duration-300 hover:bg-primary-dark">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link h-full w-full"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <h1 class="font-bold text-left text-primary capitalize">{{ $blog->title }}</h1>
+                <a href="{{ route('home') }}" class="h-14 w-24 text-left text-xl lg:text-center text-white bg-primary rounded-lg p-2 active:scale-95 duration-300 hover:bg-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link h-full w-full"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 </a>
             </span>
             <span class="w-full h-auto flex flex-row flex-wrap justify-start items-start gap-2">
@@ -39,11 +39,11 @@
             </span>
             @if(isset($blog->content) && is_array($blog->content) && count($blog->content) > 0)
                 @foreach($blog->content as $contentItem)
-                    <p class="text-left text-xl lg:text-center text-gray-500 capitalize">{{ $contentItem['header'] }}</p>
-                    <p class="text-left text-lg lg:text-center text-gray-500">{{ $contentItem['content'] }}</p>
+                    <p class="text-left text-xl font-bold text-gray-500 capitalize">{{ $contentItem['header'] }}</p>
+                    <p class="text-left text-lg text-gray-500">{{ $contentItem['content'] }}</p>
                 @endforeach
             @endif
-            <p class="text-gray-500 mt-auto">
+            <p class="text-gray-500 mt-auto text-lg">
                 {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong>
             </p>
         </div>

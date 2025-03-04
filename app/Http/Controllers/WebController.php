@@ -79,8 +79,9 @@ class WebController extends Controller
         $query = WebBlog::query();
 
         // Apply case-insensitive name filter if supplier_name is present
+        $query->where('status', 'published');
+
         if ($blogContent) {
-            $query->where('status', 'published');
             $query->whereRaw('LOWER(content) LIKE ?', ['%' . strtolower($blogContent) . '%']);
         }
 
