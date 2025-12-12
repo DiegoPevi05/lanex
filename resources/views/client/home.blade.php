@@ -145,7 +145,7 @@
             </div>
         </div>
     </section>
-    <x-brands  title="{{ __('messages.home.brands') }}" :suppliers="$suppliers"/>
+    <x-brands-by-category title="{{ __('messages.home.brands') }}" :suppliers="$suppliers" />
     <x-services-section />
     <x-questions title="{{ __('messages.home.questions.title') }}" :questions="$questions" />
     <x-blogs-carousel :blogs="$blogs" />

@@ -287,7 +287,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
         'supplier_section' => [
             'header' => 'Encuentra Tu Producto Ideal',
             'title' => 'Algunos de Nuestros Proveedores Más Notables',
-            'empty_content' => 'Actualmente no hay proovedores para mostrar'
+            'empty_content' => 'Actualmente no hay proovedores para mostrar',
+            'otherCategory' => 'Otra categoria',
         ]
     ],
     'supplier' => [
@@ -1136,6 +1137,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 ]
             ],
             'supplier' => [
+                'otherCategory' => 'otra categoria',
                 'name' => 'proveedor',
                 'new_entity' => 'nuevo proveedor',
                 'header' => "proveedores",
@@ -1145,6 +1147,7 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                 'dropdown' => [
                     'name' => 'nombre',
                     'description' => 'descripción',
+                    "category" => "Categoría"
                 ],
                 'form' => [
                     'headers' => [
@@ -1162,13 +1165,17 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                         'services' => 'servicios',
                         'add_product' => 'Agregar producto',
                         'products' => 'productos',
-                        'add_service' => 'Agregar servicio'
+                        'add_service' => 'Agregar servicio',
+                        'webpage' => 'Pagina Web',
+                        'category' => 'Categoria'
                     ],
                     'placeholders' => [
                         'name' => 'Ingresa nombre',
                         'logo' => 'logo',
                         'description' => 'Ingresa descripción',
-                        'details' => 'Ingresa detalles'
+                        'details' => 'Ingresa detalles',
+                        'webpage' => 'Ingresa la web del proveedor',
+                        'category' => 'Ingresa la categoria del proveedor'
                     ],
                     'buttons' => [
                         'cancel' => 'cancelar',
@@ -1190,6 +1197,10 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
                         'details_min' => "Los detalles deben contener al menos un detalle.",
                         'details_item_string' => "Cada detalle dentro del arreglo debe ser una cadena de texto.",
                         'details_item_max' => "Cada detalle dentro del arreglo debe tener un máximo de 300 caracteres.",
+                        "webpage_url" => "La página web debe ser una URL válida.",
+                        "webpage_max" => "La página web no debe superar los 500 caracteres.",
+                        "category_string" => "La categoría debe ser un texto.",
+                        "category_max" => "La categoría no debe superar los 120 caracteres."
                     ],
                     'success' => [
                         'create' => 'Proveedor creado exitosamente',

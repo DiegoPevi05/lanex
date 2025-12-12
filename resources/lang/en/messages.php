@@ -276,7 +276,8 @@ It is important for every company involved in international trade to be trained 
         'supplier_section' => [
             'header' => 'Find Your Ideal Product',
             'title' => 'Some of Our Most Notable Suppliers',
-            'empty_content' => 'Currently no Suppliers to show'
+            'empty_content' => 'Currently no Suppliers to show',
+            'otherCategory' => 'Other category',
         ]
     ],
     'supplier' => [
@@ -1127,6 +1128,7 @@ It is important for every company involved in international trade to be trained 
                 ]
             ],
             'supplier' => [
+                'otherCategory' => 'other category',
                 'name' => 'supplier',
                 'new_entity' => 'new supplier',
                 'header' => "suppliers",
@@ -1136,6 +1138,7 @@ It is important for every company involved in international trade to be trained 
                 'dropdown' => [
                     'name' => 'name',
                     'description' => 'description',
+                    "category" => "Category"
                 ],
                 'form' => [
                     'headers' => [
@@ -1153,13 +1156,17 @@ It is important for every company involved in international trade to be trained 
                         'services' => 'services',
                         'add_product' => 'Add product',
                         'products' => 'products',
-                        'add_service' => 'Add service'
+                        'add_service' => 'Add service',
+                        'webpage' => 'Web Page',
+                        'category' => 'Category'
                     ],
                     'placeholders' => [
                         'name' => 'Enter Name',
                         'logo' => 'logo',
                         'description' => 'Enter description',
-                        'details' => 'Enter details'
+                        'details' => 'Enter details',
+                        'webpage' => 'Enter web supplier',
+                        'category' => 'Enter supplier category'
                     ],
                     'buttons' => [
                         'cancel' => 'cancel',
@@ -1181,6 +1188,10 @@ It is important for every company involved in international trade to be trained 
                         'details_min' => "The details should contain at least one detail.",
                         'details_item_string' => "The detail inside the details array should be string.",
                         'details_item_max' => "The detail inside the details array should be string of maxium 300 characters.",
+                        "webpage_url" => "The webpage must be a valid URL.",
+                        "webpage_max" => "The webpage may not be greater than 500 characters.",
+                        "category_string" => "The category must be a string.",
+                        "category_max" => "The category may not be greater than 120 characters."
                     ],
                     'success' => [
                         'create' => 'Create Supplier Successfully',

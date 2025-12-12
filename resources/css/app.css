@@ -913,3 +913,50 @@ background-color: var(--primary-color-dark);
   pointer-events:show;
   animation: showShipmentOptions 0.3s ease-out forwards;
 }
+
+
+/* Wrapper that animates height so layout doesn’t jump */
+.brand-panels-wrap {
+  position: relative;
+  overflow: hidden;
+  transition: height 280ms ease;
+  will-change: height;
+}
+
+/* Hidden panels take no space */
+.brand-panel.is-hidden {
+  display: none;
+}
+
+/* Base animated state */
+.brand-panel {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 280ms ease, transform 280ms ease;
+  will-change: opacity, transform;
+}
+
+/* Visible */
+.brand-panel.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Leaving */
+.brand-panel.is-leaving {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+}
+
+/* Temporary state used only to measure height without showing it */
+.brand-panel.is-measuring {
+  display: block !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  visibility: hidden;
+  pointer-events: none;
+}

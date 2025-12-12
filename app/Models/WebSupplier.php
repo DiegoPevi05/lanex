@@ -18,7 +18,9 @@ class WebSupplier extends Model
         'name',
         'logo',
         'description',
-        'details'
+        'details',
+        'webpage',
+        'category'
     ];
 
     public static function getFillableFields($validatedFields, Request $request, WebSupplier $entity = null)
@@ -44,6 +46,8 @@ class WebSupplier extends Model
             'logo' => $processImage('logo', $entity ? $entity->logo : null),
             'description' => $validatedFields['description'] ?? null,
             'details' => json_encode($validatedFields['details'] ?? []) ,
+            'webpage' => $validatedFields['webpage'] ?? null,
+            'category' => $validatedFields['category'] ?? null,
         ];
 
         // Sync suppliers if the suppliers field is provided in the request
@@ -99,6 +103,8 @@ class WebSupplier extends Model
             'description' => $isUpdate ? 'sometimes|required|string|max:400' : 'required|string|max:400',
             'details' => $isUpdate ? 'sometimes|array|min:1' : 'required|array|min:1',
             'details.*' => 'string|max:300',
+            'webpage' => 'nullable|url|max:500',
+            'category' => 'nullable|string|max:120'
         ];
     }
 
@@ -122,6 +128,12 @@ class WebSupplier extends Model
             'details.min' => __('messages.dashboard.web.supplier.form.validations.details_min'),
             'details.*.string' => __('messages.dashboard.web.supplier.form.validations.details_item_string'),
             'details.*.max' => __('messages.dashboard.web.supplier.form.validations.details_item_max'),
+
+            'webpage.url' => __('messages.dashboard.web.supplier.form.validations.webpage_url'),
+            'webpage.max' => __('messages.dashboard.web.supplier.form.validations.webpage_max'),
+
+            'category.string' => __('messages.dashboard.web.supplier.form.validations.category_string'),
+            'category.max' => __('messages.dashboard.web.supplier.form.validations.category_max'),
 
         ];
     }
@@ -183,6 +195,10 @@ class WebSupplier extends Model
                 'label' => 'messages.dashboard.web.supplier.dropdown.description',
                 'value' => 'description',
             ],
+            [
+                'label' => 'messages.dashboard.web.supplier.dropdown.category',
+                'value' => 'category',
+            ],
         ];
     }
 
@@ -198,6 +214,8 @@ class WebSupplier extends Model
             'logo' => $this->logo,
             'description' => $this->description,
             'details' => $this->details,
+            'webpage' => $this->webpage,
+            'category' => $this->category,
         ]);
     }
 
@@ -217,6 +235,8 @@ class WebSupplier extends Model
             'logo' => $data['logo'],
             'description' => $data['description'],
             'details' => $data['details'],
+            'webpage' => $data['webpage'] ?? null,
+            'category' => $data['category'] ?? null,
         ]);
     }
 

@@ -59,24 +59,45 @@
             </div>
         </div>
     </section>
-    <section id="about_us_statistics" class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 padding gap-x-6 animation-group">
-        <div class="col-span-1 flex flex-col items-start justify-center w-full animation-element text-animation">
-            <h1 class="font-bold text-primary">{{ __('messages.about.statistics.stats_1_value') }}</h1>
-            <span class="w-full xl:w-[80%] h-[3px] bg-primary"></span>
-            <h5 class="text-body">{{ __('messages.about.statistics.stats_1_label') }}</h5>
-        </div>
+    <section id="about_us_statistics"
+    class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 padding gap-x-6 gap-y-6 animation-group items-start">
 
-        <div class="col-span-1 flex flex-col items-start justify-center w-full animation-element text-animation">
-            <h1 class="font-bold text-primary">{{ __('messages.about.statistics.stats_2_value') }}</h1>
-            <span class="w-full xl:w-[80%] h-[3px] bg-primary"></span>
-            <h5 class="text-body">{{ __('messages.about.statistics.stats_2_label') }}</h5>
-        </div>
+    <div class="col-span-1 w-full animation-element text-animation grid grid-rows-[auto_auto_1fr] items-start">
+        <h1 class="font-bold text-primary leading-none">
+            {{ __('messages.about.statistics.stats_1_value') }}
+        </h1>
 
-        <div class="hidden col-span-1 xl:flex flex-col items-start justify-center w-full animation-element text-animation">
-            <h1 class="font-bold text-primary">{{ __('messages.about.statistics.stats_3_value') }}</h1>
-            <span class="w-full xl:w-[80%] h-[3px] bg-primary"></span>
-            <h5 class="text-body">{{ __('messages.about.statistics.stats_3_label') }}</h5>
-        </div>
+        <span class="w-full xl:w-[80%] h-[3px] bg-primary my-2"></span>
+
+        <h5 class="text-body leading-snug min-h-[3rem] sm:min-h-0">
+            {{ __('messages.about.statistics.stats_1_label') }}
+        </h5>
+    </div>
+
+    <div class="col-span-1 w-full animation-element text-animation grid grid-rows-[auto_auto_1fr] items-start">
+        <h1 class="font-bold text-primary leading-none">
+            {{ __('messages.about.statistics.stats_2_value') }}
+        </h1>
+
+        <span class="w-full xl:w-[80%] h-[3px] bg-primary my-2"></span>
+
+        <h5 class="text-body leading-snug min-h-[3rem] sm:min-h-0">
+            {{ __('messages.about.statistics.stats_2_label') }}
+        </h5>
+    </div>
+
+    <div class="hidden col-span-1 xl:grid w-full animation-element text-animation grid-rows-[auto_auto_1fr] items-start">
+        <h1 class="font-bold text-primary leading-none">
+            {{ __('messages.about.statistics.stats_3_value') }}
+        </h1>
+
+        <span class="w-full xl:w-[80%] h-[3px] bg-primary my-2"></span>
+
+        <h5 class="text-body leading-snug min-h-[3rem] sm:min-h-0">
+            {{ __('messages.about.statistics.stats_3_label') }}
+        </h5>
+    </div>
+
     </section>
     <x-calculator-shipping />
     <x-content-section

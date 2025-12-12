@@ -38,6 +38,36 @@
             <span class="text-primary font-bold text-xs error-message" id="error-description"></span>
         </div>
 
+        <!-- Category Field -->
+        <div class="mb-4 mt-4">
+            <label for="category" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.supplier.form.fields.category") }}</label>
+            <input
+                type="text"
+                id="category"
+                name="category"
+                class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('category', $supplier->category ?? '') }}"
+                placeholder="{{ __("messages.dashboard.web.supplier.form.placeholders.category") }}"
+                {{$formRequest === "view" ? "disabled" : ""}}
+            >
+            <span class="text-primary font-bold text-xs error-message" id="error-category"></span>
+        </div>
+
+        <!-- Webpage Field -->
+        <div class="mb-4 mt-4">
+            <label for="webpage" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.web.supplier.form.fields.webpage") }}</label>
+            <input
+                type="text"
+                id="webpage"
+                name="webpage"
+                class="mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body"
+                value="{{ old('webpage', $supplier->webpage ?? '') }}"
+                placeholder="{{ __("messages.dashboard.web.supplier.form.placeholders.webpage") }}"
+                {{$formRequest === "view" ? "disabled" : ""}}
+            >
+            <span class="text-primary font-bold text-xs error-message" id="error-webpage"></span>
+        </div>
+
         <p class="text-lg text-primary font-bold mt-4 capitalize">{{ __("messages.dashboard.web.supplier.form.fields.details") }}</p>
 
         <div class="my-4">

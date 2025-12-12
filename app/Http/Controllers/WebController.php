@@ -62,7 +62,7 @@ class WebController extends Controller
         });
 
         // Find the service by ID or throw a 404 error if not found
-        $suppliers = WebSupplier::select('id', 'name', 'logo')->get();
+        $suppliers = WebSupplier::select('id', 'name', 'logo','webpage','category')->get();
 
         return view('client.home', ['questions' => $questions, 'suppliers' => $suppliers, 'blogs' => $blogs, 'reviews' => $reviews]);
     }
