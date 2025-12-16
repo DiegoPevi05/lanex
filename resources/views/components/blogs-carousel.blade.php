@@ -79,9 +79,13 @@
             const previousButtonSpan = document.querySelector('.home_blogs .previous_button_span');
             const nextButtonSpan = document.querySelector('.home_blogs .next_button_span');
 
+            if (!bulletSelectors.length || !bulletSelectorProjects.length) return;
 
             //initialize the middle bullet or bullet 2 index with bg-primary
             const getMiddleBullet = Math.floor(bulletSelectors.length / 2);
+
+            if (!bulletSelectors[getMiddleBullet] || !bulletSelectorProjects[getMiddleBullet]) return;
+
             bulletSelectors[getMiddleBullet].classList.remove('bg-white');
             bulletSelectors[getMiddleBullet].classList.add('bg-primary');
             bulletSelectorProjects[getMiddleBullet].checked = true;
@@ -101,46 +105,50 @@
                 });
             });
 
-            // Previous button click handler
-            previousButtonSpan.addEventListener('click', () => {
-                let currentIndex = Array.from(bulletSelectorProjects).findIndex(selector => selector.checked);
+            if (previousButtonSpan) {
+                // Previous button click handler
+                previousButtonSpan.addEventListener('click', () => {
+                    let currentIndex = Array.from(bulletSelectorProjects).findIndex(selector => selector.checked);
 
-                // Calculate new index
-                let newIndex = currentIndex === 0 ? bulletSelectorProjects.length - 1 : currentIndex - 1;
-                // Update radio button and styling
-                bulletSelectorProjects[newIndex].checked = true;
-                bulletSelectors[newIndex].classList.add('bg-primary');
-                bulletSelectors[newIndex].classList.remove('bg-white');
-                // Remove styling from other selectors
-                bulletSelectors.forEach((selector, index) => {
-                    if (index !== newIndex) {
-                        selector.classList.add('bg-white');
-                        selector.classList.remove('bg-primary');
-                    }
+                    // Calculate new index
+                    let newIndex = currentIndex === 0 ? bulletSelectorProjects.length - 1 : currentIndex - 1;
+                    // Update radio button and styling
+                    bulletSelectorProjects[newIndex].checked = true;
+                    bulletSelectors[newIndex].classList.add('bg-primary');
+                    bulletSelectors[newIndex].classList.remove('bg-white');
+                    // Remove styling from other selectors
+                    bulletSelectors.forEach((selector, index) => {
+                        if (index !== newIndex) {
+                            selector.classList.add('bg-white');
+                            selector.classList.remove('bg-primary');
+                        }
+                    });
                 });
-            });
+            }
 
-            // Next button click handler
-            nextButtonSpan.addEventListener('click', () => {
-                let currentIndex = Array.from(bulletSelectorProjects).findIndex(selector => selector.checked);
 
-                // Calculate new index
-                let newIndex = currentIndex === bulletSelectorProjects.length - 1 ? 0 : currentIndex + 1;
+            if(nextButtonSpan){
+                // Next button click handler
+                nextButtonSpan.addEventListener('click', () => {
+                    let currentIndex = Array.from(bulletSelectorProjects).findIndex(selector => selector.checked);
 
-                // Update radio button and styling
-                bulletSelectorProjects[newIndex].checked = true;
-                bulletSelectors[newIndex].classList.add('bg-primary');
-                bulletSelectors[newIndex].classList.remove('bg-white');
+                    // Calculate new index
+                    let newIndex = currentIndex === bulletSelectorProjects.length - 1 ? 0 : currentIndex + 1;
 
-                // Remove styling from other selectors
-                bulletSelectors.forEach((selector, index) => {
-                    if (index !== newIndex) {
-                        selector.classList.add('bg-white');
-                        selector.classList.remove('bg-primary');
-                    }
+                    // Update radio button and styling
+                    bulletSelectorProjects[newIndex].checked = true;
+                    bulletSelectors[newIndex].classList.add('bg-primary');
+                    bulletSelectors[newIndex].classList.remove('bg-white');
+
+                    // Remove styling from other selectors
+                    bulletSelectors.forEach((selector, index) => {
+                        if (index !== newIndex) {
+                            selector.classList.add('bg-white');
+                            selector.classList.remove('bg-primary');
+                        }
+                    });
                 });
-            });
-
+            }
         });
 
     </script>

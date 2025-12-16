@@ -9,10 +9,14 @@ use App\Models\WebSupplier;
 use App\Models\WebReview;
 use App\Models\WebProduct;
 use App\Models\WebBlog;
+use App\Models\Subscription;
 use App\Notifications\CustomEmailNotification;
 use App\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Config;
+use Throwable;
 
 class WebController extends Controller
 {
@@ -492,6 +496,131 @@ class WebController extends Controller
             return redirect()->route('quote')->with('error', __('messages.quote.error'));
         }
 
+    }
+
+    public function submitSubscriptionForm(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email:rfc,dns|unique:subscriptions,email',
+        ], [
+            'email.required' => __('messages.subscribe.validation.email_required'),
+            'email.email'    => __('messages.subscribe.validation.email_valid'),
+            'email.unique'   => __('messages.subscribe.validation.email_unique'),
+        ]);
+
+        // Unique id to track this request in logs
+        $traceId = (string) Str::uuid();
+        $email = $validated['email'];
+
+        // Log mail config (SAFE fields only: never log password)
+        Log::info('[SUBSCRIBE] start', [
+            'traceId' => $traceId,
+            'subscriberEmail' => $email,
+            'appEnv' => config('app.env'),
+            'mail' => [
+                'default' => config('mail.default'),
+                'mailer' => config('mail.default'),
+                'host' => config('mail.mailers.smtp.host'),
+                'port' => config('mail.mailers.smtp.port'),
+                'encryption' => config('mail.mailers.smtp.encryption'),
+                'username' => config('mail.mailers.smtp.username'),
+                'from_address' => config('mail.from.address'),
+                'from_name' => config('mail.from.name'),
+            ],
+            'adminEmail' => config('app.admin_email') ?? env('APP_ADMIN_EMAIL'),
+        ]);
+
+        try {
+            // 1) Store subscription
+            Log::info('[SUBSCRIBE] creating subscription', [
+                'traceId' => $traceId,
+                'email' => $email,
+            ]);
+
+            $subscription = Subscription::create(['email' => $email]);
+
+            Log::info('[SUBSCRIBE] subscription created', [
+                'traceId' => $traceId,
+                'subscriptionId' => $subscription->id,
+            ]);
+
+            // 2) Email to user (thank you)
+            Log::info('[SUBSCRIBE] notifying user', [
+                'traceId' => $traceId,
+                'to' => $email,
+            ]);
+
+            $notifiableUser = new AnonymousNotifiable($email);
+            $notifiableUser->notify(new CustomEmailNotification(
+                __('messages.subscribe.mail.subject_user'),
+                __('messages.subscribe.mail.greeting_user'),
+                [ __('messages.subscribe.mail.intro_user_1') ],
+                null,
+                null,
+                [ __('messages.subscribe.mail.outro_user_1') ],
+                __('messages.subscribe.mail.salutation_user'),
+                'primary'
+            ));
+
+            Log::info('[SUBSCRIBE] user notified OK', [
+                'traceId' => $traceId,
+                'to' => $email,
+            ]);
+
+            // 3) Email to admin (new subscriber)
+            $adminEmail = env('APP_ADMIN_EMAIL'); // if config cached, consider moving to config/app.php (see note below)
+
+            Log::info('[SUBSCRIBE] notifying admin check', [
+                'traceId' => $traceId,
+                'adminEmail' => $adminEmail,
+                'hasAdminEmail' => !empty($adminEmail),
+            ]);
+
+            if ($adminEmail) {
+                Log::info('[SUBSCRIBE] notifying admin', [
+                    'traceId' => $traceId,
+                    'to' => $adminEmail,
+                ]);
+
+                $notifiableAdmin = new AnonymousNotifiable($adminEmail);
+                $notifiableAdmin->notify(new CustomEmailNotification(
+                    __('messages.subscribe.mail.subject_admin'),
+                    __('messages.subscribe.mail.greeting_admin'),
+                    [
+                        __('messages.subscribe.mail.intro_admin_1'),
+                        __('messages.subscribe.mail.intro_admin_2') . ' : ' . $email,
+                    ],
+                    null,
+                    null,
+                    [],
+                    null,
+                    'primary'
+                ));
+
+                Log::info('[SUBSCRIBE] admin notified OK', [
+                    'traceId' => $traceId,
+                    'to' => $adminEmail,
+                ]);
+            }
+
+            Log::info('[SUBSCRIBE] finished OK', ['traceId' => $traceId]);
+
+            return back()->with('success', __('messages.subscribe.success'));
+
+        } catch (Throwable $e) {
+            // Log full details (message + class + file/line + stack)
+            Log::error('[SUBSCRIBE] FAILED', [
+                'traceId' => $traceId,
+                'subscriberEmail' => $email,
+                'exception' => get_class($e),
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return back()->with('error', __('messages.subscribe.error'));
+        }
     }
 
     public function track()

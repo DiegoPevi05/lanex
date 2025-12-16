@@ -29,6 +29,7 @@ Route::get('/blogs/api', [WebController::class, 'getBlogs'])->name('blogs.get');
 Route::get('/blog/{id}', [WebController::class, 'blog'])->name('blog');
 Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 Route::post('/contact/submit', [WebController::class, 'submitContactForm'])->name('contact.submit');
+Route::post('/subscribe', [WebController::class, 'submitSubscriptionForm'])->name('subscribe.submit');
 Route::get('/track', [WebController::class, 'track'])->name('track');
 Route::get('/quote', [WebController::class, 'quote'])->name('quote');
 Route::post('/quote/submit', [WebController::class, 'QuoteForm'])->name('quote.submit');

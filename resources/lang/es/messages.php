@@ -13,6 +13,27 @@ return [
                 'track' => 'Rastrea tus envíos con Express Lane Logistic. Mantente informado sobre la ubicación y el estado de entrega de tu paquete en tiempo real con nuestro sistema confiable.',
                 'suppliers' => 'Explora nuestra red global de proveedores de confianza y encuentra productos de alta calidad para satisfacer las demandas de tu negocio.',
     ],
+    'subscribe' => [
+        'success' => '¡Gracias por suscribirte! Revisa tu correo.',
+        'error' => 'No pudimos procesar tu suscripción en este momento. Inténtalo nuevamente.',
+        'validation' => [
+            'email_required' => 'El correo es obligatorio.',
+            'email_valid' => 'Ingresa un correo válido.',
+            'email_unique' => 'Este correo ya está suscrito.',
+        ],
+        'mail' => [
+            'subject_user' => 'Suscripción confirmada',
+            'greeting_user' => '¡Hola!',
+            'intro_user_1' => 'Gracias por suscribirte a nuestro boletín.',
+            'outro_user_1' => 'Te mantendremos al tanto de novedades y actualizaciones.',
+            'salutation_user' => 'Saludos,',
+
+            'subject_admin' => 'Nuevo suscriptor al boletín',
+            'greeting_admin' => 'Hola Admin,',
+            'intro_admin_1' => 'Un nuevo usuario se suscribió al boletín.',
+            'intro_admin_2' => 'Correo',
+        ],
+    ],
     'aria_labels' => [
         'home' => 'Inicio',
         'aboutus' => 'Sobre nosotros',

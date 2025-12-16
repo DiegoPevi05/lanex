@@ -28,7 +28,11 @@ class TrackingStepFactory extends Factory
             'country' =>  $this->faker->country,
             'city' => $this->faker->city,
             'address' => $this->faker->address,
-            'status' => 'PENDING'
+            'status' => 'PENDING',
+            'lat'      => $this->faker->latitude(-90, 90),
+            'lng'      => $this->faker->longitude(-180, 180),
+            'eta'      => $this->faker->dateTimeBetween('+1 day', '+10 days'),
+            'duration' => $this->faker->numberBetween(1, 72),
         ];
     }
 

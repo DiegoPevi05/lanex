@@ -13,6 +13,27 @@ return [
         'track' => 'Track your shipments with Express Lane Logistic. Stay updated on your package’s location and delivery status in real-time with our reliable tracking system.',
         'suppliers' => 'Browse our global network of trusted suppliers and find high-quality products to meet your business demands.',
     ],
+    'subscribe' => [
+        'success' => 'Thanks for subscribing! Please check your email.',
+        'error' => 'We could not process your subscription right now. Please try again.',
+        'validation' => [
+            'email_required' => 'Email is required.',
+            'email_valid' => 'Please enter a valid email address.',
+            'email_unique' => 'This email is already subscribed.',
+        ],
+        'mail' => [
+            'subject_user' => 'Subscription confirmed',
+            'greeting_user' => 'Hello!',
+            'intro_user_1' => 'Thanks for subscribing to our newsletter.',
+            'outro_user_1' => 'We will keep you updated with news and updates.',
+            'salutation_user' => 'Regards,',
+
+            'subject_admin' => 'New newsletter subscriber',
+            'greeting_admin' => 'Hello Admin,',
+            'intro_admin_1' => 'A new user subscribed to the newsletter.',
+            'intro_admin_2' => 'Email',
+        ],
+    ],
     'aria_labels' => [
         'home' => 'Home',
         'aboutus' => 'About us',

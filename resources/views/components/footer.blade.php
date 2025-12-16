@@ -88,8 +88,25 @@
 
         <div class="hidden sm:flex col-span-1 flex-col gap-y-4 justify-start items-start">
             <span class="font-bold">{{ __('messages.footer.subscribe') }}</span>
-            <input placeholder="{{__('messages.footer.subscribe_placeholder')}}" class="w-full bg-body border-2 border-body rounded-md p-4 text-sm placeholder:text-secondary text-secondary" />
-            <x-button text="{{__('messages.footer.subscribe_btn')}}" variant="tertiary" url="#" extraClasses="uppercase py-4 w-full font-bold"/>
+
+            <form action="{{ route('subscribe.submit') }}" method="POST" class="w-full flex flex-col gap-y-4">
+                @csrf
+
+                <input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="{{ __('messages.footer.subscribe_placeholder') }}"
+                    class="w-full bg-body border-2 border-body rounded-md p-4 text-sm placeholder:text-secondary text-secondary"
+                />
+
+                <button
+                    type="submit"
+                    class="uppercase py-4 w-full font-bold rounded-md bg-primary-dark text-white hover:bg-secondary-dark duration-300 active:scale-95"
+                >
+                    {{ __('messages.footer.subscribe_btn') }}
+                </button>
+            </form>
         </div>
     </div>
     <div class="w-full h-auto flex flex-col justify-start items-start border-t-2 border-secondary-dark border-dashed gap-y-2">
@@ -100,3 +117,20 @@
     </div>
 </footer>
 
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        @if(session('success'))
+            showToast(["{{session('success')}}"]);
+        @endif
+
+        @if($errors->any())
+            showToast(@json($errors->all()));
+        @endif
+
+        @if(session('error'))
+            showToast(["{{session('error')}}"]);
+        @endif
+
+    });
+</script>
