@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "wa_link" => "https://w.app/jgekar",
+    "wa_link" => "https://wa.me/51992764991?text=Hola%20Lanex%2C%20quiero%20informacion%20sobre%20sus%20servicios%20logistico",
     'meta' => [
         'home' => 'Welcome to Express Lane Logistic, your trusted partner in global product imports. Simplify your logistics with our expert solutions.',
         'aboutus' => 'Discover Express Lane Logistic, a leader in global product imports. Learn about our mission to streamline your supply chain.',

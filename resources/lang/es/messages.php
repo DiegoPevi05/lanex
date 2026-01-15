@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "wa_link" => "https://w.app/vujkiq",
+    "wa_link" => "https://wa.me/51992764991?text=Hola%20Lanex%2C%20quiero%20informacion%20sobre%20sus%20servicios%20logistico",
     'meta' => [
         'home' => 'Bienvenido a Express Lane Logistic, tu socio confiable en importación de productos. Simplifica tu logística con nuestras soluciones expertas.',
                 'aboutus' => 'Descubre Express Lane Logistic, líder en importación de productos. Conoce nuestra misión de optimizar tu cadena de suministro.',
