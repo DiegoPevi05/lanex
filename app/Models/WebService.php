@@ -121,41 +121,41 @@ class WebService extends Model
     {
         return [
             'name' => $isUpdate ? 'sometimes|required|string' : 'required|string',
-            'icon' => $isUpdate ? 'sometimes|required|string' : 'required|string',
-            'short_description' => $isUpdate ? 'sometimes|required|string' : 'required|string',
-            'webcontent' => $isUpdate ? 'sometimes|required|array' : 'required|array',
+            'icon' => 'nullable|string',
+            'short_description' => 'nullable|string',
+            'webcontent' => 'nullable|array',
             'webcontent.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
-            'webcontent.header' => 'required|string',
-            'webcontent.title' => 'required|string',
-            'webcontent.description' => 'required|string',
+            'webcontent.header' => 'nullable|string',
+            'webcontent.title' => 'nullable|string',
+            'webcontent.description' => 'nullable|string',
 
             // Overview nested fields
-            'webcontent.overview.header' => 'required|string',
-            'webcontent.overview.title' => 'required|string',
+            'webcontent.overview.header' => 'nullable|string',
+            'webcontent.overview.title' => 'nullable|string',
             'webcontent.overview.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
-            'webcontent.overview.content.header' => 'required|string',
-            'webcontent.overview.content.introduction' => 'required|string',
-            'webcontent.overview.content.content' => 'required|string',
+            'webcontent.overview.content.header' => 'nullable|string',
+            'webcontent.overview.content.introduction' => 'nullable|string',
+            'webcontent.overview.content.content' => 'nullable|string',
 
             // Content link nested fields
-            'webcontent.content_link.header' => 'required|string',
-            'webcontent.content_link.title' => 'required|string',
-            'webcontent.content_link.button_label' => 'required|string',
+            'webcontent.content_link.header' => 'nullable|string',
+            'webcontent.content_link.title' => 'nullable|string',
+            'webcontent.content_link.button_label' => 'nullable|string',
             'webcontent.content_link.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
-            'webcontent.content_link.content' => 'required|string',
+            'webcontent.content_link.content' => 'nullable|string',
 
             // Keypoints nested fields
-            'webcontent.keypoints.header' => 'required|string',
-            'webcontent.keypoints.title' => 'required|string',
-            'webcontent.keypoints.points' => 'required|array|min:1|max:6',
-            'webcontent.keypoints.points.*.title' => 'required|string', // Title for each point
-            'webcontent.keypoints.points.*.content' => 'required|string', // Content for each point
+            'webcontent.keypoints.header' => 'nullable|string',
+            'webcontent.keypoints.title' => 'nullable|string',
+            'webcontent.keypoints.points' => 'nullable|array|max:6',
+            'webcontent.keypoints.points.*.title' => 'nullable|string', // Title for each point
+            'webcontent.keypoints.points.*.content' => 'nullable|string', // Content for each point
 
             // FAQs nested fields
-            'webcontent.faqs.title' => 'required|string',
-            'webcontent.faqs.questions' => 'required|array|min:1|max:6',
-            'webcontent.faqs.questions.*.question' => 'required|string',
-            'webcontent.faqs.questions.*.answer' => 'required|string',
+            'webcontent.faqs.title' => 'nullable|string',
+            'webcontent.faqs.questions' => 'nullable|array|max:6',
+            'webcontent.faqs.questions.*.question' => 'nullable|string',
+            'webcontent.faqs.questions.*.answer' => 'nullable|string',
         ];
     }
 

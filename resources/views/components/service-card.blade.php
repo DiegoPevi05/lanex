@@ -1,5 +1,8 @@
 <?php
-$svgContent = file_get_contents(storage_path('app/public/' . $icon));
+$svgContent = '';
+if (!empty($icon) && file_exists(storage_path('app/public/' . $icon))) {
+    $svgContent = file_get_contents(storage_path('app/public/' . $icon));
+}
 ?>
 
 <a href="{{ route('service', $id) }}"

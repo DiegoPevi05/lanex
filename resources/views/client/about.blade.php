@@ -28,7 +28,10 @@
                                 <!-- Render right icon using Blade UI Kit -->
 
                                 <?php
-                                    $svgContent = file_get_contents(storage_path('app/public/' . $services[0]['icon'] ));
+                                    $svgContent = '';
+                                    if (!empty($services[0]['icon']) && file_exists(storage_path('app/public/' . $services[0]['icon']))) {
+                                        $svgContent = file_get_contents(storage_path('app/public/' . $services[0]['icon']));
+                                    }
                                 ?>
                                 <span class="ml-2 w-6 sm:w-8 h-6 sm:h-8">
                                     {!! $svgContent !!}
@@ -47,7 +50,10 @@
                                 <!-- Render right icon using Blade UI Kit -->
 
                                 <?php
-                                    $svgContent2 = file_get_contents(storage_path('app/public/' . $services[1]['icon'] ));
+                                    $svgContent2 = '';
+                                    if (!empty($services[1]['icon']) && file_exists(storage_path('app/public/' . $services[1]['icon']))) {
+                                        $svgContent2 = file_get_contents(storage_path('app/public/' . $services[1]['icon']));
+                                    }
                                 ?>
                                 <span class="ml-2 w-6 sm:w-8 h-6 sm:h-8">
                                     {!! $svgContent2 !!}

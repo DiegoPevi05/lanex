@@ -3,15 +3,20 @@
 
 @section('content-client')
     <section id="blog-hero-section" class="w-full flex flex-col h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
-
-        <img src="{{ asset('storage/'. $blog->featured_image)}}" alt="suppliers_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
+        @if(!empty($blog->featured_image))
+            <img src="{{ asset('storage/'. $blog->featured_image)}}" alt="suppliers_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
+        @else
+            <div class="w-full h-full absolute top-0 left-0 right-0 bottom-0 bg-slate-700 z-20"></div>
+        @endif
         <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
             <div class="w-full h-full flex flex-col justify-center gap-y-12 animation-group">
 
                 <div class="w-full h-auto flex flex-col justify-center items-center gap-y-4 animation-element slide-in-up">
                     <div class="w-full h-auto flex flex-col gap-y-2 justify-center items-start lg:items-center">
                         <h5 class="font-bold text-left lg:text-center text-3xl">{{ $blog->title }}</h5>
-                        <h1 class="font-bold text-left lg:text-center text-5xl">{{ $blog->sub_header }}</h1>
+                        @if(!empty($blog->sub_header))
+                            <h1 class="font-bold text-left lg:text-center text-5xl">{{ $blog->sub_header }}</h1>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -43,9 +48,11 @@
                     <p class="text-left text-lg text-gray-500">{{ $contentItem['content'] }}</p>
                 @endforeach
             @endif
-            <p class="text-gray-500 mt-auto text-lg">
-                {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong>
-            </p>
+            @if(!empty($blog->author))
+                <p class="text-gray-500 mt-auto text-lg">
+                    {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong>
+                </p>
+            @endif
         </div>
     </section>
 @endsection

@@ -28,11 +28,17 @@ Route::get('/blogs', [WebController::class, 'blogs'])->name('blogs');
 Route::get('/blogs/api', [WebController::class, 'getBlogs'])->name('blogs.get');
 Route::get('/blog/{id}', [WebController::class, 'blog'])->name('blog');
 Route::get('/contact', [WebController::class, 'contact'])->name('contact');
-Route::post('/contact/submit', [WebController::class, 'submitContactForm'])->name('contact.submit');
-Route::post('/subscribe', [WebController::class, 'submitSubscriptionForm'])->name('subscribe.submit');
+Route::post('/contact/submit', [WebController::class, 'submitContactForm'])
+    ->middleware('throttle:3,1')
+    ->name('contact.submit');
+Route::post('/subscribe', [WebController::class, 'submitSubscriptionForm'])
+    ->middleware('throttle:3,1')
+    ->name('subscribe.submit');
 Route::get('/track', [WebController::class, 'track'])->name('track');
 Route::get('/quote', [WebController::class, 'quote'])->name('quote');
-Route::post('/quote/submit', [WebController::class, 'QuoteForm'])->name('quote.submit');
+Route::post('/quote/submit', [WebController::class, 'QuoteForm'])
+    ->middleware('throttle:3,1')
+    ->name('quote.submit');
 
 Route::get('/track/order',[OrderController::class,'searchOrder'])->name('order.search');
 Route::get('/track-flight', [WebController::class, 'trackFlight'])->name('track-flight');

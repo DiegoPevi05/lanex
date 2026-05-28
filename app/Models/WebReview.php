@@ -67,10 +67,10 @@ class WebReview extends Model
     {
         return [
             'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'charge' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
-            'date_review' => $isUpdate ? 'sometimes|required|date' : 'required|date',
-            'review' => $isUpdate ? 'sometimes|required|string|max:500' : 'required|string|max:500',
-            'stars' => $isUpdate ? 'sometimes|required|integer|min:1|max:5' : 'required|integer|min:1|max:5',
+            'charge' => 'nullable|string|max:255',
+            'date_review' => 'nullable|date',
+            'review' => 'nullable|string|max:500',
+            'stars' => 'nullable|integer|min:1|max:5',
         ];
     }
 

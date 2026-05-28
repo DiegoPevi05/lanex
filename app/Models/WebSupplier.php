@@ -100,8 +100,8 @@ class WebSupplier extends Model
         return [
             'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'description' => $isUpdate ? 'sometimes|required|string|max:400' : 'required|string|max:400',
-            'details' => $isUpdate ? 'sometimes|array|min:1' : 'required|array|min:1',
+            'description' => 'nullable|string|max:400',
+            'details' => 'nullable|array',
             'details.*' => 'string|max:300',
             'webpage' => 'nullable|url|max:500',
             'category' => 'nullable|string|max:120'

@@ -93,8 +93,8 @@ class WebProduct extends Model
         return [
             'name' => $isUpdate ? 'sometimes|required|string|max:255' : 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'stars' => $isUpdate ? 'sometimes|required|integer|min:1|max:5' : 'required|integer|min:1|max:5',
-            'description' => $isUpdate ? 'sometimes|required|string|max:600' : 'required|string|max:600',
+            'stars' => 'nullable|integer|min:1|max:5',
+            'description' => 'nullable|string|max:600',
         ];
     }
 
@@ -133,9 +133,6 @@ class WebProduct extends Model
         // Return the translated message using __() helper
         return isset($messages[$action]) ? __($messages[$action]) : '';
     }
-
-
-
 
     /**
      * Get error messages for CRUD operations.
