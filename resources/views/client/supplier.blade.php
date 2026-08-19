@@ -3,10 +3,10 @@
 
 
 @section('content-client')
-    <section id="suppliers_hero_section" class="w-full flex flex-col bg-slate-700 h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
+    <section id="suppliers_hero_section" class="w-full flex flex-col bg-slate-700 min-h-[100svh] pt-[80px] xl:pt-[140px] relative z-10 text-white">
         <img src="{{ asset('storage/'. '/images/web/supplier.webp') }}" alt="supplier_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
-        <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30 bg-transparent">
-            <div class="w-full h-full flex flex-col-reverse xl:flex-row justify-center gap-y-12">
+        <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] padding-x padding-b z-30 bg-transparent">
+            <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] flex flex-col-reverse xl:flex-row justify-center gap-y-12">
 
                 <div class="w-full xl:w-full h-auto flex flex-col justify-end items-center gap-y-4 animation-element slide-in-up">
                     <div class="bg-transparent w-full xl:w-[350px] h-auto x:h-[500px] hover:-translate-y-[20px] duration-300">

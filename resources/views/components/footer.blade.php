@@ -17,6 +17,24 @@
                 </div>
             </a>
             <p class="text-justify">{{ __('messages.footer.caption') }}</p>
+            <div class="flex flex-col gap-y-2">
+                <a href="tel:+51992764991"
+                    class="flex flex-row items-center gap-x-2 hover:text-primary duration-300"
+                    aria-label="{{ __('messages.aria_labels.call') }}"
+                    title="{{ __('messages.titles.call') }}"
+                    >
+                    <x-heroicon-o-phone class="h-4 w-4 flex-shrink-0" />
+                    <span class="font-bold">+51 992 764 991</span>
+                </a>
+                <a href="mailto:operaciones@lanexsac.com"
+                    class="flex flex-row items-center gap-x-2 hover:text-primary duration-300"
+                    aria-label="{{ __('messages.aria_labels.email') }}"
+                    title="{{ __('messages.titles.email') }}"
+                    >
+                    <x-heroicon-o-envelope class="h-4 w-4 flex-shrink-0" />
+                    <span class="font-bold break-all">operaciones@lanexsac.com</span>
+                </a>
+            </div>
             <div class="flex flex-row gap-x-4">
                 <a href="https://www.linkedin.com/company/expresslane-logistics-s-a-c/" target="_blank"
             aria-label="{{  __('messages.aria_labels.linkedin') }}"

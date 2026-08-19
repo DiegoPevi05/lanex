@@ -2,11 +2,11 @@
 @extends('layouts.client')
 
 @section('content-client')
-    <section id="blog-hero-section" class="w-full flex flex-col h-screen pt-[80px] xl:pt-[140px] relative z-10 text-white">
+    <section id="blog-hero-section" class="w-full flex flex-col min-h-[100svh] pt-[80px] xl:pt-[140px] relative z-10 text-white">
 
         <img src="{{ asset('storage/'. 'images/web/cosco.webp')}}" alt="suppliers_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
-        <div class="w-full h-[calc(100vh-80px)] xl:h-[calc(100vh-140px)] padding-x padding-b z-30">
-            <div class="w-full h-full flex flex-col justify-center gap-y-12 animation-group">
+        <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] padding-x padding-b z-30">
+            <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] flex flex-col justify-center gap-y-12 animation-group">
 
                 <div class="w-full h-auto flex flex-col justify-center items-center gap-y-4 animation-element slide-in-up">
                     <div class="w-full h-auto flex flex-col gap-y-2 justify-center items-start lg:items-center">

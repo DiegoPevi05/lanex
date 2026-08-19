@@ -121,6 +121,25 @@
                 ><h4 class="font-bold hover:text-primary-dark duration-300 cursor-pointer text-nowrap">{{ __('messages.navbar.contact') }}</h4></a>
         </div>
 
+        <div class="w-full h-auto flex flex-col gap-y-3 bg-secondary rounded-xl p-4 mt-6 sm:mt-8">
+            <a href="tel:+51992764991"
+                class="flex flex-row items-center gap-x-3 text-primary-dark hover:text-primary duration-300"
+                aria-label="{{ __('messages.aria_labels.call') }}"
+                title="{{ __('messages.titles.call') }}"
+                >
+                <x-heroicon-o-phone class="h-5 w-5 flex-shrink-0" />
+                <span class="font-bold">+51 992 764 991</span>
+            </a>
+            <a href="mailto:operaciones@lanexsac.com"
+                class="flex flex-row items-center gap-x-3 text-primary-dark hover:text-primary duration-300"
+                aria-label="{{ __('messages.aria_labels.email') }}"
+                title="{{ __('messages.titles.email') }}"
+                >
+                <x-heroicon-o-envelope class="h-5 w-5 flex-shrink-0" />
+                <span class="font-bold break-all">operaciones@lanexsac.com</span>
+            </a>
+        </div>
+
         <a href={{ Auth::user() ? route('dashboard_home') : route('login') }}
             class="h-8 w-auto text-primary hover:text-primary-dark mr-auto my-4"
             aria-label="{{ Auth::user() ? __('messages.aria_labels.dashboard') : __('messages.aria_labels.login') }}"

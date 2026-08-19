@@ -3,14 +3,14 @@
 return [
     "wa_link" => "https://wa.me/51992764991?text=Hola%20Lanex%2C%20quiero%20informacion%20sobre%20sus%20servicios%20logistico",
     'meta' => [
-        'home' => 'Welcome to Express Lane Logistic, your trusted partner in global product imports. Simplify your logistics with our expert solutions.',
-        'aboutus' => 'Discover Express Lane Logistic, a leader in global product imports. Learn about our mission to streamline your supply chain.',
+        'home' => 'Welcome to ExpressLane Logistics S.A.C., your trusted partner in global product imports. Simplify your logistics with our expert solutions.',
+        'aboutus' => 'Discover ExpressLane Logistics S.A.C., a leader in global product imports. Learn about our mission to streamline your supply chain.',
         'services' => 'Explore our tailored services in import logistics, customs management, and global supply chain solutions.',
         'service' => 'Learn about our specialized import services designed to meet your business needs with efficiency and reliability.',
-        'supplier' => 'Connect with reliable suppliers and source high-quality products through Express Lane Logistic’s trusted network.',
-        'contactus' => 'Have questions? Contact Express Lane Logistic for expert support in your product import projects.',
-        'quote' => 'Request a personalized quote from Express Lane Logistic. Competitive prices and tailored import solutions await.',
-        'track' => 'Track your shipments with Express Lane Logistic. Stay updated on your package’s location and delivery status in real-time with our reliable tracking system.',
+        'supplier' => 'Connect with reliable suppliers and source high-quality products through ExpressLane Logistics S.A.C.’s trusted network.',
+        'contactus' => 'Have questions? Contact ExpressLane Logistics S.A.C. for expert support in your product import projects.',
+        'quote' => 'Request a personalized quote from ExpressLane Logistics S.A.C. Competitive prices and tailored import solutions await.',
+        'track' => 'Track your shipments with ExpressLane Logistics S.A.C. Stay updated on your package’s location and delivery status in real-time with our reliable tracking system.',
         'suppliers' => 'Browse our global network of trusted suppliers and find high-quality products to meet your business demands.',
     ],
     'subscribe' => [
@@ -48,6 +48,8 @@ return [
         'tiktok' => 'Go to TikTok',
         'quote' => 'Go to Quote',
         'whatsapp' => 'Chat with us on Whatsapp',
+        'call' => 'Call us',
+        'email' => 'Email us',
         'default' => 'LanEx page link to another section'
     ],
     'titles' => [
@@ -64,6 +66,8 @@ return [
         'tiktok' => 'Go to TikTok',
         'quote' => 'Go to Quote',
         'whatsapp' => 'Chat with us on Whatsapp',
+        'call' => 'Call us',
+        'email' => 'Email us',
         'default' => 'LanEx page link to another section'
     ],
     'common' => [
@@ -262,7 +266,25 @@ It is important for every company involved in international trade to be trained 
             'title' => 'International Logistics Consulting',
             'button_label' => 'GET A QUOTE',
             'content' => 'At LanEx, we will address all your inquiries promptly. We strive to be present at every stage of the logistics process to answer all your questions and doubts, achieving goals in terms of time and costs.'
-        ]
+        ],
+        'pillars' => [
+            'header' => 'Our Pillars',
+            'title' => 'Knowledge, innovation and technology in service of your cargo',
+            'items' => [
+                'knowledge' => [
+                    'title' => 'Knowledge',
+                    'content' => 'Over 10 years of experience in foreign trade and customs stand behind every operation we manage.',
+                ],
+                'innovation' => [
+                    'title' => 'Innovation',
+                    'content' => 'We design logistics solutions tailored to each client, never a rigid, one-size-fits-all process.',
+                ],
+                'technology' => [
+                    'title' => 'Technology',
+                    'content' => 'Digital tools back the tracking and management of your operations, so you always know where your cargo is.',
+                ],
+            ],
+        ],
     ],
     'services' => [
         'header' => 'WE ARE THE BEST LOGISTICS COMPANY',

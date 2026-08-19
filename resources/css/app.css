@@ -241,6 +241,23 @@ caption{
 
 
 
+/* Phones in landscape (short viewport height): reclaim vertical space so
+   hero content settles comfortably instead of stretching a tall, mostly-empty section. */
+@media (orientation: landscape) and (max-height: 500px) {
+    .padding-x {
+        padding: 0px 30px;
+    }
+    .padding-b {
+        padding-bottom: 24px;
+    }
+    .padding-y {
+        padding: 24px 0px;
+    }
+    .padding {
+        padding: 24px 30px;
+    }
+}
+
 .no-scroll-bar::-webkit-scrollbar {
   display: none;
 }

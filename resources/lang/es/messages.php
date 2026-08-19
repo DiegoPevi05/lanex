@@ -3,14 +3,14 @@
 return [
     "wa_link" => "https://wa.me/51992764991?text=Hola%20Lanex%2C%20quiero%20informacion%20sobre%20sus%20servicios%20logistico",
     'meta' => [
-        'home' => 'Bienvenido a Express Lane Logistic, tu socio confiable en importación de productos. Simplifica tu logística con nuestras soluciones expertas.',
-                'aboutus' => 'Descubre Express Lane Logistic, líder en importación de productos. Conoce nuestra misión de optimizar tu cadena de suministro.',
+        'home' => 'Bienvenido a ExpressLane Logistics S.A.C., tu socio confiable en importación de productos. Simplifica tu logística con nuestras soluciones expertas.',
+                'aboutus' => 'Descubre ExpressLane Logistics S.A.C., líder en importación de productos. Conoce nuestra misión de optimizar tu cadena de suministro.',
                 'services' => 'Explora nuestros servicios personalizados en logística de importación, gestión aduanera y soluciones de cadena de suministro global.',
                 'service' => 'Conoce nuestros servicios especializados de importación diseñados para satisfacer las necesidades de tu negocio con eficiencia y confiabilidad.',
-                'supplier' => 'Conecta con proveedores confiables y adquiere productos de alta calidad a través de la red de confianza de Express Lane Logistic.',
-                'contactus' => '¿Tienes preguntas? Contacta a Express Lane Logistic para obtener soporte experto en tus proyectos de importación de productos.',
-                'quote' => 'Solicita una cotización personalizada de Express Lane Logistic. Precios competitivos y soluciones a medida te esperan.',
-                'track' => 'Rastrea tus envíos con Express Lane Logistic. Mantente informado sobre la ubicación y el estado de entrega de tu paquete en tiempo real con nuestro sistema confiable.',
+                'supplier' => 'Conecta con proveedores confiables y adquiere productos de alta calidad a través de la red de confianza de ExpressLane Logistics S.A.C.',
+                'contactus' => '¿Tienes preguntas? Contacta a ExpressLane Logistics S.A.C. para obtener soporte experto en tus proyectos de importación de productos.',
+                'quote' => 'Solicita una cotización personalizada de ExpressLane Logistics S.A.C. Precios competitivos y soluciones a medida te esperan.',
+                'track' => 'Rastrea tus envíos con ExpressLane Logistics S.A.C. Mantente informado sobre la ubicación y el estado de entrega de tu paquete en tiempo real con nuestro sistema confiable.',
                 'suppliers' => 'Explora nuestra red global de proveedores de confianza y encuentra productos de alta calidad para satisfacer las demandas de tu negocio.',
     ],
     'subscribe' => [
@@ -48,6 +48,8 @@ return [
         'tiktok' => 'Ir a TikTok',
         'quote' => 'Ir a Cotizar',
         'whatsapp' => 'Chatea con nosotros en whatsapp',
+        'call' => 'Llámanos',
+        'email' => 'Envíanos un correo',
         'default' => 'Enlace de LanEx a otra sección'
     ],
     'titles' => [
@@ -64,6 +66,8 @@ return [
         'tiktok' => 'Ir a TikTok',
         'quote' => 'Ir a Cotizar',
         'whatsapp' => 'Chatea con nosotros en whatsapp',
+        'call' => 'Llámanos',
+        'email' => 'Envíanos un correo',
         'default' => 'Enlace de LanEx a otra sección'
     ],
     'common' => [
@@ -272,7 +276,25 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'title' => 'Asesoría en Logística Internacional',
             'button_label' => 'OBTENER COTIZACIÓN',
             'content' => 'En LanEx, resolveremos todas tus consultas de forma oportuna. Buscamos estar en todas las fases del proceso logístico para responder todas tus inquietudes y dudas; logrando así los objetivos en tiempos y costos.'
-        ]
+        ],
+        'pillars' => [
+            'header' => 'Nuestros Pilares',
+            'title' => 'Conocimiento, innovación y tecnología al servicio de tu carga',
+            'items' => [
+                'knowledge' => [
+                    'title' => 'Conocimiento',
+                    'content' => 'Más de 10 años de experiencia en comercio exterior y aduanas respaldan cada operación que gestionamos.',
+                ],
+                'innovation' => [
+                    'title' => 'Innovación',
+                    'content' => 'Diseñamos soluciones logísticas a la medida de cada cliente, sin procesos rígidos ni de talla única.',
+                ],
+                'technology' => [
+                    'title' => 'Tecnología',
+                    'content' => 'Seguimiento y gestión de tus operaciones apoyados en herramientas digitales, para que siempre sepas dónde está tu carga.',
+                ],
+            ],
+        ],
     ],
     'services' => [
         'header' => 'SOMOS LA MEJOR COMPAÑIA DE LOGISTICA',
