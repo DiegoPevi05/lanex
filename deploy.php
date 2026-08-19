@@ -23,6 +23,7 @@ $pathsToSync = [
     'routes',
     'config',
     'database/migrations',
+    'database/seeders',
     'artisan',
 ];
 
