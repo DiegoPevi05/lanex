@@ -16,7 +16,10 @@ if (!$targetDir) {
     die("Error: Target directory 'public_html' not found relative to " . $sourceDir . PHP_EOL);
 }
 
-// Essential paths to sync for this update
+// Essential paths to sync for this update.
+// Plain entries sync to the same relative path on the target.
+// 'src' => 'dst' entries let the target path differ from the source
+// (public_html's document root is flattened, so public/build ships to build/).
 $pathsToSync = [
     'app',
     'resources',
@@ -25,6 +28,7 @@ $pathsToSync = [
     'database/migrations',
     'database/seeders',
     'artisan',
+    'public/build' => 'build',
 ];
 
 /**
@@ -55,15 +59,18 @@ echo "--- Starting Deployment Sync ---" . PHP_EOL;
 echo "Source: $sourceDir" . PHP_EOL;
 echo "Target: $targetDir" . PHP_EOL;
 
-foreach ($pathsToSync as $path) {
-    $srcPath = $sourceDir . DIRECTORY_SEPARATOR . $path;
-    $dstPath = $targetDir . DIRECTORY_SEPARATOR . $path;
+foreach ($pathsToSync as $key => $path) {
+    $srcRelative = is_int($key) ? $path : $key;
+    $dstRelative = $path;
+
+    $srcPath = $sourceDir . DIRECTORY_SEPARATOR . $srcRelative;
+    $dstPath = $targetDir . DIRECTORY_SEPARATOR . $dstRelative;
 
     if (file_exists($srcPath)) {
-        echo "Syncing: $path..." . PHP_EOL;
+        echo "Syncing: $srcRelative -> $dstRelative..." . PHP_EOL;
         syncRecursive($srcPath, $dstPath);
     } else {
-        echo "Skip: $path (Source not found)" . PHP_EOL;
+        echo "Skip: $srcRelative (Source not found)" . PHP_EOL;
     }
 }
 
