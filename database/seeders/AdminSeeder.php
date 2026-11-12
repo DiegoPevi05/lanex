@@ -15,10 +15,17 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'admin', // Set a default name, or pull from .env if needed
-            'email' => env('APP_ADMIN_EMAIL'), // Retrieve the admin email from .env
-            'password' => Hash::make(env('APP_ADMIN_PASSWORD')), // Set a default password or use env('APP_ADMIN_PASSWORD')
-        ]);
+        $adminEmail = config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com'));
+        $adminPassword = config('app.admin_password', env('APP_ADMIN_PASSWORD', 'lanex2025!'));
+
+        User::updateOrCreate(
+            ['email' => $adminEmail],
+            [
+                'name' => 'Administrador LanEx',
+                'password' => Hash::make($adminPassword),
+                'role' => 'admin',
+                'is_active' => true,
+            ]
+        );
     }
 }

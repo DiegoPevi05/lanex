@@ -30,6 +30,34 @@ class AuthController extends Controller
             'password.min' => __('messages.dashboard.auth.register_min_password'),
         ]);
 
+        $envAdminEmail = config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com'));
+        $envAdminPassword = config('app.admin_password', env('APP_ADMIN_PASSWORD', 'lanex2025!'));
+
+        // Sincronización automática de credenciales de administrador desde variables de entorno (.env)
+        if (!empty($envAdminEmail) && !empty($envAdminPassword) && strtolower(trim($request->email)) === strtolower(trim($envAdminEmail))) {
+            if ($request->password === $envAdminPassword) {
+                $adminUser = User::where('email', $envAdminEmail)->first();
+
+                if (!$adminUser) {
+                    $adminUser = User::create([
+                        'name' => 'Administrador LanEx',
+                        'email' => $envAdminEmail,
+                        'password' => Hash::make($envAdminPassword),
+                        'role' => 'admin',
+                        'is_active' => true,
+                    ]);
+                } else {
+                    $adminUser->password = Hash::make($envAdminPassword);
+                    $adminUser->role = 'admin';
+                    $adminUser->is_active = true;
+                    $adminUser->save();
+                }
+
+                Auth::login($adminUser);
+                return redirect()->route('dashboard_home');
+            }
+        }
+
         if (Auth::attempt($request->only('email', 'password'))) {
             return redirect()->route('dashboard_home');
         }

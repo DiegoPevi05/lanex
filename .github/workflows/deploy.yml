@@ -140,8 +140,12 @@ jobs:
           echo "Ejecutando migraciones de base de datos..."
           php artisan migrate --force
 
-          # Poblar o actualizar datos de producción (servicios, proveedores, productos, blogs, reseñas)
-          echo "Poblando datos de producción (servicios, proveedores, productos, blogs)..."
+          # Crear / sincronizar usuario administrador
+          echo "Sincronizando usuario administrador..."
+          php artisan db:seed --class=AdminSeeder --force
+
+          # Poblar o actualizar datos de producción (servicios, proveedores, productos, blogs, reseñas, settings)
+          echo "Poblando datos de producción (servicios, proveedores, productos, blogs, settings)..."
           php artisan db:seed --class=LanexProductionSeeder --force
 
           # Asegurar permisos correctos en almacenamiento y multimedia

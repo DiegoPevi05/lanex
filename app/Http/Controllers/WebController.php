@@ -337,7 +337,7 @@ class WebController extends Controller
 
             $notifiable->notify($notification);
 
-            $adminEmails = Setting::getEmails('contact_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+            $adminEmails = Setting::getEmails('contact_notification_email', config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com')));
             $notification_admin = new CustomEmailNotification(
                 __('messages.contact.mail.subject_admin'),
                 __('messages.contact.mail.greeting_admin'),
@@ -423,7 +423,7 @@ class WebController extends Controller
             $notifiableConsumer->notify($notificationConsumer);
 
             // 2. Send notification to configured claims admin email(s)
-            $claimsEmails = Setting::getEmails('claims_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+            $claimsEmails = Setting::getEmails('claims_notification_email', config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com')));
             $notificationAdmin = new CustomEmailNotification(
                 "⚠️ [Nuevo Registro en Libro de Reclamaciones] {$claimCode} — " . strtoupper($validatedData['claim_type']),
                 "Atención Equipo de Operaciones y Legal LanEx,",
@@ -568,7 +568,7 @@ class WebController extends Controller
 
             $notifiable->notify($notification);
 
-            $quoteEmails = Setting::getEmails('quote_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+            $quoteEmails = Setting::getEmails('quote_notification_email', config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com')));
 
             $introLinesAdmin = [
                 __('messages.quote.mail.intro_admin_1'),
@@ -657,7 +657,7 @@ class WebController extends Controller
             ));
 
             // 3) Email to admin(s)
-            $adminEmails = Setting::getEmails('contact_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+            $adminEmails = Setting::getEmails('contact_notification_email', config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com')));
             $notificationAdmin = new CustomEmailNotification(
                 '📰 [Nuevo Suscriptor Web] ' . $email,
                 'Hola Equipo LanEx,',

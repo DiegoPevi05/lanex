@@ -32,12 +32,37 @@ class LanexProductionSeeder extends Seeder
     {
         $this->command?->info('Iniciando carga de datos de producción LanEx...');
 
+        $this->seedSettings();
         $this->seedServices();
         $this->seedSuppliersAndProducts();
         $this->seedBlogs();
         $this->seedReviews();
 
         $this->command?->info('✓ Datos de producción cargados exitosamente.');
+    }
+
+    /**
+     * Default Notification & Company Settings
+     */
+    public function seedSettings(): void
+    {
+        $defaultEmail = config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com'));
+
+        $defaults = [
+            'quote_notification_email' => $defaultEmail,
+            'claims_notification_email' => $defaultEmail,
+            'contact_notification_email' => $defaultEmail,
+            'company_phone' => '+51 1 700 8900',
+            'company_whatsapp' => '+51 987 654 321',
+            'company_address' => 'Av. Elmer Faucett s/n, Callao, Lima - Perú',
+        ];
+
+        foreach ($defaults as $key => $val) {
+            \App\Models\Setting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $val, 'group' => str_contains($key, '_email') ? 'notifications' : 'general']
+            );
+        }
     }
 
     /**

@@ -16,11 +16,12 @@ class SettingController extends Controller
      */
     public function index()
     {
+        $defaultEmail = config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com'));
         $settings = [
-            'quote_notification_email' => Setting::get('quote_notification_email', 'diegopevi05@gmail.com'),
-            'claims_notification_email' => Setting::get('claims_notification_email', 'diegopevi05@gmail.com'),
-            'contact_notification_email' => Setting::get('contact_notification_email', 'diegopevi05@gmail.com'),
-            'company_phone' => Setting::get('company_phone', '+51 987 654 321'),
+            'quote_notification_email' => Setting::get('quote_notification_email', $defaultEmail),
+            'claims_notification_email' => Setting::get('claims_notification_email', $defaultEmail),
+            'contact_notification_email' => Setting::get('contact_notification_email', $defaultEmail),
+            'company_phone' => Setting::get('company_phone', '+51 1 700 8900'),
             'company_whatsapp' => Setting::get('company_whatsapp', '+51 987 654 321'),
             'company_address' => Setting::get('company_address', 'Av. Elmer Faucett s/n, Callao, Lima - Perú'),
         ];
@@ -99,7 +100,7 @@ class SettingController extends Controller
 
         $type = $request->input('type');
         $settingKey = $type . '_notification_email';
-        $emails = Setting::getEmails($settingKey, env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+        $emails = Setting::getEmails($settingKey, config('app.admin_email', env('APP_ADMIN_EMAIL', 'operaciones@lanexsac.com')));
 
         if (empty($emails)) {
             return back()->withErrors(['test' => 'No hay correos válidos configurados para esta sección.']);
