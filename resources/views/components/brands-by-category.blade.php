@@ -1,216 +1,111 @@
 @php
-    // Fallback label for suppliers without category
-
-    $otherCategory = __('messages.suppliers.supplier_section.otherCategory');
-
     $suppliersCollection = collect($suppliers ?? []);
 
-    $grouped = $suppliersCollection->groupBy(function ($s) use ($otherCategory) {
-        $cat = is_string($s->category ?? null) ? trim($s->category) : '';
-        return $cat !== '' ? $cat : $otherCategory;
-    });
-
-    // Keep categories in a stable order, with "Other category" at the end
-    $categories = $grouped->keys()->values()->all();
-    usort($categories, function ($a, $b) use ($otherCategory) {
-        if ($a === $otherCategory) return 1;
-        if ($b === $otherCategory) return -1;
-        return strcasecmp($a, $b);
-    });
-
-    $defaultCategory = $categories[0] ?? $otherCategory;
+    $categories = $suppliersCollection->pluck('category')->filter()->unique()->values()->all();
+    sort($categories);
 @endphp
 
-<section id="brands_by_category" class="w-full bg-secondary px-6 sm:px-24 py-24 flex flex-col justify-center items-center gap-y-10">
-    @if(!empty($title))
-        <h3 class="text-center font-bold uppercase text-primary-dark">{{ $title }}</h3>
-    @endif
+<section id="brands_by_category" class="w-full bg-white py-16 sm:py-20 border-b border-slate-200/80 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center gap-y-8">
+        <!-- Centered Section Header -->
+        <div class="max-w-3xl mx-auto text-center flex flex-col items-center gap-2.5">
+            <span class="text-xs font-bold uppercase tracking-widest text-primary block">
+                {{ __('RED DE PROVEEDORES VERIFICADOS') }}
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+                {{ $title ?: __('Compañías con las que Trabajamos') }}
+            </h2>
+            <p class="text-slate-600 text-base font-normal leading-relaxed">
+                {{ __('Conectamos directamente con fabricantes certificados y marcas líderes en China, Estados Unidos y la región para compras seguras y despachos consolidados.') }}
+            </p>
+        </div>
 
-    {{-- Category pills (radio buttons) --}}
-    <div class="w-full flex flex-wrap justify-center gap-3">
-        @foreach($categories as $idx => $cat)
-            @php
-                $catId = 'brand-cat-' . $idx . '-' . \Illuminate\Support\Str::slug($cat);
-                $checked = $cat === $defaultCategory;
-            @endphp
-
-            <input
-                type="radio"
-                name="brandCategory"
-                id="{{ $catId }}"
-                value="{{ $cat }}"
-                class="sr-only peer"
-                {{ $checked ? 'checked' : '' }}
-            />
-            <label
-                for="{{ $catId }}"
-                data-brand-pill="1"
-                class="
-                    cursor-pointer select-none
-                    px-5 py-2 rounded-full
-                    text-sm font-bold
-                    border-2 border-primary
-                    text-primary
-                    bg-white
-                    transition duration-300
-                    hover:bg-primary hover:text-white
-                "
-            >
-                {{ $cat }}
-            </label>
-        @endforeach
-    </div>
-
-    {{-- Logo panels --}}
-    <div class="brand-panels-wrap w-full max-w-6xl">
-        @foreach($categories as $idx => $cat)
-            @php
-                $isActive = $cat === $defaultCategory;
-                $items = $grouped->get($cat, collect());
-            @endphp
-
-            <div class="brand-panel {{ $isActive ? 'is-active' : 'is-hidden' }}" data-brand-category="{{ $cat }}">
-                <div class="w-full flex flex-wrap justify-center gap-x-12 gap-y-10 pt-6">
-                    @foreach($items as $supplier)
-                        @php
-                            $href = !empty($supplier->webpage)
-                                ? $supplier->webpage
-                                : (function () use ($supplier) {
-                                    try { return route('supplier', $supplier->id); }
-                                    catch (\Throwable $e) { return '#'; }
-                                })();
-                        @endphp
-
-                        <a
-                            href="{{ $href }}"
-                            class="group p-none m-none"
-                            target="{{ !empty($supplier->webpage) ? '_blank' : '_self' }}"
-                            rel="{{ !empty($supplier->webpage) ? 'noopener noreferrer' : '' }}"
-                            aria-label="{{ $supplier->name ?? 'supplier' }}"
-                            title="{{ $supplier->name ?? '' }}"
-                        >
-                            <div
-                                class="
-                                    brand-logo-item
-                                    h-[52px] w-[220px]
-                                    flex items-center justify-center
-                                    transition duration-300
-                                    group-hover:scale-[1.03]
-                                "
-                            >
-                                <img
-                                    src="{{ asset('storage/' . $supplier->logo) }}"
-                                    alt="brand_logo_{{ $supplier->id }}"
-                                    class="max-h-full w-auto object-contain"
-                                />
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+        <!-- Centered Category Filter Tabs -->
+        @if(count($categories) > 0)
+            <div class="w-full flex flex-wrap items-center justify-center gap-2.5">
+                <button
+                    type="button"
+                    class="supplier-cat-btn h-11 px-5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 bg-primary text-white shadow-xs cursor-pointer"
+                    data-cat="all"
+                >
+                    {{ __('Todos') }} ({{ $suppliersCollection->count() }})
+                </button>
+                @foreach($categories as $cat)
+                    @php
+                        $count = $suppliersCollection->where('category', $cat)->count();
+                    @endphp
+                    <button
+                        type="button"
+                        class="supplier-cat-btn h-11 px-5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200/70 cursor-pointer"
+                        data-cat="{{ \Illuminate\Support\Str::slug($cat) }}"
+                    >
+                        {{ $cat }} ({{ $count }})
+                    </button>
+                @endforeach
             </div>
-        @endforeach
+
+            <!-- Filtered Brand Cards Grid -->
+            <div class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pt-2" id="supplier-cards-grid">
+                @foreach($suppliersCollection as $supplier)
+                    @php
+                        $catSlug = \Illuminate\Support\Str::slug($supplier->category ?? 'other');
+                        $href = !empty($supplier->webpage)
+                            ? $supplier->webpage
+                            : (function () use ($supplier) {
+                                try { return route('supplier', $supplier->id); }
+                                catch (\Throwable $e) { return '#'; }
+                            })();
+                    @endphp
+
+                    <a
+                        href="{{ $href }}"
+                        class="supplier-brand-card taste-card-link group bg-slate-50/70 hover:bg-white border border-slate-200/90 hover:border-primary/50 rounded-xl p-4 h-24 flex items-center justify-center hover:shadow-sm cursor-pointer"
+                        data-category="{{ $catSlug }}"
+                        target="{{ !empty($supplier->webpage) ? '_blank' : '_self' }}"
+                        rel="{{ !empty($supplier->webpage) ? 'noopener noreferrer' : '' }}"
+                        aria-label="{{ $supplier->name }}"
+                        title="{{ $supplier->name }} - {{ $supplier->category }}"
+                    >
+                        <img
+                            src="{{ asset('storage/' . $supplier->logo) }}"
+                            alt="{{ $supplier->name ?? 'brand' }}"
+                            class="taste-photo-zoom max-h-10 w-auto max-w-[130px] object-contain opacity-90 group-hover:opacity-100"
+                            loading="lazy"
+                        />
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const radios = Array.from(document.querySelectorAll('input[name="brandCategory"]'));
-    const panels = Array.from(document.querySelectorAll(".brand-panel"));
+    document.addEventListener("DOMContentLoaded", function () {
+        const catButtons = document.querySelectorAll('.supplier-cat-btn');
+        const cards = document.querySelectorAll('.supplier-brand-card');
 
-    function setActivePill(input) {
-      // reset all labels
-      radios.forEach((r) => {
-        const label = document.querySelector(`label[for="${r.id}"]`);
-        if (!label) return;
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const targetCat = this.getAttribute('data-cat');
 
-        label.classList.remove("bg-primary", "text-white");
-        label.classList.add("bg-white", "text-primary");
-      });
+                // Update active tab style
+                catButtons.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'shadow-xs');
+                    b.classList.add('bg-slate-100', 'text-slate-700');
+                });
+                this.classList.remove('bg-slate-100', 'text-slate-700');
+                this.classList.add('bg-primary', 'text-white', 'shadow-xs');
 
-      // activate selected
-      const activeLabel = document.querySelector(`label[for="${input.id}"]`);
-      if (activeLabel) {
-        activeLabel.classList.remove("bg-white", "text-primary");
-        activeLabel.classList.add("bg-primary", "text-white");
-      }
-    }
-
-    const wrap = document.querySelector(".brand-panels-wrap");
-    const DURATION = 280; // must match CSS
-
-    function measureHiddenPanel(panel) {
-      if (!panel) return 0;
-
-      // If it's already visible, measure directly
-      if (!panel.classList.contains("is-hidden")) return panel.offsetHeight;
-
-      // Temporarily show for measurement without affecting layout
-      panel.classList.remove("is-hidden");
-      panel.classList.add("is-measuring");
-      const h = panel.offsetHeight;
-      panel.classList.remove("is-measuring");
-      panel.classList.add("is-hidden");
-
-      return h;
-    }
-
-    function animateWrapHeight(fromH, toH) {
-      if (!wrap) return;
-
-      wrap.style.height = fromH + "px";
-      // force reflow
-      wrap.offsetHeight;
-      wrap.style.height = toH + "px";
-
-      // after animation, let it be auto again
-      setTimeout(() => {
-        wrap.style.height = "auto";
-      }, DURATION);
-    }
-
-    function showCategory(cat) {
-      const current = panels.find(p => p.classList.contains("is-active"));
-      const next = panels.find(p => p.dataset.brandCategory === cat);
-
-      if (!next || current === next) return;
-
-      const currentH = current ? current.offsetHeight : 0;
-      const nextH = measureHiddenPanel(next);
-
-      animateWrapHeight(currentH, nextH);
-
-      // Prepare next: add to layout, then animate in
-      next.classList.remove("is-hidden", "is-leaving");
-      requestAnimationFrame(() => next.classList.add("is-active"));
-
-      // Animate current out, then remove from layout
-      if (current) {
-        current.classList.remove("is-active");
-        current.classList.add("is-leaving");
-
-        setTimeout(() => {
-          current.classList.remove("is-leaving");
-          current.classList.add("is-hidden");
-        }, DURATION);
-      }
-    }
-
-    function syncUI() {
-      const checked = radios.find(r => r.checked) || radios[0];
-      if (!checked) return;
-      setActivePill(checked);
-      showCategory(checked.value);
-    }
-
-    // init
-    syncUI();
-
-    // on change
-    radios.forEach((r) => {
-      r.addEventListener("change", () => {
-        setActivePill(r);
-        showCategory(r.value);
-      });
+                // Filter cards smoothly
+                cards.forEach(card => {
+                    const cardCat = card.getAttribute('data-category');
+                    if (targetCat === 'all' || cardCat === targetCat) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
     });
-  });
 </script>

@@ -1,0 +1,153 @@
+# Despliegue automático de LanEx en Hostinger
+# Se ejecuta en cada push a la rama main o manualmente desde GitHub Actions.
+#
+# Secretos requeridos en GitHub (Settings → Secrets and variables → Actions → Secrets):
+#   SSH_HOST         : IP o dominio del servidor Hostinger (hPanel → Avanzado → Acceso SSH)
+#   SSH_PRIVATE_KEY  : Clave privada SSH (cuya clave pública está autorizada en hPanel)
+#
+# Secretos opcionales (toman los valores por defecto si no están definidos):
+#   SSH_PORT         : Puerto SSH de Hostinger (por defecto: 65002)
+#   SSH_USER         : Usuario SSH de Hostinger (por defecto: u996714911)
+#   CLONE_DIR        : Ruta del clon en el servidor (por defecto: /home/u996714911/domains/lanexsac.com/lanex_clone)
+#   PUBLIC_DIR       : Ruta de producción (por defecto: /home/u996714911/domains/lanexsac.com/public_html)
+
+name: Desplegar LanEx en Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    name: Desplegar a Producción
+    runs-on: ubuntu-latest
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PORT: ${{ secrets.SSH_PORT || '65002' }}
+      SSH_USER: ${{ secrets.SSH_USER || 'u996714911' }}
+      CLONE_DIR: ${{ secrets.CLONE_DIR || '/home/u996714911/domains/lanexsac.com/lanex_clone' }}
+      PUBLIC_DIR: ${{ secrets.PUBLIC_DIR || '/home/u996714911/domains/lanexsac.com/public_html' }}
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js y compilar assets frontend
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar paquetes npm y compilar Vite
+        run: |
+          npm ci || npm install
+          npm run build
+
+      - name: Comprobar secretos de conexión
+        id: check_secrets
+        run: |
+          if [ -z "$SSH_HOST" ] || [ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]; then
+            echo "::warning::Faltan secretos de conexión (SSH_HOST o SSH_PRIVATE_KEY). Omitiendo despliegue."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Preparar clave SSH y known_hosts
+        if: steps.check_secrets.outputs.ready == 'true'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Sincronizar archivos hacia lanex_clone en el servidor
+        if: steps.check_secrets.outputs.ready == 'true'
+        run: |
+          SSH="ssh -i $HOME/.ssh/id_deploy -p $SSH_PORT"
+          DEST="$SSH_USER@$SSH_HOST"
+
+          # Asegurar que existan los directorios
+          $SSH "$DEST" "mkdir -p '$CLONE_DIR' '$PUBLIC_DIR'"
+
+          # Sincronizar archivos del repositorio al clon en el servidor (excluyendo temporales, .env y vendor local)
+          rsync -az --delete \
+            --exclude '.git' \
+            --exclude 'node_modules' \
+            --exclude 'vendor' \
+            --exclude '.env' \
+            --exclude 'storage/framework/cache/*' \
+            --exclude 'storage/framework/sessions/*' \
+            --exclude 'storage/framework/views/*' \
+            --exclude 'storage/logs/*' \
+            -e "$SSH" ./ "$DEST:$CLONE_DIR/"
+
+      - name: Ejecutar despliegue y actualización en el servidor
+        if: steps.check_secrets.outputs.ready == 'true'
+        run: |
+          ssh -i ~/.ssh/id_deploy -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
+            "CLONE_DIR='$CLONE_DIR' PUBLIC_DIR='$PUBLIC_DIR' bash -s" <<'REMOTO'
+          set -e
+
+          echo "=================================================="
+          echo "==> 1. Actualizando dependencias en lanex_clone..."
+          echo "=================================================="
+          cd "$CLONE_DIR"
+
+          # Si lanex_clone tiene .git configurado, sincronizar HEAD si es posible
+          if [ -d "$CLONE_DIR/.git" ]; then
+            echo "Sincronizando estado Git en $CLONE_DIR..."
+            git fetch origin main 2>/dev/null && git reset --hard origin/main 2>/dev/null || echo "Git remoto omitido (archivos ya actualizados con rsync)."
+          fi
+
+          # Instalar paquetes Composer con la versión PHP de Hostinger
+          if [ -f "$CLONE_DIR/composer.json" ]; then
+            echo "Ejecutando composer install en lanex_clone..."
+            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+          fi
+
+          echo "=================================================="
+          echo "==> 2. Ejecutando deploy.php hacia public_html..."
+          echo "=================================================="
+          if [ -f "$CLONE_DIR/deploy.php" ]; then
+            php "$CLONE_DIR/deploy.php"
+          else
+            echo "Error: $CLONE_DIR/deploy.php no existe."
+            exit 1
+          fi
+
+          echo "=================================================="
+          echo "==> 3. Configurando public_html en producción..."
+          echo "=================================================="
+          cd "$PUBLIC_DIR"
+
+          # Asegurar dependencias de composer en public_html
+          if [ -f "$PUBLIC_DIR/composer.json" ]; then
+            echo "Verificando dependencias en public_html..."
+            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist || composer dump-autoload --optimize
+          fi
+
+          # Enlace simbólico de storage
+          echo "Verificando enlace simbólico storage..."
+          php artisan storage:link || true
+
+          # Migraciones de base de datos (sin seeders automáticos)
+          echo "Ejecutando migraciones de base de datos..."
+          php artisan migrate --force
+
+          # Limpieza y optimización de cachés
+          echo "Limpiando y regenerando caché de Laravel..."
+          php artisan optimize:clear
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+          echo "=================================================="
+          echo "==> ¡Despliegue completado con éxito en Hostinger!"
+          echo "=================================================="
+          REMOTO

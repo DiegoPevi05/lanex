@@ -13,15 +13,17 @@ class ServiceCard extends Component
     public $name;
     public $icon;
     public $description;
+    public $image;
     /**
      * Create a new component instance.
      */
-    public function __construct(string $id,string $name,  string $icon, string $description)
+    public function __construct(string $id, string $name, string $icon, string $description, ?string $image = null)
     {
         $this->id                   = $id;
         $this->name                 = $name;
         $this->icon                 = $icon;
         $this->description          = $description;
+        $this->image                = $image;
     }
 
     /**

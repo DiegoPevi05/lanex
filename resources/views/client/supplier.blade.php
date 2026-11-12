@@ -1,157 +1,149 @@
-@section('meta_description', __('messages.meta.supplier'))
+@section('title', ($supplier->name ?? 'Proveedor') . ' — Catálogo y Productos | LanEx')
+@section('meta_description', !empty($supplier->description) ? Str::limit(strip_tags($supplier->description), 155) : __('messages.meta.supplier'))
+@if(!empty($supplier->image))
+@section('og_image', asset('storage/' . $supplier->image))
+@endif
 @extends('layouts.client')
 
 
 @section('content-client')
-    <section id="suppliers_hero_section" class="w-full flex flex-col bg-slate-700 min-h-[100svh] pt-[80px] xl:pt-[140px] relative z-10 text-white">
-        <img src="{{ asset('storage/'. '/images/web/supplier.webp') }}" alt="supplier_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
-        <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] padding-x padding-b z-30 bg-transparent">
-            <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] flex flex-col-reverse xl:flex-row justify-center gap-y-12">
+    <section id="suppliers_hero_section" data-enter class="w-full flex flex-col min-h-[75svh] lg:min-h-[82svh] pt-[160px] xl:pt-[190px] pb-24 relative z-10 text-white overflow-hidden bg-slate-950">
+        <img src="{{ asset('storage/images/web/supplier.webp') }}" alt="{{ __('Proveedor LanEx') }}" class="hero-enter-media w-full h-full absolute inset-0 object-cover opacity-55">
+        <!-- Protective Dark Gradient Overlays for Guaranteed Text Legibility -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-primary-dark/45 z-10 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/35 via-transparent to-transparent z-10 pointer-events-none"></div>
 
-                <div class="w-full xl:w-full h-auto flex flex-col justify-end items-center gap-y-4 animation-element slide-in-up">
-                    <div class="bg-transparent w-full xl:w-[350px] h-auto x:h-[500px] hover:-translate-y-[20px] duration-300">
-                        @if(!empty($supplier['products']) && isset($supplier['products'][0]))
-                            <x-product-card :product="$supplier['products'][0]"/>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-20 w-full my-auto flex flex-col justify-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-8 flex flex-col items-start gap-4">
+                    <div class="hero-enter-item flex items-center gap-3 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/20">
+                        <img src="{{ asset('storage/'. $supplier['logo']) }}" alt="{{ $supplier['name'] }}" class="h-6 w-auto object-contain brightness-110"/>
+                        <span class="text-xs font-bold text-white uppercase tracking-wider">{{ $supplier['name'] }}</span>
+                    </div>
+
+                    <h1 class="hero-enter-item text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-display">
+                        {{ __('messages.supplier.hero.header') }}
+                    </h1>
+
+                    <div class="hero-enter-item w-full max-w-xl bg-white p-2 rounded-2xl shadow-xl border border-slate-200 mt-2">
+                        <label for="search_product_input" class="sr-only">{{ __('Buscar producto de este proveedor') }}</label>
+                        <div class="w-full flex flex-col sm:flex-row items-center gap-2">
+                            <input id="search_product_input" placeholder="{{__('messages.supplier.supplier_section.search_input_placeholder')}}" class="w-full px-4 h-11 rounded-xl border border-slate-200 text-slate-900 text-base font-medium focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none" />
+                            <button id="search_product_btn" class="taste-btn w-full sm:w-auto px-6 h-11 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-sm shrink-0 cursor-pointer">
+                                {{__('messages.supplier.supplier_section.search_button_label')}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hero-enter-item flex flex-wrap items-center gap-3 mt-1">
+                        <a href="{{ route('quote', ['type' => 'supplier', 'id' => $supplier['id']]) }}" class="taste-btn inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-xs uppercase tracking-wider shadow-lg shadow-primary/25">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/></svg>
+                            <span>Cotizar Flete con {{ $supplier['name'] }}</span>
+                        </a>
+                        @if(!empty($supplier['webpage']))
+                            <a href="{{ $supplier['webpage'] }}" target="_blank" rel="noopener noreferrer" class="taste-btn inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/20">
+                                <span>Sitio Oficial</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
                         @endif
                     </div>
                 </div>
-                <div class="w-full h-auto flex flex-col items-start justify-center text-body gap-y-1 xl:p-6 animation-element slide-in-up">
-                    <img src={{ asset('storage/'. $supplier['logo'])}} alt="supplier_hero_logo" class="w-[40%] h-auto"/>
-                    <h5 class="font-bold text-white">{{$supplier['name']}}</h5>
-                    <h1 class="font-bold text-white">{{ __('messages.supplier.hero.header') }}</h1>
-                    <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4 p-4 rounded-xl" style="background-color: rgba(255, 255, 255, 0.6);">
-                        <input id="search_product_input" placeholder="{{__('messages.supplier.supplier_section.search_input_placeholder')}}" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
-                        <button id="search_product_btn" class="px-8 py-2 duration-300 active:scale-95 rounded-xl transition inline-flex gap-x-4 justify-center items-center  border-2 bg-primary hover:bg-primary-dark text-white border-primary hover:border-white h-full">{{__('messages.supplier.supplier_section.search_button_label')}}</button>
+
+                @if(!empty($supplier['products']) && isset($supplier['products'][0]))
+                    <div class="lg:col-span-4 flex justify-center hero-enter-item">
+                        <div class="w-full max-w-[320px]">
+                            <x-product-card :product="$supplier['products'][0]"/>
+                        </div>
                     </div>
+                @endif
+            </div>
+        </div>
+    </section>
+
+    <section id="products-sections" class="relative w-full h-auto py-16 sm:py-24 bg-white border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
+            <div class="max-w-2xl mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary block mb-2">{{ __('messages.supplier.products.header') }}</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight font-display">
+                    {{ __('messages.supplier.products.title') }}
+                </h2>
+            </div>
+
+            <div class="w-full h-auto min-h-[380px] pb-10 flex flex-col justify-center items-center">
+                <div id="products-items" class="h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                </div>
+                <div id="loader-products-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                </div>
+                <div id="empty-products-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-6 hidden">
+                    <p class="font-bold text-slate-700 text-lg">{{ __('messages.common.no_products') }}</p>
+                    <img src="{{ asset('/images/svg/empty.svg' ) }}" alt="{{ __('Sin productos') }}" class="h-28 w-auto"/>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row justify-between items-center pt-6 border-t border-slate-200/80">
+                <div class="flex flex-row items-center gap-x-3">
+                    <button id="first-products-page" aria-label="{{ __('Primera página de productos') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg>
+                    </button>
+                    <button id="prev-products-page" aria-label="{{ __('Página anterior de productos') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                    </button>
+                </div>
+                <div class="flex flex-row items-center gap-x-3">
+                    <button id="next-products-page" aria-label="{{ __('Página siguiente de productos') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                    </button>
+                    <button id="last-products-page" aria-label="{{ __('Última página de productos') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <section id="products-sections" class="relative w-full h-full padding flex flex-col justify-center items-center">
-        <h5 class="animation-element slide-in-up text-primary">{{ __('messages.supplier.products.header') }}</h5>
-        <h1 class="font-bold text-primary-dark animation-element slide-in-up text-center">
-            {{ __('messages.supplier.products.title') }}
-        </h1>
-
-        <div class="w-full h-auto min-h-[400px] py-12 xl:p-12 flex flex-col justify-center items-center duration-300 transition-all">
-            <div id="products-items" class="h-full w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-3 gap-6 xl:gap-24 animation-element slide-in-down">
-
+    <section id="suppliers-sections" class="relative w-full h-auto py-16 sm:py-24 bg-slate-50 border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
+            <div class="max-w-2xl mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary block mb-2">{{ __('messages.supplier.supplier_section.header') }}</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight font-display">
+                    {{ __('messages.supplier.supplier_section.title') }}
+                </h2>
             </div>
-            <div id="loader-products-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-10 sm:h-20 w-10 sm:w-20 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            </div>
-            <div id="empty-products-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
-                <h5 class="font-bold text-primary">{{ __('messages.common.no_products') }}</h5>
-                <img src="{{ asset('/images/svg/empty.svg' ) }}" alt="empty_logo" class="h-24 sm:h-48 w-auto"/>
-            </div>
-        </div>
 
-        <div class="w-full h-auto flex flex-row justify-around">
-            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
-                <!-- First Page -->
-                <button
-                   id="first-products-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-left">
-                        <path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path>
-                    </svg>
-                </button>
-                <!-- Previous Page -->
-                <button
-                   id="prev-products-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left">
-                        <path d="m15 18-6-6 6-6"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
-                <!-- Next Page -->
-                <button
-                   id="next-products-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </button>
-                <!-- Last Page -->
-                <button
+            <div class="w-full h-auto min-h-[380px] pb-10 flex flex-col justify-center items-center">
+                <div id="suppliers-items" class="h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                   id="last-products-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-right">
-                        <path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path>
-                    </svg>
-                </button>
+                </div>
+                <div id="loader-suppliers-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                </div>
+                <div id="empty-suppliers-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-6 hidden">
+                    <p class="font-bold text-slate-700 text-lg">{{__('messages.suppliers.supplier_section.empty_content')}}</p>
+                    <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" alt="{{ __('Sin proveedores') }}" class="h-28 w-auto"/>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row justify-between items-center pt-6 border-t border-slate-200/80">
+                <div class="flex flex-row items-center gap-x-3">
+                    <button id="first-suppliers-page" aria-label="{{ __('Primera página de proveedores') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg>
+                    </button>
+                    <button id="prev-suppliers-page" aria-label="{{ __('Página anterior de proveedores') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                    </button>
+                </div>
+                <div class="flex flex-row items-center gap-x-3">
+                    <button id="next-suppliers-page" aria-label="{{ __('Página siguiente de proveedores') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                    </button>
+                    <button id="last-suppliers-page" aria-label="{{ __('Última página de proveedores') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
-
-
-    </section>
-
-
-    <section id="suppliers-sections" class="relative w-full h-full padding flex flex-col justify-center items-center">
-        <h5 class="animation-element slide-in-up text-primary">{{ __('messages.supplier.supplier_section.header') }}</h5>
-        <h1 class="font-bold text-primary-dark animation-element slide-in-up text-center">
-            {{ __('messages.supplier.supplier_section.title') }}
-        </h1>
-
-        <div class="w-full h-auto min-h-[400px] py-12 xl:p-12 flex flex-col justify-center items-center duration-300 transition-all">
-            <div id="suppliers-items" class="h-full w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-3 gap-6 xl:gap-24 animation-element slide-in-down">
-
-            </div>
-            <div id="loader-suppliers-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-10 sm:h-20 w-10 sm:w-20 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            </div>
-            <div id="empty-suppliers-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
-                <h5 class="font-bold text-primary">{{__('messages.suppliers.supplier_section.empty_content')}}</h5>
-                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" alt="empty_content" class="h-24 sm:h-48 w-auto"/>
-            </div>
-        </div>
-
-        <div class="w-full h-auto flex flex-row justify-around">
-            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
-                <!-- First Page -->
-                <button
-                   id="first-suppliers-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-left">
-                        <path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path>
-                    </svg>
-                </button>
-                <!-- Previous Page -->
-                <button
-                   id="prev-suppliers-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left">
-                        <path d="m15 18-6-6 6-6"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
-                <!-- Next Page -->
-                <button
-                   id="next-suppliers-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </button>
-                <!-- Last Page -->
-                <button
-
-                   id="last-suppliers-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-right">
-                        <path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-
     </section>
 @endsection
 
@@ -206,28 +198,34 @@
 
                 // Populate suppliers
                 data.suppliers.data.forEach(supplier => {
-                    const supplierDiv = document.createElement('div');
-                    supplierDiv.classList.add('col-span-3', 'sm:col-span-2', 'xl:col-span-1', 'flex', 'flex-col', 'justify-start', 'items-start', 'h-auto');
+                    const supplierCard = document.createElement('a');
+                    supplierCard.href = `/supplier/${supplier.id}`;
+                    supplierCard.classList.add(
+                        'taste-card-link', 'group', 'bg-white', 'border', 'border-slate-200/90', 'hover:border-primary/50',
+                        'rounded-2xl', 'p-6', 'flex', 'flex-col', 'justify-between', 'gap-5', 'hover:shadow-md'
+                    );
 
                     const detailsHtml = (supplier.details && Array.isArray(supplier.details)) 
-                        ? supplier.details.map(detail => `<li><p>${detail}</p></li>`).join('') 
+                        ? supplier.details.map(detail => `<li class="text-sm text-slate-600 leading-relaxed flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0"></span><span>${detail}</span></li>`).join('') 
                         : '';
 
-                    supplierDiv.innerHTML = `
-                        <div class="w-full min-h-[200px] flex justify-center items-center p-4">
-                            <img src="/storage/${supplier.logo}" alt="supplier_logo_image" class="w-auto h-16" alt="${supplier.name}">
-                        </div>
-                        <a href="/supplier/${supplier.id}" class="group p-none m-none">
-                            <span class="font-bold text-primary group-hover:underline">${supplier.name}</span>
-                        </a>
-                        <div class="w-full h-full p-6">
-                            <ul class="list-disc">
+                    supplierCard.innerHTML = `
+                        <div class="flex flex-col gap-4">
+                            <div class="w-full h-24 rounded-xl bg-slate-50 border border-slate-100 flex justify-center items-center p-4 overflow-hidden">
+                                <img src="/storage/${supplier.logo}" alt="${supplier.name}" class="taste-photo-zoom max-h-12 w-auto max-w-[160px] object-contain">
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-primary transition-colors">${supplier.name}</h3>
+                            <ul class="flex flex-col gap-2">
                                 ${detailsHtml}
                             </ul>
                         </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-primary">
+                            <span>Ver catálogo del proveedor</span>
+                            <svg class="w-4 h-4 taste-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </div>
                     `;
 
-                    suppliersContainer.appendChild(supplierDiv);
+                    suppliersContainer.appendChild(supplierCard);
                 });
 
 
@@ -335,29 +333,29 @@
                     const productCard = document.createElement('div');
                     productCard.id = `product_card_${product.id}`;
                     productCard.classList.add(
-                        'col-span-3','sm:col-span-2','xl:col-span-1','w-full', 'h-full', 'rounded-xl', 'shadow-xl', 'flex', 'flex-col',
-                        'text-body', 'py-4', 'px-6'
+                        'taste-card-link', 'group', 'w-full', 'h-full', 'bg-white', 'rounded-2xl', 'border', 'border-slate-200/90',
+                        'hover:border-primary/50', 'hover:shadow-md', 'flex', 'flex-col', 'justify-between', 'p-6', 'text-slate-900'
                     );
-                    productCard.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
 
-                    const starsCount = parseInt(product.stars) || 0;
+                    const starsCount = parseInt(product.stars) || 5;
                     const description = product.description || '';
 
                     productCard.innerHTML = `
-                        <div class="h-auto flex justify-center items-center">
-                            <div class="h-24 w-24 flex justify-center items-center border-2 border-gray-light rounded-xl p-1">
-                                <img src="/storage/${product.image}" alt="product_logo_image" class="w-auto h-full" alt="${product.name}" />
+                        <div>
+                            <div class="w-28 h-28 rounded-xl bg-slate-50 border border-slate-100 flex justify-center items-center p-2 mb-4 mx-auto overflow-hidden">
+                                <img src="/storage/${product.image}" alt="${product.name}" class="taste-photo-zoom max-w-full max-h-full object-contain" />
                             </div>
-                        </div>
-                        <div class="h-auto w-full flex flex-col justify-start items-center gap-y-3">
-                            <div class="w-full flex flex-row justify-center items-center text-primary py-4">
-                                ${Array(starsCount).fill('<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 sm:h-10 w-6 sm:w-10 lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>').join('')}
+                            <div class="flex items-center justify-center gap-1 text-amber-400 mb-2">
+                                ${Array(starsCount).fill('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>').join('')}
                             </div>
-                            <p class="font-bold text-center">${product.name}</p>
-                            <p class="!text-xs text-justify hidden xl:block">${description}</p>
+                            <h3 class="font-bold text-slate-900 text-center text-base leading-snug mb-2 font-display">${product.name}</h3>
+                            <p class="text-sm text-slate-600 text-center leading-relaxed font-normal line-clamp-3">${description}</p>
                         </div>
-                        <div class="h-full w-full flex justify-center items-center mt-6">
-                            <a href="/quote?type=product&id=${product.id}" class="px-8 py-2 duration-300 active:scale-95 rounded-xl transition inline-flex gap-x-4 justify-center items-center  border-2 bg-primary hover:bg-primary-dark text-white border-primary hover:border-white">{{__('messages.supplier.supplier_section.quote_now')}}</a>
+                        <div class="w-full pt-4 mt-4 border-t border-slate-100">
+                            <a href="/quote?type=product&id=${product.id}" class="taste-btn w-full h-11 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-xs tracking-wider text-center uppercase flex items-center justify-center gap-2">
+                                <span>{{__('messages.supplier.supplier_section.quote_now')}}</span>
+                                <svg class="w-3.5 h-3.5 taste-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </a>
                         </div>
                     `;
 

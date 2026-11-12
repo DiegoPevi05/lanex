@@ -1,154 +1,215 @@
-<section id="home_blogs" class="home_blogs relative w-full lg:h-[100vh] flex flex-col justify-start items-center pt-24 py-6 lg:py-6 px-12 lg:px-24 bg-white">
-            <div class="relative w-full flex flex-row justify-center items-start lg:px-6 z-20">
-                <div class="relative h-auto w-full flex flex-col justify-center items-center">
-                    <h2 class="font-bold text-primary text-center text-2xl">
-                        {{__('messages.home.blogs.title')}}
-                    </h2>
-                    <h1 class="text-primary-dark font-bold text-center text-xl sm:text-5xl">
-                        {{__('messages.home.blogs.subtitle')}}
-                    </h1>
-
-                        <div class="carousel-project-images">
-                            @foreach($blogs as $index => $blog)
-                                <input type="radio" name="position" class="bullet-selector-project opacity-0 pointer-events-none" />
-                            @endforeach
-
-                            <main id="carousel">
-                                @foreach($blogs as $blog)
-                                    <div class="item bg-white border-2 border-gray-200 shadow-md rounded-lg flex flex-col items-start justify-start cursor-pointer group">
-                                        <a href="{{ route('blog', $blog->id) }}" class="w-full h-auto">
-                                            <div class="w-full h-[150px] overflow-hidden">
-                                                <img src="{{ asset('storage/'.$blog->thumbnail_image) }}" alt="icon" class="w-full h-auto object-cover transition-all duration-300 opacity-50 group-hover:opacity-100 group-hover:scale-105" />
-                                            </div>
-                                        </a>
-                                        <div class="w-full h-full flex flex-col items-start justify-start p-2">
-                                            <span class="w-full flex flex-row items-center justify-between">
-                                                <p class="text-gray-500 text-xs">
-                                                    {{ __('messages.home.blogs.published_at') }} <strong>{{ $blog->published_at }}</strong>
-                                                </p>
-                                                <p class="text-gray-500 text-xs">
-                                                    {{ __('messages.home.blogs.reading_time') }} <strong>{{ $blog->reading_time }}</strong> {{ __('messages.home.blogs.minutes') }}
-                                                </p>
-                                            </span>
-                                            <h3 class="font-bold text-primary-dark mt-2 text-xs text-left">
-                                                {{ $blog->title }}
-                                            </h3>
-                                            <p class="text-gray-500 text-xs text-justify pt-2">
-                                                {{ \Illuminate\Support\Str::limit($blog->excerpt, 200, '...') }}
-                                            </p>
-
-                                            <span class="mt-auto w-full flex flex-row flex-wrap items-center justify-between gap-1 pt-2">
-
-                                                @if(isset($blog->tags) && is_array($blog->tags) && count($blog->tags) > 0)
-                                                    @foreach($blog->tags as $tag)
-                                                        <p class="bg-primary text-white px-2 py-1 rounded-full text-xs">
-                                                            {{ $tag }}
-                                                        </p>
-                                                    @endforeach
-                                                @endif
-                                            </span>
-                                            <p class="text-gray-500 mt-auto py-4">
-                                                {{ __('messages.home.blogs.author') }} <strong>{{ $blog->author }}</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </main>
-                            <span class="hidden lg:block previous_button_span absolute top-1/2 -left-16 h-12 w-12 p-1 bg-primary text-white rounded-full z-10 flex justify-center items-center cursor-pointer hover:bg-secondary hover:text-primary active:scale-95 border-2 border-primary hover:border-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left h-full w-full"><path d="m15 18-6-6 6-6"/></svg>
-                            </span>
-                            <span class="hidden lg:block next_button_span absolute top-1/2 -right-16 h-12 w-12 p-1 bg-primary text-white rounded-full z-10 flex justify-center items-center cursor-pointer hover:bg-secondary hover:text-primary active:scale-95 border-2 border-primary hover:border-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-full w-full"><path d="m9 18 6-6-6-6"/></svg>
-                            </span>
-                        </div>
-                </div>
+<!-- resources/views/components/blogs-carousel.blade.php -->
+<section id="home_blogs" class="w-full bg-slate-50/50 py-12 sm:py-16 border-b border-slate-200/80 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col gap-8">
+        <!-- Header with Integrated Nav Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div class="flex flex-col gap-1.5 max-w-xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary block">
+                    {{ __('NOTICIAS & COMERCIO EXTERIOR') }}
+                </span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+                    {{ __('messages.home.blogs.title') }}
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed">
+                    {{ __('Actualizaciones aduaneras, guías de importación y análisis del comercio internacional.') }}
+                </p>
             </div>
-            <ul class="w-full h-auto absolute flex flex-row justify-center items-center gap-x-2 lg:gap-4 bottom-6 sm:bottom-12 z-[50]">
+
+            <!-- Carousel Controls -->
+            <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                <button
+                    type="button"
+                    id="blog_carousel_prev"
+                    aria-label="{{ __('Noticia anterior') }}"
+                    class="taste-btn h-11 w-11 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-white hover:bg-slate-900 flex items-center justify-center cursor-pointer"
+                >
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button
+                    type="button"
+                    id="blog_carousel_next"
+                    aria-label="{{ __('Noticia siguiente') }}"
+                    class="taste-btn h-11 w-11 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-white hover:bg-slate-900 flex items-center justify-center cursor-pointer"
+                >
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slider Viewport -->
+        <div class="w-full relative overflow-hidden" id="blog_slider_viewport">
+            <div
+                id="blog_slider_track"
+                class="blog-slider-track flex gap-5 py-2"
+                style="transform: translateX(0px);"
+            >
                 @foreach($blogs as $index => $blog)
-                    <li class="w-6 h-6 bg-white border-2 border-primary hover:bg-primary active:scale-95 rounded-full transition-all duration-300 cursor-pointer bullet_selector"></li>
+                    @php
+                        $tags = is_array($blog->tags) ? $blog->tags : (json_decode($blog->tags, true) ?? []);
+                        $firstTag = !empty($tags) ? ltrim($tags[0], '#') : 'Comercio Exterior';
+                        $pubDate = $blog->published_at ? \Carbon\Carbon::parse($blog->published_at)->format('d M Y') : 'Reciente';
+                    @endphp
+
+                    <article
+                        class="blog-card-item taste-card-link flex-shrink-0 w-[285px] sm:w-[330px] bg-white border border-slate-200/90 hover:border-primary/50 rounded-xl overflow-hidden hover:shadow-md flex flex-col justify-between group cursor-pointer"
+                        data-index="{{ $index }}"
+                    >
+                        <!-- Card Image -->
+                        <a href="{{ route('blog', $blog->id) }}" class="block relative w-full h-[155px] overflow-hidden bg-slate-100">
+                            <img
+                                src="{{ asset('storage/' . $blog->thumbnail_image) }}"
+                                alt="{{ $blog->title }}"
+                                class="taste-photo-zoom w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                            <div class="absolute top-2.5 left-2.5 bg-slate-900/85 text-white text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
+                                {{ $firstTag }}
+                            </div>
+                        </a>
+
+                        <!-- Card Body -->
+                        <div class="p-5 flex-1 flex flex-col justify-between gap-3">
+                            <div class="flex flex-col gap-1.5">
+                                <div class="flex items-center justify-between text-[11px] text-slate-400 font-normal">
+                                    <span>{{ $pubDate }}</span>
+                                    <span>{{ $blog->reading_time ?? 4 }} min lectura</span>
+                                </div>
+
+                                <h3 class="font-bold text-slate-900 group-hover:text-primary text-base leading-snug line-clamp-2 transition-colors">
+                                    <a href="{{ route('blog', $blog->id) }}">
+                                        {{ $blog->title }}
+                                    </a>
+                                </h3>
+
+                                <p class="text-sm text-slate-600 font-normal leading-relaxed line-clamp-2">
+                                    {{ \Illuminate\Support\Str::limit($blog->excerpt, 120, '...') }}
+                                </p>
+                            </div>
+
+                            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                                <span class="text-slate-400 text-[11px] font-normal truncate max-w-[170px]">
+                                    {{ $blog->author }}
+                                </span>
+                                <span class="font-bold text-primary inline-flex items-center gap-1">
+                                    <span>{{ __('Leer artículo') }}</span>
+                                    <svg class="w-3.5 h-3.5 taste-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </article>
                 @endforeach
-            </ul>
-    </section>
+            </div>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        <!-- Dot Indicators -->
+        <div class="flex items-center justify-center gap-1.5" id="blog_slider_dots">
+            @foreach($blogs as $index => $blog)
+                <button
+                    type="button"
+                    class="blog-dot h-2 rounded-full transition-all duration-300 {{ $index === 0 ? 'w-6 bg-primary' : 'w-2 bg-slate-300 hover:bg-slate-400' }}"
+                    data-dot-index="{{ $index }}"
+                    aria-label="Ir a noticia {{ $index + 1 }}"
+                ></button>
+            @endforeach
+        </div>
+    </div>
+</section>
 
-            // Get elements using vanilla JS selectors
-            const bulletSelectorProjects = document.querySelectorAll('.home_blogs .bullet-selector-project');
-            const bulletSelectors = document.querySelectorAll('.home_blogs .bullet_selector');
-            const previousButtonSpan = document.querySelector('.home_blogs .previous_button_span');
-            const nextButtonSpan = document.querySelector('.home_blogs .next_button_span');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const track = document.getElementById("blog_slider_track");
+        const viewport = document.getElementById("blog_slider_viewport");
+        const prevBtn = document.getElementById("blog_carousel_prev");
+        const nextBtn = document.getElementById("blog_carousel_next");
+        const dots = document.querySelectorAll(".blog-dot");
+        const cards = document.querySelectorAll(".blog-card-item");
 
-            if (!bulletSelectors.length || !bulletSelectorProjects.length) return;
+        if (!track || !cards.length) return;
 
-            //initialize the middle bullet or bullet 2 index with bg-primary
-            const getMiddleBullet = Math.floor(bulletSelectors.length / 2);
+        let currentIndex = 0;
+        const totalCards = cards.length;
 
-            if (!bulletSelectors[getMiddleBullet] || !bulletSelectorProjects[getMiddleBullet]) return;
+        function getCardWidth() {
+            const firstCard = cards[0];
+            const gap = 20;
+            return (firstCard ? firstCard.offsetWidth : 320) + gap;
+        }
 
-            bulletSelectors[getMiddleBullet].classList.remove('bg-white');
-            bulletSelectors[getMiddleBullet].classList.add('bg-primary');
-            bulletSelectorProjects[getMiddleBullet].checked = true;
-            // Add click events to bullet selectors
-            bulletSelectors.forEach((selector, index) => {
-                selector.addEventListener('click', () => {
-                    bulletSelectorProjects[index].checked = true;
-                    selector.classList.remove('bg-white');
-                    selector.classList.add('bg-primary');
-                    // Remove class from other selectors
-                    bulletSelectors.forEach(otherSelector => {
-                        if (otherSelector !== selector) {
-                            otherSelector.classList.add('bg-white');
-                            otherSelector.classList.remove('bg-primary');
-                        }
-                    });
-                });
+        function getMaxIndex() {
+            if (!viewport || !cards[0]) return totalCards - 1;
+            const viewportWidth = viewport.offsetWidth;
+            const visibleCount = Math.floor(viewportWidth / (cards[0].offsetWidth + 10)) || 1;
+            return Math.max(0, totalCards - visibleCount);
+        }
+
+        function updateSlider(index) {
+            const maxIdx = getMaxIndex();
+            currentIndex = Math.max(0, Math.min(index, maxIdx));
+            const cardW = getCardWidth();
+            const offset = currentIndex * cardW;
+
+            track.style.transform = `translateX(-${offset}px)`;
+
+            dots.forEach((dot, idx) => {
+                if (idx === currentIndex) {
+                    dot.classList.remove("w-2", "bg-slate-300");
+                    dot.classList.add("w-6", "bg-primary");
+                } else {
+                    dot.classList.remove("w-6", "bg-primary");
+                    dot.classList.add("w-2", "bg-slate-300");
+                }
             });
+        }
 
-            if (previousButtonSpan) {
-                // Previous button click handler
-                previousButtonSpan.addEventListener('click', () => {
-                    let currentIndex = Array.from(bulletSelectorProjects).findIndex(selector => selector.checked);
-
-                    // Calculate new index
-                    let newIndex = currentIndex === 0 ? bulletSelectorProjects.length - 1 : currentIndex - 1;
-                    // Update radio button and styling
-                    bulletSelectorProjects[newIndex].checked = true;
-                    bulletSelectors[newIndex].classList.add('bg-primary');
-                    bulletSelectors[newIndex].classList.remove('bg-white');
-                    // Remove styling from other selectors
-                    bulletSelectors.forEach((selector, index) => {
-                        if (index !== newIndex) {
-                            selector.classList.add('bg-white');
-                            selector.classList.remove('bg-primary');
-                        }
-                    });
-                });
+        function nextSlide() {
+            const maxIdx = getMaxIndex();
+            if (currentIndex >= maxIdx) {
+                updateSlider(0);
+            } else {
+                updateSlider(currentIndex + 1);
             }
+        }
 
-
-            if(nextButtonSpan){
-                // Next button click handler
-                nextButtonSpan.addEventListener('click', () => {
-                    let currentIndex = Array.from(bulletSelectorProjects).findIndex(selector => selector.checked);
-
-                    // Calculate new index
-                    let newIndex = currentIndex === bulletSelectorProjects.length - 1 ? 0 : currentIndex + 1;
-
-                    // Update radio button and styling
-                    bulletSelectorProjects[newIndex].checked = true;
-                    bulletSelectors[newIndex].classList.add('bg-primary');
-                    bulletSelectors[newIndex].classList.remove('bg-white');
-
-                    // Remove styling from other selectors
-                    bulletSelectors.forEach((selector, index) => {
-                        if (index !== newIndex) {
-                            selector.classList.add('bg-white');
-                            selector.classList.remove('bg-primary');
-                        }
-                    });
-                });
+        function prevSlide() {
+            const maxIdx = getMaxIndex();
+            if (currentIndex <= 0) {
+                updateSlider(maxIdx);
+            } else {
+                updateSlider(currentIndex - 1);
             }
+        }
+
+        if (nextBtn) nextBtn.addEventListener("click", nextSlide);
+        if (prevBtn) prevBtn.addEventListener("click", prevSlide);
+
+        dots.forEach(dot => {
+            dot.addEventListener("click", function () {
+                const idx = parseInt(this.getAttribute("data-dot-index"), 10);
+                updateSlider(idx);
+            });
         });
 
-    </script>
+        let startX = 0;
+        let isTouching = false;
+
+        viewport.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+            isTouching = true;
+        }, { passive: true });
+
+        viewport.addEventListener("touchend", (e) => {
+            if (!isTouching) return;
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            if (Math.abs(diffX) > 40) {
+                if (diffX > 0) nextSlide();
+                else prevSlide();
+            }
+            isTouching = false;
+        }, { passive: true });
+
+        window.addEventListener("resize", () => {
+            updateSlider(currentIndex);
+        });
+    });
+</script>

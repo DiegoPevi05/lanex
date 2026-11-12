@@ -1,45 +1,54 @@
-<section id="pillars_section" class="w-full h-auto bg-white text-body">
-    <div class="w-full h-auto padding flex flex-col items-center">
-        <h5 class="text-primary text-center animation-element slide-in-up">
-            {{ __('messages.about.pillars.header') }}
-        </h5>
-        <h2 class="font-bold text-primary-dark text-center animation-element slide-in-up">
-            {{ __('messages.about.pillars.title') }}
-        </h2>
+<!-- resources/views/components/pillars-section.blade.php -->
+<section id="pillars_section" class="w-full bg-white text-slate-900 py-16 sm:py-24 border-b border-slate-200/80" data-scroll-title="{{ __('Pilares') }}">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
+        <div class="max-w-2xl mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-primary block mb-2">
+                {{ __('messages.about.pillars.header') }}
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+                {{ __('messages.about.pillars.title') }}
+            </h2>
+        </div>
 
-        <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-y-10 gap-x-6 xl:gap-x-12 mt-12 animation-group">
-            <div class="col-span-1 flex flex-col items-center text-center gap-y-4 animation-element slide-in-up">
-                <div class="rounded-xl flex items-center justify-center w-20 h-20 bg-primary p-4">
-                    <x-heroicon-o-book-open class="w-full h-full text-white" />
+        <div class="w-full grid grid-cols-1 md:grid-cols-3 border-t border-slate-200 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+            <!-- Pillar 1 -->
+            <div class="flex flex-col items-start py-8 md:pr-8 lg:pr-10">
+                <div class="w-full flex items-center justify-between mb-6">
+                    <span class="text-xs font-mono font-bold text-primary tracking-wider">{{ __('PILAR 01') }}</span>
+                    <x-heroicon-o-book-open class="w-5 h-5 text-slate-700" />
                 </div>
-                <h4 class="font-bold text-primary-dark">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 tracking-tight">
                     {{ __('messages.about.pillars.items.knowledge.title') }}
-                </h4>
-                <p>
+                </h3>
+                <p class="text-base text-slate-600 leading-relaxed font-normal">
                     {{ __('messages.about.pillars.items.knowledge.content') }}
                 </p>
             </div>
 
-            <div class="col-span-1 flex flex-col items-center text-center gap-y-4 animation-element slide-in-up">
-                <div class="rounded-xl flex items-center justify-center w-20 h-20 bg-primary p-4">
-                    <x-heroicon-o-light-bulb class="w-full h-full text-white" />
+            <!-- Pillar 2 -->
+            <div class="flex flex-col items-start py-8 md:px-8 lg:px-10">
+                <div class="w-full flex items-center justify-between mb-6">
+                    <span class="text-xs font-mono font-bold text-primary tracking-wider">{{ __('PILAR 02') }}</span>
+                    <x-heroicon-o-light-bulb class="w-5 h-5 text-slate-700" />
                 </div>
-                <h4 class="font-bold text-primary-dark">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 tracking-tight">
                     {{ __('messages.about.pillars.items.innovation.title') }}
-                </h4>
-                <p>
+                </h3>
+                <p class="text-base text-slate-600 leading-relaxed font-normal">
                     {{ __('messages.about.pillars.items.innovation.content') }}
                 </p>
             </div>
 
-            <div class="col-span-1 flex flex-col items-center text-center gap-y-4 animation-element slide-in-up">
-                <div class="rounded-xl flex items-center justify-center w-20 h-20 bg-primary p-4">
-                    <x-heroicon-o-cpu-chip class="w-full h-full text-white" />
+            <!-- Pillar 3 -->
+            <div class="flex flex-col items-start py-8 md:pl-8 lg:pl-10">
+                <div class="w-full flex items-center justify-between mb-6">
+                    <span class="text-xs font-mono font-bold text-primary tracking-wider">{{ __('PILAR 03') }}</span>
+                    <x-heroicon-o-cpu-chip class="w-5 h-5 text-slate-700" />
                 </div>
-                <h4 class="font-bold text-primary-dark">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 tracking-tight">
                     {{ __('messages.about.pillars.items.technology.title') }}
-                </h4>
-                <p>
+                </h3>
+                <p class="text-base text-slate-600 leading-relaxed font-normal">
                     {{ __('messages.about.pillars.items.technology.content') }}
                 </p>
             </div>

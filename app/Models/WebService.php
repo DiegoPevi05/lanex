@@ -41,6 +41,39 @@ class WebService extends Model
             return $currentImagePath;
         };
 
+        // Helper function for SVG scene, uploaded SVG/image file, or pasted <svg> code
+        $processSvgOrImage = function ($imageFieldPath, $sceneFieldPath, $svgCodeFieldPath, $currentImagePath) use ($request) {
+            $safeDeletePath = ($currentImagePath && !str_starts_with($currentImagePath, 'scene:') && !str_starts_with($currentImagePath, '/images/web/'))
+                ? $currentImagePath
+                : null;
+
+            // 1. Uploaded file (.svg, .png, .jpg, .webp, .gif)
+            if ($request->hasFile($imageFieldPath)) {
+                return ImageUploadService::storeOrReplaceImage(
+                    $request->file($imageFieldPath),
+                    self::getType(),
+                    $safeDeletePath
+                );
+            }
+
+            // 2. Pasted raw <svg>...</svg> code
+            $rawSvgCode = trim((string) $request->input($svgCodeFieldPath, ''));
+            if (!empty($rawSvgCode) && str_contains($rawSvgCode, '<svg')) {
+                $fileName = 'custom-svg-' . uniqid() . '.svg';
+                $relativePath = 'images/' . self::getType() . '/' . $fileName;
+                \Illuminate\Support\Facades\Storage::disk('public')->put($relativePath, $rawSvgCode);
+                return '/' . $relativePath;
+            }
+
+            // 3. Selected scene or existing SVG path from selector
+            $selectedScene = trim((string) $request->input($sceneFieldPath, ''));
+            if (!empty($selectedScene)) {
+                return $selectedScene;
+            }
+
+            return $currentImagePath;
+        };
+
         $fillableFields = [
             'name' => $validatedFields['name'] ?? null,
             'icon' => $validatedFields['icon'] ?? null,
@@ -53,7 +86,12 @@ class WebService extends Model
                 'overview' => [
                     'header' => $validatedFields['webcontent']['overview']['header'] ?? '',
                     'title' => $validatedFields['webcontent']['overview']['title'] ?? '',
-                    'image' => $processImage('webcontent.overview.image', $entity ? json_decode($entity->webcontent)->overview->image : null),
+                    'image' => $processSvgOrImage(
+                        'webcontent.overview.image',
+                        'webcontent.overview.scene',
+                        'webcontent.overview.svg_code',
+                        $entity ? (json_decode($entity->webcontent)->overview->image ?? null) : null
+                    ),
                     'content' => [
                         'header' => $validatedFields['webcontent']['overview']['content']['header'] ?? '',
                         'introduction' => $validatedFields['webcontent']['overview']['content']['introduction'] ?? '',
@@ -64,7 +102,12 @@ class WebService extends Model
                     'header' => $validatedFields['webcontent']['content_link']['header'] ?? '',
                     'title' => $validatedFields['webcontent']['content_link']['title'] ?? '',
                     'button_label' => $validatedFields['webcontent']['content_link']['button_label'] ?? '',
-                    'image' => $processImage('webcontent.content_link.image', $entity ? json_decode($entity->webcontent)->content_link->image : null),
+                    'image' => $processSvgOrImage(
+                        'webcontent.content_link.image',
+                        'webcontent.content_link.scene',
+                        'webcontent.content_link.svg_code',
+                        $entity ? (json_decode($entity->webcontent)->content_link->image ?? null) : null
+                    ),
                     'content' => $validatedFields['webcontent']['content_link']['content'] ?? '',
                 ],
                 'keypoints' => [
@@ -132,7 +175,9 @@ class WebService extends Model
             // Overview nested fields
             'webcontent.overview.header' => 'nullable|string',
             'webcontent.overview.title' => 'nullable|string',
-            'webcontent.overview.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
+            'webcontent.overview.image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:4096',
+            'webcontent.overview.scene' => 'nullable|string',
+            'webcontent.overview.svg_code' => 'nullable|string',
             'webcontent.overview.content.header' => 'nullable|string',
             'webcontent.overview.content.introduction' => 'nullable|string',
             'webcontent.overview.content.content' => 'nullable|string',
@@ -141,7 +186,9 @@ class WebService extends Model
             'webcontent.content_link.header' => 'nullable|string',
             'webcontent.content_link.title' => 'nullable|string',
             'webcontent.content_link.button_label' => 'nullable|string',
-            'webcontent.content_link.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Updated for image validation
+            'webcontent.content_link.image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:4096',
+            'webcontent.content_link.scene' => 'nullable|string',
+            'webcontent.content_link.svg_code' => 'nullable|string',
             'webcontent.content_link.content' => 'nullable|string',
 
             // Keypoints nested fields

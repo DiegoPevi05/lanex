@@ -1,52 +1,62 @@
 @extends('layouts.dashboard')
 
 @section('content-dashboard')
-    <section id="dashboard_history" class="bg-gray-light h-full w-full flex flex-row xl:gap-x-4 p-4 max-lg:overflow-y-scroll">
-
-        <div class="w-full h-full flex flex-col justify-start items-start bg-gray-light rounded-xl gap-4">
-
-            <div class="w-full h-full flex flex-col justify-stat items-start bg-white rounded-xl p-4">
-                <div class="w-full h-auto flex flex-row justify-between py-4">
-                    <div class="w-auto h-auto flex flex-row items-center gap-x-2">
-                        <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+    <section id="dashboard_history" class="bg-slate-50 h-full w-full flex flex-col p-4 sm:p-6 gap-5 overflow-y-auto">
+        <div class="w-full flex-1 flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-sm p-5 overflow-hidden">
+            <div class="w-full flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <span class="h-10 w-10 rounded-xl bg-purple-50 border border-purple-200/60 flex items-center justify-center text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 22h2a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><circle cx="8" cy="16" r="6"/><path d="M9.5 17.5 8 16.25V14"/></svg>
+                    </span>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-primary block">
+                            REGISTRO HISTÓRICO DE CARGA
                         </span>
-                        <h4 class="font-bold text-primary-dark capitalize">{{ __('messages.dashboard.history.name') }}</h4>
+                        <h1 class="text-lg sm:text-xl font-bold text-slate-900 capitalize font-display">
+                            {{ __('messages.dashboard.history.name') }}
+                        </h1>
                     </div>
                 </div>
+                <span class="text-xs font-mono font-semibold text-slate-500">
+                    Total: {{ $pagination->total() }}
+                </span>
+            </div>
 
-                <div id="order-cards-container" class="w-full h-full flex flex-col justify-start items-start overflow-y-scroll gap-y-4">
+            <div id="order-cards-container" class="w-full flex-1 flex flex-col justify-start items-start overflow-y-auto gap-4 pr-1">
+                @forelse ($pagination->items() as $paginate)
+                    <x-order-card :data="$paginate" type="history"/>
+                @empty
+                    <div class="w-full flex-1 flex flex-col items-center justify-center text-center py-12 px-4 border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                        <p class="text-sm font-bold text-slate-800 mb-1">Sin órdenes archivadas en el historial</p>
+                        <p class="text-xs text-slate-500">Las órdenes completadas o canceladas aparecerán aquí para consulta o restauración.</p>
+                    </div>
+                @endforelse
+            </div>
 
-                    @foreach ($pagination->items() as $paginate)
-                        <x-order-card :data="$paginate" type="history"/>
-                    @endforeach
+            <div class="w-full flex items-center justify-between pt-4 mt-4 border-t border-slate-100">
+                <div class="flex items-center gap-1.5">
+                    <a href="{{ route('dashboard_history', ['page' => 1]) }}" class="{{ $pagination->currentPage() == 1 ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white' }} h-9 w-9 border rounded-xl flex items-center justify-center transition-colors p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+                    </a>
+                    <a href="{{ route('dashboard_history', ['page' => $pagination->currentPage() - 1]) }}" class="{{ $pagination->currentPage() == 1 ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white' }} h-9 w-9 border rounded-xl flex items-center justify-center transition-colors p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                    </a>
                 </div>
 
-                <div class="w-full h-auto flex flex-row justify-between mt-auto">
-                    <div class="w-auto flex flex-row gap-x-1">
-                        <a href="{{route('dashboard_history',['page' => 1 ] )}}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center   duration-300 cursor-pointer  p-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
-                        </a>
+                <span class="text-xs font-mono text-slate-500">
+                    Página {{ $pagination->currentPage() }} de {{ max(1, $pagination->lastPage()) }}
+                </span>
 
-                        <a href="{{ route('dashboard_history', ['page' =>$pagination->currentPage() - 1]) }}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m15 18-6-6 6-6"/></svg>
-                        </a>
-                    </div>
-
-                    <div class="w-auto flex flex-row gap-x-1">
-                        <a href="{{ route('dashboard_history', ['page' =>$pagination->currentPage() + 1]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="m9 18 6-6-6-6"/></svg>
-                        </a>
-
-                        <a href="{{ route('dashboard_history', ['page' =>$pagination->lastPage()]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
-                        </a>
-                    </div>
+                <div class="flex items-center gap-1.5">
+                    <a href="{{ route('dashboard_history', ['page' => $pagination->currentPage() + 1]) }}" class="{{ $pagination->lastPage() == $pagination->currentPage() ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white' }} h-9 w-9 border rounded-xl flex items-center justify-center transition-colors p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                    </a>
+                    <a href="{{ route('dashboard_history', ['page' => $pagination->lastPage()]) }}" class="{{ $pagination->lastPage() == $pagination->currentPage() ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white' }} h-9 w-9 border rounded-xl flex items-center justify-center transition-colors p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+                    </a>
                 </div>
-
             </div>
         </div>
-
     </section>
     <x-order-status-modal/>
     <x-order-custom-email-modal/>

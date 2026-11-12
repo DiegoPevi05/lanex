@@ -57,6 +57,9 @@ class OrderController extends AbstractEntityController
         // Log the steps as an array
         //Log::info('tracking_steps', ['order_steps' => $order->trackingSteps->toArray()]);
 
+        // Public order lookup is strictly read-only: return the latest snapshot saved by the Cron Job / Admin Panel
+        $liveTelemetry = app(\App\Services\FlightTracker::class)->getOrderSnapshot($order);
+
         // Fetch tracking steps related to the order
         $trackingSteps = $order->trackingSteps()
             ->select(['status', 'sequence', 'country', 'city','eta','lat','lng','duration', 'transport_type_id','updated_at','created_at']) // Include foreign key
@@ -119,15 +122,22 @@ class OrderController extends AbstractEntityController
                 );
             })
             ->toArray();
-        // Calculate the current position based on percentage of advance
+
+        // Calculate the current position based on telemetry or percentage of advance
         $currentPosition = $this->calculateCurrentPosition($trackingSteps);
+        $liveLat = $liveTelemetry['lat'] ?? $currentPosition['lat'];
+        $liveLng = $liveTelemetry['lng'] ?? $currentPosition['lng'];
 
         // Construct the final response
         $response = [
             'order' => array_merge(
                 $order->only(['order_number', 'status', 'details', 'numero_dam', 'manifest', 'client_name', 'updated_at']),
-                ['current_lat' => $currentPosition['lat'], 'current_lng' => $currentPosition['lng']]
+                [
+                    'current_lat' => $liveLat,
+                    'current_lng' => $liveLng,
+                ]
             ),
+            'live_telemetry' => $liveTelemetry,
             'freights' => $freights,
             'tracking_steps' => $trackingSteps
         ];
@@ -140,12 +150,13 @@ class OrderController extends AbstractEntityController
     {
         $filterKey = $request->input('filterKey');
         $filterValue = $request->input('filterValue');
-        $perPage = 3;
+        $perPage = 5;
         $query = $this->model->query();
 
         // Filter for orders where canceled is false
         $query->where('canceled', false);
         $query->whereNotIn('status',['COMPLETED']);
+        $query->orderBy('id', 'desc');
 
         $filterableFields = $this->model->filterFields();
         $filterableValues = array_column($filterableFields, 'value');
@@ -300,8 +311,51 @@ class OrderController extends AbstractEntityController
         return ''; // Return empty string if the value is not formatted as expected
     }
 
+    public function lookupTransport(Request $request)
+    {
+        $query = (string) $request->query('query', '');
+        $mode = (string) $request->query('mode', 'AUTO');
+        $result = app(\App\Services\FlightTracker::class)->lookupTransportAndBuildSteps($query, $mode);
+
+        return response()->json($result);
+    }
+
+    protected function prepareAutoTransportStepsInRequest(Request $request): void
+    {
+        $lookupCode = trim((string) $request->input('transport_lookup_code', ''));
+        $lookupMode = trim((string) $request->input('transport_lookup_mode', 'AUTO'));
+        $transports = $request->input('transports');
+
+        if ($lookupCode !== '' && (empty($transports) || !is_array($transports))) {
+            $auto = app(\App\Services\FlightTracker::class)->lookupTransportAndBuildSteps($lookupCode, $lookupMode);
+            $builtSteps = [];
+            foreach ($auto['steps'] as $s) {
+                $builtSteps[] = [
+                    'name' => $s['name'],
+                    'icon' => $s['icon'],
+                    'country' => $s['country'],
+                    'city' => $s['city'],
+                    'lat' => $s['lat'],
+                    'lng' => $s['lng'],
+                    'address' => $s['address'],
+                    'type' => $s['type'],
+                    'status' => $s['status'],
+                    'external_reference' => $s['extref'],
+                    'eta' => $s['eta'],
+                    'duration' => $s['duration'],
+                    'description' => $s['description'],
+                ];
+            }
+            $request->merge(['transports' => $builtSteps]);
+            if (empty($request->input('details')) && !empty($auto['order_details'])) {
+                $request->merge(['details' => $auto['order_details']]);
+            }
+        }
+    }
+
     public function store(Request $request)
     {
+        $this->prepareAutoTransportStepsInRequest($request);
         $validator = Validator::make($request->all(), $this->model::getValidationRules(), $this->model::getValidationMessages());
 
         //validate Order Data
@@ -376,6 +430,8 @@ class OrderController extends AbstractEntityController
 
         $entity->save();
 
+        app(\App\Services\FlightTracker::class)->syncOrderLiveTracking($entity, false);
+
         $emailNotification = $request->input('email-notification', false); // Default to false if not provided
 
         if ($emailNotification) {
@@ -398,6 +454,7 @@ class OrderController extends AbstractEntityController
                 ->with('error', $this->model::getErrorMessage('not_found'));
         }
 
+        $this->prepareAutoTransportStepsInRequest($request);
         $validator = Validator::make($request->all(), $this->model::getValidationRules(true), $this->model::getValidationMessages());
 
         if ($validator->fails()) {
@@ -518,6 +575,8 @@ class OrderController extends AbstractEntityController
         $entity->status = $currentStatus;
 
         $entity->save();
+
+        app(\App\Services\FlightTracker::class)->syncOrderLiveTracking($entity, false);
 
         return redirect()->route($this->model::getRedirectRoutes("update"))
             ->with('success', $this->model::getSuccessMessage('update'));

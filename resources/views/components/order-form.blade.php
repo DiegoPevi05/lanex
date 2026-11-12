@@ -194,6 +194,97 @@
             </div>
         </x-wrapper-scroll>
 
+        @php
+            $initialLookupRef = '';
+            $initialLookupMode = 'AUTO';
+            if ($order && $order->trackingSteps && count($order->trackingSteps) > 0) {
+                $activeSt = $order->getCurrentTrackStep();
+                if ($activeSt && $activeSt->transportType) {
+                    $initialLookupRef = $activeSt->transportType->external_reference ?? $activeSt->transportType->name ?? '';
+                    $initialLookupMode = in_array($activeSt->transportType->type, ['AIR', 'SHIP']) ? $activeSt->transportType->type : 'AUTO';
+                }
+            }
+        @endphp
+
+        <!-- Live Flight / Ship Number Auto-Fill Panel -->
+        <div class="my-4 p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
+                        AUTOCOMPLETAR TRANSPORTE EN VIVO (VUELO ADS-B / BARCO AIS)
+                    </span>
+                </div>
+                <span class="text-[11px] text-slate-400">
+                    Ingresa el N° de vuelo o barco y llena automáticamente toda la ruta y telemetría
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-end">
+                <div class="sm:col-span-3">
+                    <label for="transport_lookup_mode" class="block text-[11px] font-mono uppercase text-slate-300 mb-1">Modalidad</label>
+                    <select id="transport_lookup_mode" name="transport_lookup_mode" class="w-full h-10 px-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs font-semibold focus:border-purple-400 focus:outline-none" {{ $formRequest === "view" ? "disabled" : "" }}>
+                        <option value="AUTO" {{ $initialLookupMode === 'AUTO' ? 'selected' : '' }}>Auto-detectar (Vuelo / Barco)</option>
+                        <option value="AIR" {{ $initialLookupMode === 'AIR' ? 'selected' : '' }}>✈️ Vuelo Aéreo (OpenSky ADS-B)</option>
+                        <option value="SHIP" {{ $initialLookupMode === 'SHIP' ? 'selected' : '' }}>🚢 Barco Marítimo (Marine AIS)</option>
+                    </select>
+                </div>
+
+                <div class="sm:col-span-6">
+                    <label for="transport_lookup_code" class="block text-[11px] font-mono uppercase text-slate-300 mb-1">N° de Vuelo (Callsign / ICAO24) o N° de Barco (MMSI / IMO / Nombre)</label>
+                    <input
+                        type="text"
+                        id="transport_lookup_code"
+                        name="transport_lookup_code"
+                        value="{{ $initialLookupRef }}"
+                        placeholder="Ej: LPE2383, UPS5334, e8021e ó MSC SENA, 636017582, FINNTIDE"
+                        class="w-full h-10 px-3.5 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder:text-slate-400 text-xs font-mono font-bold focus:border-purple-400 focus:outline-none"
+                        {{ $formRequest === "view" ? "disabled" : "" }}
+                    />
+                </div>
+
+                <div class="sm:col-span-3">
+                    <button
+                        type="button"
+                        id="btn_autofill_transport"
+                        onclick="autoFillOrderTransportFromLookup()"
+                        class="w-full h-10 px-4 rounded-xl bg-primary hover:bg-purple-500 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+                        {{ $formRequest === "view" ? "disabled" : "" }}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" style="width:14px;height:14px;" class="lookup-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+                        <span class="lookup-btn-text">Autocompletar</span>
+                    </button>
+                </div>
+            </div>
+
+            @if($formRequest !== "view")
+                <div class="flex flex-wrap items-center gap-1.5 mt-3 pt-2.5 border-t border-slate-800/80 text-[11px]">
+                    <span class="text-slate-400 font-medium">Ejemplos reales en vivo:</span>
+                    <button type="button" onclick="quickFillTransportCode('LPE2383', 'AIR')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-purple-600 text-purple-200 hover:text-white font-mono transition-colors cursor-pointer">
+                        ✈️ Vuelo LPE2383 (LATAM)
+                    </button>
+                    <button type="button" onclick="quickFillTransportCode('UPS5334', 'AIR')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-purple-600 text-purple-200 hover:text-white font-mono transition-colors cursor-pointer">
+                        ✈️ Vuelo Cargo UPS
+                    </button>
+                    <button type="button" onclick="quickFillTransportCode('636017582', 'SHIP')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-emerald-600 text-emerald-200 hover:text-white font-mono transition-colors cursor-pointer">
+                        🚢 Buque MSC SENA (MMSI 636017582)
+                    </button>
+                    <button type="button" onclick="quickFillTransportCode('230631000', 'SHIP')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-emerald-600 text-emerald-200 hover:text-white font-mono transition-colors cursor-pointer">
+                        🚢 Buque FINNTIDE (MMSI 230631000)
+                    </button>
+                </div>
+            @endif
+
+            <!-- Live Lookup Result Preview -->
+            <div id="transport-autofill-preview" class="hidden mt-3 p-3 rounded-xl bg-slate-950/90 border border-emerald-500/40 text-xs">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span id="autofill-preview-title" class="font-bold text-emerald-400 font-mono"></span>
+                    <span id="autofill-preview-coords" class="font-mono text-[11px] text-slate-300"></span>
+                </div>
+                <p id="autofill-preview-desc" class="text-[11px] text-slate-300 mt-1" style="font-size:11px;line-height:1.35;"></p>
+            </div>
+        </div>
+
         <x-wrapper-scroll id="transport" title="messages.dashboard.tracking_step.plural">
             <div class="p-none">
                 <div class="w-full h-auto flex flex-row justify-between py-none">
@@ -276,8 +367,8 @@
                                     <select id="transports[{{$index}}][city]" name="transports[{{$index}}][city]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->city ?? ''}}">
                                         <option value="">{{ __("messages.dashboard.tracking_step.form.placeholders.city") }}</option>
                                     </select>
-                                    <input id="transports[{{$index}}][lat]" name="transports[{{$index}}][lat]" class="hidden"/>
-                                    <input id="transports[{{$index}}][lng]" name="transports[{{$index}}][lng]" class="hidden"/>
+                                    <input id="transports[{{$index}}][lat]" name="transports[{{$index}}][lat]" class="hidden" value="{{$trackingStep->lat ?? ''}}"/>
+                                    <input id="transports[{{$index}}][lng]" name="transports[{{$index}}][lng]" class="hidden" value="{{$trackingStep->lng ?? ''}}"/>
                                 </div>
 
                                 <!-- Address Field -->
@@ -288,15 +379,15 @@
 
                                 <div class="col-span-2 flex flex-row gap-x-4">
                                     <select id="transports[{{$index}}][icon]" name="transports[{{$index}}][icon]" class="text-sm mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" {{ $formRequest === "view" ? "disabled" : "" }} value="{{$trackingStep->transportType->icon ?? ''}}" onchange="AddHandlerUpdateTrackIcon(this, {{$index}})">
-                                        <option value="" disabled selected>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
+                                        <option value="" disabled>{{ __("messages.dashboard.web.service.form.placeholders.icon") }}</option>
 
                                         @foreach($icons as $filename => $content)
-                                            <option value="{{ $content }}" {{ old('icon', $service->icon ?? '') === $content ? 'selected' : '' }}>
+                                            <option value="{{ $content }}" {{ ($trackingStep->transportType->icon ?? '') === $content ? 'selected' : '' }}>
                                                 {{ $filename }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <img id="icon-tracking-step-image-{{$index}}" src="/storage/images/svgs/ambulance.svg" class="h-12 w-12 shadow-md rounded-xl p-2 border-2 border-primary text-primary"/>
+                                    <img id="icon-tracking-step-image-{{$index}}" src="{{ !empty($trackingStep->transportType->icon) ? asset('storage/' . ltrim($trackingStep->transportType->icon, '/')) : '/storage/images/svgs/ambulance.svg' }}" class="h-12 w-12 shadow-md rounded-xl p-2 border-2 border-primary text-primary"/>
                                 </div>
 
                                 <!-- Type Field -->
@@ -331,8 +422,15 @@
 
                                 <!-- EXt Reference Field -->
                                 <div class="col-span-1">
-                                    <label for="transports[{{$index}}][external_reference]" class="block text-sm font-bold text-secondary-dark capitalize">{{ __("messages.dashboard.transport_type.form.fields.external_reference") }} ({{ __('messages.common.optional') }}):</label>
-                                    <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="text-sm mt-1 block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="{{ __("messages.dashboard.transport_type.form.placeholders.external_reference") }}" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->transportType->external_reference ?? ''}}">
+                                    <label for="transports[{{$index}}][external_reference]" class="block text-sm font-bold text-secondary-dark capitalize">N° Vuelo (ICAO24/Callsign) o Barco (MMSI):</label>
+                                    <div class="flex items-center gap-1.5 mt-1">
+                                        <input type="text" id="transports[{{$index}}][external_reference]" name="transports[{{$index}}][external_reference]" class="text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body" placeholder="Ej: LPE2383 o MMSI 636017582" {{$formRequest === "view" ? "disabled" : ""}} value="{{$trackingStep->transportType->external_reference ?? ''}}">
+                                        @if($formRequest !== "view")
+                                            <button type="button" onclick="autoFillSingleStepFromLookup({{$index}})" title="Autocompletar datos de este tramo con el N° de vuelo o barco" class="px-2.5 py-2 rounded-lg bg-primary hover:bg-primary-dark text-white text-xs font-semibold shrink-0 cursor-pointer">
+                                                Autocompletar
+                                            </button>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <!-- Eta Field -->

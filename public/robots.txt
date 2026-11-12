@@ -1,2 +1,24 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /dashboard
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /register
+Disallow: /password/
+Disallow: /track/order
+Disallow: /track-flight
+
+# AI & Search crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+Sitemap: https://lanexsac.com/sitemap.xml

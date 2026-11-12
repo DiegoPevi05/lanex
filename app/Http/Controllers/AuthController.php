@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -92,11 +93,32 @@ class AuthController extends Controller
             'email.email' => __('messages.dashboard.auth.forgot_password_invalid_email'),
         ]);
 
-        $status = Password::sendResetLink($request->only('email'));
+        if (!User::where('email', $request->email)->exists()) {
+            return back()->withInput()->withErrors([
+                'email' => 'No encontramos ninguna cuenta registrada con el correo: ' . $request->email,
+            ]);
+        }
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __('messages.dashboard.auth.forgot_password_link_sent')])
-            : back()->withErrors(['email' => __('messages.dashboard.auth.forgot_password_link_failed')]);
+        try {
+            $status = Password::sendResetLink($request->only('email'));
+
+            if ($status === Password::RESET_LINK_SENT) {
+                return back()->with(['status' => __('messages.dashboard.auth.forgot_password_link_sent')]);
+            }
+
+            return back()->withInput()->withErrors([
+                'email' => __($status) ?: __('messages.dashboard.auth.forgot_password_link_failed'),
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('[Password Reset Error] ' . $e->getMessage(), [
+                'exception' => $e,
+                'email' => $request->email,
+            ]);
+
+            return back()->withInput()->withErrors([
+                'email' => 'Ocurrió un error al contactar al servidor de correo: ' . $e->getMessage(),
+            ]);
+        }
     }
 
     // Show reset password form

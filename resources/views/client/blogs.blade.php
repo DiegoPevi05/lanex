@@ -1,95 +1,88 @@
-@section('meta_description', __('messages.meta.home'))
+@section('title', 'Blog de Logística, Aduanas y Comercio Exterior | LanEx')
+@section('meta_description', 'Artículos, guías sobre Incoterms, despacho aduanero, fletes marítimos y aéreos, y tendencias del comercio internacional.')
 @extends('layouts.client')
 
 @section('content-client')
-    <section id="blog-hero-section" class="w-full flex flex-col min-h-[100svh] pt-[80px] xl:pt-[140px] relative z-10 text-white">
+    <section id="blog-hero-section" data-enter class="w-full flex flex-col min-h-[75svh] lg:min-h-[82svh] pt-[160px] xl:pt-[190px] pb-24 relative z-10 text-white overflow-hidden bg-slate-950">
+        <!-- Photographic Ground with High Visibility -->
+        <img src="{{ asset('storage/images/web/cosco.webp') }}" alt="{{ __('Noticias & Blog LanEx') }}" class="hero-enter-media w-full h-full absolute inset-0 object-cover opacity-55">
+        <!-- Protective Dark Gradient Overlays for Guaranteed Text Legibility -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-primary-dark/45 z-10 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/35 via-transparent to-transparent z-10 pointer-events-none"></div>
 
-        <img src="{{ asset('storage/'. 'images/web/cosco.webp')}}" alt="suppliers_hero_image" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover  z-20 blur-sm">
-        <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] padding-x padding-b z-30">
-            <div class="w-full min-h-[calc(100svh-80px)] xl:min-h-[calc(100svh-140px)] flex flex-col justify-center gap-y-12 animation-group">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 relative z-20 w-full my-auto flex flex-col justify-center items-center text-center">
+            <span class="hero-enter-item text-xs sm:text-sm font-bold uppercase tracking-widest text-purple-400 block mb-3">
+                {{ __('NOTICIAS Y ANÁLISIS DE COMERCIO EXTERIOR') }}
+            </span>
+            <h1 class="hero-enter-item text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight sm:leading-none font-display mb-4">
+                {{ __('messages.blogs.blogs_section.title') }}
+            </h1>
+            <p class="hero-enter-item text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl mb-8">
+                {{ __('Actualizaciones del Puerto de Chancay y Callao, tendencias logísticas en China y Estados Unidos y normativas SUNAT.') }}
+            </p>
 
-                <div class="w-full h-auto flex flex-col justify-center items-center gap-y-4 animation-element slide-in-up">
-                    <div class="w-full h-auto flex flex-col gap-y-2 justify-center items-start lg:items-center">
-                        <h5 class="font-bold text-left lg:text-center text-3xl">{{ __('messages.blogs.hero.header') }}</h5>
-                        <h1 class="font-bold text-left lg:text-center text-5xl">{{ __('messages.blogs.hero.title') }}</h1>
-                    </div>
-                </div>
-                <div class="w-full h-auto flex flex-col items-start justify-start text-body gap-y-1 bg-primary-dark sm:bg-white p-3 sm:p-6 rounded-xl animation-element slide-in-up" >
-                    <div class="w-full flex flex-col sm:flex-row items-end sm:items-center justify-start gap-y-4 sm:gap-x-4">
+            <div class="hero-enter-item w-full max-w-2xl bg-white p-2 sm:p-2.5 rounded-2xl shadow-xl border border-slate-200 text-left">
+                <label for="blogNameInput" class="sr-only">{{ __('Buscar artículos de comercio exterior') }}</label>
+                <div class="w-full flex flex-col sm:flex-row items-center gap-2">
+                    <div class="relative w-full flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400 absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                         <input
                             id="blogNameInput"
-                            placeholder="{{ __('messages.blogs.hero.input_placeholder') }}" class="uppercase w-full border-2 border-body rounded-md p-4 text-md font-bold focus:border-2 focus:border-primary focus:outline-none" />
-                        <button
+                            placeholder="{{ __('messages.blogs.hero.input_placeholder') }}"
+                            class="w-full pl-11 pr-4 h-11 rounded-xl border border-slate-200 text-slate-900 text-base font-medium focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
+                        />
+                    </div>
+                    <button
                         id="searchButton"
-                        class="h-full uppercase font-bold rounded-xl active:scale-95 duration-300 hover:bg-primary-dark bg-primary text-white p-4 rounded-md">
+                        class="taste-btn w-full sm:w-auto px-6 h-11 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-sm shrink-0 cursor-pointer"
+                    >
                         {{ __('messages.suppliers.hero.input_button') }}
                     </button>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="blogs-sections" class="relative w-full h-full padding flex flex-col justify-center items-center">
-        <h5 class="animation-element slide-in-up text-primary">{{ __('messages.blogs.blogs_section.header') }}</h5>
-        <h1 class="font-bold text-primary-dark animation-element slide-in-up text-center">
-            {{ __('messages.blogs.blogs_section.title') }}
-        </h1>
-
-        <div class="w-full h-auto min-h-[400px] py-12 xl:p-12 flex flex-col justify-center items-center duration-300 transition-all">
-            <div id="blogs-items" class="h-full w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-3 gap-6 xl:gap-24 animation-element slide-in-down">
-
-
+    <section id="blogs-sections" class="relative w-full h-auto py-16 sm:py-24 bg-white border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
+            <div class="max-w-2xl mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary block mb-2">{{ __('messages.blogs.blogs_section.header') }}</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight font-display">
+                    {{ __('messages.blogs.blogs_section.title') }}
+                </h2>
             </div>
-            <div id="loader-blogs-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-10 sm:h-20 w-10 sm:w-20 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            </div>
-            <div id="empty-blogs-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-12 animation-element slide-in-down hidden">
-                <h5 class="font-bold text-primary">{{__('messages.blogs.blogs_section.empty_content')}}</h5>
-                <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-24 sm:h-48 w-auto"/>
-            </div>
-        </div>
 
-        <div class="w-full h-auto flex flex-row justify-around">
-            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
-                <!-- First Page -->
-                <button
-                   id="first-blogs-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-left">
-                        <path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path>
-                    </svg>
-                </button>
-                <!-- Previous Page -->
-                <button
-                   id="prev-blogs-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left">
-                        <path d="m15 18-6-6 6-6"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="flex flex-row w-auto h-auto justify-center items-center gap-x-4">
-                <!-- Next Page -->
-                <button
-                   id="next-blogs-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </button>
-                <!-- Last Page -->
-                <button
+            <div class="w-full h-auto min-h-[380px] pb-10 flex flex-col justify-center items-center">
+                <div id="blogs-items" class="h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                   id="last-blogs-page"
-                   class="h-8 sm:h-12 w-8 sm:w-12 max-sm:p-1 rounded-full inline-flex justify-center items-center  duration-300 active:scale-95 border-2 shadow-lg active:border-white text-white bg-primary hover:bg-white hover:text-primary border-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-right">
-                        <path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path>
-                    </svg>
-                </button>
+                </div>
+                <div id="loader-blogs-content" class="w-full h-auto flex justify-center items-center animate-spin text-primary hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                </div>
+                <div id="empty-blogs-content" class="w-full h-auto flex flex-col items-center justify-center gap-y-6 hidden">
+                    <p class="font-bold text-slate-700 text-lg">{{__('messages.blogs.blogs_section.empty_content')}}</p>
+                    <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" alt="{{ __('Sin artículos') }}" class="h-28 w-auto"/>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row justify-between items-center pt-6 border-t border-slate-200/80">
+                <div class="flex flex-row items-center gap-x-3">
+                    <button id="first-blogs-page" aria-label="{{ __('Primera página de noticias') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg>
+                    </button>
+                    <button id="prev-blogs-page" aria-label="{{ __('Página anterior de noticias') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                    </button>
+                </div>
+                <div class="flex flex-row items-center gap-x-3">
+                    <button id="next-blogs-page" aria-label="{{ __('Página siguiente de noticias') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                    </button>
+                    <button id="last-blogs-page" aria-label="{{ __('Última página de noticias') }}" class="taste-btn h-11 w-11 rounded-xl inline-flex justify-center items-center border text-white bg-primary hover:bg-primary-dark border-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
-
-
     </section>
 @endsection
 
@@ -144,41 +137,44 @@
 
                 // Populate blogs
                 data.blogs.data.forEach(blog => {
-                    const blogDiv = document.createElement('div');
-                    blogDiv.classList.add('col-span-3', 'sm:col-span-2', 'xl:col-span-1', 'min-h-[400px]','bg-white', 'border-2', 'border-gray-200', 'shadow-md', 'rounded-lg', 'flex', 'flex-col', 'items-start', 'justify-start', 'cursor-pointer', 'group');
+                    const blogCard = document.createElement('article');
+                    blogCard.classList.add(
+                        'taste-card-link', 'group', 'bg-white', 'border', 'border-slate-200/90', 'hover:border-primary/50',
+                        'rounded-2xl', 'overflow-hidden', 'hover:shadow-md', 'flex', 'flex-col', 'justify-between'
+                    );
 
-                    blogDiv.innerHTML = `
-                        <a href="/blog/${blog.id}" class="w-full h-auto">
-                            <div class="w-full h-[150px] overflow-hidden">
-                                <img src="/storage/${blog.thumbnail_image}" alt="icon" class="w-full h-auto object-cover transition-all duration-300 opacity-50 group-hover:opacity-100 group-hover:scale-105" />
+                    const tagsList = Array.isArray(blog.tags) ? blog.tags : [];
+                    const firstTag = tagsList.length > 0 ? String(tagsList[0]).replace(/^#/, '') : 'Comercio Exterior';
+
+                    blogCard.innerHTML = `
+                        <div>
+                            <a href="/blog/${blog.id}" class="block relative w-full h-48 overflow-hidden bg-slate-100">
+                                <img src="/storage/${blog.thumbnail_image}" alt="${blog.title}" class="taste-photo-zoom w-full h-full object-cover" />
+                                <span class="absolute top-3 left-3 bg-slate-900/85 text-white text-[10px] font-semibold px-2.5 py-1 rounded-md">${firstTag}</span>
+                            </a>
+                            <div class="p-6 flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-xs text-slate-400">
+                                    <span>${blog.published_at || ''}</span>
+                                    <span>${blog.reading_time || 4} min lectura</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 group-hover:text-primary text-lg leading-snug transition-colors mt-1">
+                                    <a href="/blog/${blog.id}">${blog.title}</a>
+                                </h3>
+                                <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mt-1">
+                                    ${blog.excerpt || ''}
+                                </p>
                             </div>
-                        </a>
-                        <div class="w-full h-full flex flex-col items-start justify-start p-2">
-                            <span class="w-full flex flex-row items-center justify-between">
-                                <p class="text-gray-500 text-xs">
-                                    {{ __('messages.home.blogs.published_at') }} <strong>${blog.published_at}</strong>
-                                </p>
-                                <p class="text-gray-500 text-xs">
-                                    {{ __('messages.home.blogs.reading_time') }} <strong>${blog.reading_time}</strong> {{ __('messages.home.blogs.minutes') }}
-                                </p>
-                            </span>
-                            <h3 class="font-bold text-primary-dark mt-2 text-xs text-left">
-                                ${blog.title}
-                            </h3>
-                            <p class="text-gray-500 text-xs text-left">
-                                ${blog.excerpt}
-                            </p>
-
-                            <span class="mt-auto w-full flex flex-row flex-wrap items-center justify-between gap-1 py-2">
-                                ${blog.tags.map(tag => `<p class="bg-primary text-white px-2 py-1 rounded-full text-xs">${tag}</p>`).join('')}
-                            </span>
-                            <p class="text-gray-500 mt-auto py-4">
-                                {{ __('messages.home.blogs.author') }} <strong>${blog.author}</strong>
-                            </p>
+                        </div>
+                        <div class="px-6 py-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                            <span class="text-slate-500 font-medium truncate max-w-[180px]">${blog.author || 'Equipo LanEx'}</span>
+                            <a href="/blog/${blog.id}" class="font-bold text-primary inline-flex items-center gap-1">
+                                <span>Leer artículo</span>
+                                <svg class="w-3.5 h-3.5 taste-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </a>
                         </div>
                     `;
 
-                    blogsContainer.appendChild(blogDiv);
+                    blogsContainer.appendChild(blogCard);
                 });
 
                 blogsContainer.classList.remove('hidden');

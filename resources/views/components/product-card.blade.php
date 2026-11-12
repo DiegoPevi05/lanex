@@ -1,19 +1,28 @@
-<div id="product_card_{{$product['id']}}" class="w-full h-full rounded-xl shadow-xl flex flex-col text-body py-4 px-6" style="background-color: rgba(255, 255, 255, 0.6);">
-    <div class="h-auto w-full flex justify-center items-center">
-        <div class="h-24 w-24 flex justify-center items-center border-2 border-gray-light rounded-xl p-1">
-            <img src="{{asset ('storage/'. $product['image'])}}" class="w-auto h-full" />
+<div id="product_card_{{$product['id']}}" class="taste-card-link w-full h-full bg-white rounded-2xl border border-slate-200/90 hover:border-primary/50 hover:shadow-md p-6 flex flex-col justify-between text-slate-900 group">
+    <div>
+        <div class="w-28 h-28 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-2 mb-4 mx-auto overflow-hidden">
+            <img src="{{ asset('storage/' . $product['image']) }}" alt="{{ $product['name'] }}" class="taste-photo-zoom max-w-full max-h-full object-contain" />
         </div>
-    </div>
-    <div class="h-auto w-full flex flex-col justify-start items-center gap-y-3">
-        <div class="w-full flex flex-row justify-center items-center">
-            @for ($i = 0; $i < $product['stars']; $i++)
-                <x-heroicon-s-star class="h-6 sm:h-10 w-6 sm:w-10 text-primary" />
+
+        <div class="flex items-center justify-center gap-1 text-amber-400 mb-2">
+            @for ($i = 0; $i < ($product['stars'] ?? 5); $i++)
+                <x-heroicon-s-star class="w-4 h-4 text-amber-400 fill-current" />
             @endfor
         </div>
-        <p class="font-bold text-center">{{$product['name']}}</p>
-        <p class="!text-xs text-justify hidden xl:block">{{$product['description']}} </p>
+
+        <p class="font-bold text-slate-900 text-center text-base leading-snug mb-2 font-display">
+            {{ $product['name'] }}
+        </p>
+
+        <p class="text-sm text-slate-600 text-center line-clamp-3 leading-relaxed font-normal">
+            {{ $product['description'] }}
+        </p>
     </div>
-    <div class="h-full w-full flex justify-center items-center mt-6">
-        <x-button :url="route('quote') . '?type=product&id=' . $product['id']" text="Cotizar Ahora" variant="primary"/>
+
+    <div class="w-full pt-4 mt-3 border-t border-slate-100">
+        <a href="{{ route('quote') . '?type=product&id=' . $product['id'] }}" class="taste-btn w-full h-11 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-xs tracking-wider text-center uppercase flex items-center justify-center gap-2">
+            <span>{{ __('Cotizar Producto') }}</span>
+            <svg class="w-3.5 h-3.5 taste-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
     </div>
 </div>

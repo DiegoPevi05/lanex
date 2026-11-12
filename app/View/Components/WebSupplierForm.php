@@ -23,7 +23,21 @@ class WebSupplierForm extends Component
         $this->formRequest = $formRequest;
 
         if ($supplier) {
-            $supplier->details = json_decode($supplier->details, true);
+            $decoded = is_string($supplier->details)
+                ? json_decode($supplier->details, true)
+                : $supplier->details;
+
+            $normalizedDetails = [];
+            if (is_array($decoded)) {
+                foreach ($decoded as $key => $val) {
+                    if (is_string($val) && trim($val) !== '') {
+                        $normalizedDetails[] = $val;
+                    } elseif (is_bool($val) && $val) {
+                        $normalizedDetails[] = ucfirst((string) $key) . ': Sí';
+                    }
+                }
+            }
+            $supplier->details = array_values($normalizedDetails);
             $this->supplier = $supplier;
         }else {
             $this->supplier = null; // or initialize with a default value

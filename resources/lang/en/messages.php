@@ -1284,6 +1284,7 @@ It is important for every company involved in international trade to be trained 
                     'icon' => 'icon',
                     'status' => 'status',
                     'external_reference' => 'external reference',
+                    'providers' => 'providers',
                     'SELECT_TRANSPORT_TYPE' => 'Select transport type',
                     'LAND' => 'land',
                     'AIR' => 'air',
@@ -1824,7 +1825,7 @@ It is important for every company involved in international trade to be trained 
             'packages' => 'Packages',
             'details' => 'Details',
             'weight' => 'Weight',
-            'length' => 'Lenght',
+            'length' => 'Length',
             'volume' => 'Volume',
             'unit' => 'Unit'
         ],

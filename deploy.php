@@ -22,13 +22,22 @@ if (!$targetDir) {
 // (public_html's document root is flattened, so public/build ships to build/).
 $pathsToSync = [
     'app',
+    'bootstrap/app.php' => 'bootstrap/app.php',
+    'bootstrap/providers.php' => 'bootstrap/providers.php',
     'resources',
     'routes',
     'config',
     'database/migrations',
     'database/seeders',
     'artisan',
+    'composer.json',
+    'composer.lock',
     'public/build' => 'build',
+    'public/images' => 'images',
+    'public/robots.txt' => 'robots.txt',
+    'public/sitemap.xml' => 'sitemap.xml',
+    'public/favicon.ico' => 'favicon.ico',
+    'storage/app/public' => 'storage/app/public',
 ];
 
 /**
@@ -42,11 +51,21 @@ function syncRecursive($src, $dst) {
                 return;
             }
         }
-        $files = array_diff(scandir($src), ['.', '..']);
+        $files = array_diff(scandir($src), ['.', '..', '.DS_Store', '.git']);
         foreach ($files as $file) {
+            if (str_ends_with($file, ':Zone.Identifier')) {
+                continue;
+            }
             syncRecursive("$src/$file", "$dst/$file");
         }
     } else {
+        $parentDir = dirname($dst);
+        if (!is_dir($parentDir)) {
+            if (!mkdir($parentDir, 0755, true)) {
+                echo "Failed to create directory: $parentDir\n";
+                return;
+            }
+        }
         if (copy($src, $dst)) {
             // Successfully copied
         } else {

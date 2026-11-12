@@ -2,35 +2,37 @@
 
 @section('content-dashboard')
 
-    <section id="dashboard_web_{{$EntityType}}" class="bg-gray-light h-full w-full flex flex-row xl:gap-x-4 p-4">
+    <section id="dashboard_web_{{$EntityType}}" class="bg-slate-50 h-full w-full flex flex-row xl:gap-x-5 p-4 sm:p-6 overflow-hidden">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <div class="w-full h-full flex flex-col bg-white rounded-xl p-4 gap-y-2">
-            <div class="w-full h-auto flex flex-row justify-between py-4">
-                <div class="w-auto h-auto flex flex-row items-center gap-x-2">
-                    <a href="{{ route('dashboard_web') }}" class="h-10 w-10 bg-transparent bg-white rounded-full hover:bg-primary hover:text-white cursor-pointer border-2 border-primary active:scale-95 flex items-center justify-center text-secondary-dark p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+        <div class="w-full xl:w-[50%] h-full flex flex-col bg-white border border-slate-200/90 shadow-sm rounded-2xl p-5 gap-y-4">
+            <div class="w-full h-auto flex flex-row items-center justify-between pb-3 border-b border-slate-100">
+                <div class="w-auto h-auto flex flex-row items-center gap-x-2.5">
+                    <a href="{{ route('dashboard_web') }}" class="h-9 w-9 bg-slate-50 rounded-xl hover:bg-primary hover:text-white cursor-pointer border border-slate-200 hover:border-primary active:scale-95 flex items-center justify-center text-slate-700 transition-colors p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
                     </a>
-                    <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1">
+                    <span class="h-9 w-9 rounded-xl bg-purple-50 border border-purple-200/60 flex items-center justify-center text-primary p-1.5">
                         @if($EntityType == "product")
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-2"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
-
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
                         @elseif($EntityType == "supplier")
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-warehouse"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg>
                         @elseif($EntityType == "service")
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                         @elseif($EntityType == "blog")
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><polyline points="11 3 11 11 14 8 17 11 17 3"/></svg>
                         @else
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                         @endif
                     </span>
-                    <h4 class="font-bold text-primary-dark capitalize">{{ __('messages.dashboard.web.'.$EntityType.'.header') }}</h4>
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-primary block">CONTENIDO WEB</span>
+                        <h4 class="text-lg font-bold text-slate-900 capitalize font-display">{{ __('messages.dashboard.web.'.$EntityType.'.header') }}</h4>
+                    </div>
                 </div>
 
                 <div class="w-auto h-auto flex flex-row">
-                    <button id="create_button" class="w-auto h-full px-4 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2">
-                        {{__('messages.dashboard.web.'.$EntityType.'.new_entity')}}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    <button id="create_button" class="h-10 px-4 bg-primary capitalize text-white text-xs rounded-xl active:scale-95 hover:bg-primary-dark duration-200 font-semibold inline-flex items-center gap-x-2 shadow-sm">
+                        <span>{{__('messages.dashboard.web.'.$EntityType.'.new_entity')}}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                     </button>
                 </div>
             </div>
@@ -43,8 +45,8 @@
                 placeholderInput='messages.dashboard.web.{{$EntityType}}.input_placeholder_search'
                 labelButton='messages.dashboard.web.{{$EntityType}}.button_label_search'
             />
-            <div class="w-full flex flex-col overflow-y-scroll no-scroll-bar">
-                <div class="w-full flex flex-col gap-y-2">
+            <div class="w-full flex-1 flex flex-col overflow-y-auto no-scroll-bar pr-0.5">
+                <div class="w-full flex flex-col gap-y-3">
                     @foreach ($pagination->items() as $paginate)
                         <x-web-content-card
                             :data="$paginate"
@@ -52,44 +54,48 @@
                     @endforeach
                 </div>
             </div>
-            <div class="w-full h-auto flex flex-row justify-between mt-auto">
-                <div class="w-auto flex flex-row gap-x-1">
-                    <a href="{{route('dashboard_web_'.$EntityType,['page' => 1 ] )}}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center   duration-300 cursor-pointer  p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+            <div class="w-full h-auto flex flex-row items-center justify-between pt-3 mt-auto border-t border-slate-100">
+                <div class="w-auto flex flex-row gap-x-1.5">
+                    <a href="{{route('dashboard_web_'.$EntityType,['page' => 1 ] )}}" class="{{$pagination->currentPage() == 1 ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
                     </a>
 
-                    <a href="{{ route('dashboard_web_'.$EntityType, ['page' =>$pagination->currentPage() - 1]) }}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m15 18-6-6 6-6"/></svg>
+                    <a href="{{ route('dashboard_web_'.$EntityType, ['page' =>$pagination->currentPage() - 1]) }}" class="{{$pagination->currentPage() == 1 ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
                     </a>
                 </div>
 
-                <div class="w-auto flex flex-row gap-x-1">
-                    <a  href="{{ route('dashboard_web_'.$EntityType, ['page' =>$pagination->currentPage() + 1]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="m9 18 6-6-6-6"/></svg>
+                <span class="text-xs font-mono text-slate-500">
+                    Pág. {{ $pagination->currentPage() }} / {{ max(1, $pagination->lastPage()) }}
+                </span>
+
+                <div class="w-auto flex flex-row gap-x-1.5">
+                    <a href="{{ route('dashboard_web_'.$EntityType, ['page' =>$pagination->currentPage() + 1]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
                     </a>
 
-                    <a href="{{ route('dashboard_web_'.$EntityType, ['page' =>$pagination->lastPage()]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+                    <a href="{{ route('dashboard_web_'.$EntityType, ['page' =>$pagination->lastPage()]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="dashboard_web_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full  sm:w-[600px] max-xl:border-s-2 xl:w-[50%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4 transition-all duration-300">
+        <div class="dashboard_web_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full sm:w-[600px] max-xl:border-s max-xl:border-slate-200 xl:w-[50%] h-full bg-white border border-slate-200/90 shadow-sm rounded-2xl flex flex-col items-center justify-center p-5 transition-all duration-300 z-[110]">
             <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-4 z-[1200]">
-                <span class="dashboard_button_toggle_content h-12 w-12 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <span class="dashboard_button_toggle_content h-10 w-10 flex items-center justify-center border border-slate-200 rounded-xl cursor-pointer hover:bg-primary text-slate-700 hover:text-white bg-slate-100 duration-200 p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </span>
             </div>
-            <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center">
-                <img src="/storage/images/web/empty.svg" alt="empty_logo" class="w-[40%] h-auto"/>
-                <label>{{__('messages.dashboard.web.empty_content')}}</label>
+            <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center gap-y-3 text-center px-6">
+                <img src="/storage/images/web/empty.svg" alt="empty_logo" class="w-36 h-auto opacity-80"/>
+                <label class="text-sm font-semibold text-slate-500">{{__('messages.dashboard.web.empty_content')}}</label>
             </div>
             <div id="loading-content-form" class="hidden w-full h-full flex items-center justify-center">
-                <span class="animate-spin p-1 h-12 w-12 text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                <span class="animate-spin p-1 h-10 w-10 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
                 </span>
             </div>
-            <div id="content-form" class="hidden h-full w-full overflow-y-scroll">
+            <div id="content-form" class="hidden h-full w-full overflow-y-auto">
             </div>
         </div>
     </section>
@@ -514,6 +520,148 @@
         }
     }
 
+    function selectServiceSvgScene(sectionKey, selectedValue) {
+        const stage = document.getElementById(`svg-live-stage-${sectionKey}`);
+        const badge = document.getElementById(`badge-svg-${sectionKey}`);
+        const selectEl = document.getElementById(`webcontent-${sectionKey}-scene`);
+        const fileInput = document.getElementById(`webcontent-${sectionKey}-file`);
+        const codeInput = document.getElementById(`webcontent-${sectionKey}-svg-code`);
+        const fileNameLabel = document.getElementById(`file-name-${sectionKey}`);
+        const customHolder = document.getElementById(`svg-custom-holder-${sectionKey}`);
+
+        if (!stage) return;
+
+        // Clear any pending file upload or raw SVG code so the selected option wins
+        if (fileInput) fileInput.value = '';
+        if (codeInput) codeInput.value = '';
+        if (fileNameLabel) fileNameLabel.textContent = 'Formatos: .svg, .png, .jpg, .webp';
+
+        const items = stage.querySelectorAll('[data-scene-item]');
+        let matchedBuiltIn = false;
+
+        items.forEach(item => {
+            if (item.getAttribute('data-scene-item') === selectedValue) {
+                item.classList.remove('hidden');
+                item.classList.add('block');
+                matchedBuiltIn = true;
+            } else {
+                item.classList.remove('block');
+                item.classList.add('hidden');
+            }
+        });
+
+        if (!matchedBuiltIn) {
+            const customItem = stage.querySelector('[data-scene-item="custom"]');
+            if (customItem) {
+                customItem.classList.remove('hidden');
+                customItem.classList.add('block');
+            }
+            if (customHolder && selectedValue) {
+                const assetUrl = selectedValue.startsWith('http') ? selectedValue : `/storage/${selectedValue.replace(/^\/+/, '')}`;
+                customHolder.innerHTML = `<img src="${assetUrl}" alt="Vista previa SVG" class="w-full h-auto max-h-[300px] object-contain rounded-xl mx-auto" />`;
+            }
+        }
+
+        if (badge && selectEl && selectEl.selectedIndex >= 0) {
+            badge.textContent = selectEl.options[selectEl.selectedIndex].text.trim();
+        }
+    }
+
+    function previewServiceSvgUpload(event, sectionKey) {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+
+        const stage = document.getElementById(`svg-live-stage-${sectionKey}`);
+        const customHolder = document.getElementById(`svg-custom-holder-${sectionKey}`);
+        const badge = document.getElementById(`badge-svg-${sectionKey}`);
+        const fileNameLabel = document.getElementById(`file-name-${sectionKey}`);
+        const codeInput = document.getElementById(`webcontent-${sectionKey}-svg-code`);
+
+        if (codeInput) codeInput.value = '';
+        if (fileNameLabel) fileNameLabel.textContent = file.name;
+        if (badge) badge.textContent = `Archivo nuevo: ${file.name}`;
+
+        if (stage) {
+            stage.querySelectorAll('[data-scene-item]').forEach(item => {
+                if (item.getAttribute('data-scene-item') === 'custom') {
+                    item.classList.remove('hidden');
+                    item.classList.add('block');
+                } else {
+                    item.classList.remove('block');
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        if (!customHolder) return;
+
+        if (file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const svgText = e.target.result || '';
+                if (svgText.includes('<svg')) {
+                    customHolder.innerHTML = svgText;
+                } else {
+                    customHolder.innerHTML = `<span class="text-xs text-red-500 font-mono">El archivo no contiene una etiqueta &lt;svg&gt; válida.</span>`;
+                }
+            };
+            reader.readAsText(file);
+        } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                customHolder.innerHTML = `<img src="${e.target.result}" alt="${file.name}" class="w-full h-auto max-h-[300px] object-contain rounded-xl mx-auto" />`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function toggleServiceSvgCodeBox(sectionKey) {
+        const box = document.getElementById(`svg-code-box-${sectionKey}`);
+        if (!box) return;
+        box.classList.toggle('hidden');
+        if (!box.classList.contains('hidden')) {
+            const textarea = document.getElementById(`webcontent-${sectionKey}-svg-code`);
+            if (textarea) textarea.focus();
+        }
+    }
+
+    function previewServiceSvgCode(sectionKey, rawCode) {
+        const trimmed = (rawCode || '').trim();
+        const stage = document.getElementById(`svg-live-stage-${sectionKey}`);
+        const customHolder = document.getElementById(`svg-custom-holder-${sectionKey}`);
+        const badge = document.getElementById(`badge-svg-${sectionKey}`);
+        const fileInput = document.getElementById(`webcontent-${sectionKey}-file`);
+
+        if (!trimmed) {
+            const selectEl = document.getElementById(`webcontent-${sectionKey}-scene`);
+            if (selectEl) selectServiceSvgScene(sectionKey, selectEl.value);
+            return;
+        }
+
+        if (fileInput) fileInput.value = '';
+        if (badge) badge.textContent = 'Código <svg> personalizado';
+
+        if (stage) {
+            stage.querySelectorAll('[data-scene-item]').forEach(item => {
+                if (item.getAttribute('data-scene-item') === 'custom') {
+                    item.classList.remove('hidden');
+                    item.classList.add('block');
+                } else {
+                    item.classList.remove('block');
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        if (customHolder) {
+            if (trimmed.includes('<svg')) {
+                customHolder.innerHTML = trimmed;
+            } else {
+                customHolder.innerHTML = `<span class="text-xs text-amber-600 font-mono">Pega un bloque que contenga &lt;svg ...&gt;...&lt;/svg&gt; para ver la vista previa.</span>`;
+            }
+        }
+    }
+
 
 
     let detailIndex = 0;
@@ -549,7 +697,7 @@
 
 
         const detailTextarea = document.createElement("textarea");
-        detailTextarea.name = `details[${questionIndex}]`;
+        detailTextarea.name = `details[${detailIndex}]`;
         detailTextarea.classList.add("mt-2","text-sm", "block", "w-full", "p-2", "border-b-2", "border-b-secondary-dark", "bg-white", "focus:border-b-primary", "focus:outline-none", "text-body","!h-[150px]","no-scroll-bar");
         detailTextarea.placeholder = "Enter detail";
         detailContainer.appendChild(detailTextarea);
@@ -563,20 +711,23 @@
 
     // Helper function to update point titles after deletion
     function updateDetailTitles() {
-        const datailItems = document.querySelectorAll(".detail-item");
-        datailItems.forEach((item, index) => {
+        const detailItems = document.querySelectorAll(".detail-item");
+        detailItems.forEach((item, index) => {
             // Update point title display
             const detailTitle = item.querySelector("p");
-            detailTitle.innerText = `Detail ${index + 1}`;
+            if (detailTitle) {
+                detailTitle.innerText = `{{__('messages.dashboard.web.supplier.form.fields.details_detail')}} ${index + 1}`;
+            }
 
-            // Update input names to have continuous indexing
-            const detailInput = item.querySelector("input[type='text']");
-
-            detailInput.name = `details[${index}]`;
+            // Update textarea names to have continuous indexing
+            const detailInput = item.querySelector("textarea") || item.querySelector("input[type='text']");
+            if (detailInput) {
+                detailInput.name = `details[${index}]`;
+            }
         });
 
         // Update detailIndex to the current count
-        detailIndex = pointItems.length;
+        detailIndex = detailItems.length;
     }
 
 

@@ -1,32 +1,18 @@
-    <section id="brands" class="w-full {{ $variant == 'secondary' ? 'bg-white padding-x': 'bg-primary-dark padding' }} h-auto flex flex-col justify-center items-center  gap-y-12">
-        @if($variant != 'secondary')
-            <h3 class="max-sm:text-center font-bold uppercase {{ $variant == 'secondary' ? 'text-primary-dark': 'text-white' }}">{{$title}}</h3>
-        @endif
-        <div class="w-full flex flex-row justify-start items-start">
-
-          <div class="relative w-full h-auto overflow-hidden">
-
-            <div class="w-full h-auto {{ $variant == 'secondary' ? 'py-12' : 'py-6' }} reviews">
-              <div class="h-full flex flex-row justify-start items-center reviews-slide p-0">
-                @foreach ($suppliers as $supplier)
-                <a href="{{route('supplier',$supplier['id'])}}" class="p-none m-none">
-                  <div class="reviews-slide-card w-[280px] h-[40px] flex justify-center items-center px-12">
-                    <img src="{{ asset('storage/' . $supplier->logo)}}" alt="brands_logo_image" class="w-auto h-full">
-                  </div>
-                </a>
-                @endforeach
-              </div>
-              <div class="h-full flex flex-row justify-start items-center reviews-slide p-0">
-                @foreach ($suppliers as $supplier)
-                <a href="{{route('supplier',$supplier['id'])}}" class="p-none m-none">
-                  <div class="reviews-slide-card w-[280px] h-[40px] flex justify-center items-center px-12">
-                        <img src="{{ asset('storage/' . $supplier->logo)}}" alt="brands_logo_image_replicate" class="w-auto h-full">
-                  </div>
-                </a>
-                @endforeach
-              </div>
-            </div>
-          </div>
-
+<section id="brands" class="w-full bg-slate-50 border-b border-slate-200/80 py-12 sm:py-14">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col gap-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span class="text-xs font-bold uppercase tracking-widest text-primary block">
+                {{ $title ?: 'Compañías Asociadas' }}
+            </span>
+            <span class="text-xs text-slate-500 font-normal">{{ __('Fabricantes y operadores certificados') }}</span>
         </div>
-    </section>
+
+        <div class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5">
+            @foreach (collect($suppliers ?? [])->take(6) as $supplier)
+                <a href="{{ route('supplier', $supplier['id']) }}" class="taste-card-link group bg-white border border-slate-200/90 hover:border-primary/50 rounded-xl p-4 h-20 flex items-center justify-center hover:shadow-xs">
+                    <img src="{{ asset('storage/' . $supplier->logo) }}" alt="{{ $supplier->name ?? 'Marca asociada' }}" class="taste-photo-zoom max-h-9 w-auto max-w-[120px] object-contain opacity-90 group-hover:opacity-100" loading="lazy" />
+                </a>
+            @endforeach
+        </div>
+    </div>
+</section>

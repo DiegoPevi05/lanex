@@ -24,7 +24,9 @@ class WebServiceForm extends Component
         $this->suppliers = WebSupplier::select('id', 'name')->get();
 
         if ($service) {
-            $service->webcontent = json_decode($service->webcontent, true);
+            $service->webcontent = is_string($service->webcontent)
+                ? json_decode($service->webcontent, true)
+                : $service->webcontent;
             $this->service = $service;
         }else {
             $this->service = null; // or initialize with a default value

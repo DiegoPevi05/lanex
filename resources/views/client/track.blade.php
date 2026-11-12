@@ -1,153 +1,362 @@
+@section('title', 'Rastreo de Carga y Envíos en Tiempo Real | LanEx')
 @section('meta_description', __('messages.meta.track'))
 @extends('layouts.client')
 
 
 @section('content-client')
-    <section id="tracking_section" class="w-full h-auto text-body pt-[80px] pt:mt-[140px] max-xl:mt-12">
-        <div class="w-full h-full px-4 sm:px-24 xl:px-48 pt-12 pb-12 sm:pt-24 xl:pt-36 flex flex-col xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24">
-            <div id="container-content-order-tracked" class="w-full h-full flex flex-col flex-start items-start gap-y-6">
-                <h2 class="font-bold text-primary">{{ __('messages.track.hero.title') }}</h2>
-                <form id="search_track_order" class="w-full h-auto flex flex-row justify-center items-start gap-x-4">
-                    <input id="track_order" name="order" type="text"  class="w-full h-auto px-4 py-3 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark focus:border-2 focus:border-primary focus:outline-none font-bold" placeholder="{{ __('messages.track.hero.input_placeholder') }}" />
-                    <button type="submit" class="bg-primary-dark px-12 py-3 h-full text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
+    <section id="tracking_section" data-enter class="w-full h-auto bg-slate-50 text-slate-900 pt-[160px] xl:pt-[190px] pb-20 sm:pb-24 border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col xl:flex-row justify-start items-start gap-8">
+            <div id="container-content-order-tracked" class="w-full h-full flex flex-col items-start gap-y-6">
+                <div class="flex flex-col gap-2">
+                    <span class="hero-enter-item text-xs font-bold uppercase tracking-widest text-primary block">{{ __('MONITOREO DE OPERACIONES') }}</span>
+                    <h1 class="hero-enter-item text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight font-display">{{ __('messages.track.hero.title') }}</h1>
+                </div>
+
+                <form id="search_track_order" class="hero-enter-item w-full max-w-2xl bg-white p-2 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center gap-2">
+                    <label for="track_order" class="sr-only">{{ __('Número de orden o guía de rastreo') }}</label>
+                    <input id="track_order" name="order" type="text" required class="w-full h-11 px-4 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none font-bold text-base uppercase tracking-wider" placeholder="{{ __('messages.track.hero.input_placeholder') }}" />
+                    <button type="submit" class="taste-btn w-full sm:w-auto bg-primary hover:bg-primary-dark px-8 h-11 text-white font-semibold text-sm rounded-xl shrink-0 cursor-pointer">
                         <span>{{ __('messages.track.hero.input_button') }}</span>
                     </button>
                 </form>
-                <div id="default-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4">
-                    <img src="{{ asset('storage/'. '/images/web/map.svg') }}" alt="default_track_image" class="h-auto w-[40%]"/>
-                    <p>{{__('messages.track.messages.input_order_number')}}</p>
-                </div>
-                <div id="not-found-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4 hidden">
-                    <img src="{{ asset('storage/'. '/images/web/not_found.svg') }}" alt="order_track_not_found" class="h-auto w-[40%]"/>
-                    <p>{{__('messages.track.messages.order_number_not_found')}}</p>
-                    <p>{{__('messages.track.messages.order_number_not_found_helper')}}  <a href="https://wa.link/s7w6z3" target="_blank" class="text-primary hover:underline" aria-label="{{__('messages.track.messages.contact_us')}}" title="{{__('messages.track.messages.contact_us')}}">{{__('messages.track.messages.contact_us')}}</a></p>
-                </div>
-                <div id="error-order-tracked" class="w-full h-auto flex flex-col items-center justify-center animation-element slide-in-up py-12 gap-y-4 hidden">
-                    <img src="{{ asset('storage/'. '/images/web/404.svg') }}" alt="order_track_not_found" class="h-auto w-[40%]"/>
-                    <p>{{__('messages.track.messages.order_number_error')}}</p>
-                    <p>{{__('messages.track.messages.order_number_error_helper')}}  <a href="https://wa.link/s7w6z3" target="_blank" class="text-primary hover:underline" aria-label="{{__('messages.track.messages.contact_us')}}" title="{{__('messages.track.messages.contact_us')}}">{{__('messages.track.messages.contact_us')}}</a></p>
-                </div>
-                <div id="loader-order-tracked" class="w-full h-auto flex items-center justify-center animation-element slide-in-up py-12 hidden">
-                    <span class="h-12 w-12 text-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                    </span>
-                </div>
-                <div id="content-order-tracked" class="w-full h-auto grid grid-cols-1 sm:grid-cols-2 animation-element slide-in-up hidden">
-                    <div class="col-span-1 flex flex-col items-start justify-start">
-                        <label id="header_track_status" class="capitalize"></label>
-                        <h2 id="header_track_status_day" class="capitalize"></h2>
-                        <h5 id="header_track_status_eta"></h5>
-                        <span class="w-full h-4"></span>
-                        <label id="sub_header_track_status" class="capitalize"></label>
-                        <h5 id="track_status" class="capitalize"></h5>
+
+                <!-- Read-Only Telemetry Snapshot Card -->
+                <div id="live-telemetry-card" class="w-full bg-slate-950 text-white rounded-2xl border border-slate-800 p-5 sm:p-6 hidden shadow-lg">
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                            </span>
+                            <span id="telemetry-provider-badge" class="font-mono text-xs font-bold uppercase tracking-wider text-purple-300">
+                                {{ __('ÚLTIMO SNAPSHOT DE TELEMETRÍA') }}
+                            </span>
+                            <span id="telemetry-live-api-pill" class="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] font-bold uppercase tracking-wider">
+                                {{ __('SNAPSHOT REGISTRADO') }}
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="telemetry-synced-at" class="text-[11px] font-mono text-slate-400">{{ __('Última actualización: --') }}</span>
+                        </div>
                     </div>
-                    <div class="col-span-1 flex flex-col items-end justify-start">
-                        <label class="capitalize">{{ __('messages.track.order.order_number') }}</label>
-                        <p id="tracking_id"></p>
-                        <div id="tracking_steps" class="relative w-4 h-full flex flex-col justify-start items-end py-4">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
+                            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">{{ __('Aeronave / Embarcación') }}</span>
+                            <p id="telemetry-reference" class="text-sm font-bold text-white mt-1 truncate">--</p>
+                            <span id="telemetry-status-label" class="text-xs text-emerald-400 font-medium block mt-0.5">--</span>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
+                            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">{{ __('Coordenadas GPS / AIS') }}</span>
+                            <p id="telemetry-coords" class="text-sm font-mono font-bold text-white mt-1">--</p>
+                            <span id="telemetry-corridor" class="text-xs text-slate-400 block mt-0.5">--</span>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
+                            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">{{ __('Velocidad y Rumbo') }}</span>
+                            <p id="telemetry-speed" class="text-sm font-mono font-bold text-white mt-1">--</p>
+                            <span id="telemetry-heading" class="text-xs text-purple-300 font-mono block mt-0.5">--</span>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
+                            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">{{ __('Avance del Tramo') }}</span>
+                            <div class="flex items-center justify-between mt-1">
+                                <span id="telemetry-progress-text" class="text-sm font-mono font-bold text-white">0%</span>
+                                <span id="telemetry-altitude" class="text-xs font-mono text-slate-400">--</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden mt-2">
+                                <div id="telemetry-progress-bar" class="h-full bg-purple-500 rounded-full transition-all duration-500" style="width: 50%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <div id="default-order-tracked" class="hero-enter-item w-full bg-white rounded-2xl border border-slate-200/90 p-10 flex flex-col items-center justify-center gap-y-4 text-center">
+                    <img src="{{ asset('storage/images/web/map.svg') }}" alt="{{ __('Rastreo de carga LanEx') }}" class="h-44 sm:h-56 w-auto object-contain"/>
+                    <p class="text-base font-medium text-slate-600 max-w-md">{{__('messages.track.messages.input_order_number')}}</p>
+                </div>
+
+                <div id="not-found-order-tracked" class="w-full bg-white rounded-2xl border border-slate-200/90 p-10 flex flex-col items-center justify-center gap-y-4 text-center hidden">
+                    <img src="{{ asset('storage/images/web/not_found.svg') }}" alt="{{ __('Orden no encontrada') }}" class="h-44 sm:h-56 w-auto object-contain"/>
+                    <p class="font-bold text-slate-900 text-lg">{{__('messages.track.messages.order_number_not_found')}}</p>
+                    <p class="text-sm text-slate-600">{{__('messages.track.messages.order_number_not_found_helper')}} <a href="https://wa.link/s7w6z3" target="_blank" class="font-bold text-primary hover:underline" aria-label="{{__('messages.track.messages.contact_us')}}" title="{{__('messages.track.messages.contact_us')}}">{{__('messages.track.messages.contact_us')}}</a></p>
+                </div>
+
+                <div id="error-order-tracked" class="w-full bg-white rounded-2xl border border-slate-200/90 p-10 flex flex-col items-center justify-center gap-y-4 text-center hidden">
+                    <img src="{{ asset('storage/images/web/404.svg') }}" alt="{{ __('Error en consulta') }}" class="h-44 sm:h-56 w-auto object-contain"/>
+                    <p class="font-bold text-slate-900 text-lg">{{__('messages.track.messages.order_number_error')}}</p>
+                    <p class="text-sm text-slate-600">{{__('messages.track.messages.order_number_error_helper')}} <a href="https://wa.link/s7w6z3" target="_blank" class="font-bold text-primary hover:underline" aria-label="{{__('messages.track.messages.contact_us')}}" title="{{__('messages.track.messages.contact_us')}}">{{__('messages.track.messages.contact_us')}}</a></p>
+                </div>
+
+                <div id="loader-order-tracked" class="w-full bg-white rounded-2xl border border-slate-200/90 p-12 flex items-center justify-center hidden">
+                    <span class="h-12 w-12 text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    </span>
+                </div>
+
+                <div id="content-order-tracked" class="w-full bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-6 hidden">
+                    <div class="col-span-1 flex flex-col items-start justify-start">
+                        <span id="header_track_status" class="text-xs font-bold uppercase tracking-wider text-primary"></span>
+                        <h2 id="header_track_status_day" class="capitalize text-2xl font-bold text-slate-900 mt-1"></h2>
+                        <p id="header_track_status_eta" class="text-sm text-slate-500"></p>
+                        <span class="w-full h-4"></span>
+                        <span id="sub_header_track_status" class="text-xs font-semibold uppercase tracking-wider text-slate-400"></span>
+                        <p id="track_status" class="capitalize font-bold text-slate-900 text-lg"></p>
+                    </div>
+                    <div class="col-span-1 flex flex-col items-end justify-start">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">{{ __('messages.track.order.order_number') }}</span>
+                        <p id="tracking_id" class="font-mono font-bold text-slate-900 text-lg"></p>
+                        <div id="tracking_steps" class="relative w-4 h-full flex flex-col justify-start items-end py-4">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="content-order-tracked-map" class="w-full xl:w-1/3 h-[400px] xl:h-[800px] flex flex-col flex-start items-start gap-y-6 animation-element slide-in-up hidden">
-                <h3 class="font-bold text-primary-dark">{{ __('messages.track.order.live_tracking') }}</h3>
-                <div id="map" class="w-full h-full rounded-xl bg-primary border-2 border-gray-light">
+
+            <div id="content-order-tracked-map" class="relative z-10 isolate w-full xl:w-1/3 h-[400px] xl:h-[600px] flex flex-col items-start gap-y-4 hidden" style="isolation: isolate; z-index: 10;">
+                <h2 class="text-lg font-bold text-slate-900">{{ __('messages.track.order.live_tracking') }}</h2>
+                <div id="map" class="relative z-10 w-full h-full rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden" style="isolation: isolate; z-index: 10;">
                 </div>
             </div>
         </div>
-        <div id="content-order-freights" class="w-full h-full px-4 sm:px-24 xl:px-48 pb-6 sm:pb-12 xl:pb-18 flex flex-col justify-start items-start gap-y-6 sm:gap-y-12 animation-element slide-in-up hidden">
-            <div class="w-full flex flex-row justify-start items-center gap-x-4">
-                <span class="h-12 w-12 text-primary">
+
+        <div id="content-order-freights" class="max-w-7xl mx-auto px-6 lg:px-8 pt-10 flex flex-col justify-start items-start gap-y-4 hidden">
+            <div class="w-full flex flex-row justify-start items-center gap-x-3">
+                <span class="h-8 w-8 text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
                 </span>
-                <h2 class="capitalize">{{ __('messages.track.order.freight.freights') }}</h2>
+                <h2 class="capitalize text-xl font-bold text-slate-900">{{ __('messages.track.order.freight.freights') }}</h2>
             </div>
-            <table class="w-full border-2 border-gray-light">
-                <thead>
-                    <tr class="border-2 border-gray-light">
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.freight.freight_id') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.freight.name') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary max-sm:hidden capitalize">{{ __('messages.track.order.freight.description') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.freight.origin') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary max-sm:hidden capitalize">{{ __('messages.track.order.freight.characteristics') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.freight.packages') }}</th>
-                    </tr>
-                </thead>
-                <tbody id="freights-container">
-                </tbody>
-            </table>
+            <div class="w-full bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-200 bg-slate-50 text-slate-700">
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.freight.freight_id') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.freight.name') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold max-sm:hidden capitalize">{{ __('messages.track.order.freight.description') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.freight.origin') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold max-sm:hidden capitalize">{{ __('messages.track.order.freight.characteristics') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.freight.packages') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="freights-container" class="divide-y divide-slate-200">
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div id="content-order-tracking-steps" class="w-full h-full px-4 sm:px-24 xl:px-48 pb-12 sm:pb-24 xl:pb-36 flex flex-col justify-start items-start gap-y-6 sm:gap-y-12 animation-element slide-in-up hidden">
-            <div class="w-full flex flex-row justify-start items-center gap-x-4">
-                <span class="h-12 w-12 text-primary">
+        <div id="content-order-tracking-steps" class="max-w-7xl mx-auto px-6 lg:px-8 pt-10 flex flex-col justify-start items-start gap-y-4 hidden">
+            <div class="w-full flex flex-row justify-start items-center gap-x-3">
+                <span class="h-8 w-8 text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                 </span>
-                <h2>{{ __('messages.track.order.tracking.tracking_of_order') }}</h2>
+                <h2 class="text-xl font-bold text-slate-900">{{ __('messages.track.order.tracking.tracking_of_order') }}</h2>
             </div>
-            <table class="w-full border-2 border-gray-light">
-                <thead>
-                    <tr class="border-2 border-gray-light">
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.tracking_id') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.status') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.name') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:hidden">{{ __('messages.track.order.tracking.country') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:hidden">{{ __('messages.track.order.tracking.city') }}</th>
-                        <th class="border-2 border-gray-light text-center py-1 bg-secondary capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.eta') }}</th>
-                    </tr>
-                </thead>
-                <tbody id="tracking-steps-container">
-                </tbody>
-            </table>
+            <div class="w-full bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-200 bg-slate-50 text-slate-700">
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.tracking_id') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.status') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.name') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:hidden">{{ __('messages.track.order.tracking.country') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:hidden">{{ __('messages.track.order.tracking.city') }}</th>
+                            <th class="text-center py-3 px-4 font-semibold capitalize max-sm:text-xs">{{ __('messages.track.order.tracking.eta') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tracking-steps-container" class="divide-y divide-slate-200">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
     <x-questions title="{{ __('messages.track.questions.title') }}" :questions="$questions" />
 
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "{{ env('GOOGLE_MAPS_API_KEY') }}", v: "weekly"});</script>
-    <!-- Move script here -->
+    <!-- Open-Source Map Engine: Leaflet + OpenStreetMap + OpenSeaMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
     <script>
-        // Initialize and add the map
         let currentLatitude = -12.046374;
         let currentLongitude = -77.042793;
-        let typeTransport = 'airplaine';
-        let map;
-        let beachFlagMarkerView = null;
+        let activeOrderNumber = null;
+        let autoRefreshInterval = null;
+        let leafletMap = null;
+        let routeLayerGroup = null;
+        let liveVehicleMarker = null;
 
-        async function initMap() {
-          // The location of Uluru
-        const position = { lat: currentLatitude, lng: currentLongitude };
-        // A marker with a with a URL pointing to a PNG.
-        const iconTransport = document.createElement("img");
+        function initOpenSourceMap() {
+            const mapEl = document.getElementById('map');
+            if (!mapEl || leafletMap) return;
 
-        iconTransport.src = typeTransport == 'ship' ? "storage/images/web/ship_map.svg" : "storage/images/web/aircraft.svg";
-        iconTransport.height = typeTransport == 'ship' ? 48 : 96; // or any desired value
-        iconTransport.width = typeTransport == 'ship' ? 48 : 96;
+            leafletMap = L.map('map', {
+                center: [currentLatitude, currentLongitude],
+                zoom: 3,
+                scrollWheelZoom: true,
+                worldCopyJump: true,
+            });
 
-          // Request needed libraries.
-          //@ts-ignore
-          const { Map } = await google.maps.importLibrary("maps");
-          const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+            // Base OpenStreetMap Layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(leafletMap);
 
-          // The map, centered at Uluru
-          map = new Map(document.getElementById("map"), {
-            zoom: 3,
-            center: position,
-            gestureHandling: "none",
-            zoomControl: false,
-            mapId: "DEMO_MAP_ID",
-          });
+            // OpenSeaMap Nautical Marks Overlay for Maritime Vessels
+            L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                opacity: 0.75,
+                attribution: '&copy; OpenSeaMap'
+            }).addTo(leafletMap);
 
-            beachFlagMarkerView = new AdvancedMarkerElement({
-              map,
-              position: position,
-              content: iconTransport,
-              title: "A marker using a custom PNG Image",
+            routeLayerGroup = L.layerGroup().addTo(leafletMap);
+        }
+
+        function buildVehicleMapIcon(mode, headingDeg = 0) {
+            const isAir = (mode || '').toUpperCase() === 'AIR';
+            const badgeBg = isAir ? '#6D28D9' : '#0F172A';
+            const svgGlyph = isAir
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(${headingDeg - 45}deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10.189V14"/><path d="M12 2v3"/></svg>`;
+
+            return L.divIcon({
+                className: 'lanex-live-vehicle-marker',
+                html: `
+                    <div style="position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;">
+                        <span style="position:absolute;inset:0;border-radius:9999px;background:${badgeBg};opacity:0.25;animation:ping 1.8s cubic-bezier(0,0,0.2,1) infinite;"></span>
+                        <div style="position:relative;width:38px;height:38px;border-radius:9999px;background:${badgeBg};border:2.5px solid #FFFFFF;box-shadow:0 6px 16px rgba(15,23,42,0.35);display:flex;align-items:center;justify-content:center;">
+                            ${svgGlyph}
+                        </div>
+                    </div>
+                `,
+                iconSize: [44, 44],
+                iconAnchor: [22, 22],
             });
         }
 
-        initMap();
+        function updateOpenSourceMap(order, trackingSteps, telemetry) {
+            initOpenSourceMap();
+            if (!leafletMap || !routeLayerGroup) return;
+
+            setTimeout(() => {
+                leafletMap.invalidateSize();
+            }, 120);
+
+            routeLayerGroup.clearLayers();
+            const boundsPoints = [];
+
+            // Draw step waypoints
+            const validSteps = (trackingSteps || []).filter(s => s.lat !== null && s.lng !== null && !isNaN(parseFloat(s.lat)) && !isNaN(parseFloat(s.lng)));
+            const latLngs = [];
+
+            validSteps.forEach((step, idx) => {
+                const lat = parseFloat(step.lat);
+                const lng = parseFloat(step.lng);
+                latLngs.push([lat, lng]);
+                boundsPoints.push([lat, lng]);
+
+                const isCompleted = step.status === 'COMPLETED';
+                const isInTransit = step.status === 'IN_TRANSIT';
+                const dotColor = isCompleted ? '#10B981' : (isInTransit ? '#6D28D9' : '#64748B');
+
+                const stepMarker = L.circleMarker([lat, lng], {
+                    radius: 7,
+                    fillColor: dotColor,
+                    color: '#FFFFFF',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.95,
+                }).bindPopup(`
+                    <div style="font-family:sans-serif;min-width:160px;">
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#6D28D9;">Hito #${step.sequence + 1} · ${step.status}</div>
+                        <div style="font-size:13px;font-weight:700;color:#0F172A;margin-top:2px;">${step.city || ''}, ${step.country || ''}</div>
+                        <div style="font-size:11px;color:#475569;margin-top:2px;">${step.transport_type ? step.transport_type.name : ''}</div>
+                    </div>
+                `);
+                routeLayerGroup.addLayer(stepMarker);
+            });
+
+            if (latLngs.length >= 2) {
+                const polyline = L.polyline(latLngs, {
+                    color: '#6D28D9',
+                    weight: 3,
+                    opacity: 0.75,
+                    dashArray: '8, 8',
+                });
+                routeLayerGroup.addLayer(polyline);
+            }
+
+            // Add live aircraft / vessel position marker
+            const liveLat = telemetry && telemetry.lat ? parseFloat(telemetry.lat) : parseFloat(order.current_lat);
+            const liveLng = telemetry && telemetry.lng ? parseFloat(telemetry.lng) : parseFloat(order.current_lng);
+
+            if (!isNaN(liveLat) && !isNaN(liveLng)) {
+                const mode = (telemetry && telemetry.mode) ? telemetry.mode : 'SHIP';
+                const heading = (telemetry && telemetry.heading_deg) ? telemetry.heading_deg : 120;
+                const refLabel = (telemetry && telemetry.reference) ? telemetry.reference : order.order_number;
+                const speedLabel = (telemetry && telemetry.speed_knots)
+                    ? `${telemetry.speed_knots} kn (${telemetry.speed_kmh} km/h)`
+                    : '';
+
+                liveVehicleMarker = L.marker([liveLat, liveLng], {
+                    icon: buildVehicleMapIcon(mode, heading),
+                    zIndexOffset: 1000,
+                }).bindPopup(`
+                    <div style="font-family:sans-serif;min-width:190px;">
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#10B981;">POSICIÓN EN TIEMPO REAL (${mode})</div>
+                        <div style="font-size:13px;font-weight:700;color:#0F172A;margin-top:2px;">${refLabel}</div>
+                        <div style="font-size:11px;color:#334155;margin-top:4px;">Coordenadas: <b>${liveLat.toFixed(4)}, ${liveLng.toFixed(4)}</b></div>
+                        ${speedLabel ? `<div style="font-size:11px;color:#334155;">Velocidad: <b>${speedLabel}</b> · Rumbo: <b>${heading}°</b></div>` : ''}
+                    </div>
+                `);
+                routeLayerGroup.addLayer(liveVehicleMarker);
+                boundsPoints.push([liveLat, liveLng]);
+            }
+
+            if (boundsPoints.length > 1) {
+                leafletMap.fitBounds(boundsPoints, { padding: [36, 36], maxZoom: 6 });
+            } else if (boundsPoints.length === 1) {
+                leafletMap.setView(boundsPoints[0], 5);
+            }
+        }
+
+        function updateTelemetryCard(telemetry) {
+            const card = document.getElementById('live-telemetry-card');
+            if (!card) return;
+
+            if (!telemetry || !telemetry.lat) {
+                card.classList.add('hidden');
+                return;
+            }
+
+            card.classList.remove('hidden');
+            const livePill = document.getElementById('telemetry-live-api-pill');
+            if (livePill) {
+                livePill.textContent = 'ÚLTIMO SNAPSHOT REGISTRADO';
+                livePill.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] font-bold uppercase tracking-wider';
+            }
+            document.getElementById('telemetry-provider-badge').textContent =
+                `${telemetry.mode === 'AIR' ? 'VUELO ADS-B' : 'BUQUE MARÍTIMO AIS'} · ${telemetry.provider || 'Open-Source Tracker'}`;
+            document.getElementById('telemetry-synced-at').textContent =
+                `Último Snapshot: ${telemetry.synced_at || '--'}`;
+            document.getElementById('telemetry-reference').textContent =
+                telemetry.reference || '--';
+            document.getElementById('telemetry-status-label').textContent =
+                telemetry.status_label || 'En tránsito internacional';
+            document.getElementById('telemetry-coords').textContent =
+                `Lat ${Number(telemetry.lat).toFixed(4)}° · Lng ${Number(telemetry.lng).toFixed(4)}°`;
+            document.getElementById('telemetry-corridor').textContent =
+                `${telemetry.origin_city || 'Origen'} → ${telemetry.destination_city || 'Callao, Perú'}`;
+            document.getElementById('telemetry-speed').textContent =
+                telemetry.mode === 'AIR'
+                    ? `${telemetry.speed_kmh} km/h (${telemetry.speed_knots} kn)`
+                    : `${telemetry.speed_knots} nudos (${telemetry.speed_kmh} km/h)`;
+            document.getElementById('telemetry-heading').textContent =
+                `Rumbo (COG/Track): ${telemetry.heading_deg || 0}°`;
+            document.getElementById('telemetry-progress-text').textContent =
+                `${telemetry.progress_pct || 50}% completado`;
+            document.getElementById('telemetry-altitude').textContent =
+                telemetry.mode === 'AIR' ? `Altitud: ${telemetry.altitude_m || 10668} m` : 'Canal Marítimo AIS';
+            document.getElementById('telemetry-progress-bar').style.width =
+                `${Math.min(100, Math.max(5, telemetry.progress_pct || 50))}%`;
+        }
 
         const track_container = document.getElementById('tracking_section');
 
@@ -162,45 +371,16 @@
         const content_order_freights = track_container.querySelector('#content-order-freights');
         const content_order_tracking_steps = track_container.querySelector('#content-order-tracking-steps');
 
-
-        async function TrackOrderNumber (order_number){
-
-            default_order_content.classList.add('hidden')
-
+        async function TrackOrderNumber(order_number) {
+            activeOrderNumber = order_number.trim();
+            default_order_content.classList.add('hidden');
             loader_order_content.classList.remove('hidden');
 
-            if (!not_found_order_content.classList.contains('hidden')) {
-                not_found_order_content.classList.add('hidden');
-            }
-
-            if(!error_order_content.classList.contains('hidden')){
-                error_order_content.classList.add('hidden');
-            }
-
-            if(container_content_order_tracked.classList.contains('xl:w-2/3')){
-                container_content_order_tracked.classList.remove('xl:w-2/3')
-            }
-
-            if (!content_order_tracked.classList.contains('hidden')) {
-                content_order_tracked.classList.add('hidden');
-            }
-            if (!content_order_tracked_map.classList.contains('hidden')) {
-                content_order_tracked_map.classList.add('hidden');
-            }
-            if (!content_order_freights.classList.contains('hidden')) {
-                content_order_freights.classList.add('hidden');
-            }
-
-            if (!content_order_tracking_steps.classList.contains('hidden')) {
-                content_order_tracking_steps.classList.add('hidden');
-            }
-
-
-
+            not_found_order_content.classList.add('hidden');
+            error_order_content.classList.add('hidden');
 
             try {
-                // Make the AJAX request to track the flight
-                const response = await fetch(`/track/order?order_number=${order_number}`, {
+                const response = await fetch(`/track/order?order_number=${encodeURIComponent(activeOrderNumber)}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -209,48 +389,43 @@
                 });
 
                 if (!response.ok) {
-                    if(response.status === 404){
+                    document.getElementById('live-telemetry-card')?.classList.add('hidden');
+                    if (response.status === 404) {
                         not_found_order_content.classList.remove('hidden');
                         return;
-                    }else{
+                    } else {
                         error_order_content.classList.remove('hidden');
                         return;
                     }
                 }
 
-                // Parse the JSON response
                 const result = await response.json();
 
-                if(result.order && result.order.current_lat && result.order.current_lng){
-                    currentLatitude = result.order.current_lat;
-                    currentLongitude = result.order.current_lng;
-
-                    // Update the map and marker positions
-                    const newPosition = { lat: currentLatitude, lng: currentLongitude };
-                    beachFlagMarkerView.position = newPosition;
-                    map.setCenter(newPosition);
+                if (result.order && result.order.current_lat && result.order.current_lng) {
+                    currentLatitude = parseFloat(result.order.current_lat);
+                    currentLongitude = parseFloat(result.order.current_lng);
                 }
-                // Log the data to the console
-                addOrderData(result.order,result.tracking_steps);
+
+                addOrderData(result.order, result.tracking_steps);
                 addFreights(result.freights);
-                addTrackingSteps(result.order,result.tracking_steps);
-                addStepBullet(serializeOrderBulletData(result.order,result.tracking_steps));
+                addTrackingSteps(result.order, result.tracking_steps);
+                addStepBullet(serializeOrderBulletData(result.order, result.tracking_steps));
+                updateTelemetryCard(result.live_telemetry);
+
                 content_order_tracked.classList.remove('hidden');
                 content_order_tracked_map.classList.remove('hidden');
                 content_order_freights.classList.remove('hidden');
                 content_order_tracking_steps.classList.remove('hidden');
-                container_content_order_tracked.classList.add('xl:w-2/3')
+                container_content_order_tracked.classList.add('xl:w-2/3');
 
-                //not_found_order_content
+                updateOpenSourceMap(result.order, result.tracking_steps, result.live_telemetry);
 
             } catch (error) {
                 console.error('Error:', error);
                 error_order_content.classList.remove('hidden');
-                throw new Error('Failed to track order');
             } finally {
                 loader_order_content.classList.add('hidden');
             }
-
         }
 
 

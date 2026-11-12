@@ -1838,8 +1838,8 @@ Es importante que toda empresa dedicada al comercio exterior se capacite sobre l
             'unit' => 'Unidad'
         ],
         'status' => [
-            'header' => '¡Tu pedido está en camino!',
-            'subheader' => "¡Buenas noticias! Tu pedido está listo para salir. Lo estamos empacando con cuidado y estará en camino a tu dirección en poco tiempo.",
+            'confirmation_header' => '¡Tu pedido está en camino!',
+            'confirmation_subheader' => "¡Buenas noticias! Tu pedido está listo para salir. Lo estamos empacando con cuidado y estará en camino a tu dirección en poco tiempo.",
             'confirmation_subject' => 'Pedido Confirmado',
 
             'shipping_header' => '¡Tu pedido ha sido enviado!',

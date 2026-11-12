@@ -76,11 +76,11 @@
             </div>
             <!-- Container for dynamic details -->
             <div id="details-container" class="mb-4 mt-4">
-                @if($supplier)
-                    @foreach($supplier->details as $index => $detail)
+                @if($supplier && is_array($supplier->details))
+                    @foreach($supplier->details as $detail)
                         <div class="detail-item mb-4 mt-4 border-2 border-secondary-dark flex flex-col rounded-md p-4 animation-element in-view slide-in-up">
                             <div class="flex flex-row justify-between w-full h-auto">
-                                <p class="text-sm font-bold text-primary capitalize">{{__('messages.dashboard.web.supplier.form.fields.details_detail')}} {{ $index + 1 }}</p>
+                                <p class="text-sm font-bold text-primary capitalize">{{__('messages.dashboard.web.supplier.form.fields.details_detail')}} {{ $loop->iteration }}</p>
                                 @if($formRequest !== 'view')
                                 <button type="button" class="text-sm font-bold text-primary capitalize rounded-xl active:scale-95 duration-300 transition-all bg-secondary-dark hover:bg-primary px-4 py-2 text-white" onclick="this.closest('.detail-item').remove(); updateDetailTitles()">
                                     {{ __('messages.common.delete') }}
@@ -89,7 +89,7 @@
                             </div>
 
                             <label class="block text-sm font-bold text-secondary-dark capitalize mt-2">{{__('messages.dashboard.web.supplier.form.fields.details_detail')}}</label>
-                            <textarea name="details[{{ $index }}]" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body !h-[150px] no-scroll-bar" placeholder="{{__('messages.dashboard.web.supplier.form.placeholders.details_detail')}}">{{$detail}}</textarea>
+                            <textarea name="details[{{ $loop->index }}]" class="mt-2 text-sm block w-full p-2 border-b-2 border-b-secondary-dark bg-white focus:border-b-primary focus:outline-none text-body !h-[150px] no-scroll-bar" placeholder="{{__('messages.dashboard.web.supplier.form.placeholders.details_detail')}}" {{ $formRequest === 'view' ? 'disabled' : '' }}>{{ is_scalar($detail) ? $detail : '' }}</textarea>
                         </div>
                     @endforeach
                 @endif

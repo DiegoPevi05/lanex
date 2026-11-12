@@ -10,6 +10,7 @@ use App\Models\WebReview;
 use App\Models\WebProduct;
 use App\Models\WebBlog;
 use App\Models\Subscription;
+use App\Models\Setting;
 use App\Notifications\CustomEmailNotification;
 use App\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Log;
@@ -195,7 +196,8 @@ class WebController extends Controller
 
         // Decode details for each supplier
         $suppliers->getCollection()->transform(function ($supplier) {
-            $supplier->details = json_decode($supplier->details, true);
+            $decoded = is_string($supplier->details) ? json_decode($supplier->details, true) : $supplier->details;
+            $supplier->details = is_array($decoded) ? array_values(array_filter($decoded, 'is_string')) : [];
             return $supplier;
         });
 
@@ -335,7 +337,7 @@ class WebController extends Controller
 
             $notifiable->notify($notification);
 
-            $notifiable_admin = new AnonymousNotifiable(env('APP_ADMIN_EMAIL'));
+            $adminEmails = Setting::getEmails('contact_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
             $notification_admin = new CustomEmailNotification(
                 __('messages.contact.mail.subject_admin'),
                 __('messages.contact.mail.greeting_admin'),
@@ -353,7 +355,10 @@ class WebController extends Controller
                 null
             );
 
-            $notifiable_admin->notify($notification_admin);
+            foreach ($adminEmails as $adminEmail) {
+                $notifiable_admin = new AnonymousNotifiable($adminEmail);
+                $notifiable_admin->notify($notification_admin);
+            }
 
             return redirect()->route('contact')->with('success', __('messages.contact.success'));
 
@@ -367,19 +372,115 @@ class WebController extends Controller
 
     }
 
+    public function claims()
+    {
+        return view('client.claims');
+    }
+
+    public function submitClaim(Request $request)
+    {
+        $validatedData = $request->validate([
+            'claim_type' => 'required|in:reclamo,queja',
+            'full_name' => 'required|string|max:255',
+            'doc_type' => 'required|string|max:20',
+            'doc_number' => 'required|string|max:30',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:30',
+            'address' => 'required|string|max:255',
+            'service_type' => 'required|string|max:255',
+            'amount' => 'nullable|string|max:50',
+            'detail' => 'required|string|max:2000',
+            'request' => 'required|string|max:2000',
+        ]);
+
+        $claimCode = 'LR-' . date('Y') . '-' . str_pad(rand(100, 9999), 5, '0', STR_PAD_LEFT);
+
+        try {
+            // 1. Send confirmation copy to the consumer
+            $notifiableConsumer = new AnonymousNotifiable($validatedData['email']);
+            $notificationConsumer = new CustomEmailNotification(
+                "Constancia de Reclamación Virtual — Código: {$claimCode}",
+                "Estimado(a) {$validatedData['full_name']},",
+                [
+                    "Hemos recibido su " . strtoupper($validatedData['claim_type']) . " a través de nuestro Libro de Reclamaciones Virtual.",
+                    "Código de Registro Oficial: {$claimCode}",
+                    "Fecha y hora: " . now()->format('d/m/Y H:i:s'),
+                    "Documento de Identidad: {$validatedData['doc_type']} {$validatedData['doc_number']}",
+                    "Servicio reclamado: {$validatedData['service_type']}",
+                    "Detalle: {$validatedData['detail']}",
+                    "Pedido del reclamante: {$validatedData['request']}",
+                    "Conforme a lo dispuesto por la Ley N° 29571 (Código de Protección y Defensa del Consumidor), daremos respuesta formal a su caso en un plazo máximo de quince (15) días hábiles."
+                ],
+                null,
+                null,
+                [
+                    "EXPRESS LANE LOGISTICS S.A.C. — RUC: 20612739481",
+                    "Domicilio legal: Callao, Lima - Perú"
+                ],
+                "Atentamente,\nÁrea de Atención al Consumidor — LanEx",
+                'primary'
+            );
+            $notifiableConsumer->notify($notificationConsumer);
+
+            // 2. Send notification to configured claims admin email(s)
+            $claimsEmails = Setting::getEmails('claims_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+            $notificationAdmin = new CustomEmailNotification(
+                "⚠️ [Nuevo Registro en Libro de Reclamaciones] {$claimCode} — " . strtoupper($validatedData['claim_type']),
+                "Atención Equipo de Operaciones y Legal LanEx,",
+                [
+                    "Se ha registrado un nuevo " . strtoupper($validatedData['claim_type']) . " en el Libro de Reclamaciones Virtual.",
+                    "Código Oficial: {$claimCode}",
+                    "Consumidor: {$validatedData['full_name']} ({$validatedData['doc_type']} {$validatedData['doc_number']})",
+                    "Correo: {$validatedData['email']}",
+                    "Teléfono: {$validatedData['phone']}",
+                    "Dirección: {$validatedData['address']}",
+                    "Servicio: {$validatedData['service_type']}",
+                    "Monto reclamado: " . ($validatedData['amount'] ?: 'No especificado'),
+                    "Detalle del caso: {$validatedData['detail']}",
+                    "Pedido formulado: {$validatedData['request']}",
+                    "Plazo perentorio de respuesta: 15 días hábiles (Ley N° 29571)."
+                ],
+                "Ver Configuración de Correos",
+                route('dashboard_settings'),
+                [],
+                "LanEx Logistics Telemetry & Compliance",
+                'primary'
+            );
+
+            foreach ($claimsEmails as $adminEmail) {
+                $notifiableAdmin = new AnonymousNotifiable($adminEmail);
+                $notifiableAdmin->notify($notificationAdmin);
+            }
+        } catch (\Throwable $e) {
+            Log::error('[Claims Email Notification Error] ' . $e->getMessage(), ['exception' => $e]);
+        }
+
+        return redirect()->route('claims')->with('success', "Su reclamación ha sido registrada satisfactoriamente con el código: {$claimCode}. Se ha enviado una constancia formal a su correo ({$validatedData['email']}). Conforme a Ley N° 29571, recibirá respuesta formal en un plazo máximo de quince (15) días hábiles.");
+    }
+
     public function quote(Request $request)
     {
-        // Retrieve the query parameters, set default to null if not provided
+        // Retrieve the query parameters
         $type = $request->query('type', null);
-        $id = $request->query('id',null);
+        $id = $request->query('id', null);
 
-        // If the 'type' is present and 'id' is provided, fetch the product
         $product = null;
+        $service = null;
+        $supplier = null;
+        $interestItem = null;
+
         if ($type && $id) {
-            if($type == 'product'){
-                $product = WebProduct::findOrFail($id);
+            if ($type === 'product') {
+                $product = WebProduct::with('suppliers')->find($id);
+                $interestItem = $product;
+            } elseif ($type === 'service') {
+                $service = WebService::find($id);
+                $interestItem = $service;
+            } elseif ($type === 'supplier') {
+                $supplier = WebSupplier::with('products')->find($id);
+                $interestItem = $supplier;
             }
-        };
+        }
 
         // Static questions (same as before)
         $questions = [
@@ -405,11 +506,13 @@ class WebController extends Controller
             ],
         ];
 
-        // Pass type, product, and questions to the view
-        return view('client.quote',
-        ['questions' => $questions,
+        return view('client.quote', [
+            'questions' => $questions,
             'product' => $product,
-            'type' => $type
+            'service' => $service,
+            'supplier' => $supplier,
+            'interestItem' => $interestItem,
+            'type' => $type,
         ]);
     }
 
@@ -424,6 +527,9 @@ class WebController extends Controller
             'departure_address' => 'required|string|max:255',
             'arrival_address' => 'required|string|max:255',
             'message' => 'required|string|max:1000',
+            'interest_type' => 'nullable|string|max:50',
+            'interest_id' => 'nullable|string|max:50',
+            'interest_name' => 'nullable|string|max:255',
         ], [
             'full_name.required' => __('messages.quote.form.validations.full_name_required'),
             'full_name.string' => __('messages.quote.form.validations.full_name_string'),
@@ -462,21 +568,29 @@ class WebController extends Controller
 
             $notifiable->notify($notification);
 
-            $notifiable_admin = new AnonymousNotifiable(env('APP_ADMIN_EMAIL'));
+            $quoteEmails = Setting::getEmails('quote_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+
+            $introLinesAdmin = [
+                __('messages.quote.mail.intro_admin_1'),
+                __('messages.quote.mail.intro_admin_2'),
+            ];
+
+            if (!empty($validatedData['interest_name'])) {
+                $introLinesAdmin[] = '🎯 Requerimiento Específico: ' . strtoupper($validatedData['interest_type'] ?? 'GENERAL') . ' — ' . $validatedData['interest_name'];
+            }
+
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_3') . ' : ' . $validatedData['full_name'];
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_4') . ' : ' . ($validatedData['company'] ?: 'No indicada');
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_5') . ' : ' . $validatedData['email'];
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_6') . ' : ' . $validatedData['cellphone'];
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_7') . ' : ' . $validatedData['departure_address'];
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_8') . ' : ' . $validatedData['arrival_address'];
+            $introLinesAdmin[] = __('messages.quote.mail.intro_admin_9') . ' : ' . $validatedData['message'];
 
             $notification_admin = new CustomEmailNotification(
-                __('messages.quote.mail.subject_admin'),
+                __('messages.quote.mail.subject_admin') . (!empty($validatedData['interest_name']) ? ' [' . $validatedData['interest_name'] . ']' : ''),
                 __('messages.quote.mail.greeting_admin'),
-                [__('messages.quote.mail.intro_admin_1'),
-                 __('messages.quote.mail.intro_admin_2'),
-                 __('messages.quote.mail.intro_admin_3') . ' : ' . $validatedData['full_name'],
-                 __('messages.quote.mail.intro_admin_4') . ' : ' . $validatedData['company'],
-                 __('messages.quote.mail.intro_admin_5') . ' : ' . $validatedData['email'],
-                 __('messages.quote.mail.intro_admin_6') . ' : ' . $validatedData['cellphone'],
-                 __('messages.quote.mail.intro_admin_7') . ' : ' . $validatedData['departure_address'],
-                 __('messages.quote.mail.intro_admin_8') . ' : ' . $validatedData['arrival_address'],
-                 __('messages.quote.mail.intro_admin_9') . ' : ' . $validatedData['message']
-                ],
+                $introLinesAdmin,
                 null,
                 null,
                 [],
@@ -484,7 +598,10 @@ class WebController extends Controller
                 null
             );
 
-            $notifiable_admin->notify($notification_admin);
+            foreach ($quoteEmails as $adminEmail) {
+                $notifiable_admin = new AnonymousNotifiable($adminEmail);
+                $notifiable_admin->notify($notification_admin);
+            }
 
             return redirect()->route('quote')->with('success', __('messages.quote.success'));
 
@@ -501,125 +618,75 @@ class WebController extends Controller
     public function submitSubscriptionForm(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email:rfc,dns|unique:subscriptions,email',
+            'email' => 'required|email|max:255',
         ], [
-            'email.required' => __('messages.subscribe.validation.email_required'),
-            'email.email'    => __('messages.subscribe.validation.email_valid'),
-            'email.unique'   => __('messages.subscribe.validation.email_unique'),
+            'email.required' => 'Por favor, ingresa tu correo electrónico.',
+            'email.email'    => 'Ingresa una dirección de correo válida.',
         ]);
 
-        // Unique id to track this request in logs
+        $email = strtolower(trim($validated['email']));
+
+        // Check if already subscribed to prevent duplicates
+        if (Subscription::where('email', $email)->exists()) {
+            return back()->with('info', '¡Este correo ya se encuentra suscrito a nuestro boletín de noticias!');
+        }
+
         $traceId = (string) Str::uuid();
-        $email = $validated['email'];
-
-        // Log mail config (SAFE fields only: never log password)
-        Log::info('[SUBSCRIBE] start', [
-            'traceId' => $traceId,
-            'subscriberEmail' => $email,
-            'appEnv' => config('app.env'),
-            'mail' => [
-                'default' => config('mail.default'),
-                'mailer' => config('mail.default'),
-                'host' => config('mail.mailers.smtp.host'),
-                'port' => config('mail.mailers.smtp.port'),
-                'encryption' => config('mail.mailers.smtp.encryption'),
-                'username' => config('mail.mailers.smtp.username'),
-                'from_address' => config('mail.from.address'),
-                'from_name' => config('mail.from.name'),
-            ],
-            'adminEmail' => config('app.admin_email') ?? env('APP_ADMIN_EMAIL'),
-        ]);
 
         try {
             // 1) Store subscription
-            Log::info('[SUBSCRIBE] creating subscription', [
-                'traceId' => $traceId,
-                'email' => $email,
-            ]);
-
             $subscription = Subscription::create(['email' => $email]);
 
-            Log::info('[SUBSCRIBE] subscription created', [
-                'traceId' => $traceId,
-                'subscriptionId' => $subscription->id,
-            ]);
-
-            // 2) Email to user (thank you)
-            Log::info('[SUBSCRIBE] notifying user', [
-                'traceId' => $traceId,
-                'to' => $email,
-            ]);
-
+            // 2) Email to subscriber (welcome & thank you)
             $notifiableUser = new AnonymousNotifiable($email);
             $notifiableUser->notify(new CustomEmailNotification(
-                __('messages.subscribe.mail.subject_user'),
-                __('messages.subscribe.mail.greeting_user'),
-                [ __('messages.subscribe.mail.intro_user_1') ],
-                null,
-                null,
-                [ __('messages.subscribe.mail.outro_user_1') ],
-                __('messages.subscribe.mail.salutation_user'),
+                '¡Gracias por suscribirte al Boletín de LanEx!',
+                '¡Bienvenido(a)!',
+                [
+                    'Gracias por unirte a nuestra comunidad de comercio exterior y logística internacional.',
+                    'A través de este boletín recibirás periódicamente reportes de tarifas de flete marítimo y aéreo, novedades de aduanas SUNAT y consejos para optimizar tus importaciones y exportaciones.'
+                ],
+                'Visitar LanEx Logistics',
+                route('home'),
+                [
+                    'Si deseas darte de baja en cualquier momento, puedes responder a este correo.',
+                    'Express Lane Logistics S.A.C. — Callao, Perú.'
+                ],
+                "Atentamente,\nEquipo de LanEx Logistics",
                 'primary'
             ));
 
-            Log::info('[SUBSCRIBE] user notified OK', [
-                'traceId' => $traceId,
-                'to' => $email,
-            ]);
+            // 3) Email to admin(s)
+            $adminEmails = Setting::getEmails('contact_notification_email', env('APP_ADMIN_EMAIL', 'diegopevi05@gmail.com'));
+            $notificationAdmin = new CustomEmailNotification(
+                '📰 [Nuevo Suscriptor Web] ' . $email,
+                'Hola Equipo LanEx,',
+                [
+                    'Un nuevo usuario se ha suscrito al boletín de noticias desde el portal web.',
+                    'Correo del suscriptor: ' . $email,
+                    'Fecha: ' . now()->format('d/m/Y H:i:s'),
+                ],
+                'Ver Directorio de Suscriptores',
+                route('dashboard_subscribers'),
+                [],
+                'LanEx Notifications',
+                'primary'
+            );
 
-            // 3) Email to admin (new subscriber)
-            $adminEmail = env('APP_ADMIN_EMAIL'); // if config cached, consider moving to config/app.php (see note below)
-
-            Log::info('[SUBSCRIBE] notifying admin check', [
-                'traceId' => $traceId,
-                'adminEmail' => $adminEmail,
-                'hasAdminEmail' => !empty($adminEmail),
-            ]);
-
-            if ($adminEmail) {
-                Log::info('[SUBSCRIBE] notifying admin', [
-                    'traceId' => $traceId,
-                    'to' => $adminEmail,
-                ]);
-
-                $notifiableAdmin = new AnonymousNotifiable($adminEmail);
-                $notifiableAdmin->notify(new CustomEmailNotification(
-                    __('messages.subscribe.mail.subject_admin'),
-                    __('messages.subscribe.mail.greeting_admin'),
-                    [
-                        __('messages.subscribe.mail.intro_admin_1'),
-                        __('messages.subscribe.mail.intro_admin_2') . ' : ' . $email,
-                    ],
-                    null,
-                    null,
-                    [],
-                    null,
-                    'primary'
-                ));
-
-                Log::info('[SUBSCRIBE] admin notified OK', [
-                    'traceId' => $traceId,
-                    'to' => $adminEmail,
-                ]);
+            foreach ($adminEmails as $adminEmail) {
+                (new AnonymousNotifiable($adminEmail))->notify($notificationAdmin);
             }
 
-            Log::info('[SUBSCRIBE] finished OK', ['traceId' => $traceId]);
-
-            return back()->with('success', __('messages.subscribe.success'));
+            return back()->with('success', '¡Gracias por suscribirte a nuestro boletín! Hemos registrado tu correo correctamente.');
 
         } catch (Throwable $e) {
-            // Log full details (message + class + file/line + stack)
             Log::error('[SUBSCRIBE] FAILED', [
                 'traceId' => $traceId,
                 'subscriberEmail' => $email,
-                'exception' => get_class($e),
                 'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
             ]);
 
-            return back()->with('error', __('messages.subscribe.error'));
+            return back()->with('error', 'Ocurrió un error al procesar tu suscripción. Por favor, inténtalo nuevamente.');
         }
     }
 

@@ -15,6 +15,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\Web\BlogController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubscriberController;
 
 Route::get('/', [WebController::class, 'home'])->name('home');
 Route::get('/about', [WebController::class, 'about'])->name('about');
@@ -31,6 +34,10 @@ Route::get('/contact', [WebController::class, 'contact'])->name('contact');
 Route::post('/contact/submit', [WebController::class, 'submitContactForm'])
     ->middleware('throttle:3,1')
     ->name('contact.submit');
+Route::get('/libro-de-reclamaciones', [WebController::class, 'claims'])->name('claims');
+Route::post('/libro-de-reclamaciones/submit', [WebController::class, 'submitClaim'])
+    ->middleware('throttle:3,1')
+    ->name('claims.submit');
 Route::post('/subscribe', [WebController::class, 'submitSubscriptionForm'])
     ->middleware('throttle:3,1')
     ->name('subscribe.submit');
@@ -47,6 +54,14 @@ Route::get('/set-language/{lang}', function ($lang) {
     return redirect()->back();
 })->name('set-language');
 
+Route::get('/sitemap.xml', function () {
+    $path = public_path('sitemap.xml');
+    if (file_exists($path)) {
+        return response(file_get_contents($path), 200, ['Content-Type' => 'application/xml; charset=utf-8']);
+    }
+    abort(404);
+})->name('sitemap');
+
 
 Route::prefix('/dashboard')->middleware('auth')->group(function(){
 
@@ -57,6 +72,25 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
     Route::get('/history', [DashboardController::class, 'history'])->name('dashboard_history');
     Route::get('/billing', [DashboardController::class, 'billing'])->name('dashboard_billing');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('dashboard_profile');
+
+    Route::prefix('/settings')->group(function(){
+        Route::get('/', [SettingController::class, 'index'])->name('dashboard_settings');
+        Route::post('/update', [SettingController::class, 'update'])->name('dashboard_settings.update');
+        Route::post('/test-email', [SettingController::class, 'testEmail'])->name('dashboard_settings.test_email');
+    });
+
+    Route::prefix('/users')->group(function(){
+        Route::get('/', [UserController::class, 'index'])->name('dashboard_user');
+        Route::post('/store', [UserController::class, 'store'])->name('user.store');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    });
+
+    Route::prefix('/subscribers')->group(function(){
+        Route::get('/', [SubscriberController::class, 'index'])->name('dashboard_subscribers');
+        Route::delete('/destroy/{id}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
+        Route::post('/send-newsletter', [SubscriberController::class, 'sendNewsletter'])->name('subscribers.newsletter');
+    });
 
     Route::get('/clients/search', [ClientController::class, 'searchByCompany']);
 
@@ -81,6 +115,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
         Route::post('/email-order/{id}', [OrderController::class, 'emailOrder'])->name('order.email');
         Route::post('/restore/{id}', [OrderController::class, 'restore'])->name('order.restore');
         Route::get('/search-cities', [OrderController::class, 'SearchCityByCountry'])->name('search.city');
+        Route::get('/lookup-transport', [OrderController::class, 'lookupTransport'])->name('order.lookup_transport');
     });
 
     Route::prefix('/history')->group(function(){
@@ -142,8 +177,12 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/register', function() {
+    return redirect()->route('login')->with('info', 'El registro público está deshabilitado. Solo el administrador puede crear nuevos usuarios desde el panel.');
+})->name('showRegister');
+Route::post('/register', function() {
+    return redirect()->route('login')->with('info', 'El registro público está deshabilitado. Solo el administrador puede crear nuevos usuarios desde el panel.');
+})->name('register');
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('showForgotPassword');
 Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -13,8 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(WebServiceSeeder::class);
-        $this->call(WebReviewSeeder::class);
+        $this->call(LanexProductionSeeder::class);
         $this->call(OrderSeeder::class);
         $this->call(AdminSeeder::class);
     }

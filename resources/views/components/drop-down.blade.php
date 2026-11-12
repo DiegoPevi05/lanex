@@ -1,5 +1,4 @@
 @php
-    // Find the label of the current option based on the selected value
     $currentOptionLabel = '';
     foreach ($options as $option) {
         if ($option['value'] == $currentDropDownOption) {
@@ -9,28 +8,25 @@
     }
 @endphp
 
-<div class="relative w-full h-full  border-2 border-gray-light rounded-xl">
+<div class="relative w-full h-10">
     <div
         data-id="{{$id}}"
-        class="drop-down-selector w-auto h-auto flex flex-row items-center gap-x-1 rounded-xl py-2 px-3 bg-white border-2 border-white font-bold text-primary cursor-pointer duration-300 hover:text-white hover:bg-secondary-dark hover:border-secondary-dark">
-        <!-- Display the currently selected language -->
-        <span data-id="{{$currentDropDownOption}}" class="current_option capitalize text-sm">
+        class="drop-down-selector w-full h-10 flex flex-row items-center justify-between gap-x-2 rounded-xl px-3.5 bg-slate-50/70 border border-slate-300 font-semibold text-slate-700 cursor-pointer duration-200 hover:border-primary hover:text-primary">
+        <span data-id="{{$currentDropDownOption}}" class="current_option capitalize text-xs truncate">
             {{ $currentOptionLabel ? $currentOptionLabel : __('messages.dashboard.web.dropdown_search') }}
         </span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m6 9 6 6 6-6"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
     </div>
 
     <!-- Dropdown options, hidden by default -->
-    <div id="dropdown-options-{{$id}}" class="dropdown-options absolute right-0 w-full mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-[120] hidden">
-        <div class="p-none">
+    <div id="dropdown-options-{{$id}}" class="dropdown-options absolute right-0 w-full mt-1.5 rounded-xl shadow-lg bg-white border border-slate-200 focus:outline-none z-[120] hidden overflow-hidden">
+        <div class="py-1">
             @foreach ($options as $option)
                 <div
                     data-label="{{ __($option['label']) }}"
                     data-value="{{ $option['value'] }}"
                     onclick="setCurrentOption('{{ __($option['label']) }}', '{{ $option['value'] }}')"
-                    class="capitalize px-4 py-2 text-primary font-bold hover:bg-secondary-dark hover:text-white cursor-pointer text-sm duration-300
-                        @if($loop->first) rounded-t-md @endif
-                        @if($loop->last) rounded-b-md @endif">
+                    class="capitalize px-3.5 py-2 text-slate-700 font-semibold hover:bg-purple-50 hover:text-primary cursor-pointer text-xs duration-150">
                         {{ __($option['label']) }}
                 </div>
             @endforeach
@@ -39,7 +35,6 @@
 </div>
 
 <script>
-    // Function to toggle dropdowns based on clicked component
     function attachDropdownEvent(id) {
         const selector = document.querySelector(`.drop-down-selector[data-id='${id}']`);
         if (selector) {
@@ -52,15 +47,10 @@
         }
     }
 
-    // Set selected option and update the dropdown
     function setCurrentOption(label, value) {
-        // Find the correct dropdown selector based on its data-id
         const dropDownSelector = document.querySelector(`.drop-down-selector[data-id='{{$id}}']`);
-
-        // Find the current_option span within the specific dropdown
         const currentOption = dropDownSelector.querySelector('.current_option');
 
-        // Update the text and data-id of the selected option
         currentOption.textContent = label;
         currentOption.setAttribute('data-id', value);
 
@@ -68,11 +58,7 @@
         if (dropdown) {
             dropdown.classList.toggle('hidden');
         }
-
     }
 
-
-
     attachDropdownEvent('{{$id}}');
-
 </script>

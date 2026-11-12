@@ -65,7 +65,7 @@
 </div>
             @else
                 <div class="col-span-1 sm:col-span-2 xl:col-span-3 flex flex-col items-center justify-center py-24 gap-y-12">
-                    <h5 class="font-bold text-primary">Currently no Products for this Supplier</h5>
+                    <h5 class="font-bold text-primary">{{ __('Currently no Products for this Supplier') }}</h5>
                     <img src="{{ asset('storage/' . '/images/web/empty.svg' ) }}" class="h-48 w-auto"/>
                 </div>
             @endif

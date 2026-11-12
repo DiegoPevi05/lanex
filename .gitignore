@@ -18,3 +18,15 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+
+# Assistant / tooling cache
+/.agents
+/.claude
+/.codex
+/.impeccable
+/agent
+/skills-lock.json
+/scripts
+.github/agents
+.github/hooks
+.github/skills

@@ -39,7 +39,7 @@ class LanexServicesSeeder extends Seeder
                 'short_description' => 'Servicio de asesoría personalizada, soporte en operaciones de comercio exterior y aduanas, así como soluciones logísticas de manera eficiente.',
                 'webcontent' => [
                     'header' => 'Asesoría y Consultoría',
-                    'image' => '/images/web/services.webp',
+                    'image' => '/images/service/service_consultoria.jpg',
                     'title' => 'Soluciones estratégicas para sus operaciones de comercio exterior',
                     'description' => 'Brindamos asesoría especializada, orientando a nuestros clientes en la gestión de sus operaciones logísticas y aduaneras.',
                     'overview' => [
@@ -85,7 +85,7 @@ class LanexServicesSeeder extends Seeder
                 'short_description' => 'Servicios de transporte de Carga Internacional. Trabajamos bajo modalidades FCL y LCL de la mano de navieras, agentes y consolidadoras.',
                 'webcontent' => [
                     'header' => 'Agencia de Carga',
-                    'image' => '/images/web/services.webp',
+                    'image' => '/images/service/service_agencia_carga.jpg',
                     'title' => 'Transportamos su mercancía ofreciendo calidad y confianza',
                     'description' => 'Comprometidos con sus necesidades, transportamos su carga bajo las modalidades FCL, LCL y Breakbulk de la mano de navieras, agentes y consolidadoras.',
                     'overview' => [
@@ -133,7 +133,7 @@ class LanexServicesSeeder extends Seeder
                 'short_description' => 'Servicio de transporte «puerta a puerta» actuando como intermediario del destinatario o de los transportistas de las operaciones de transporte multimodal.',
                 'webcontent' => [
                     'header' => 'Logística OTM',
-                    'image' => '/images/web/services.webp',
+                    'image' => '/images/service/service_otm.jpg',
                     'title' => 'Gestión integral del transporte multimodal',
                     'description' => 'Actuamos como intermediarios entre el destinatario y los transportistas, coordinando cada operación de transporte multimodal puerta a puerta.',
                     'overview' => [
@@ -179,7 +179,7 @@ class LanexServicesSeeder extends Seeder
                 'short_description' => 'Gestión documentaria en desaduanaje de cargas marítimas, aéreas, postales y/o terrestres de los diversos regímenes aduaneros.',
                 'webcontent' => [
                     'header' => 'Aduanas',
-                    'image' => '/images/web/services.webp',
+                    'image' => '/images/service/service_aduanas.jpg',
                     'title' => 'El manejo documentario y operativo del despacho aduanero',
                     'description' => 'Gestionamos el ingreso y salida legal de mercancías, garantizando el cumplimiento de la normativa aduanera vigente.',
                     'overview' => [
@@ -226,7 +226,7 @@ class LanexServicesSeeder extends Seeder
                 'short_description' => 'Envíos rápidos para compras y paquetes internacionales, ideal para cargas pequeñas, documentos y pedidos urgentes, con seguimiento y asesoría en todo el proceso.',
                 'webcontent' => [
                     'header' => 'Courier',
-                    'image' => '/images/web/services.webp',
+                    'image' => '/images/service/service_courier.jpg',
                     'title' => 'Soluciones para el traslado de documentos y paquetes por el mundo',
                     'description' => 'Envíos rápidos para compras y paquetes internacionales, ideal para cargas pequeñas, documentos y pedidos urgentes, con seguimiento y asesoría en todo el proceso.',
                     'overview' => [

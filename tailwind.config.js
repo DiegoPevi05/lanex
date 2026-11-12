@@ -7,22 +7,36 @@ module.exports = {
   ],
   theme: {
       extend: {
+        fontFamily: {
+          sans: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+          display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          body: ['"Inter"', 'system-ui', 'sans-serif'],
+        },
         colors: {
             primary: {
-              DEFAULT: '#A55AD9', // Base primary color
-              dark: '#5A2982',    // Dark primary color
+              light: '#8B5CF6',
+              DEFAULT: '#6D28D9', // Vibrant high-velocity brand purple (WCAG AA > 4.5:1)
+              dark: '#3B0764',    // Midnight Plum executive anchor (WCAG AAA > 8.5:1)
             },
             secondary: {
-              DEFAULT: '#F4EDF6', // Base secondary color
-              dark: '#B891D6',    // Dark secondary color
+              DEFAULT: '#F8FAFC', // Crisp modern slate white
+              dark: '#1E293B',    // Slate 800 high-contrast text (> 10:1)
+              muted: '#64748B',   // Slate 500 metadata
             },
-            white: '#FFFFFF',      // White color
-            body: '#5C6C7B',       // Dark body color
+            accent: {
+              amber: '#F59E0B',   // High-velocity express amber
+              orange: '#EA580C',
+              blue: '#2563EB',
+            },
+            white: '#FFFFFF',
+            body: '#334155',       // Slate 700 text color (WCAG AAA)
             gray: {
-              light: '#F1F1F1',    // Light gray color
+              light: '#E2E8F0',    // Slate 200 border
+              subtle: '#F1F5F9',   // Slate 100 card fill
             },
             text: {
-              DEFAULT: '#5C6C7B',  // Default text color set to body
+              DEFAULT: '#1E293B',
+              muted: '#64748B',
             },
         },
         animation: {

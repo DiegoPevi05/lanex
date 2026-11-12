@@ -1,140 +1,232 @@
+@section('title', 'Cotización de Carga Internacional y Servicios Logísticos | LanEx')
 @section('meta_description', __('messages.meta.quote'))
 @extends('layouts.client')
 
-
 @section('content-client')
-    <section id="quote_hero_section" class="w-full h-auto bg-white text-body pt-[80px] pt:mt-[140px]">
-    <div class="relative w-full h-auto px-4 sm:px-24 xl:px-48 py-12 sm:py-24 xl:py-36 flex flex-col-reverse xl:flex-row justify-start items-start gap-y-6 sm:gap-x-12 xl:gap-x-24 animation-group">
-        <div class="w-full xl:w-1/2 h-full flex flex-col justify-start xl:justify-center items-start gap-y-6">
-            <form id="quote_form" action="{{route('quote.submit')}}" method="POST" class="w-full h-full border-2 border-gray-light rounded-xl flex flex-col justify-start items-start px-4 py-6 sm:p-6 gap-y-6 text-primary-dark animation-element slide-in-up">
-                @csrf
-                <h5>
-                    {{__('messages.quote.form.quote_form_title')}}
-                </h5>
-                <div class="w-full h-auto grid grid-cols-1 sm:grid-cols-2 gap-10 my-6">
-                    <div class="col-span-1 h-auto flex flex-col ">
-                        <div class="flex flex-col w-full h-auto">
-                            <label for="quote_form_full_name" class="flex flex-row w-full h-auto gap-x-2">
-                                <span class="text-primary h-6 w-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plane"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
-                                </span>
-                                <p class="font-bold text-secondary-dark">
+    <section id="quote_hero_section" data-enter class="w-full bg-slate-50 text-slate-900 pt-[160px] xl:pt-[190px] pb-20 sm:pb-24 border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+                <!-- Left Column: Quote Form -->
+                <div class="lg:col-span-7 order-2 lg:order-1 hero-enter-item">
+                    <form id="quote_form" action="{{route('quote.submit')}}" method="POST" class="w-full bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-10 shadow-xs flex flex-col gap-6 text-slate-900">
+                        @csrf
+                        <div class="border-b border-slate-100 pb-4">
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight font-display">
+                                {{__('messages.quote.form.quote_form_title')}}
+                            </h2>
+                            <p class="text-sm text-slate-500 font-normal mt-1">
+                                {{ __('Ingresa los detalles de origen, destino y tipo de mercancía para cotizar tu flete internacional.') }}
+                            </p>
+                        </div>
+
+                        @if(!empty($interestItem))
+                            <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-indigo-50/50 border border-purple-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                <div class="flex items-center gap-3.5 min-w-0">
+                                    <div class="w-12 h-12 rounded-xl bg-white border border-purple-200 shadow-xs flex items-center justify-center p-2 shrink-0">
+                                        @if($type === 'product' && !empty($interestItem->image))
+                                            <img src="{{ asset('storage/' . $interestItem->image) }}" alt="{{ $interestItem->name }}" class="w-full h-full object-contain" onerror="this.src='/images/logo.png'">
+                                        @elseif($type === 'supplier' && !empty($interestItem->logo))
+                                            <img src="{{ asset('storage/' . $interestItem->logo) }}" alt="{{ $interestItem->name }}" class="w-full h-full object-contain" onerror="this.src='/images/logo.png'">
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                                        @endif
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="flex items-center gap-2 mb-0.5">
+                                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary text-white shrink-0">
+                                                @if($type === 'product') Producto Seleccionado
+                                                @elseif($type === 'service') Servicio Seleccionado
+                                                @elseif($type === 'supplier') Proveedor Aliado
+                                                @else Interés Seleccionado
+                                                @endif
+                                            </span>
+                                            @if($type === 'product' && $interestItem->supplier)
+                                                <span class="text-[11px] text-slate-500 font-medium truncate">Prov: {{ $interestItem->supplier->name }}</span>
+                                            @endif
+                                        </div>
+                                        <h3 class="text-sm font-bold text-slate-900 leading-tight truncate">{{ $interestItem->name }}</h3>
+                                        <p class="text-[11px] text-slate-600 line-clamp-1 mt-0.5">
+                                            @if($type === 'service')
+                                                {{ $interestItem->webcontent['description'] ?? 'Servicio especializado de transporte y logística internacional.' }}
+                                            @elseif($type === 'product')
+                                                {{ $interestItem->description ?? 'Producto verificado para cotización de importación.' }}
+                                            @elseif($type === 'supplier')
+                                                {{ $interestItem->country ?? 'China' }} · {{ $interestItem->category ?? 'Proveedor verificado' }}
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <a href="{{ route('quote') }}" class="text-xs font-semibold text-slate-500 hover:text-red-600 transition-colors inline-flex items-center gap-1 shrink-0 px-2.5 py-1 rounded-lg bg-white border border-slate-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                    <span>Cambiar</span>
+                                </a>
+                            </div>
+
+                            <input type="hidden" name="interest_type" value="{{ $type }}">
+                            <input type="hidden" name="interest_id" value="{{ $interestItem->id }}">
+                            <input type="hidden" name="interest_name" value="{{ $interestItem->name }}">
+                        @endif
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div class="flex flex-col gap-1.5">
+                                <label for="quote_form_full_name" class="text-sm font-semibold text-slate-800">
                                     {{__('messages.quote.form.quote_form_full_name_label')}}
-                                </p>
-                            </label>
-                            <input id="quote_form_full_name" name="full_name" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_full_name_placeholder')}}" />
-                        </div>
+                                </label>
+                                <input
+                                    id="quote_form_full_name"
+                                    name="full_name"
+                                    type="text"
+                                    autocomplete="name"
+                                    required
+                                    class="w-full h-12 px-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors"
+                                    placeholder="{{__('messages.quote.form.quote_form_full_name_placeholder')}}"
+                                />
+                            </div>
 
-                    </div>
-                    <div class="col-span-1 h-auto flex flex-col ">
-                        <div class="flex flex-col w-full h-auto">
-                            <label for="quote_form_company" class="flex flex-row w-full h-auto gap-x-2">
-                                <span class="text-primary h-6 w-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
-                                </span>
-                                <p class="font-bold text-secondary-dark">
-
+                            <div class="flex flex-col gap-1.5">
+                                <label for="quote_form_company" class="text-sm font-semibold text-slate-800">
                                     {{__('messages.quote.form.quote_form_company_label')}}
-                                </p>
-                            </label>
-                            <input id="quote_form_company" name="company" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_company_placeholder')}}" />
-                        </div>
-                    </div>
-                    <div class="col-span-1 h-auto flex flex-col ">
-                        <div class="flex flex-col w-full h-auto">
-                            <label for="quote_form_email" class="flex flex-row w-full h-auto gap-x-2">
-                                <span class="text-primary h-6 w-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-check"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/><path d="m16 19 2 2 4-4"/></svg>
-                                </span>
-                                <p class="font-bold text-secondary-dark">
+                                </label>
+                                <input
+                                    id="quote_form_company"
+                                    name="company"
+                                    type="text"
+                                    autocomplete="organization"
+                                    required
+                                    class="w-full h-12 px-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors"
+                                    placeholder="{{__('messages.quote.form.quote_form_company_placeholder')}}"
+                                />
+                            </div>
 
+                            <div class="flex flex-col gap-1.5">
+                                <label for="quote_form_email" class="text-sm font-semibold text-slate-800">
                                     {{__('messages.quote.form.quote_form_email_label')}}
-                                </p>
-                            </label>
-                            <input id="quote_form_email" name="email" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_email_placeholder')}}" />
-                        </div>
-                    </div>
-                    <div class="col-span-1 h-auto flex flex-col ">
-                        <div class="flex flex-col w-full h-auto">
-                            <label for="quote_form_cellphone" class="flex flex-row w-full h-auto gap-x-2">
-                                <span class="text-primary h-6 w-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                </span>
-                                <p class="font-bold text-secondary-dark">
+                                </label>
+                                <input
+                                    id="quote_form_email"
+                                    name="email"
+                                    type="email"
+                                    autocomplete="email"
+                                    required
+                                    class="w-full h-12 px-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors"
+                                    placeholder="{{__('messages.quote.form.quote_form_email_placeholder')}}"
+                                />
+                            </div>
 
+                            <div class="flex flex-col gap-1.5">
+                                <label for="quote_form_cellphone" class="text-sm font-semibold text-slate-800">
                                     {{__('messages.quote.form.quote_form_cellphone_label')}}
-                                </p>
-                            </label>
-                            <input id="quote_form_cellphone" name="cellphone" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_cellphone_placeholder')}}" />
-                        </div>
-                    </div>
-                    <div class="col-span-1 h-auto flex flex-col ">
-                        <div class="flex flex-col w-full h-auto">
-                            <label for="quote_form_departure_address" class="flex flex-row w-full h-auto gap-x-2">
-                                <span class="text-primary h-6 w-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-earth"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                                </span>
-                                <p class="font-bold text-secondary-dark">
+                                </label>
+                                <input
+                                    id="quote_form_cellphone"
+                                    name="cellphone"
+                                    type="tel"
+                                    autocomplete="tel"
+                                    required
+                                    class="w-full h-12 px-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors"
+                                    placeholder="{{__('messages.quote.form.quote_form_cellphone_placeholder')}}"
+                                />
+                            </div>
 
+                            <div class="flex flex-col gap-1.5">
+                                <label for="quote_form_departure_address" class="text-sm font-semibold text-slate-800">
                                     {{__('messages.quote.form.quote_form_departure_address_label')}}
-                                </p>
-                            </label>
-                            <input id="quote_form_departure_address" name="departure_address" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_departure_address_placeholder')}}" />
-                        </div>
-                    </div>
-                    <div class="col-span-1 h-auto flex flex-col ">
-                        <div class="flex flex-col w-full h-auto">
-                            <label for="quote_form_arrival_address" class="flex flex-row w-full h-auto gap-x-2">
-                                <span class="text-primary h-6 w-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                                </span>
-                                <p class="font-bold text-secondary-dark">
+                                </label>
+                                <input
+                                    id="quote_form_departure_address"
+                                    name="departure_address"
+                                    type="text"
+                                    required
+                                    value="{{ old('departure_address', ($type === 'product' || $type === 'supplier') ? 'Guangzhou / Ningbo, China' : '') }}"
+                                    class="w-full h-12 px-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors"
+                                    placeholder="{{__('messages.quote.form.quote_form_departure_address_placeholder')}}"
+                                />
+                            </div>
 
+                            <div class="flex flex-col gap-1.5">
+                                <label for="quote_form_arrival_address" class="text-sm font-semibold text-slate-800">
                                     {{__('messages.quote.form.quote_form_arrival_address_label')}}
-                                </p>
-                            </label>
-                            <input id="quote_form_arrival_address" name="arrival_address" type="text"  class="w-full h-auto py-2 px-4 border-b-2 border-secondary-dark text-secondary-dark placeholder:text-secondary-dark focus:border-b-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_arrival_address_placeholder')}}" />
+                                </label>
+                                <input
+                                    id="quote_form_arrival_address"
+                                    name="arrival_address"
+                                    type="text"
+                                    required
+                                    value="{{ old('arrival_address', ($type === 'product' || $type === 'supplier') ? 'Callao, Perú' : '') }}"
+                                    class="w-full h-12 px-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors"
+                                    placeholder="{{__('messages.quote.form.quote_form_arrival_address_placeholder')}}"
+                                />
+                            </div>
+
+                            <div class="sm:col-span-2 flex flex-col gap-1.5">
+                                <label for="quote_form_message" class="text-sm font-semibold text-slate-800">
+                                    {{__('messages.quote.form.quote_form_message_label')}}
+                                </label>
+                                <textarea
+                                    id="quote_form_message"
+                                    name="message"
+                                    rows="4"
+                                    required
+                                    class="w-full p-4 border border-slate-300 rounded-xl text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors leading-relaxed"
+                                    placeholder="{{__('messages.quote.form.quote_form_message_placeholder')}}"
+                                >@if(!empty($interestItem))@if($type === 'product')Deseo cotizar flete e importación para el producto: {{ $interestItem->name }}@if($interestItem->supplier) (Proveedor: {{ $interestItem->supplier->name }})@endif. Volumen / cantidad estimada: @elseif($type === 'service')Deseo solicitar cotización para el servicio logístico: {{ $interestItem->name }}. Requiero tarifas vigentes y tiempos estimados de tránsito.@elseif($type === 'supplier')Deseo cotizar flete e importación coordinando la recogida con el proveedor: {{ $interestItem->name }}. Tipo de mercancía: @endif @else{{ old('message') }}@endif</textarea>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <span class="text-xs text-slate-500">{{ __('Cotización integral con desglose de flete y gastos aduaneros.') }}</span>
+                            <button type="submit" class="taste-btn w-full sm:w-auto h-12 px-8 bg-primary hover:bg-primary-dark text-white font-semibold text-sm rounded-xl inline-flex items-center justify-center gap-2 cursor-pointer group">
+                                <span>{{__('messages.quote.form.quote_form_button')}}</span>
+                                <svg class="w-4 h-4 taste-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Column: Context & Visual -->
+                <div class="lg:col-span-5 order-1 lg:order-2 flex flex-col gap-6">
+                    <div class="flex flex-col gap-3">
+                        <span class="hero-enter-item text-xs font-bold uppercase tracking-widest text-primary block">
+                            {{__('messages.quote.hero.header')}}
+                        </span>
+                        <h1 class="hero-enter-item text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight font-display">
+                            {{__('messages.quote.hero.title')}}
+                        </h1>
+                        <p class="hero-enter-item text-base text-slate-600 font-normal leading-relaxed mt-1">
+                            {{ __('Evaluamos la ruta óptima para tu carga consolidada (LCL), contenedor completo (FCL) o envío aéreo express desde cualquier puerto de origen.') }}
+                        </p>
+                    </div>
+
+                    <div class="hero-enter-item flex flex-col divide-y divide-slate-200 border-t border-b border-slate-200 py-2 text-sm text-slate-700">
+                        <div class="py-3.5 flex items-center gap-3">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>{{ __('Tarifas negociadas con navieras y aerolíneas de primer nivel') }}</span>
+                        </div>
+                        <div class="py-3.5 flex items-center gap-3">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>{{ __('Clasificación arancelaria y liquidación de impuestos SUNAT') }}</span>
+                        </div>
+                        <div class="py-3.5 flex items-center gap-3">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>{{ __('Seguro de carga internacional y transporte interno en Perú') }}</span>
                         </div>
                     </div>
-                </div>
-                <div class="w-full h-auto">
-                    <label for="quote_form_message" class="flex flex-row w-full h-auto gap-x-2">
-                        <span class="text-primary h-6 w-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg>
-                        </span>
-                        <p class="font-bold text-primary-dark">
 
-                            {{__('messages.quote.form.quote_form_message_label')}}
-                        </p>
-                    </label>
-                    <textarea id="quote_form_message" name="message"  class="w-full h-auto p-4 border-2 border-secondary-dark rounded-lg text-secondary-dark placeholder:text-secondary-dark mt-4 focus:border-2 focus:border-primary focus:outline-none" placeholder="{{__('messages.quote.form.quote_form_message_placeholder')}}"></textarea>
-                </div>
-                <button type="submit" class="bg-primary-dark px-12 sm:px-24 py-2 sm:py-4 lg:py-3 text-white font-bold duration-300 active:scale-95 rounded-xl hover:bg-secondary-dark mx-auto">
-                    <span>{{__('messages.quote.form.quote_form_button')}}</span>
-                </button>
-            </form>
-        </div>
-        <div class="w-full xl:w-1/2 h-full flex flex-col justify-start items-start gap-y-6 max-sm:mt-12">
-            <div class="h-auto h-full w-full flex flex-col justify-start items-end relative">
-                <h5 class="animation-element slide-in-up text-right">
-                    {{__('messages.quote.hero.header')}}
-                </h5>
-                <h1 class="text-primary-dark font-bold animation-element slide-in-up text-right">
-                    {{__('messages.quote.hero.title')}}
-                </h1>
-                <div class="w-full h-full flex justify-center items-center p-6 sm:p-4 mt-6 sm:mt-12 animation-element slide-in-up">
-                    <img src="{{asset('storage'.'/images/web/quote.svg')}}" alt="quote_hero_image" class="h-48 sm:h-96 w-auto" />
+                    <div class="hero-enter-item taste-photo-wrap bg-white rounded-2xl border border-slate-200/90 p-6 flex justify-center items-center">
+                        <img src="{{ asset('storage/images/web/quote.svg') }}" alt="{{ __('Cotización de Carga LanEx') }}" class="taste-photo-zoom h-48 sm:h-60 w-auto object-contain" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
+
     <x-questions title="{{__('messages.quote.questions.title')}}" :questions="$questions" />
 @endsection
 
- <script>
+@push('scripts')
+<script>
     document.addEventListener("DOMContentLoaded", function () {
-
         @if(session('success'))
             showToast(["{{session('success')}}"]);
         @endif
@@ -159,10 +251,11 @@
         const { origin, destiny, content } = getQueryParams();
 
         const form = document.getElementById("quote_form");
-        // Set the values in the form fields
-        form.querySelector("#quote_form_departure_address").value = origin;
-        form.querySelector("#quote_form_arrival_address").value = destiny;
-        form.querySelector("#quote_form_message").innerHTML = content;
-
+        if (form) {
+            if (origin) form.querySelector("#quote_form_departure_address").value = origin;
+            if (destiny) form.querySelector("#quote_form_arrival_address").value = destiny;
+            if (content) form.querySelector("#quote_form_message").value = content;
+        }
     });
 </script>
+@endpush

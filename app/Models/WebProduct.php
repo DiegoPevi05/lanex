@@ -222,4 +222,9 @@ class WebProduct extends Model
     {
         return $this->belongsToMany(WebSupplier::class, 'web_product_supplier','product_id', 'supplier_id');
     }
+
+    public function getSupplierAttribute()
+    {
+        return $this->suppliers->first();
+    }
 }

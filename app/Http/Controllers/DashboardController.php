@@ -17,10 +17,11 @@ class DashboardController extends Controller
     public function home(Request $request)
     {
 
-        $perPage = 2;
-        $query = Order::query();  // Add the "::" to correctly reference the model
+        $perPage = 4;
+        $query = Order::query();
         $query->where('canceled', false);
-        $query->whereIn('status', ['IN_TRANSIT','PENDING']);
+        $query->whereIn('status', ['IN_TRANSIT', 'IN TRANSIT', 'PENDING']);
+        $query->orderBy('id', 'desc');
         $orders = $query->paginate($perPage);
 
         return view('dashboard.dashboard', [
@@ -217,6 +218,6 @@ class DashboardController extends Controller
 
     public function config()
     {
-        return view('dashboard.config');
+        return redirect()->route('dashboard_settings');
     }
 }

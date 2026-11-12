@@ -2,28 +2,30 @@
 
 @section('content-dashboard')
 
-    <section id="dashboard_{{$EntityType}}" class="bg-gray-light h-full w-full flex flex-row xl:gap-x-4 p-4">
+    <section id="dashboard_{{$EntityType}}" class="bg-slate-50 h-full w-full flex flex-row p-4 sm:p-6 overflow-hidden relative">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <div class="w-full h-full flex flex-col bg-white rounded-xl p-4 gap-y-2">
-            <div class="w-full h-auto flex flex-row justify-between py-4">
-                <div class="w-auto h-auto flex flex-row items-center gap-x-2">
-                    <span class="h-8 w-8 bg-transparent flex items-center justify-center text-secondary-dark p-1">
+        <div class="w-full h-full flex flex-col bg-white border border-slate-200/90 shadow-sm rounded-2xl p-5 gap-y-4">
+            <div class="w-full h-auto flex flex-row items-center justify-between pb-3 border-b border-slate-100">
+                <div class="w-auto h-auto flex flex-row items-center gap-x-3">
+                    <span class="h-10 w-10 rounded-xl bg-purple-50 border border-purple-200/60 flex items-center justify-center text-primary p-2">
                         @if($EntityType == "transport_type")
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                         @elseif($EntityType == "client")
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                         @elseif($EntityType == "order")
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M21 7h-3a2 2 0 0 1-2-2V2"/><path d="M21 6v6.5c0 .8-.7 1.5-1.5 1.5h-7c-.8 0-1.5-.7-1.5-1.5v-9c0-.8.7-1.5 1.5-1.5H17Z"/><path d="M7 8v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H15"/><path d="M3 12v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H11"/></svg>
-
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M21 7h-3a2 2 0 0 1-2-2V2"/><path d="M21 6v6.5c0 .8-.7 1.5-1.5 1.5h-7c-.8 0-1.5-.7-1.5-1.5v-9c0-.8.7-1.5 1.5-1.5H17Z"/><path d="M7 8v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H15"/><path d="M3 12v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H11"/></svg>
                         @endif
                     </span>
-                    <h4 class="font-bold text-primary-dark capitalize">{{ __('messages.dashboard.'.$EntityType.'.header') }}</h4>
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-primary block">MÓDULO OPERATIVO</span>
+                        <h4 class="text-lg font-bold text-slate-900 capitalize font-display">{{ __('messages.dashboard.'.$EntityType.'.header') }}</h4>
+                    </div>
                 </div>
 
                 <div class="w-auto h-auto flex flex-row">
-                    <button id="create_button" class="w-auto h-full px-4 bg-primary capitalize text-white rounded-xl active:scale-95 hover:bg-secondary-dark duration-300 font-bold inline-flex items-center gap-x-2">
-                        {{__('messages.dashboard.'.$EntityType.'.new_entity')}}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    <button id="create_button" class="h-10 px-4 bg-primary capitalize text-white text-xs rounded-xl active:scale-95 hover:bg-primary-dark duration-200 font-semibold inline-flex items-center gap-x-2 shadow-sm cursor-pointer">
+                        <span>{{__('messages.dashboard.'.$EntityType.'.new_entity')}}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                     </button>
                 </div>
             </div>
@@ -36,8 +38,8 @@
                 placeholderInput='messages.dashboard.{{$EntityType}}.input_placeholder_search'
                 labelButton='messages.dashboard.{{$EntityType}}.button_label_search'
             />
-            <div class="w-full flex flex-col overflow-y-scroll no-scroll-bar">
-                <div class="w-full flex flex-col gap-y-2">
+            <div class="w-full flex-1 flex flex-col overflow-y-auto no-scroll-bar pr-0.5">
+                <div class="w-full flex flex-col gap-y-3">
                     @foreach ($pagination->items() as $paginate)
                         @if($EntityType == "transport_type")
                             <x-transport-type-card :data="$paginate"/>
@@ -49,44 +51,57 @@
                     @endforeach
                 </div>
             </div>
-            <div class="w-full h-auto flex flex-row justify-between mt-auto">
-                <div class="w-auto flex flex-row gap-x-1">
-                    <a href="{{route('dashboard_'.$EntityType,['page' => 1 ] )}}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center   duration-300 cursor-pointer  p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+            <div class="w-full h-auto flex flex-row items-center justify-between pt-3 mt-auto border-t border-slate-100">
+                <div class="w-auto flex flex-row gap-x-1.5">
+                    <a href="{{route('dashboard_'.$EntityType,['page' => 1 ] )}}" class="{{$pagination->currentPage() == 1 ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
                     </a>
 
-                    <a href="{{ route('dashboard_'.$EntityType, ['page' =>$pagination->currentPage() - 1]) }}" class="{{$pagination->currentPage() == 1 ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m15 18-6-6 6-6"/></svg>
+                    <a href="{{ route('dashboard_'.$EntityType, ['page' =>$pagination->currentPage() - 1]) }}" class="{{$pagination->currentPage() == 1 ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
                     </a>
                 </div>
 
-                <div class="w-auto flex flex-row gap-x-1">
-                    <a  href="{{ route('dashboard_'.$EntityType, ['page' =>$pagination->currentPage() + 1]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2  rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-full w-full"><path d="m9 18 6-6-6-6"/></svg>
+                <span class="text-xs font-mono text-slate-500">
+                    Pág. {{ $pagination->currentPage() }} / {{ max(1, $pagination->lastPage()) }}
+                </span>
+
+                <div class="w-auto flex flex-row gap-x-1.5">
+                    <a href="{{ route('dashboard_'.$EntityType, ['page' =>$pagination->currentPage() + 1]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
                     </a>
 
-                    <a href="{{ route('dashboard_'.$EntityType, ['page' =>$pagination->lastPage()]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-gray-100 text-gray-300 pointer-events-none' : 'hover:bg-secondary-dark hover:text-white border-secondary-dark active:scale-95 text-primary'}} h-10 w-10 border-2 rounded-xl flex items-center justify-center duration-300 cursor-pointer active:scale-95 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+                    <a href="{{ route('dashboard_'.$EntityType, ['page' =>$pagination->lastPage()]) }}" class="{{$pagination->lastPage() == $pagination->currentPage() ? 'bg-slate-100 text-slate-300 border-slate-200 pointer-events-none' : 'bg-white text-slate-700 border-slate-300 hover:bg-primary hover:border-primary hover:text-white'}} h-9 w-9 border rounded-xl flex items-center justify-center duration-200 cursor-pointer p-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="dashboard_content_form max-xl:fixed max-xl:top-0 max-xl:bottom-0 max-sm:-right-[100%] max-xl:-right-[600px] w-full  sm:w-[600px] max-xl:border-s-2 xl:w-[50%] h-full bg-white rounded-xl flex flex-col items-center justify-center p-4 transition-all duration-300">
-            <div class="w-full h-auto flex flex-row justify-end px-4 xl:hidden absolute top-4 right-4 z-[1200]">
-                <span class="dashboard_button_toggle_content h-12 w-12 flex items-center justify-center border-2 border-gray-light rounded-xl cursor-pointer hover:bg-primary-dark text-white bg-secondary-dark duration-300 p-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+        <!-- Overlay Backdrop -->
+        <div id="dashboard_form_backdrop" onclick="closeFormOverlay()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[105] hidden transition-opacity duration-200"></div>
+
+        <!-- Overlay Modal / Drawer Form -->
+        <div class="dashboard_content_form fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-4xl h-[90vh] bg-white border border-slate-200/90 shadow-2xl rounded-2xl hidden flex-col items-center justify-center p-5 sm:p-6 transition-all duration-200 z-[110]">
+            <div class="w-full h-auto flex flex-row items-center justify-between pb-3 mb-2 border-b border-slate-100 shrink-0">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-primary"></span>
+                    <span class="text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">Formulario de Gestión · {{ __('messages.dashboard.'.$EntityType.'.header') }}</span>
+                </div>
+                <button type="button" onclick="closeFormOverlay()" title="Cerrar formulario" class="dashboard_button_toggle_content h-8 w-8 flex items-center justify-center border border-slate-200 rounded-lg cursor-pointer hover:bg-red-600 hover:border-red-600 text-slate-600 hover:text-white bg-slate-50 duration-200 p-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            <div id="empty-content-form" class="hidden w-auto h-auto flex-col items-center justify-center gap-y-3 text-center px-6">
+                <img src="/storage/images/web/empty.svg" class="w-36 h-auto opacity-80"/>
+                <label class="text-sm font-semibold text-slate-500 capitalize">{{__('messages.dashboard.'.$EntityType.'.empty_content')}}</label>
+            </div>
+            <div id="loading-content-form" class="hidden w-full flex-1 flex items-center justify-center">
+                <span class="animate-spin p-1 h-10 w-10 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
                 </span>
             </div>
-            <div id="empty-content-form" class="w-auto h-auto flex flex-col items-center justify-center gap-y-4">
-                <img src="/storage/images/web/empty.svg" class="w-[30%] h-auto"/>
-                <label class="capitalize">{{__('messages.dashboard.'.$EntityType.'.empty_content')}}</label>
-            </div>
-            <div id="loading-content-form" class="hidden w-full h-full flex items-center justify-center">
-                <span class="animate-spin p-1 h-12 w-12 text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                </span>
-            </div>
-            <div id="content-form" class="hidden h-full w-full overflow-y-scroll">
+            <div id="content-form" class="hidden flex-1 w-full overflow-y-auto pr-1">
             </div>
         </div>
     </section>
@@ -96,32 +111,47 @@
 
 @push('scripts')
     <script>
+        function openFormOverlay() {
+            const menu = document.querySelector('.dashboard_content_form');
+            const backdrop = document.getElementById('dashboard_form_backdrop');
+            if (menu) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+            }
+            if (backdrop) {
+                backdrop.classList.remove('hidden');
+            }
+        }
+
+        function closeFormOverlay() {
+            const menu = document.querySelector('.dashboard_content_form');
+            const backdrop = document.getElementById('dashboard_form_backdrop');
+            if (menu) {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+            if (backdrop) {
+                backdrop.classList.add('hidden');
+            }
+        }
 
         function toggleFormContent(){
-
             const menu = document.querySelector('.dashboard_content_form');
-
-            if (menu.classList.contains('max-xl:-right-[600px]')) {
-                menu.classList.add('max-xl:-right-0');
-                menu.classList.remove('max-xl:-right-[600px]');
-                menu.classList.remove('max-sm:-right-[100%]');
-
+            if (menu && menu.classList.contains('hidden')) {
+                openFormOverlay();
             } else {
-                menu.classList.add('max-xl:-right-[600px]');
-                menu.classList.add('max-sm:-right-[100%]');
-                menu.classList.remove('max-xl:-right-0');
+                closeFormOverlay();
             }
-
         };
 
         function clearContent() {
-            toggleFormContent();
+            closeFormOverlay();
             const currentPage = document.querySelector('#dashboard_{{$EntityType}}');
             const contentForm  = currentPage.querySelector('#content-form');
-            const emtpyContentForm = currentPage.querySelector('#empty-content-form ')
+            const emtpyContentForm = currentPage.querySelector('#empty-content-form');
 
-            emtpyContentForm.classList.remove('hidden');
-            contentForm.classList.add('hidden');
+            if (emtpyContentForm) emtpyContentForm.classList.remove('hidden');
+            if (contentForm) contentForm.classList.add('hidden');
         };
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -144,14 +174,6 @@
 
 
 
-            // Select the button and the menu
-            const menuButtons = document.querySelectorAll('.dashboard_button_toggle_content');
-            menuButtons.forEach(function(button) {
-                button.addEventListener('click', toggleFormContent);
-            });
-
-
-
             const SearchBar = document.querySelector(`#content-{{$EntityType}}-search`);
             // Listen for the custom event
             SearchBar.addEventListener('search-content-{{$EntityType}}-search', function (e) {
@@ -169,7 +191,7 @@
 
             function updateFormState(idEntity, typeEntity,formRequest){
 
-                toggleFormContent();
+                openFormOverlay();
 
                 const currentPage = document.querySelector('#dashboard_{{$EntityType}}');
                 const contentForm  = currentPage.querySelector('#content-form');
@@ -997,20 +1019,32 @@
             const ExternalReferenceLabel = document.createElement('label');
             ExternalReferenceLabel.htmlFor = `transports[${index}][external_reference]`;
             ExternalReferenceLabel.classList.add('block','text-sm','font-bold','text-secondary-dark','capitalize');
-            ExternalReferenceLabel.textContent = "{{ __('messages.dashboard.transport_type.form.fields.external_reference') }} ({{ __('messages.common.optional') }}):"
+            ExternalReferenceLabel.textContent = "N° Vuelo (ICAO24/Callsign) o Barco (MMSI):"
+
+            const ExternalRefRow = document.createElement('div');
+            ExternalRefRow.classList.add('flex', 'items-center', 'gap-1.5', 'mt-1');
 
             const ExternalReferenceInput = document.createElement('input');
             ExternalReferenceInput.id = `transports[${index}][external_reference]`;
             ExternalReferenceInput.name =  `transports[${index}][external_reference]`;
-            ExternalReferenceInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
-            ExternalReferenceInput.placeholder = "{{ __('messages.dashboard.transport_type.form.placeholders.external_reference') }}";
+            ExternalReferenceInput.classList.add('text-sm','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
+            ExternalReferenceInput.placeholder = "Ej: LPE2383 o MMSI 636017582";
 
             if(data && data.extref){
                 ExternalReferenceInput.value = data.extref;
             }
 
+            const AutoFillStepBtn = document.createElement('button');
+            AutoFillStepBtn.type = 'button';
+            AutoFillStepBtn.textContent = 'Autocompletar';
+            AutoFillStepBtn.className = 'px-2.5 py-2 rounded-lg bg-primary hover:bg-primary-dark text-white text-xs font-semibold shrink-0 cursor-pointer';
+            AutoFillStepBtn.setAttribute('onclick', `autoFillSingleStepFromLookup(${index})`);
+
+            ExternalRefRow.appendChild(ExternalReferenceInput);
+            ExternalRefRow.appendChild(AutoFillStepBtn);
+
             ExternalReferenceSpan.appendChild(ExternalReferenceLabel);
-            ExternalReferenceSpan.appendChild(ExternalReferenceInput);
+            ExternalReferenceSpan.appendChild(ExternalRefRow);
 
             transportBodyCard.appendChild(ExternalReferenceSpan);
 
@@ -1029,6 +1063,10 @@
             EtaInput.name =  `transports[${index}][eta]`;
             EtaInput.classList.add('text-sm','mt-1','block','w-full','p-2','border-b-2','border-b-secondary-dark','bg-white','focus:border-b-primary','focus:outline-none','text-body');
             EtaInput.placeholder = "{{ __('messages.dashboard.tracking_step.form.placeholders.eta') }}";
+
+            if (data && data.eta) {
+                EtaInput.value = data.eta;
+            }
 
             EtaSpan.appendChild(EtaLabel);
             EtaSpan.appendChild(EtaInput);
@@ -1116,16 +1154,14 @@
             });
 
             if(data && data.country){
-
-                CountrySelect.value = data.country;
+                ensureSelectOptionAndSetValue(CountrySelect, data.country);
 
                 if (CitySelect) {
-
                     await loadCities(data.country,CountrySelect, CitySelect);
-
-                    CitySelect.value = data.city;
+                    if (data.city) {
+                        ensureSelectOptionAndSetValue(CitySelect, data.city);
+                    }
                 }
-
             }
 
             if(data && data.type){
@@ -1134,6 +1170,14 @@
 
             if(data && data.status){
                 StatusSelect.value = data.status;
+                stepTrackIcon.classList.remove('border-gray-light', 'border-primary', 'border-primary-dark');
+                if (data.status === 'IN_TRANSIT') {
+                    stepTrackIcon.classList.add('border-primary-dark');
+                } else if (data.status === 'COMPLETED') {
+                    stepTrackIcon.classList.add('border-primary');
+                } else {
+                    stepTrackIcon.classList.add('border-gray-light');
+                }
             }
 
             const defaultIconOption = document.createElement('option');
@@ -1375,9 +1419,9 @@
 
                     await attachCountriesOptions(selectInput);
 
-                    if (index) {
+                    if (index && order && order.tracking_steps && order.tracking_steps[index]) {
 
-                        selectInput.value = order.tracking_steps[index].country;
+                        ensureSelectOptionAndSetValue(selectInput, order.tracking_steps[index].country);
 
                         const citySelect = document.querySelector(`[id="transports[${index}][city]"]`);
 
@@ -1402,7 +1446,7 @@
                         const LattitudeInput = document.querySelector(`[id="transports[${index}][lat]"]`);
                         const LongitudeInput = document.querySelector(`[id="transports[${index}][lng]"]`);
 
-                        citySelect.value = order.tracking_steps[index].city;
+                        ensureSelectOptionAndSetValue(citySelect, order.tracking_steps[index].city);
                         LattitudeInput.value = order.tracking_steps[index].lat;
                         LongitudeInput.value = order.tracking_steps[index].lng;
                     }
@@ -1410,6 +1454,175 @@
                 });
             } catch (error) {
                 console.error('Error fetching country data:', error);
+            }
+        }
+
+        function ensureSelectOptionAndSetValue(selectEl, val) {
+            if (!selectEl || !val) return;
+            let exists = false;
+            for (let i = 0; i < selectEl.options.length; i++) {
+                if (selectEl.options[i].value === val) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                selectEl.appendChild(opt);
+            }
+            selectEl.value = val;
+        }
+
+        function quickFillTransportCode(code, mode) {
+            const codeInput = document.getElementById('transport_lookup_code');
+            const modeSelect = document.getElementById('transport_lookup_mode');
+            if (codeInput) codeInput.value = code;
+            if (modeSelect && mode) modeSelect.value = mode;
+            autoFillOrderTransportFromLookup();
+        }
+
+        async function autoFillOrderTransportFromLookup() {
+            const codeInput = document.getElementById('transport_lookup_code');
+            const modeSelect = document.getElementById('transport_lookup_mode');
+            const btn = document.getElementById('btn_autofill_transport');
+            const spinner = btn ? btn.querySelector('.lookup-spinner') : null;
+            const btnText = btn ? btn.querySelector('.lookup-btn-text') : null;
+
+            const query = codeInput ? codeInput.value.trim() : '';
+            const mode = modeSelect ? modeSelect.value : 'AUTO';
+
+            if (spinner) spinner.classList.add('animate-spin');
+            if (btnText) btnText.textContent = 'Buscando...';
+
+            try {
+                const res = await fetch(`/dashboard/order/lookup-transport?query=${encodeURIComponent(query)}&mode=${encodeURIComponent(mode)}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!res.ok) throw new Error('Error consultando transporte');
+                const data = await res.json();
+
+                // Show live preview card inside form
+                const previewBox = document.getElementById('transport-autofill-preview');
+                const previewTitle = document.getElementById('autofill-preview-title');
+                const previewCoords = document.getElementById('autofill-preview-coords');
+                const previewDesc = document.getElementById('autofill-preview-desc');
+                const tel = data.telemetry || {};
+
+                if (previewBox) {
+                    previewBox.classList.remove('hidden');
+                    if (previewTitle) {
+                        previewTitle.textContent = `${data.mode === 'AIR' ? '✈️ VUELO DETECTADO:' : '🚢 BUQUE DETECTADO:'} ${tel.name || query}`;
+                    }
+                    if (previewCoords && tel.lat !== undefined) {
+                        previewCoords.textContent = `GPS: ${Number(tel.lat).toFixed(4)}°, ${Number(tel.lng).toFixed(4)}° · ${tel.speed_kmh} km/h (${tel.speed_knots} kn) · Rumbo ${tel.heading_deg}°`;
+                    }
+                    if (previewDesc) {
+                        previewDesc.textContent = `${tel.status_label || ''} — Se autocompletaron las ${data.steps ? data.steps.length : 3} etapas de seguimiento (Origen → Tramo en Vivo → Destino Callao/Lima).`;
+                    }
+                }
+
+                // Auto-fill order details if empty
+                const detailsInput = document.getElementById('details');
+                if (detailsInput && (!detailsInput.value || detailsInput.value.trim() === '') && data.order_details) {
+                    detailsInput.value = data.order_details;
+                }
+
+                // Populate all transport steps automatically
+                transportsContainer = document.querySelector('.step-tracks');
+                if (transportsContainer && Array.isArray(data.steps)) {
+                    transportsContainer.innerHTML = '';
+                    for (const stepOption of data.steps) {
+                        await addTransportCard(stepOption);
+                    }
+                }
+
+                // Open the transport wrapper accordion automatically so the user sees the populated steps
+                const transportWrapper = document.getElementById('wrapperContainer_transport');
+                const transportText = document.getElementById('wrapper_transport');
+                const iconOpen = document.getElementById('iconOpen_transport');
+                const iconClose = document.getElementById('iconClose_transport');
+                if (transportWrapper && transportWrapper.classList.contains('h-[0px]')) {
+                    transportWrapper.classList.remove('h-[0px]');
+                    transportWrapper.classList.add('h-[600px]', 'sm:h-[600px]');
+                    if (transportText) {
+                        transportText.classList.remove('opacity-0');
+                        transportText.classList.add('opacity-100');
+                    }
+                    if (iconOpen) iconOpen.classList.add('hidden');
+                    if (iconClose) iconClose.classList.remove('hidden');
+                }
+
+                if (typeof showToast === 'function') {
+                    showToast([`Transporte autocompletado en vivo: ${tel.name || query}`]);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                if (spinner) spinner.classList.remove('animate-spin');
+                if (btnText) btnText.textContent = 'Autocompletar';
+            }
+        }
+
+        async function autoFillSingleStepFromLookup(index) {
+            const extInput = document.getElementById(`transports[${index}][external_reference]`);
+            const topInput = document.getElementById('transport_lookup_code');
+            const typeSelect = document.getElementById(`transports[${index}][type]`);
+            const query = (extInput && extInput.value.trim()) ? extInput.value.trim() : (topInput ? topInput.value.trim() : '');
+            const mode = (typeSelect && (typeSelect.value === 'AIR' || typeSelect.value === 'SHIP')) ? typeSelect.value : 'AUTO';
+
+            try {
+                const res = await fetch(`/dashboard/order/lookup-transport?query=${encodeURIComponent(query)}&mode=${encodeURIComponent(mode)}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                const step = data.single_step;
+                if (!step) return;
+
+                const nameInput = document.getElementById(`transports[${index}][name]`);
+                const iconSelect = document.getElementById(`transports[${index}][icon]`);
+                const iconImg = document.getElementById(`icon-tracking-step-image-${index}`);
+                const stepHeaderIcon = document.getElementById(`step-track-icon-${index}`);
+                const stepHeaderLabel = document.getElementById(`step-track-label-${index}`);
+                const statusSelect = document.getElementById(`transports[${index}][status]`);
+                const countrySelect = document.getElementById(`transports[${index}][country]`);
+                const citySelect = document.getElementById(`transports[${index}][city]`);
+                const latInput = document.getElementById(`transports[${index}][lat]`);
+                const lngInput = document.getElementById(`transports[${index}][lng]`);
+                const addressInput = document.getElementById(`transports[${index}][address]`);
+                const etaInput = document.getElementById(`transports[${index}][eta]`);
+                const durationInput = document.getElementById(`transports[${index}][duration]`);
+                const descInput = document.getElementById(`transports[${index}][description]`);
+
+                if (nameInput) nameInput.value = step.name;
+                if (stepHeaderLabel) stepHeaderLabel.textContent = step.name;
+                if (extInput) extInput.value = step.extref;
+                if (typeSelect) typeSelect.value = step.type;
+                if (statusSelect) statusSelect.value = step.status;
+                if (iconSelect) iconSelect.value = step.icon;
+                if (iconImg) iconImg.src = '/storage' + step.icon;
+                if (stepHeaderIcon) stepHeaderIcon.src = '/storage' + step.icon;
+                if (countrySelect) {
+                    ensureSelectOptionAndSetValue(countrySelect, step.country);
+                    if (citySelect) {
+                        await loadCities(step.country, countrySelect, citySelect);
+                        ensureSelectOptionAndSetValue(citySelect, step.city);
+                    }
+                }
+                if (latInput) latInput.value = step.lat;
+                if (lngInput) lngInput.value = step.lng;
+                if (addressInput) addressInput.value = step.address;
+                if (etaInput) etaInput.value = step.eta;
+                if (durationInput) durationInput.value = step.duration;
+                if (descInput) descInput.value = step.description;
+
+                if (typeof showToast === 'function') {
+                    showToast([`Tramo #${index + 1} autocompletado: ${step.name}`]);
+                }
+            } catch (e) {
+                console.error(e);
             }
         }
 
