@@ -136,9 +136,18 @@ jobs:
           echo "Verificando enlace simbólico storage..."
           php artisan storage:link || true
 
-          # Migraciones de base de datos (sin seeders automáticos)
+          # Migraciones de base de datos
           echo "Ejecutando migraciones de base de datos..."
           php artisan migrate --force
+
+          # Poblar o actualizar datos de producción (servicios, proveedores, productos, blogs, reseñas)
+          echo "Poblando datos de producción (servicios, proveedores, productos, blogs)..."
+          php artisan db:seed --class=LanexProductionSeeder --force
+
+          # Asegurar permisos correctos en almacenamiento y multimedia
+          echo "Asegurando permisos 755/644 en storage..."
+          chmod -R 755 "$PUBLIC_DIR/storage" 2>/dev/null || true
+          find "$PUBLIC_DIR/storage" -type f -exec chmod 644 {} + 2>/dev/null || true
 
           # Limpieza y optimización de cachés
           echo "Limpiando y regenerando caché de Laravel..."

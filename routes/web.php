@@ -77,6 +77,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function(){
         Route::get('/', [SettingController::class, 'index'])->name('dashboard_settings');
         Route::post('/update', [SettingController::class, 'update'])->name('dashboard_settings.update');
         Route::post('/test-email', [SettingController::class, 'testEmail'])->name('dashboard_settings.test_email');
+        Route::post('/run-seeder', [SettingController::class, 'runSeeder'])->name('dashboard_settings.run_seeder');
     });
 
     Route::prefix('/users')->group(function(){

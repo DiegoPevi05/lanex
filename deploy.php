@@ -51,6 +51,7 @@ function syncRecursive($src, $dst) {
                 return;
             }
         }
+        @chmod($dst, 0755);
         $files = array_diff(scandir($src), ['.', '..', '.DS_Store', '.git']);
         foreach ($files as $file) {
             if (str_ends_with($file, ':Zone.Identifier')) {
@@ -67,7 +68,7 @@ function syncRecursive($src, $dst) {
             }
         }
         if (copy($src, $dst)) {
-            // Successfully copied
+            @chmod($dst, 0644);
         } else {
             echo "Failed to copy: $src to $dst\n";
         }

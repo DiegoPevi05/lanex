@@ -12,6 +12,14 @@
 !images/mail/**
 !images/test/
 !images/test/**
+!images/product/
+!images/product/**
+!images/supplier/
+!images/supplier/**
+!images/blog/
+!images/blog/**
+!images/service/
+!images/service/**
 
 # Ignore files with .jpg:Zone.Identifier extension
 *.Identifier

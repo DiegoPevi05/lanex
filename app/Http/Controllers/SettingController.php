@@ -146,4 +146,24 @@ class SettingController extends Controller
             ]);
         }
     }
+
+    /**
+     * Run the production seeder on-demand to populate suppliers, products, blogs, reviews, and services.
+     */
+    public function runSeeder(Request $request)
+    {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('db:seed', [
+                '--class' => 'LanexProductionSeeder',
+                '--force' => true,
+            ]);
+
+            return back()->with('status', '¡Datos de producción (proveedores, productos, blogs, servicios y reseñas) cargados exitosamente!');
+        } catch (\Throwable $e) {
+            Log::error('[Run Seeder Error] ' . $e->getMessage(), ['exception' => $e]);
+            return back()->withErrors([
+                'seed_error' => 'Error al cargar los datos: ' . $e->getMessage()
+            ]);
+        }
+    }
 }

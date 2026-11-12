@@ -305,6 +305,36 @@
             </div>
         </form>
 
+        <!-- Section: Initial Production Data Seeder -->
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-primary border border-purple-200 flex items-center justify-center shrink-0 mt-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 font-display">
+                            Datos de Producción &amp; Contenido Inicial
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1 max-w-xl">
+                            Carga o actualiza en la base de datos los 12 proveedores internacionales verificados, 10 productos industriales, 8 artículos de blog especializados, 5 servicios oficiales y testimonios de clientes.
+                        </p>
+                    </div>
+                </div>
+
+                <form action="{{ route('dashboard_settings.run_seeder') }}" method="POST" onsubmit="return confirm('¿Deseas poblar/actualizar la base de datos con los datos de producción de LanEx?');">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="h-10 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs shadow-sm transition-all duration-200 inline-flex items-center gap-2 whitespace-nowrap"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        <span>Cargar Datos de Producción (Seed)</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </section>
 @endsection
